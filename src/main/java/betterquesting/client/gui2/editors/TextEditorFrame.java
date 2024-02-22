@@ -5,12 +5,17 @@ import betterquesting.api.questing.IQuest;
 import betterquesting.core.BetterQuesting;
 import betterquesting.core.ModReference;
 import betterquesting.network.handlers.NetQuestEdit;
+import io.netty.util.collection.IntObjectHashMap;
+import io.netty.util.collection.IntObjectMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.IntHashMap;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
+import org.jetbrains.annotations.Nullable;
+import scala.collection.immutable.IntMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -23,6 +28,8 @@ import javax.swing.undo.UndoManager;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
@@ -30,11 +37,22 @@ import java.io.InputStream;
 public class TextEditorFrame extends JFrame {
     private static final int initialRowCount = 30;
     private static final int defaultColumns = 60;
-    public static void openTextEditor(int questID, IQuest quest) {
-        new TextEditorFrame(questID, quest).requestFocus();
-    }
-
+    private static final IntObjectMap<TextEditorFrame> opened = new IntObjectHashMap<>();// questId -> TextEditorFrame
     private static BufferedImage logoCache = null;
+
+    public static void openTextEditor(int questID, IQuest quest) {
+        if (opened.containsKey(questID)){
+            TextEditorFrame frame = opened.get(questID);
+            frame.toFront();
+            frame.requestFocus();
+            Toolkit.getDefaultToolkit().beep();
+        }else {
+            TextEditorFrame frame = new TextEditorFrame(questID, quest);
+            opened.put(questID, frame);
+            frame.requestFocus();
+        }
+	}
+
 
     private final int questID;
     public final IQuest quest;
@@ -88,6 +106,13 @@ public class TextEditorFrame extends JFrame {
         description.setBorder(new TitledBorder(BorderFactory.createLineBorder(Color.GRAY, 1, true), I18n.format("betterquesting.gui.description")));
         description.setLineWrap(true);
         UndoHelper.addUndoHelper(description);
+
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                opened.remove(questID);
+            }
+        });
 
         JPanel footerPanel = add(wholePanel, new JPanel());
         footerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
@@ -175,10 +200,10 @@ public class TextEditorFrame extends JFrame {
         class UndoAction extends AbstractAction {
             UndoAction() {
                 super("Undo(U)");
-                putValue(MNEMONIC_KEY, new Integer('U'));
+                putValue(MNEMONIC_KEY, (int)'U');
                 putValue(SHORT_DESCRIPTION, "Undo");
                 putValue(LONG_DESCRIPTION, "Undo");
-                putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('Z', Event.CTRL_MASK));
+                putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('Z', InputEvent.CTRL_DOWN_MASK));
             }
             public void actionPerformed(ActionEvent e) {
                 if (undoManager.canUndo()) {
@@ -190,10 +215,10 @@ public class TextEditorFrame extends JFrame {
         class RedoAction extends AbstractAction {
             RedoAction() {
                 super("Redo(R)");
-                putValue(MNEMONIC_KEY, new Integer('R'));
+                putValue(MNEMONIC_KEY, (int) 'R');
                 putValue(SHORT_DESCRIPTION, "Redo");
                 putValue(LONG_DESCRIPTION, "Redo");
-                putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('Y', Event.CTRL_MASK));
+                putValue(ACCELERATOR_KEY, KeyStroke.getKeyStroke('Y', InputEvent.CTRL_DOWN_MASK));
             }
             public void actionPerformed(ActionEvent e) {
                 if (undoManager.canRedo()) {
