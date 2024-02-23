@@ -22,7 +22,7 @@ jobs:
 
       - name: Get Mod Name
         id: get_mod_name
-        run: echo ::set-output name=mod_name::$(sed -n 's/^modBaseName = \(.*\)/\1/p' < gradle.properties*)
+        run: echo ::set-output name=mod_name::$(sed -n 's/^modArchivesBaseName = \(.*\)/\1/p' < gradle.properties*)
 
       - name: Retrieve Jar from Latest Release
         uses: dsaltares/fetch-gh-release-asset@master
