@@ -57,7 +57,7 @@ public class ComponentRegistry {
     }
 
     private void init() {
-        //register(new ResourceLocation("betterquesting", "canvas_empty"), CanvasEmpty::new, new NBTTagCompound());
+        //register(new ResourceLocation(ModReference.MODID, "canvas_empty"), CanvasEmpty::new, new NBTTagCompound());
 
         NBTTagCompound refTag = new NBTTagCompound();
         //refTag.setString("texture", PresetTexture.PANEL_MAIN.getKey().toString());
