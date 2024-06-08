@@ -1,18 +1,18 @@
 package betterquesting.api.placeholders;
 
 import net.minecraft.world.entity.Entity;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 
 public class EntityPlaceholder extends Entity {
-    private final EntityItem eItem;
+    private final ItemEntity eItem;
     private CompoundTag original = new CompoundTag();
 
     public EntityPlaceholder(Level world) {
         super(world);
-        eItem = new EntityItem(world);
+        eItem = new ItemEntity(world);
         eItem.setItem(new ItemStack(ItemPlaceholder.placeholder));
     }
 
@@ -25,7 +25,7 @@ public class EntityPlaceholder extends Entity {
         return this.original;
     }
 
-    public EntityItem GetItemEntity() {
+    public ItemEntity GetItemEntity() {
         return eItem;
     }
 

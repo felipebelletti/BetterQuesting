@@ -3,7 +3,7 @@ package betterquesting.client.renderer;
 import betterquesting.api.placeholders.EntityPlaceholder;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.resources.ResourceLocation;
 
 public class EntityPlaceholderRenderer extends Render<EntityPlaceholder> {
@@ -13,7 +13,7 @@ public class EntityPlaceholderRenderer extends Render<EntityPlaceholder> {
 
     @Override
     public void doRender(EntityPlaceholder entity, double x, double y, double z, float yaw, float partialTick) {
-        EntityItem item = entity.GetItemEntity();
+        ItemEntity item = entity.GetItemEntity();
         this.renderManager.renderEntity(item, x, y + 1D, z, yaw, partialTick, false);
     }
 
