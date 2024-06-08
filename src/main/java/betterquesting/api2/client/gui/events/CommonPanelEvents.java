@@ -3,7 +3,7 @@ package betterquesting.api2.client.gui.events;
 import betterquesting.api.events.QuestEvent;
 import betterquesting.api2.client.gui.events.types.PEventQuest;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
