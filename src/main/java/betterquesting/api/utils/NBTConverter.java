@@ -21,24 +21,30 @@ public class NBTConverter {
     private static void NBTtoJSON_Base(Tag value, boolean format, JsonWriter out) throws IOException {
         if (value == null || value.getId() == 0) out.beginObject().endObject();
         else if (value instanceof NumericTag) out.value(NBTConverter.getNumber(value));
-        else if (value instanceof NBTTagString) out.value(((NBTTagString) value).getString());
-        else if (value instanceof NBTTagByteArray) {
+        else if (value instanceof StringTag) out.value(((StringTag) value).getAsString());
+        else if (value instanceof ByteArrayTag) {
             out.beginArray();
-            for (byte b : ((NBTTagByteArray) value).getByteArray()) {
+            for (byte b : ((ByteArrayTag) value).getAsByteArray()) {
                 out.value(b);
             }
             out.endArray();
-        } else if (value instanceof NBTTagIntArray) {
+        } else if (value instanceof IntArrayTag) {
             out.beginArray();
-            for (int b : ((NBTTagIntArray) value).getIntArray()) {
+            for (int b : ((IntArrayTag) value).getAsIntArray()) {
                 out.value(b);
+            }
+            out.endArray();
+        } else if (value instanceof LongArrayTag) {
+            out.beginArray();
+            for (long l : ((LongArrayTag) value).getAsLongArray()) {
+                out.value(l);
             }
             out.endArray();
         } else if (value instanceof ListTag) {
             ListTag tagList = (ListTag) value;
             if (format) {
                 out.beginObject();
-                for (int i = 0; i < tagList.tagCount(); i++) {
+                for (int i = 0; i < tagList.size(); i++) {
                     Tag tag = tagList.get(i);
                     out.name(i + ":" + tag.getId());
                     NBTtoJSON_Base(tag, true, out);
@@ -49,6 +55,7 @@ public class NBTConverter {
                 for (Tag tag : tagList) {
                     NBTtoJSON_Base(tag, false, out);
                 }
+                out.endArray();
             }
         } else if (value instanceof CompoundTag) {
             NBTtoJSON_Compound((CompoundTag) value, out, format);
@@ -62,8 +69,8 @@ public class NBTConverter {
         out.beginObject();
 
         if (parent != null)
-            for (String key : parent.getKeySet()) {
-                Tag tag = parent.getTag(key);
+            for (String key : parent.getAllKeys()) {
+                Tag tag = parent.get(key);
 
                 if (format) {
                     out.name(key + ":" + tag.getId());
@@ -87,8 +94,8 @@ public class NBTConverter {
         if (tag.getId() >= 1 && tag.getId() <= 6) {
             return new JsonPrimitive(getNumber(tag));
         }
-        if (tag instanceof NBTTagString) {
-            return new JsonPrimitive(((NBTTagString) tag).getString());
+        if (tag instanceof StringTag) {
+            return new JsonPrimitive(((StringTag) tag).getAsString());
         } else if (tag instanceof CompoundTag) {
             return NBTtoJSON_Compound((CompoundTag) tag, new JsonObject(), format);
         } else if (tag instanceof ListTag) {
@@ -97,7 +104,7 @@ public class NBTConverter {
 
                 ListTag tagList = (ListTag) tag;
 
-                for (int i = 0; i < tagList.tagCount(); i++) {
+                for (int i = 0; i < tagList.size(); i++) {
                     jAry.add(i + ":" + tagList.get(i).getId(), NBTtoJSON_Base(tagList.get(i), true));
                 }
 
@@ -113,26 +120,26 @@ public class NBTConverter {
 
                 return jAry;
             }
-        } else if (tag instanceof NBTTagByteArray) {
+        } else if (tag instanceof ByteArrayTag) {
             JsonArray jAry = new JsonArray();
 
-            for (byte b : ((NBTTagByteArray) tag).getByteArray()) {
+            for (byte b : ((ByteArrayTag) tag).getAsByteArray()) {
                 jAry.add(new JsonPrimitive(b));
             }
 
             return jAry;
-        } else if (tag instanceof NBTTagIntArray) {
+        } else if (tag instanceof IntArrayTag) {
             JsonArray jAry = new JsonArray();
 
-            for (int i : ((NBTTagIntArray) tag).getIntArray()) {
+            for (int i : ((IntArrayTag) tag).getAsIntArray()) {
                 jAry.add(new JsonPrimitive(i));
             }
 
             return jAry;
-        } else if (tag instanceof NBTTagLongArray) {
+        } else if (tag instanceof LongArrayTag) {
             JsonArray jAry = new JsonArray();
 
-            for (long l : readLongArray((NBTTagLongArray) tag)) {
+            for (long l : ((LongArrayTag) tag).getAsLongArray()) {
                 jAry.add(new JsonPrimitive(l));
             }
 
@@ -144,7 +151,7 @@ public class NBTConverter {
 
     // The fact that this is necessary is so dumb
     @SuppressWarnings("WeakerAccess")
-    public static long[] readLongArray(NBTTagLongArray tag) {
+    public static long[] readLongArray(LongArrayTag tag) {
         if (tag == null) return new long[0];
 
         String[] entry = tag.toString().replaceAll("[\\[\\]L;]", "").split(","); // Cut off square braces and "L;" before splitting elements
@@ -164,9 +171,9 @@ public class NBTConverter {
             return jObj;
         }
 
-        Set<String> keySet = new TreeSet<>(parent.getKeySet());
+        Set<String> keySet = new TreeSet<>(parent.getAllKeys());
         for (String key : keySet) {
-            Tag tag = parent.getTag(key);
+            Tag tag = parent.get(key);
 
             if (format) {
                 jObj.add(key + ":" + tag.getId(), NBTtoJSON_Base(tag, true));
@@ -190,7 +197,7 @@ public class NBTConverter {
             String key = entry.getKey();
 
             if (!format) {
-                tags.setTag(key, JSONtoNBT_Element(entry.getValue(), (byte) 0, false));
+                tags.put(key, JSONtoNBT_Element(entry.getValue(), (byte) 0, false));
             } else {
                 String[] s = key.split(":");
                 byte id = 0;
@@ -199,13 +206,13 @@ public class NBTConverter {
                     id = Byte.parseByte(s[s.length - 1]);
                     key = key.substring(0, key.lastIndexOf(":" + id));
                 } catch (Exception e) {
-                    if (tags.hasKey(key)) {
+                    if (tags.contains(key)) {
                         QuestingAPI.getLogger().log(Level.WARN, "JSON/NBT formatting conflict on key '" + key + "'. Skipping...");
                         continue;
                     }
                 }
 
-                tags.setTag(key, JSONtoNBT_Element(entry.getValue(), id, true));
+                tags.put(key, JSONtoNBT_Element(entry.getValue(), id, true));
             }
         }
 
@@ -217,7 +224,7 @@ public class NBTConverter {
      */
     private static Tag JSONtoNBT_Element(JsonElement jObj, byte id, boolean format) {
         if (jObj == null) {
-            return new NBTTagString();
+            return StringTag.valueOf("");
         }
 
         byte tagID = id <= 0 ? fallbackTagID(jObj) : id;
@@ -225,11 +232,11 @@ public class NBTConverter {
         try {
             if (tagID == 1 && (id <= 0 || jObj.getAsJsonPrimitive().isBoolean())) // Edge case for BQ2 legacy files
             {
-                return new ByteTag(jObj.getAsBoolean() ? (byte) 1 : (byte) 0);
+                return ByteTag.valueOf(jObj.getAsBoolean() ? (byte) 1 : (byte) 0);
             } else if (tagID >= 1 && tagID <= 6) {
                 return instanceNumber(jObj.getAsNumber(), tagID);
             } else if (tagID == 8) {
-                return new NBTTagString(jObj.getAsString());
+                return StringTag.valueOf(jObj.getAsString());
             } else if (tagID == 10) {
                 return JSONtoNBT_Object(jObj.getAsJsonObject(), new CompoundTag(), format);
             } else if (tagID == 7) // Byte array
@@ -242,7 +249,7 @@ public class NBTConverter {
                     bAry[i] = jAry.get(i).getAsByte();
                 }
 
-                return new NBTTagByteArray(bAry);
+                return new ByteArrayTag(bAry);
             } else if (tagID == 11) {
                 JsonArray jAry = jObj.getAsJsonArray();
 
@@ -252,7 +259,7 @@ public class NBTConverter {
                     iAry[i] = jAry.get(i).getAsInt();
                 }
 
-                return new NBTTagIntArray(iAry);
+                return new IntArrayTag(iAry);
             } else if (tagID == 12) {
                 JsonArray jAry = jObj.getAsJsonArray();
 
@@ -262,7 +269,7 @@ public class NBTConverter {
                     lAry[i] = jAry.get(i).getAsLong();
                 }
 
-                return new NBTTagLongArray(lAry);
+                return new LongArrayTag(lAry);
             } else if (tagID == 9) {
                 ListTag tList = new ListTag();
 
@@ -271,7 +278,7 @@ public class NBTConverter {
 
                     for (int i = 0; i < jAry.size(); i++) {
                         JsonElement jElm = jAry.get(i);
-                        tList.appendTag(JSONtoNBT_Element(jElm, (byte) 0, format));
+                        tList.add(JSONtoNBT_Element(jElm, (byte) 0, format));
                     }
                 } else if (jObj.isJsonObject()) {
                     JsonObject jAry = jObj.getAsJsonObject();
@@ -281,9 +288,9 @@ public class NBTConverter {
                             String[] s = entry.getKey().split(":");
                             byte id2 = Byte.parseByte(s[s.length - 1]);
                             //String key = entry.getKey().substring(0, entry.getKey().lastIndexOf(":" + id));
-                            tList.appendTag(JSONtoNBT_Element(entry.getValue(), id2, format));
+                            tList.add(JSONtoNBT_Element(entry.getValue(), id2, format));
                         } catch (Exception e) {
-                            tList.appendTag(JSONtoNBT_Element(entry.getValue(), (byte) 0, format));
+                            tList.add(JSONtoNBT_Element(entry.getValue(), (byte) 0, format));
                         }
                     }
                 }
@@ -295,23 +302,23 @@ public class NBTConverter {
         }
 
         QuestingAPI.getLogger().log(Level.WARN, "Unknown NBT representation for " + jObj.toString() + " (ID: " + tagID + ")");
-        return new NBTTagString();
+        return StringTag.valueOf("");
     }
 
     @SuppressWarnings("WeakerAccess")
     public static Number getNumber(Tag tag) {
         if (tag instanceof ByteTag) {
-            return ((ByteTag) tag).getByte();
-        } else if (tag instanceof NBTTagShort) {
-            return ((NBTTagShort) tag).getShort();
-        } else if (tag instanceof NBTTagInt) {
-            return ((NBTTagInt) tag).getInt();
-        } else if (tag instanceof NBTTagFloat) {
-            return ((NBTTagFloat) tag).getFloat();
-        } else if (tag instanceof NBTTagDouble) {
-            return ((NBTTagDouble) tag).getDouble();
-        } else if (tag instanceof NBTTagLong) {
-            return ((NBTTagLong) tag).getLong();
+            return ((ByteTag) tag).getAsByte();
+        } else if (tag instanceof ShortTag) {
+            return ((ShortTag) tag).getAsShort();
+        } else if (tag instanceof IntTag) {
+            return ((IntTag) tag).getAsInt();
+        } else if (tag instanceof FloatTag) {
+            return ((FloatTag) tag).getAsFloat();
+        } else if (tag instanceof DoubleTag) {
+            return ((DoubleTag) tag).getAsDouble();
+        } else if (tag instanceof LongTag) {
+            return ((LongTag) tag).getAsLong();
         } else {
             return 0;
         }
@@ -321,17 +328,17 @@ public class NBTConverter {
     public static Tag instanceNumber(Number num, byte type) {
         switch (type) {
             case 1:
-                return new ByteTag(num.byteValue());
+                return ByteTag.valueOf(num.byteValue());
             case 2:
-                return new NBTTagShort(num.shortValue());
+                return ShortTag.valueOf(num.shortValue());
             case 3:
-                return new NBTTagInt(num.intValue());
+                return IntTag.valueOf(num.intValue());
             case 4:
-                return new NBTTagLong(num.longValue());
+                return LongTag.valueOf(num.longValue());
             case 5:
-                return new NBTTagFloat(num.floatValue());
+                return FloatTag.valueOf(num.floatValue());
             default:
-                return new NBTTagDouble(num.doubleValue());
+                return DoubleTag.valueOf(num.doubleValue());
         }
     }
 
