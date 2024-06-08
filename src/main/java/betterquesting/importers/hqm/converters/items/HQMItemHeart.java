@@ -2,7 +2,7 @@ package betterquesting.importers.hqm.converters.items;
 
 import betterquesting.api.utils.BigItemStack;
 import betterquesting.core.ModReference;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 

@@ -3,7 +3,7 @@ package betterquesting.api.placeholders;
 import betterquesting.api.utils.BigItemStack;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.Fluid;

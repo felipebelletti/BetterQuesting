@@ -26,7 +26,7 @@ import net.minecraft.block.Block;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.resources.ResourceLocation;

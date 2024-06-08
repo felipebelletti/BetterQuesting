@@ -8,7 +8,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.core.BetterQuesting;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Items;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.NonNullList;

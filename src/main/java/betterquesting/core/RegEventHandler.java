@@ -4,7 +4,7 @@ import betterquesting.api.placeholders.ItemPlaceholder;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.item.Items;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;

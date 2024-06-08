@@ -28,7 +28,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.resources.SimpleReloadableResourceManager;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.client.model.ModelLoader;

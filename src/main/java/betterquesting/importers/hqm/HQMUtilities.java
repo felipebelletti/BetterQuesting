@@ -8,7 +8,7 @@ import betterquesting.importers.hqm.converters.items.HQMItem;
 import betterquesting.importers.hqm.converters.items.HQMItemBag;
 import betterquesting.importers.hqm.converters.items.HQMItemHeart;
 import com.google.gson.JsonObject;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
