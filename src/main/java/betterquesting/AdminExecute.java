@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
@@ -30,12 +30,12 @@ public class AdminExecute implements ICommandSender {
 
     @Nonnull
     @Override
-    public ITextComponent getDisplayName() {
+    public Component getDisplayName() {
         return player.getDisplayName();
     }
 
     @Override
-    public void sendMessage(ITextComponent p_145747_1_) {
+    public void sendMessage(Component p_145747_1_) {
         player.sendMessage(p_145747_1_);
     }
 

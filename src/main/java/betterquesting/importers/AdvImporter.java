@@ -24,7 +24,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
 import org.apache.commons.io.FilenameUtils;
 
 import javax.annotation.Nonnull;
@@ -222,12 +222,12 @@ public class AdvImporter implements IImporter {
 
     private void readDisplayInfo(JsonObject json, IQuest quest) {
         if (json.has("title")) {
-            ITextComponent title = ITextComponent.Serializer.fromJsonLenient(json.get("title").toString());
+            Component title = Component.Serializer.fromJsonLenient(json.get("title").toString());
             if (title != null) quest.setProperty(NativeProps.NAME, title.getFormattedText());
         }
 
         if (json.has("description")) {
-            ITextComponent title = ITextComponent.Serializer.fromJsonLenient(json.get("description").toString());
+            Component title = Component.Serializer.fromJsonLenient(json.get("description").toString());
             if (title != null) quest.setProperty(NativeProps.DESC, title.getFormattedText());
         }
 

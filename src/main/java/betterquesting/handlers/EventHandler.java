@@ -139,8 +139,8 @@ public class EventHandler {
                     return;
                 }
                 String questName = quest.getProperty(NativeProps.NAME);
-                ITextComponent translated = new TextComponentTranslation("betterquesting.msg.share_quest", questName);
-                ITextComponent newMessage = new TextComponentString(text.substring(0, index) + translated.getFormattedText() + text.substring(endIndex));
+                Component translated = new TextComponentTranslation("betterquesting.msg.share_quest", questName);
+                Component newMessage = new TextComponentString(text.substring(0, index) + translated.getFormattedText() + text.substring(endIndex));
                 Style newMessageStyle;
                 EntityPlayerSP player = Minecraft.getMinecraft().player;
                 if (QuestCache.isQuestShown(quest, QuestingAPI.getQuestingUUID(player), player)) {

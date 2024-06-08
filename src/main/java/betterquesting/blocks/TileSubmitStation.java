@@ -24,7 +24,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fluids.FluidStack;
@@ -404,7 +404,7 @@ public class TileSubmitStation extends TileEntity implements IFluidHandler, ISid
 
     @Override
     @Nonnull
-    public ITextComponent getDisplayName() {
+    public Component getDisplayName() {
         return new TextComponentString(BetterQuesting.submitStation.getLocalizedName());
     }
 
