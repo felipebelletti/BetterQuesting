@@ -23,7 +23,7 @@ import betterquesting.importers.hqm.HQMBagImporter;
 import betterquesting.importers.hqm.HQMQuestImporter;
 import betterquesting.misc.QuestResourcesFile;
 import betterquesting.misc.QuestResourcesFolder;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;

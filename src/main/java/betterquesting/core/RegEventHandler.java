@@ -1,7 +1,7 @@
 package betterquesting.core;
 
 import betterquesting.api.placeholders.ItemPlaceholder;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Item;

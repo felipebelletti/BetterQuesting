@@ -11,7 +11,7 @@ import betterquesting.api2.utils.ParticipantInfo;
 import betterquesting.client.gui2.tasks.PanelTaskBlockBreak;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskBlockBreak;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.init.Blocks;

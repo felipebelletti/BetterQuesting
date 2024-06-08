@@ -2,7 +2,7 @@ package betterquesting;
 
 import betterquesting.api.placeholders.ItemPlaceholder;
 import betterquesting.api.utils.BigItemStack;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.CompoundTag;

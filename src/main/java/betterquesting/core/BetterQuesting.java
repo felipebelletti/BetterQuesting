@@ -22,7 +22,7 @@ import betterquesting.items.ItemLootChest;
 import betterquesting.items.ItemQuestBook;
 import betterquesting.network.PacketQuesting;
 import betterquesting.network.PacketTypeRegistry;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.world.item.CreativeModeTabs;
