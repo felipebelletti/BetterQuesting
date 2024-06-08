@@ -66,7 +66,7 @@ public class BetterQuesting {
     public SimpleNetworkWrapper network;
     public static Logger logger;
 
-    public static CreativeTabs tabQuesting = new CreativeTabQuesting();
+    public static CreativeModeTabs tabQuesting = new CreativeTabQuesting();
 
     public static Item extraLife = new ItemExtraLife();
     public static Item guideBook = new ItemGuideBook();

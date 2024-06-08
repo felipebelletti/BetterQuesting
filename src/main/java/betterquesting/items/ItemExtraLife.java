@@ -96,7 +96,7 @@ public class ItemExtraLife extends Item {
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> list) {
+    public void getSubItems(@Nonnull CreativeModeTabs tab, @Nonnull NonNullList<ItemStack> list) {
         if (this.isInCreativeTab(tab)) {
             list.add(new ItemStack(this, 1, 0));
             list.add(new ItemStack(this, 1, 1));

@@ -163,8 +163,8 @@ public class ItemLootChest extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     @SuppressWarnings("rawtypes")
-    public void getSubItems(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> list) {
-        if (tab != CreativeTabs.SEARCH && tab != this.getCreativeTab()) return;
+    public void getSubItems(@Nonnull CreativeModeTabs tab, @Nonnull NonNullList<ItemStack> list) {
+        if (tab != CreativeModeTabs.SEARCH && tab != this.getCreativeTab()) return;
         if (subItems != null) // CACHED ITEMS
         {
             list.addAll(subItems);

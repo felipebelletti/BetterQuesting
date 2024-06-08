@@ -43,7 +43,7 @@ public class CanvasItemDatabase extends CanvasSearch<ItemStack, Item> {
         try {
             NonNullList<ItemStack> subList = NonNullList.create();
 
-            item.getSubItems(CreativeTabs.SEARCH, subList);
+            item.getSubItems(CreativeModeTabs.SEARCH, subList);
 
             if (subList.isEmpty()) {
                 subList.add(item.getDefaultInstance());

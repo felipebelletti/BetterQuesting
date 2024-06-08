@@ -40,5 +40,5 @@ public class ApiReference // Note to self: Don't make these client side only. It
     public static final ApiKey<IToolRegistry> TOOL_REG = new ApiKey<>();
     public static final ApiKey<IImportRegistry> IMPORT_REG = new ApiKey<>();
 
-    public static final ApiKey<CreativeTabs> CREATIVE_TAB = new ApiKey<>();
+    public static final ApiKey<CreativeModeTabs> CREATIVE_TAB = new ApiKey<>();
 }
