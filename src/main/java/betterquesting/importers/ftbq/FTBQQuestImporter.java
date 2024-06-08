@@ -18,14 +18,14 @@ import betterquesting.importers.ftbq.converters.rewards.FtbqRewardItem;
 import betterquesting.importers.ftbq.converters.rewards.FtbqRewardXP;
 import betterquesting.importers.ftbq.converters.tasks.*;
 import betterquesting.questing.tasks.TaskCheckbox;
-import net.minecraft.init.Items;
+import net.minecraft.world.item.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
@@ -224,8 +224,8 @@ public class FTBQQuestImporter implements IImporter {
                 double gridSize = 32;
                 double size = qTag.hasKey("size") ? qTag.getDouble("size") : 1D;
                 size *= iconSize;
-                qle.setSize(MathHelper.ceil(size), MathHelper.ceil(size));
-                qle.setPosition(MathHelper.ceil(qTag.getDouble("x") * gridSize - (gridSize / 2D)), MathHelper.ceil(qTag.getDouble("y") * gridSize - (gridSize / 2D)));
+                qle.setSize(Mth.ceil(size), Mth.ceil(size));
+                qle.setPosition(Mth.ceil(qTag.getDouble("x") * gridSize - (gridSize / 2D)), Mth.ceil(qTag.getDouble("y") * gridSize - (gridSize / 2D)));
 
                 // === PARENTING INFO ===
 

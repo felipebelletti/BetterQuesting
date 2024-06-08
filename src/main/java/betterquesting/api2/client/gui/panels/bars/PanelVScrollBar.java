@@ -6,7 +6,7 @@ import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import org.lwjgl.input.Mouse;
 
 import java.util.List;
@@ -98,7 +98,7 @@ public class PanelVScrollBar implements IScrollBar {
             texBack.drawTexture(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), 0F, partialTick);
         }
 
-        int sy = MathHelper.floor((bounds.getHeight() - hSize - (inset * 2)) * scroll);
+        int sy = Mth.floor((bounds.getHeight() - hSize - (inset * 2)) * scroll);
         int state = !active ? 0 : (isDragging || bounds.contains(mx, my) ? 2 : 1);
         IGuiTexture tex = texHandleState[state];
 
@@ -163,7 +163,7 @@ public class PanelVScrollBar implements IScrollBar {
 
     @Override
     public void writeValue(Float value) {
-        this.scroll = MathHelper.clamp(value, 0F, 1F);
+        this.scroll = Mth.clamp(value, 0F, 1F);
     }
 
     @Override

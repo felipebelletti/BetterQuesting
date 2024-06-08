@@ -7,7 +7,7 @@ import betterquesting.api2.storage.SimpleDatabase;
 import betterquesting.api2.utils.QuestLineSorter;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public final class QuestLineDatabase extends SimpleDatabase<IQuestLine> implemen
     @Override
     public synchronized void setOrderIndex(int lineID, int index) {
         lineOrder.remove((Integer) lineID);
-        lineOrder.add(MathHelper.clamp(index, 0, lineOrder.size()), lineID);
+        lineOrder.add(Mth.clamp(index, 0, lineOrder.size()), lineID);
     }
 
     @Override

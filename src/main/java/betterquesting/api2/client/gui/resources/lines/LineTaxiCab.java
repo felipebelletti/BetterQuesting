@@ -4,7 +4,7 @@ import betterquesting.api2.client.gui.misc.IGuiRect;
 import betterquesting.api2.client.gui.resources.colors.IGuiColor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import org.lwjgl.opengl.GL11;
 
 public class LineTaxiCab implements IGuiLine {
@@ -18,7 +18,7 @@ public class LineTaxiCab implements IGuiLine {
     }
 
     public LineTaxiCab(float bias, boolean isVertical, int stipScale, short stipMask) {
-        this.bias = MathHelper.clamp(bias, 0F, 1F);
+        this.bias = Mth.clamp(bias, 0F, 1F);
         this.isVertical = isVertical;
 
         this.stipScale = stipScale;

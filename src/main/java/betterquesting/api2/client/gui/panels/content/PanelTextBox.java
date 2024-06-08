@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
@@ -55,7 +55,7 @@ public class PanelTextBox implements IGuiPanel {
     }
 
     public PanelTextBox setAlignment(int align) {
-        this.align = MathHelper.clamp(align, 0, 2);
+        this.align = Mth.clamp(align, 0, 2);
         return this;
     }
 

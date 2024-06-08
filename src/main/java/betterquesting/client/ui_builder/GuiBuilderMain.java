@@ -25,7 +25,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -228,8 +228,8 @@ public class GuiBuilderMain extends GuiScreenCanvas implements IVolatileScreen {
     public void drawPanel(int mx, int my, float partialTick) {
         super.drawPanel(mx, my, partialTick);
 
-        int cmx = MathHelper.clamp(mx, cvPreview.getTransform().getX(), cvPreview.getTransform().getX() + cvPreview.getTransform().getWidth());
-        int cmy = MathHelper.clamp(my, cvPreview.getTransform().getY(), cvPreview.getTransform().getY() + cvPreview.getTransform().getHeight());
+        int cmx = Mth.clamp(mx, cvPreview.getTransform().getX(), cvPreview.getTransform().getX() + cvPreview.getTransform().getWidth());
+        int cmy = Mth.clamp(my, cvPreview.getTransform().getY(), cvPreview.getTransform().getY() + cvPreview.getTransform().getHeight());
 
         // === DRAG ACTIONS ===
 
@@ -283,10 +283,10 @@ public class GuiBuilderMain extends GuiScreenCanvas implements IVolatileScreen {
                 } else if ((dragType & 16) == 0 && selPn.getTransform() instanceof GuiTransform) {
                     // TODO: Make this work for GuiRectangle (or just deprecate that class entirely... but legacy support uhg)
                     GuiTransform trans = (GuiTransform) selPn.getTransform();
-                    int width = MathHelper.ceil(trans.getParent().getWidth() * (trans.getAnchor().z - trans.getAnchor().x));
-                    int height = MathHelper.ceil(trans.getParent().getHeight() * (trans.getAnchor().w - trans.getAnchor().y));
-                    int dx = cmx - (trans.getParent().getX() + MathHelper.ceil(trans.getParent().getWidth() * trans.getAnchor().x));
-                    int dy = cmy - (trans.getParent().getY() + MathHelper.ceil(trans.getParent().getHeight() * trans.getAnchor().y));
+                    int width = Mth.ceil(trans.getParent().getWidth() * (trans.getAnchor().z - trans.getAnchor().x));
+                    int height = Mth.ceil(trans.getParent().getHeight() * (trans.getAnchor().w - trans.getAnchor().y));
+                    int dx = cmx - (trans.getParent().getX() + Mth.ceil(trans.getParent().getWidth() * trans.getAnchor().x));
+                    int dy = cmy - (trans.getParent().getY() + Mth.ceil(trans.getParent().getHeight() * trans.getAnchor().y));
                     boolean shift = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
 
                     // Edge Bit Map = R L B T
@@ -391,11 +391,11 @@ public class GuiBuilderMain extends GuiScreenCanvas implements IVolatileScreen {
 
         if (rect instanceof GuiTransform) {
             GuiTransform trans = (GuiTransform) rect;
-            ax1 = x1 + MathHelper.floor(trans.getParent().getWidth() * trans.getAnchor().x);
-            ax2 = x1 + MathHelper.floor(trans.getParent().getWidth() * trans.getAnchor().z);
+            ax1 = x1 + Mth.floor(trans.getParent().getWidth() * trans.getAnchor().x);
+            ax2 = x1 + Mth.floor(trans.getParent().getWidth() * trans.getAnchor().z);
 
-            ay1 = y1 + MathHelper.floor(trans.getParent().getHeight() * trans.getAnchor().y);
-            ay2 = y1 + MathHelper.floor(trans.getParent().getHeight() * trans.getAnchor().w);
+            ay1 = y1 + Mth.floor(trans.getParent().getHeight() * trans.getAnchor().y);
+            ay2 = y1 + Mth.floor(trans.getParent().getHeight() * trans.getAnchor().w);
 
             // X axis line
             drawSimpleLine(x1, midY, ax1, midY, 2, ancCol);

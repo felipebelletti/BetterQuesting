@@ -15,7 +15,7 @@ import betterquesting.api2.client.gui.resources.colors.GuiColorStatic;
 import betterquesting.api2.client.gui.resources.textures.ItemTexture;
 import betterquesting.questing.tasks.TaskXP;
 import net.minecraft.client.Minecraft;
-import net.minecraft.init.Items;
+import net.minecraft.world.item.Items;
 import net.minecraft.util.text.TextFormatting;
 
 public class PanelTaskXP extends CanvasMinimum {

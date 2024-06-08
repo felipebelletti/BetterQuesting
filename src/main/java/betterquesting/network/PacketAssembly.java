@@ -5,7 +5,7 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTSizeTracker;
 import net.minecraft.nbt.NBTTagByteArray;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -36,7 +36,7 @@ public final class PacketAssembly {
             baos.flush();
             byte[] data = baos.toByteArray();
             baos.close();
-            int req = MathHelper.ceil(data.length / (float) bufSize);
+            int req = Mth.ceil(data.length / (float) bufSize);
             List<CompoundTag> pkts = new ArrayList<>(req);
 
             for (int p = 0; p < req; p++) {

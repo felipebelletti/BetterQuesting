@@ -14,7 +14,7 @@ import betterquesting.questing.tasks.factory.FactoryTaskInteractEntity;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.init.Items;
+import net.minecraft.world.item.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

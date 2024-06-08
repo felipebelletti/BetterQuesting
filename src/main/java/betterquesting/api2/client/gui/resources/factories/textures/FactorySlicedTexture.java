@@ -12,7 +12,7 @@ import betterquesting.core.ModReference;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 public class FactorySlicedTexture implements IFactoryData<IGuiTexture, JsonObject> {
     public static final FactorySlicedTexture INSTANCE = new FactorySlicedTexture();
@@ -22,7 +22,7 @@ public class FactorySlicedTexture implements IFactoryData<IGuiTexture, JsonObjec
     @Override
     public SlicedTexture loadFromData(JsonObject data) {
         ResourceLocation atlas = new ResourceLocation(JsonHelper.GetString(data, "atlas", PresetTexture.TX_NULL.toString()));
-        int sliceMode = MathHelper.clamp(JsonHelper.GetNumber(data, "sliceMode", 0).intValue(), 0, SliceMode.values().length);
+        int sliceMode = Mth.clamp(JsonHelper.GetNumber(data, "sliceMode", 0).intValue(), 0, SliceMode.values().length);
 
         int[] bounds = new int[]{0, 0, 16, 16};
         JsonArray jAry = JsonHelper.GetArray(data, "bounds");

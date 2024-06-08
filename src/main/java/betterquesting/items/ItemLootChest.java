@@ -19,7 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.util.*;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -118,7 +118,7 @@ public class ItemLootChest extends Item {
             }
             return new ActionResult<>(EnumActionResult.PASS, stack);
         } else if (!world.isRemote) {
-            float rarity = stack.getItemDamage() == 101 ? itemRand.nextFloat() : MathHelper.clamp(stack.getItemDamage(), 0, 100) / 100F;
+            float rarity = stack.getItemDamage() == 101 ? itemRand.nextFloat() : Mth.clamp(stack.getItemDamage(), 0, 100) / 100F;
             LootGroup group = LootRegistry.INSTANCE.getWeightedGroup(rarity, itemRand);
             List<BigItemStack> loot = new ArrayList<>();
             String title = "No Loot Setup";
@@ -243,7 +243,7 @@ public class ItemLootChest extends Item {
             if (stack.getItemDamage() == 101) {
                 tooltip.add(QuestTranslation.translate("bq_standard.tooltip.loot_chest", "???"));
             } else {
-                tooltip.add(QuestTranslation.translate("bq_standard.tooltip.loot_chest", MathHelper.clamp(stack.getItemDamage(), 0, 100) + "%"));
+                tooltip.add(QuestTranslation.translate("bq_standard.tooltip.loot_chest", Mth.clamp(stack.getItemDamage(), 0, 100) + "%"));
             }
         }
     }

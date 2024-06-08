@@ -18,7 +18,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import org.lwjgl.input.Mouse;
 
 import java.util.List;
@@ -72,7 +72,7 @@ public class PanelButton implements IPanelButton, IGuiPanel, INBTSaveLoad<Compou
     }
 
     public PanelButton setTextAlignment(int align) {
-        this.textAlign = MathHelper.clamp(align, 0, 2);
+        this.textAlign = Mth.clamp(align, 0, 2);
         return this;
     }
 

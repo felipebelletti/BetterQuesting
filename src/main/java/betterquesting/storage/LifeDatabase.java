@@ -4,7 +4,7 @@ import betterquesting.api.properties.NativeProps;
 import betterquesting.api.storage.ILifeDatabase;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,7 +25,7 @@ public final class LifeDatabase implements ILifeDatabase {
 
     @Override
     public synchronized void setLives(@Nonnull UUID uuid, int value) {
-        playerLives.put(uuid, MathHelper.clamp(value, 0, QuestSettings.INSTANCE.getProperty(NativeProps.LIVES_MAX)));
+        playerLives.put(uuid, Mth.clamp(value, 0, QuestSettings.INSTANCE.getProperty(NativeProps.LIVES_MAX)));
     }
 
     @Override

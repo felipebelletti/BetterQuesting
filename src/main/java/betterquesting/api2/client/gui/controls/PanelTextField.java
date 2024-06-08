@@ -16,7 +16,7 @@ import net.minecraft.client.gui.screens.Screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
 import net.minecraft.util.ChatAllowedCharacters;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import org.lwjgl.input.Mouse;
 
 import java.util.List;
@@ -149,7 +149,7 @@ public class PanelTextField<T> implements IGuiPanel {
             return;
         }
 
-        scrollX.writeValue(MathHelper.clamp(value, 0, scrollWidth) / (float) scrollWidth);
+        scrollX.writeValue(Mth.clamp(value, 0, scrollWidth) / (float) scrollWidth);
     }
 
     public void setScrollY(int value) {
@@ -158,7 +158,7 @@ public class PanelTextField<T> implements IGuiPanel {
             return;
         }
 
-        scrollY.writeValue(MathHelper.clamp(value, 0, scrollHeight) / (float) scrollHeight);
+        scrollY.writeValue(Mth.clamp(value, 0, scrollHeight) / (float) scrollHeight);
     }
 
     public void setActive(boolean state) {
@@ -359,7 +359,7 @@ public class PanelTextField<T> implements IGuiPanel {
     public void setCursorPosition(int pos) {
         this.selectStart = pos;
         int i = this.text.length();
-        this.selectStart = MathHelper.clamp(this.selectStart, 0, i);
+        this.selectStart = Mth.clamp(this.selectStart, 0, i);
         this.setSelectionPos(this.selectStart);
     }
 

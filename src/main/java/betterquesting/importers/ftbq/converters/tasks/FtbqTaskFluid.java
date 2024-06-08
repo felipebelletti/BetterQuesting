@@ -5,7 +5,7 @@ import betterquesting.api.questing.tasks.ITask;
 import betterquesting.api.utils.BigItemStack;
 import betterquesting.importers.ftbq.FTBQQuestImporter;
 import betterquesting.questing.tasks.TaskFluid;
-import net.minecraft.init.Items;
+import net.minecraft.world.item.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.fluids.Fluid;

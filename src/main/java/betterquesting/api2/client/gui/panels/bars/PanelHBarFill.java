@@ -10,7 +10,7 @@ import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 import java.util.List;
 
@@ -86,7 +86,7 @@ public class PanelHBarFill implements IBarFill {
             texBack.drawTexture(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), 0F, partialTick);
         }
 
-        float f = MathHelper.clamp(fillDriver.readValue(), 0F, 1F);
+        float f = Mth.clamp(fillDriver.readValue(), 0F, 1F);
 
         if (this.flipBar) {
             RenderUtils.startScissor(new GuiRectangle(bounds.getX() + (int) (bounds.getWidth() - (bounds.getWidth() * f)), bounds.getY(), (int) (bounds.getWidth() * f), bounds.getHeight(), 0));

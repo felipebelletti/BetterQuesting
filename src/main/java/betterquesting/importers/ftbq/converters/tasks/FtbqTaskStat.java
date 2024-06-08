@@ -5,7 +5,7 @@ import betterquesting.api.utils.BigItemStack;
 import betterquesting.importers.ftbq.FTBQQuestImporter;
 import betterquesting.questing.tasks.TaskScoreboard;
 import betterquesting.questing.tasks.TaskScoreboard.ScoreOperation;
-import net.minecraft.init.Items;
+import net.minecraft.world.item.Items;
 import net.minecraft.nbt.CompoundTag;
 
 public class FtbqTaskStat {

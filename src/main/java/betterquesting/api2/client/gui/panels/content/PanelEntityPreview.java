@@ -9,7 +9,7 @@ import betterquesting.api2.client.gui.panels.IGuiPanel;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 import java.util.List;
 
@@ -95,7 +95,7 @@ public class PanelEntityPreview implements IGuiPanel {
         int sizeY = bounds.getHeight();
         float scale = Math.min((sizeY / 2F) / entity.height, (sizeX / 2F) / entity.width);
 
-        RenderUtils.RenderEntity(bounds.getX() + sizeX / 2, bounds.getY() + sizeY / 2 + MathHelper.ceil(entity.height * scale / 2F), (int) scale, yawDriver.readValue(), pitchDriver.readValue(), entity);
+        RenderUtils.RenderEntity(bounds.getX() + sizeX / 2, bounds.getY() + sizeY / 2 + Mth.ceil(entity.height * scale / 2F), (int) scale, yawDriver.readValue(), pitchDriver.readValue(), entity);
 
         RenderUtils.endScissor();
         GlStateManager.popMatrix();

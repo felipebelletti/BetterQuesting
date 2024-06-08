@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -294,8 +294,8 @@ public class RenderUtils {
         int hlEnd = Math.max(highlightStart, highlightEnd);
         int size = string.length();
 
-        int i1 = MathHelper.clamp(hlStart, 0, size);
-        int i2 = MathHelper.clamp(hlEnd, 0, size);
+        int i1 = Mth.clamp(hlStart, 0, size);
+        int i2 = Mth.clamp(hlEnd, 0, size);
 
         if (i1 != i2) {
             int x1 = getStringWidth(string.substring(0, i1), renderer);
@@ -561,7 +561,7 @@ public class RenderUtils {
             return 0;
         }
 
-        int row = MathHelper.clamp(y / font.FONT_HEIGHT, 0, tLines.size() - 1);
+        int row = Mth.clamp(y / font.FONT_HEIGHT, 0, tLines.size() - 1);
         String lastFormat = "";
         String line;
         int idx = 0;

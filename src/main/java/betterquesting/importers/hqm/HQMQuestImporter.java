@@ -19,7 +19,7 @@ import betterquesting.importers.hqm.converters.rewards.HQMRewardReputation;
 import betterquesting.importers.hqm.converters.rewards.HQMRewardStandard;
 import betterquesting.importers.hqm.converters.tasks.*;
 import com.google.gson.*;
-import net.minecraft.init.Items;
+import net.minecraft.world.item.Items;
 import net.minecraft.nbt.ListTag;
 import org.apache.logging.log4j.Level;
 

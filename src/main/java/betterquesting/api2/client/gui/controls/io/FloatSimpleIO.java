@@ -2,7 +2,7 @@ package betterquesting.api2.client.gui.controls.io;
 
 import betterquesting.api.utils.RenderUtils;
 import betterquesting.api2.client.gui.controls.IValueIO;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 public class FloatSimpleIO implements IValueIO<Float> {
     private boolean lerp = false;
@@ -49,7 +49,7 @@ public class FloatSimpleIO implements IValueIO<Float> {
 
             long tmpMillis = System.currentTimeMillis();
             long d = tmpMillis - t;
-            s = RenderUtils.lerpFloat(s, v, (float) MathHelper.clamp(d * (double) lerpSpd, 0D, 1D));
+            s = RenderUtils.lerpFloat(s, v, (float) Mth.clamp(d * (double) lerpSpd, 0D, 1D));
             if (d > 0) t = tmpMillis; // Required if read out more than once in 1ms
             return s;
         }
@@ -60,7 +60,7 @@ public class FloatSimpleIO implements IValueIO<Float> {
     @Override
     public void writeValue(Float value) {
         if (s == v) t = System.currentTimeMillis();
-        this.v = clamp ? MathHelper.clamp(value, min, max) : value;
+        this.v = clamp ? Mth.clamp(value, min, max) : value;
     }
 
     @Override
@@ -70,7 +70,7 @@ public class FloatSimpleIO implements IValueIO<Float> {
 
     @Override
     public void writeValueRaw(Float value) {
-        this.v = clamp ? MathHelper.clamp(value, min, max) : value;
+        this.v = clamp ? Mth.clamp(value, min, max) : value;
         this.s = v;
     }
 }

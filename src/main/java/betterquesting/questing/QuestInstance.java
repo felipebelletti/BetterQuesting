@@ -23,7 +23,7 @@ import betterquesting.storage.QuestSettings;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.init.Items;
+import net.minecraft.world.item.Items;
 import net.minecraft.nbt.*;
 import net.minecraftforge.common.util.Constants;
 import org.apache.logging.log4j.Level;
