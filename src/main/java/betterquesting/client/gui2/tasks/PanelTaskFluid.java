@@ -16,7 +16,7 @@ import mezz.jei.Internal;
 import mezz.jei.api.recipe.IFocus.Mode;
 import mezz.jei.gui.Focus;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.Optional.Method;
 

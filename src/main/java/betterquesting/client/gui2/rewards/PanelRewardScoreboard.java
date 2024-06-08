@@ -6,7 +6,7 @@ import betterquesting.api2.client.gui.panels.CanvasMinimum;
 import betterquesting.api2.client.gui.panels.content.PanelTextBox;
 import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.questing.rewards.RewardScoreboard;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
 import org.lwjgl.util.vector.Vector4f;
 
 public class PanelRewardScoreboard extends CanvasMinimum {

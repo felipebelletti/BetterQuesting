@@ -18,7 +18,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.questing.tasks.TaskCrafting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
 
 import java.util.UUID;
 

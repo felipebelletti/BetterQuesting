@@ -13,7 +13,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.questing.tasks.TaskRetrieval;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
 
 import java.util.UUID;
 

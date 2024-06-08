@@ -34,7 +34,7 @@ import betterquesting.questing.rewards.RewardRegistry;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
 import org.lwjgl.util.vector.Vector4f;
 
 import java.util.ArrayDeque;

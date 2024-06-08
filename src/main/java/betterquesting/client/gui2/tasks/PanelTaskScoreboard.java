@@ -10,7 +10,7 @@ import betterquesting.api2.client.gui.panels.content.PanelTextBox;
 import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.questing.tasks.TaskScoreboard;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
 
 import java.text.DecimalFormat;
 

@@ -24,7 +24,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.api2.utils.QuestTranslation;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
 import org.lwjgl.input.Keyboard;
 
 public class GuiTextEditor extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {

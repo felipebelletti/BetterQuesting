@@ -18,7 +18,7 @@ import net.minecraft.client.gui.Gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.biome.Biome;
 import org.apache.commons.lang3.StringUtils;

@@ -15,7 +15,7 @@ import betterquesting.questing.tasks.TaskAdvancement;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
 
 public class PanelTaskAdvancement extends CanvasEmpty {
     private final TaskAdvancement task;

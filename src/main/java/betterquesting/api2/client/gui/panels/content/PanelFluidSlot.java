@@ -8,7 +8,7 @@ import betterquesting.api2.client.gui.resources.textures.FluidTexture;
 import betterquesting.api2.client.gui.resources.textures.LayeredTexture;
 import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;

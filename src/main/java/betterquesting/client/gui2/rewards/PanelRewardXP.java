@@ -11,7 +11,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.questing.rewards.RewardXP;
 import net.minecraft.world.item.Items;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
 import org.lwjgl.util.vector.Vector4f;
 
 public class PanelRewardXP extends CanvasMinimum {

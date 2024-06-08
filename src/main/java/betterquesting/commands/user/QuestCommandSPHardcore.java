@@ -10,7 +10,7 @@ import net.minecraft.command.CommandException;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.ChatFormatting;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
 
 public class QuestCommandSPHardcore extends QuestCommandBase {
