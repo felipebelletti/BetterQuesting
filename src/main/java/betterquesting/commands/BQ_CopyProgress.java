@@ -9,7 +9,7 @@ import betterquesting.questing.QuestDatabase;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
@@ -52,12 +52,12 @@ public class BQ_CopyProgress extends CommandBase {
 
     @Override
     public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) throws CommandException {
-        if (sender instanceof EntityPlayer) {
+        if (sender instanceof Player) {
             if (args.length == 0 || args.length > 2) {
                 throw new CommandException(COMMAND_USAGE);
             }
 
-            UUID ownUUID = args.length == 2 ? getPlayer(server, sender, args[1]).getPersistentID() : ((EntityPlayer) sender).getPersistentID();
+            UUID ownUUID = args.length == 2 ? getPlayer(server, sender, args[1]).getPersistentID() : ((Player) sender).getPersistentID();
             EntityPlayerMP addPlayer = getPlayer(server, sender, args[0]);
             UUID addUUID = addPlayer.getPersistentID();
 

@@ -19,7 +19,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.misc.QuestSearchEntry;
 import betterquesting.questing.QuestDatabase;
 import betterquesting.questing.QuestLineDatabase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayDeque;
@@ -33,10 +33,10 @@ public class CanvasQuestSearch extends CanvasSearch<QuestSearchEntry, QuestSearc
     private List<QuestSearchEntry> questList;
     private Consumer<QuestSearchEntry> questOpenCallback;
     private Consumer<QuestSearchEntry> questHighlightCallback;
-    private EntityPlayer player;
+    private Player player;
     private final UUID questingUUID;
 
-    public CanvasQuestSearch(IGuiRect rect, EntityPlayer player) {
+    public CanvasQuestSearch(IGuiRect rect, Player player) {
         super(rect);
         this.player = player;
         questingUUID = QuestingAPI.getQuestingUUID(player);

@@ -9,7 +9,7 @@ import betterquesting.client.gui2.rewards.PanelRewardScoreboard;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.rewards.factory.FactoryRewardScoreboard;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.scoreboard.*;
 import net.minecraft.util.ResourceLocation;
@@ -34,12 +34,12 @@ public class RewardScoreboard implements IReward {
     }
 
     @Override
-    public boolean canClaim(EntityPlayer player, DBEntry<IQuest> quest) {
+    public boolean canClaim(Player player, DBEntry<IQuest> quest) {
         return true;
     }
 
     @Override
-    public void claimReward(EntityPlayer player, DBEntry<IQuest> quest) {
+    public void claimReward(Player player, DBEntry<IQuest> quest) {
         Scoreboard board = player.getWorldScoreboard();
 
         ScoreObjective scoreObj = board.getObjective(score);

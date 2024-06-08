@@ -13,8 +13,8 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.command.FunctionObject;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.CommandBlockBaseLogic;
@@ -46,13 +46,13 @@ public class RewardCommand implements IReward {
     }
 
     @Override
-    public boolean canClaim(EntityPlayer player, DBEntry<IQuest> quest) {
+    public boolean canClaim(Player player, DBEntry<IQuest> quest) {
         return true;
     }
 
     @Override
     @SuppressWarnings("ConstantConditions")
-    public void claimReward(final EntityPlayer player, DBEntry<IQuest> quest) {
+    public void claimReward(final Player player, DBEntry<IQuest> quest) {
         if (player.world.isRemote) return;
 
         UUID playerID = QuestingAPI.getQuestingUUID(player);

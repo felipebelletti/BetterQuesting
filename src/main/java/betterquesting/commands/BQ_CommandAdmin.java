@@ -5,7 +5,7 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -42,7 +42,7 @@ public class BQ_CommandAdmin extends CommandBase {
 
     @Override
     public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
-        return !(sender instanceof EntityPlayer) || PermissionAPI.hasPermission((EntityPlayer) sender, "betterquesting.command.admin");
+        return !(sender instanceof Player) || PermissionAPI.hasPermission((Player) sender, "betterquesting.command.admin");
     }
 
     @Override
@@ -73,7 +73,7 @@ public class BQ_CommandAdmin extends CommandBase {
         if (strings.length == 1) {
             List<String> base = new ArrayList<>();
             for (QuestCommandBase c : coms) {
-                if (!(sender instanceof EntityPlayer) || PermissionAPI.hasPermission((EntityPlayer) sender, c.getPermissionNode())) {
+                if (!(sender instanceof Player) || PermissionAPI.hasPermission((Player) sender, c.getPermissionNode())) {
                     base.add(c.getCommand());
                 }
             }
@@ -81,7 +81,7 @@ public class BQ_CommandAdmin extends CommandBase {
         } else if (strings.length > 1) {
             for (QuestCommandBase c : coms) {
                 if (c.getCommand().equalsIgnoreCase(strings[0])) {
-                    if (!(sender instanceof EntityPlayer) || PermissionAPI.hasPermission((EntityPlayer) sender, c.getPermissionNode())) {
+                    if (!(sender instanceof Player) || PermissionAPI.hasPermission((Player) sender, c.getPermissionNode())) {
                         return c.autoComplete(server, sender, strings);
                     }
                 }
@@ -104,7 +104,7 @@ public class BQ_CommandAdmin extends CommandBase {
 
         for (QuestCommandBase c : coms) {
             if (c.getCommand().equalsIgnoreCase(args[0])) {
-                if (!(sender instanceof EntityPlayer) || PermissionAPI.hasPermission((EntityPlayer) sender, c.getPermissionNode())) {
+                if (!(sender instanceof Player) || PermissionAPI.hasPermission((Player) sender, c.getPermissionNode())) {
                     if (c.validArgs(args)) {
                         c.runCommand(server, this, sender, args);
                         return;

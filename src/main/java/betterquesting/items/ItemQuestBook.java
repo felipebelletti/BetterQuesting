@@ -1,7 +1,7 @@
 package betterquesting.items;
 
 import betterquesting.core.BetterQuesting;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -21,7 +21,7 @@ public class ItemQuestBook extends Item {
 
     @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull Level world, @Nonnull EntityPlayer player, @Nonnull EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull Level world, @Nonnull Player player, @Nonnull EnumHand hand) {
 
         ItemStack stack = player.getHeldItem(hand);
 

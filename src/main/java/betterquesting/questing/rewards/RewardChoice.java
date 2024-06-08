@@ -13,7 +13,7 @@ import betterquesting.client.gui2.rewards.PanelRewardChoice;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.rewards.factory.FactoryRewardChoice;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -58,7 +58,7 @@ public class RewardChoice implements IReward {
     }
 
     @Override
-    public boolean canClaim(EntityPlayer player, DBEntry<IQuest> quest) {
+    public boolean canClaim(Player player, DBEntry<IQuest> quest) {
         if (!selected.containsKey(QuestingAPI.getQuestingUUID(player))) return false;
 
         int tmp = selected.get(QuestingAPI.getQuestingUUID(player));
@@ -66,7 +66,7 @@ public class RewardChoice implements IReward {
     }
 
     @Override
-    public void claimReward(EntityPlayer player, DBEntry<IQuest> quest) {
+    public void claimReward(Player player, DBEntry<IQuest> quest) {
         UUID playerID = QuestingAPI.getQuestingUUID(player);
 
         if (choices.size() <= 0) {

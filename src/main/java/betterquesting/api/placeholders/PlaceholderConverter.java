@@ -1,7 +1,7 @@
 package betterquesting.api.placeholders;
 
 import betterquesting.api.utils.BigItemStack;
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;

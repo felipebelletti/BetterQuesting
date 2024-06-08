@@ -9,7 +9,7 @@ import betterquesting.api.storage.BQ_Settings;
 import betterquesting.api2.storage.DBEntry;
 import betterquesting.network.handlers.NetCacheSync;
 import betterquesting.questing.QuestDatabase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -89,7 +89,7 @@ public class QuestCache implements INBTSerializable<NBTTagCompound> {
 
     // TODO: Ensure this is thread safe because we're likely going to run this in the background
     // NOTE: Only run this when the quests completion and claim states change. Use markQuestDirty() for progression changes that need syncing
-    public synchronized void updateCache(EntityPlayer player) {
+    public synchronized void updateCache(Player player) {
         if (player == null) return;
 
         UUID uuid = QuestingAPI.getQuestingUUID(player);
@@ -210,7 +210,7 @@ public class QuestCache implements INBTSerializable<NBTTagCompound> {
 
     // TODO: Make this based on a fixed state stored on the quest instead of calculated on demand
     // TODO: Also make this thread safe
-    public static boolean isQuestShown(IQuest quest, UUID uuid, EntityPlayer player) {
+    public static boolean isQuestShown(IQuest quest, UUID uuid, Player player) {
         if (quest == null || uuid == null) {
             return false;
         }

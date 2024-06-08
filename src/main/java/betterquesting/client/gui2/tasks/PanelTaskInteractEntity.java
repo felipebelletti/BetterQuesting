@@ -18,7 +18,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetIcon;
 import betterquesting.client.themes.BQSTextures;
 import betterquesting.questing.tasks.TaskInteractEntity;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.util.ResourceLocation;
 

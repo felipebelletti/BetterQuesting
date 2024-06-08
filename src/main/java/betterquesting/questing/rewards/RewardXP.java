@@ -9,7 +9,7 @@ import betterquesting.api2.storage.DBEntry;
 import betterquesting.client.gui2.rewards.PanelRewardXP;
 import betterquesting.questing.rewards.factory.FactoryRewardXP;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -30,12 +30,12 @@ public class RewardXP implements IReward {
     }
 
     @Override
-    public boolean canClaim(EntityPlayer player, DBEntry<IQuest> quest) {
+    public boolean canClaim(Player player, DBEntry<IQuest> quest) {
         return true;
     }
 
     @Override
-    public void claimReward(EntityPlayer player, DBEntry<IQuest> quest) {
+    public void claimReward(Player player, DBEntry<IQuest> quest) {
         XPHelper.addXP(player, !levels ? amount : XPHelper.getLevelXP(amount));
     }
 

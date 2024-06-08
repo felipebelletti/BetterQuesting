@@ -7,7 +7,7 @@ import betterquesting.client.gui2.GuiQuestHelp;
 import betterquesting.client.gui2.editors.GuiEditLootGroup;
 import betterquesting.client.gui2.inventory.ContainerSubmitStation;
 import betterquesting.client.gui2.inventory.GuiSubmitStation;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler {
     @Override
-    public Object getServerGuiElement(int ID, EntityPlayer player, Level world, int x, int y, int z) {
+    public Object getServerGuiElement(int ID, Player player, Level world, int x, int y, int z) {
         TileEntity tile = world.getTileEntity(new BlockPos(x, y, z));
 
         if (ID == 0 && tile instanceof TileSubmitStation) {
@@ -26,7 +26,7 @@ public class GuiHandler implements IGuiHandler {
     }
 
     @Override
-    public Object getClientGuiElement(int ID, EntityPlayer player, Level world, int x, int y, int z) {
+    public Object getClientGuiElement(int ID, Player player, Level world, int x, int y, int z) {
         TileEntity tile = world.getTileEntity(new BlockPos(x, y, z));
 
         if (ID == 0 && tile instanceof TileSubmitStation) {

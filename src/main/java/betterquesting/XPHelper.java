@@ -1,6 +1,6 @@
 package betterquesting;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.play.server.SPacketSetExperience;
 
@@ -14,11 +14,11 @@ public class XPHelper {
         }
     }
 
-    public static void addXP(EntityPlayer player, long xp) {
+    public static void addXP(Player player, long xp) {
         addXP(player, xp, true);
     }
 
-    public static void addXP(EntityPlayer player, long xp, boolean sync) {
+    public static void addXP(Player player, long xp, boolean sync) {
         long experience = getPlayerXP(player) + xp;
         player.experienceTotal = experience >= Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) experience;
         player.experienceLevel = getXPLevel(experience);
@@ -34,12 +34,12 @@ public class XPHelper {
         player.connection.sendPacket(new SPacketSetExperience(player.experience, player.experienceTotal, player.experienceLevel));
     }
 
-    public static long getPlayerXP(EntityPlayer player) {
+    public static long getPlayerXP(Player player) {
         // Math.max is used here because for some reason the player.experience float value can sometimes be negitive in error
         return getLevelXP(player.experienceLevel) + (long) (xpBarCap(player) * Math.max(0D, player.experience));
     }
 
-    public static long xpBarCap(EntityPlayer player) {
+    public static long xpBarCap(Player player) {
         if (player.experienceLevel < 16) {
             return (long) (2D * player.experienceLevel + 7L);
         } else if (player.experienceLevel < 31) {

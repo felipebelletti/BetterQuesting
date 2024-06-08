@@ -8,7 +8,7 @@ import betterquesting.core.ModReference;
 import betterquesting.network.PacketSender;
 import betterquesting.network.PacketTypeRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -36,7 +36,7 @@ public class NetCacheSync {
 
     @SideOnly(Side.CLIENT)
     private static void onClient(NBTTagCompound message) {
-        EntityPlayer player = Minecraft.getMinecraft().player;
+        Player player = Minecraft.getMinecraft().player;
         QuestCache qc = player != null ? player.getCapability(CapabilityProviderQuestCache.CAP_QUEST_CACHE, null) : null;
         if (qc != null) qc.deserializeNBT(message.getCompoundTag("data"));
     }

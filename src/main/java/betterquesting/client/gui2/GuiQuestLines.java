@@ -54,7 +54,7 @@ import betterquesting.questing.QuestLineDatabase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.config.Configuration;
@@ -583,7 +583,7 @@ public class GuiQuestLines extends GuiScreenCanvas implements IPEventListener, I
     }
 
     private void refreshQuestCompletion() {
-        EntityPlayer player = mc.player;
+        Player player = mc.player;
         UUID playerUUId = QuestingAPI.getQuestingUUID(player);
 
         if (selectedLine == null) {

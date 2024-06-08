@@ -4,7 +4,7 @@ import betterquesting.api.api.QuestingAPI;
 import betterquesting.api.properties.IPropertyType;
 import betterquesting.api.properties.NativeProps;
 import betterquesting.api.storage.IQuestSettings;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class QuestSettings extends PropertyContainer implements IQuestSettings {
@@ -15,7 +15,7 @@ public class QuestSettings extends PropertyContainer implements IQuestSettings {
     }
 
     @Override
-    public boolean canUserEdit(EntityPlayer player) {
+    public boolean canUserEdit(Player player) {
         if (player == null) return false;
         return this.getProperty(NativeProps.EDIT_MODE) && NameCache.INSTANCE.isOP(QuestingAPI.getQuestingUUID(player));
     }

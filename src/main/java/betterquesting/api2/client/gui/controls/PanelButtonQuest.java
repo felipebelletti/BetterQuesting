@@ -20,7 +20,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.questing.QuestDatabase;
 import betterquesting.storage.QuestSettings;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
@@ -33,7 +33,7 @@ import java.util.UUID;
 
 public class PanelButtonQuest extends PanelButtonStorage<DBEntry<IQuest>> {
     public final GuiRectangle rect;
-    public final EntityPlayer player;
+    public final Player player;
     public final IGuiTexture txFrame;
 
     public PanelButtonQuest(GuiRectangle rect, int id, String txt, DBEntry<IQuest> value) {
@@ -86,7 +86,7 @@ public class PanelButtonQuest extends PanelButtonStorage<DBEntry<IQuest>> {
         return value == null ? Collections.emptyList() : getQuestTooltip(value.getValue(), player, value.getID());
     }
 
-    private List<String> getQuestTooltip(IQuest quest, EntityPlayer player, int qID) {
+    private List<String> getQuestTooltip(IQuest quest, Player player, int qID) {
         List<String> tooltip = getStandardTooltip(quest, player, qID);
 
         if (Minecraft.getMinecraft().gameSettings.advancedItemTooltips && QuestSettings.INSTANCE.getProperty(NativeProps.EDIT_MODE)) {
@@ -97,7 +97,7 @@ public class PanelButtonQuest extends PanelButtonStorage<DBEntry<IQuest>> {
         return tooltip;
     }
 
-    private List<String> getStandardTooltip(IQuest quest, EntityPlayer player, int qID) {
+    private List<String> getStandardTooltip(IQuest quest, Player player, int qID) {
         List<String> list = new ArrayList<>();
 
         list.add(QuestTranslation.translate(quest.getProperty(NativeProps.NAME)) + (Minecraft.getMinecraft().gameSettings.advancedItemTooltips && QuestSettings.INSTANCE.getProperty(NativeProps.EDIT_MODE) ? (" #" + qID) : ""));
@@ -158,7 +158,7 @@ public class PanelButtonQuest extends PanelButtonStorage<DBEntry<IQuest>> {
         return list;
     }
 
-    private List<String> getAdvancedTooltip(IQuest quest, EntityPlayer player, int qID) {
+    private List<String> getAdvancedTooltip(IQuest quest, Player player, int qID) {
         List<String> list = new ArrayList<>();
 
         list.add(TextFormatting.GRAY + QuestTranslation.translate("betterquesting.tooltip.global_quest", quest.getProperty(NativeProps.GLOBAL)));
@@ -189,7 +189,7 @@ public class PanelButtonQuest extends PanelButtonStorage<DBEntry<IQuest>> {
         return list;
     }
 
-    private long getRepeatSeconds(IQuest quest, EntityPlayer player) {
+    private long getRepeatSeconds(IQuest quest, Player player) {
         if (quest.getProperty(NativeProps.REPEAT_TIME) < 0) return -1;
 
         NBTTagCompound ue = quest.getCompletionInfo(QuestingAPI.getQuestingUUID(player));

@@ -21,7 +21,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.ICriterionInstance;
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -106,7 +106,7 @@ public class TaskTrigger implements ITask {
         if (qc != null) qc.markQuestDirty(questID);
     }
 
-    public void checkSetup(@Nonnull EntityPlayer player, @Nonnull DBEntry<IQuest> quest) {
+    public void checkSetup(@Nonnull Player player, @Nonnull DBEntry<IQuest> quest) {
         if (!needsSetup) return;
         setupListener(quest);
     }

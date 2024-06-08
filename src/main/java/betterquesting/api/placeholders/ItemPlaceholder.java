@@ -1,8 +1,8 @@
 package betterquesting.api.placeholders;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -42,12 +42,12 @@ public class ItemPlaceholder extends Item {
      */
     @Override
     public void onUpdate(ItemStack stack, Level world, Entity entity, int slot, boolean held) {
-        if (!stack.hasTagCompound() || !(entity instanceof EntityPlayer) || world.getTotalWorldTime() % 100 != 0) // Process this only once a second
+        if (!stack.hasTagCompound() || !(entity instanceof Player) || world.getTotalWorldTime() % 100 != 0) // Process this only once a second
         {
             return;
         }
 
-        EntityPlayer player = (EntityPlayer) entity;
+        Player player = (Player) entity;
 
         NBTTagCompound tags = stack.getTagCompound();
         Item i = Item.REGISTRY.getObject(new ResourceLocation(tags.getString("orig_id")));

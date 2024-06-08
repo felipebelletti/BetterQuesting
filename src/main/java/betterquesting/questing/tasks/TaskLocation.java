@@ -9,7 +9,7 @@ import betterquesting.client.gui2.tasks.PanelTaskLocation;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskLocation;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -113,7 +113,7 @@ public class TaskLocation implements ITaskTickable {
         }
     }
 
-    private double getDistance(EntityPlayer player) {
+    private double getDistance(Player player) {
         if (!taxiCab) {
             return player.getDistance(x, y, z);
         } else {

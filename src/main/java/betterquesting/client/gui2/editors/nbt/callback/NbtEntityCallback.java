@@ -3,7 +3,7 @@ package betterquesting.client.gui2.editors.nbt.callback;
 import betterquesting.api.misc.ICallback;
 import betterquesting.api.utils.JsonHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.nbt.NBTTagCompound;
 

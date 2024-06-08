@@ -7,7 +7,7 @@ import betterquesting.api.questing.tasks.ITask;
 import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.utils.ParticipantInfo;
 import betterquesting.questing.tasks.ITaskInventory;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
@@ -21,7 +21,7 @@ import java.util.UUID;
 public class PlayerContainerListener implements IContainerListener {
     private static final HashMap<UUID, PlayerContainerListener> LISTEN_MAP = new HashMap<>();
 
-    public static void refreshListener(@Nonnull EntityPlayer player) {
+    public static void refreshListener(@Nonnull Player player) {
         UUID uuid = QuestingAPI.getQuestingUUID(player);
         PlayerContainerListener listener = LISTEN_MAP.get(uuid);
         if (listener != null) {
@@ -37,9 +37,9 @@ public class PlayerContainerListener implements IContainerListener {
         }
     }
 
-    private EntityPlayer player;
+    private Player player;
 
-    private PlayerContainerListener(@Nonnull EntityPlayer player) {
+    private PlayerContainerListener(@Nonnull Player player) {
         this.player = player;
     }
 

@@ -1,7 +1,7 @@
 package betterquesting.items;
 
 import betterquesting.core.BetterQuesting;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -21,7 +21,7 @@ public class ItemGuideBook extends Item {
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
     @Override
-    public ActionResult<ItemStack> onItemRightClick(Level world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(Level world, Player player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
 
         if (world.isRemote && hand == EnumHand.MAIN_HAND) {

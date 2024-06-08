@@ -40,8 +40,8 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -159,7 +159,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public void onCapabilityPlayer(AttachCapabilitiesEvent<Entity> event) {
-        if (!(event.getObject() instanceof EntityPlayer)) return;
+        if (!(event.getObject() instanceof Player)) return;
         event.addCapability(CapabilityProviderQuestCache.LOC_QUEST_CACHE, new CapabilityProviderQuestCache());
     }
 
@@ -270,7 +270,7 @@ public class EventHandler {
     }
 
     // TODO: Create a new message inbox system for these things. On screen popups aren't ideal in combat
-    private static void postPresetNotice(IQuest quest, EntityPlayer player, int preset) {
+    private static void postPresetNotice(IQuest quest, Player player, int preset) {
         if (!(player instanceof EntityPlayerMP)) return;
         ItemStack icon = quest.getProperty(NativeProps.ICON).getBaseStack();
         String mainText = "";
@@ -323,13 +323,13 @@ public class EventHandler {
 
         if(BQ_Settings.spawnWithQuestBook) {
             NBTTagCompound playerData = event.player.getEntityData();
-            NBTTagCompound data = playerData.hasKey(EntityPlayer.PERSISTED_NBT_TAG) ? playerData.getCompoundTag(EntityPlayer.PERSISTED_NBT_TAG) : new NBTTagCompound();
+            NBTTagCompound data = playerData.hasKey(Player.PERSISTED_NBT_TAG) ? playerData.getCompoundTag(Player.PERSISTED_NBT_TAG) : new NBTTagCompound();
 
             if (!data.getBoolean(SPAWN_WITH_QUEST_BOOK)) {
                 ItemStack questBook = new ItemStack(BetterQuesting.questBook);
                 ItemHandlerHelper.giveItemToPlayer(event.player, questBook);
                 data.setBoolean(SPAWN_WITH_QUEST_BOOK, true);
-                playerData.setTag(EntityPlayer.PERSISTED_NBT_TAG, data);
+                playerData.setTag(Player.PERSISTED_NBT_TAG, data);
             }
         }
 
@@ -380,8 +380,8 @@ public class EventHandler {
             return;
         }
 
-        if (event.getEntityLiving() instanceof EntityPlayer) {
-            UUID uuid = QuestingAPI.getQuestingUUID(((EntityPlayer) event.getEntityLiving()));
+        if (event.getEntityLiving() instanceof Player) {
+            UUID uuid = QuestingAPI.getQuestingUUID(((Player) event.getEntityLiving()));
 
             int lives = LifeDatabase.INSTANCE.getLives(uuid);
             LifeDatabase.INSTANCE.setLives(uuid, lives - 1);
@@ -419,14 +419,14 @@ public class EventHandler {
     private final ArrayDeque<EntityPlayerMP> opQueue = new ArrayDeque<>();
     private boolean openToLAN = false;
 
-    private static final HashSet<EntityPlayer> playerInventoryUpdates = new HashSet<>();
+    private static final HashSet<Player> playerInventoryUpdates = new HashSet<>();
     private static boolean processingUpdates = false;
 
     /**
      * Schedules checking player's inventory on the next server tick.
      * Deduplicates requests to avoid scanning it multiple times per tick.
      */
-    public static void schedulePlayerInventoryCheck(EntityPlayer player) {
+    public static void schedulePlayerInventoryCheck(Player player) {
         if (processingUpdates) {
             return;
         }
@@ -442,7 +442,7 @@ public class EventHandler {
                 AdvListenerManager.INSTANCE.updateAll();
             }
             processingUpdates = true;
-            for (EntityPlayer player : playerInventoryUpdates) {
+            for (Player player : playerInventoryUpdates) {
                 if (player == null || player.inventory == null) {
                     continue;
                 }
@@ -489,7 +489,7 @@ public class EventHandler {
     public void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
         if (event.getEntityPlayer() == null || event.getEntityPlayer().world.isRemote || event.getEntityPlayer() instanceof FakePlayer || event.isCanceled()) return;
 
-        EntityPlayer player = event.getEntityPlayer();
+        Player player = event.getEntityPlayer();
         ParticipantInfo pInfo = new ParticipantInfo(player);
 
         List<DBEntry<IQuest>> actQuest = QuestingAPI.getAPI(ApiReference.QUEST_DB).bulkLookup(pInfo.getSharedQuests());
@@ -506,7 +506,7 @@ public class EventHandler {
     public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         if (event.getEntityPlayer() == null || event.getEntityPlayer().world.isRemote || event.getEntityPlayer() instanceof FakePlayer || event.isCanceled()) return;
 
-        EntityPlayer player = event.getEntityPlayer();
+        Player player = event.getEntityPlayer();
         ParticipantInfo pInfo = new ParticipantInfo(player);
 
         List<DBEntry<IQuest>> actQuest = QuestingAPI.getAPI(ApiReference.QUEST_DB).bulkLookup(pInfo.getSharedQuests());
@@ -525,7 +525,7 @@ public class EventHandler {
     public void onLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
         if (event.getEntityPlayer() == null || event.getEntityPlayer().world.isRemote || event.getEntityPlayer() instanceof FakePlayer || event.isCanceled()) return;
 
-        EntityPlayer player = event.getEntityPlayer();
+        Player player = event.getEntityPlayer();
         ParticipantInfo pInfo = new ParticipantInfo(player);
 
         List<DBEntry<IQuest>> actQuest = QuestingAPI.getAPI(ApiReference.QUEST_DB).bulkLookup(pInfo.getSharedQuests());
@@ -559,7 +559,7 @@ public class EventHandler {
         if (event.getEntityPlayer() == null || event.getEntityPlayer().world.isRemote || event.getEntityPlayer() instanceof FakePlayer || event.getTarget() == null || event.isCanceled())
             return;
 
-        EntityPlayer player = event.getEntityPlayer();
+        Player player = event.getEntityPlayer();
         ParticipantInfo pInfo = new ParticipantInfo(player);
 
         List<DBEntry<IQuest>> actQuest = QuestingAPI.getAPI(ApiReference.QUEST_DB).bulkLookup(pInfo.getSharedQuests());
@@ -577,7 +577,7 @@ public class EventHandler {
         if (event.getEntityPlayer() == null || event.getEntityPlayer().world.isRemote || event.getEntityPlayer() instanceof FakePlayer || event.getTarget() == null || event.isCanceled())
             return;
 
-        EntityPlayer player = event.getEntityPlayer();
+        Player player = event.getEntityPlayer();
         ParticipantInfo pInfo = new ParticipantInfo(player);
 
         List<DBEntry<IQuest>> actQuest = QuestingAPI.getAPI(ApiReference.QUEST_DB).bulkLookup(pInfo.getSharedQuests());
@@ -639,10 +639,10 @@ public class EventHandler {
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public void onEntityKilled(LivingDeathEvent event) {
-        if (event.getSource() == null || !(event.getSource().getTrueSource() instanceof EntityPlayer) || event.getSource().getTrueSource().world.isRemote || event.getSource().getTrueSource() instanceof FakePlayer || event.isCanceled())
+        if (event.getSource() == null || !(event.getSource().getTrueSource() instanceof Player) || event.getSource().getTrueSource().world.isRemote || event.getSource().getTrueSource() instanceof FakePlayer || event.isCanceled())
             return;
 
-        ParticipantInfo pInfo = new ParticipantInfo((EntityPlayer) event.getSource().getTrueSource());
+        ParticipantInfo pInfo = new ParticipantInfo((Player) event.getSource().getTrueSource());
         List<DBEntry<IQuest>> actQuest = QuestingAPI.getAPI(ApiReference.QUEST_DB).bulkLookup(pInfo.getSharedQuests());
 
         for (DBEntry<IQuest> entry : actQuest) {
@@ -657,7 +657,7 @@ public class EventHandler {
     public void onEntityTamed(AnimalTameEvent event) {
         if (event.getTamer() == null || event.getTamer().world.isRemote || event.isCanceled()) return;
 
-        EntityPlayer player = event.getTamer();
+        Player player = event.getTamer();
         ParticipantInfo pInfo = new ParticipantInfo(player);
 
         for (DBEntry<IQuest> entry : QuestingAPI.getAPI(ApiReference.QUEST_DB).bulkLookup(pInfo.getSharedQuests())) {
@@ -684,10 +684,10 @@ public class EventHandler {
 
     @SubscribeEvent
     public void onEntityLiving(LivingUpdateEvent event) {
-        if (!(event.getEntityLiving() instanceof EntityPlayer) || event.getEntityLiving().world.isRemote || event.getEntityLiving().ticksExisted % 20 != 0 || QuestingAPI.getAPI(ApiReference.SETTINGS).getProperty(NativeProps.EDIT_MODE))
+        if (!(event.getEntityLiving() instanceof Player) || event.getEntityLiving().world.isRemote || event.getEntityLiving().ticksExisted % 20 != 0 || QuestingAPI.getAPI(ApiReference.SETTINGS).getProperty(NativeProps.EDIT_MODE))
             return;
 
-        EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+        Player player = (Player) event.getEntityLiving();
         ParticipantInfo pInfo = new ParticipantInfo(player);
 
         List<DBEntry<IQuest>> actQuest = QuestingAPI.getAPI(ApiReference.QUEST_DB).bulkLookup(pInfo.getSharedQuests());
@@ -719,9 +719,9 @@ public class EventHandler {
 
     @SubscribeEvent
     public void onEntityCreated(EntityJoinWorldEvent event) {
-        if (!(event.getEntity() instanceof EntityPlayer) || event.getEntity().world.isRemote) return;
+        if (!(event.getEntity() instanceof Player) || event.getEntity().world.isRemote) return;
 
-        PlayerContainerListener.refreshListener((EntityPlayer) event.getEntity());
+        PlayerContainerListener.refreshListener((Player) event.getEntity());
     }
 
     @SubscribeEvent

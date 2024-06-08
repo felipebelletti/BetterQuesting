@@ -27,7 +27,7 @@ import betterquesting.client.gui2.editors.nbt.callback.NbtEntityCallback;
 import betterquesting.client.gui2.editors.nbt.callback.NbtFluidCallback;
 import betterquesting.client.gui2.editors.nbt.callback.NbtItemCallback;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.nbt.*;
 import net.minecraftforge.fluids.FluidStack;
 import org.lwjgl.input.Keyboard;

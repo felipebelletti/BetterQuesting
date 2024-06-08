@@ -6,7 +6,7 @@ import betterquesting.api2.cache.CapabilityProviderQuestCache;
 import betterquesting.api2.cache.QuestCache;
 import betterquesting.api2.storage.DBEntry;
 import betterquesting.questing.party.PartyManager;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -15,16 +15,16 @@ import javax.annotation.Nonnull;
 import java.util.*;
 
 public class ParticipantInfo {
-    public final EntityPlayer PLAYER;
+    public final Player PLAYER;
     public final UUID UUID;
 
     public final List<UUID> ALL_UUIDS;
-    public final List<EntityPlayer> ACTIVE_PLAYERS;
+    public final List<Player> ACTIVE_PLAYERS;
     public final List<UUID> ACTIVE_UUIDS;
 
     public final DBEntry<IParty> PARTY_INSTANCE;
 
-    public ParticipantInfo(@Nonnull EntityPlayer player) {
+    public ParticipantInfo(@Nonnull Player player) {
         this.PLAYER = player;
         this.UUID = QuestingAPI.getQuestingUUID(player);
         this.PARTY_INSTANCE = PartyManager.INSTANCE.getParty(this.UUID);
@@ -38,13 +38,13 @@ public class ParticipantInfo {
             return;
         }
 
-        List<EntityPlayer> actPl = new ArrayList<>();
+        List<Player> actPl = new ArrayList<>();
         List<UUID> actID = new ArrayList<>();
         List<UUID> allID = new ArrayList<>();
 
         for (UUID mem : PARTY_INSTANCE.getValue().getMembers()) {
             allID.add(mem);
-            EntityPlayer pMem = server.getPlayerList().getPlayerByUUID(mem);
+            Player pMem = server.getPlayerList().getPlayerByUUID(mem);
             //noinspection ConstantConditions
             if (pMem != null) {
                 actPl.add(pMem);

@@ -12,7 +12,7 @@ import betterquesting.client.gui2.tasks.PanelTaskInteractEntity;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskInteractEntity;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;

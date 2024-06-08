@@ -22,7 +22,7 @@ import betterquesting.storage.PropertyContainer;
 import betterquesting.storage.QuestSettings;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.init.Items;
 import net.minecraft.nbt.*;
 import net.minecraftforge.common.util.Constants;
@@ -81,7 +81,7 @@ public class QuestInstance implements IQuest {
     }
 
     @Override
-    public void update(EntityPlayer player) {
+    public void update(Player player) {
         UUID playerID = QuestingAPI.getQuestingUUID(player);
 
         int done = 0;
@@ -104,7 +104,7 @@ public class QuestInstance implements IQuest {
      * Fired when someone clicks the detect button for this quest
      */
     @Override
-    public void detect(EntityPlayer player) {
+    public void detect(Player player) {
         UUID playerID = QuestingAPI.getQuestingUUID(player);
         QuestCache qc = player.getCapability(CapabilityProviderQuestCache.CAP_QUEST_CACHE, null);
         if (qc == null) return;
@@ -170,7 +170,7 @@ public class QuestInstance implements IQuest {
     }
 
     @Override
-    public boolean canClaimBasically(EntityPlayer player) {
+    public boolean canClaimBasically(Player player) {
         UUID pID = QuestingAPI.getQuestingUUID(player);
         NBTTagCompound entry = getCompletionInfo(pID);
 
@@ -178,7 +178,7 @@ public class QuestInstance implements IQuest {
     }
 
     @Override
-    public boolean canClaim(EntityPlayer player) {
+    public boolean canClaim(Player player) {
         if (!canClaimBasically(player)) return false;
         DBEntry<IQuest> dbe = new DBEntry<>(QuestDatabase.INSTANCE.getID(this), this);
         for (DBEntry<IReward> rew : rewards.getEntries()) {
@@ -191,7 +191,7 @@ public class QuestInstance implements IQuest {
     }
 
     @Override
-    public void claimReward(EntityPlayer player) {
+    public void claimReward(Player player) {
         int questID = QuestDatabase.INSTANCE.getID(this);
         DBEntry<IQuest> dbe = new DBEntry<>(questID, this);
         for (DBEntry<IReward> rew : rewards.getEntries()) {
@@ -218,7 +218,7 @@ public class QuestInstance implements IQuest {
     }
 
     @Override
-    public boolean canSubmit(@Nonnull EntityPlayer player) {
+    public boolean canSubmit(@Nonnull Player player) {
         UUID playerID = QuestingAPI.getQuestingUUID(player);
 
         synchronized (completeUsers) {
@@ -291,7 +291,7 @@ public class QuestInstance implements IQuest {
     }
 
     @Override
-    public EnumQuestState getState(EntityPlayer player) {
+    public EnumQuestState getState(Player player) {
         UUID uuid = QuestingAPI.getQuestingUUID(player);
         if (this.isComplete(uuid)) {
             if (canClaimBasically(player)) {

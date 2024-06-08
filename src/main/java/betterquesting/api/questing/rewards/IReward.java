@@ -6,7 +6,7 @@ import betterquesting.api2.client.gui.panels.IGuiPanel;
 import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.storage.INBTSaveLoad;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -19,9 +19,9 @@ public interface IReward extends INBTSaveLoad<NBTTagCompound> {
 
     ResourceLocation getFactoryID();
 
-    boolean canClaim(EntityPlayer player, DBEntry<IQuest> quest);
+    boolean canClaim(Player player, DBEntry<IQuest> quest);
 
-    void claimReward(EntityPlayer player, DBEntry<IQuest> quest);
+    void claimReward(Player player, DBEntry<IQuest> quest);
 
     @SideOnly(Side.CLIENT)
     IGuiPanel getRewardGui(IGuiRect rect, DBEntry<IQuest> quest);

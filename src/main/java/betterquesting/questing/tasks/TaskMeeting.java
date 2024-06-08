@@ -11,7 +11,7 @@ import betterquesting.client.gui2.tasks.PanelTaskMeeting;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskMeeting;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
