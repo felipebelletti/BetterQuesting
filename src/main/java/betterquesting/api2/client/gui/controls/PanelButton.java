@@ -184,7 +184,7 @@ public class PanelButton implements IPanelButton, IGuiPanel, INBTSaveLoad<Compou
         }
 
         if (btnText != null && btnText.length() > 0) {
-            drawCenteredString(Minecraft.getMinecraft().fontRenderer, btnText, bounds.getX(), bounds.getY() + bounds.getHeight() / 2 - 4, bounds.getWidth(), colStates[curState].getRGB(), txtShadow, textAlign);
+            drawCenteredString(Minecraft.getInstance().fontRenderer, btnText, bounds.getX(), bounds.getY() + bounds.getHeight() / 2 - 4, bounds.getWidth(), colStates[curState].getRGB(), txtShadow, textAlign);
         }
 
         GlStateManager.popMatrix();
@@ -224,7 +224,7 @@ public class PanelButton implements IPanelButton, IGuiPanel, INBTSaveLoad<Compou
         boolean clicked = isActive() && isHovered() && (click == 1 || (click == 0 && !PEventBroadcaster.INSTANCE.postEvent(new PEventButton(this))));
 
         if (clicked) {
-            Minecraft.getMinecraft().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+            Minecraft.getInstance().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
             if (click == 0) onButtonClick();
             else if (click == 1) onRightButtonClick();
         }

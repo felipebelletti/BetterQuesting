@@ -71,7 +71,7 @@ public class NetRewardChoice {
 
     @OnlyIn(Dist.CLIENT)
     private static void onClient(CompoundTag message) {
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        EntityPlayerSP player = Minecraft.getInstance().player;
 
         int qID = message.hasKey("questID", 99) ? message.getInteger("questID") : -1;
         int rID = message.hasKey("rewardID", 99) ? message.getInteger("rewardID") : -1;

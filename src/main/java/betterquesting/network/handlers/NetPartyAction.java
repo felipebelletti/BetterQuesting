@@ -225,7 +225,7 @@ public class NetPartyAction {
             {
                 IParty party = PartyManager.INSTANCE.getValue(partyID);
                 if (party != null) {
-                    party.kickUser(QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player));
+                    party.kickUser(QuestingAPI.getQuestingUUID(Minecraft.getInstance().player));
                     MinecraftForge.EVENT_BUS.post(new DatabaseEvent.Update(DBType.PARTY));
                 }
             }

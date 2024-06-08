@@ -119,7 +119,7 @@ public class QuestResourcesFile implements IResourcePack, Closeable {
         if (bufferedImage != null) return bufferedImage;
 
         try {
-            bufferedImage = TextureUtil.readBufferedImage(Minecraft.getMinecraft().getResourceManager().getResource(UNKNOWN_PACK_TEXTURE).getInputStream());
+            bufferedImage = TextureUtil.readBufferedImage(Minecraft.getInstance().getResourceManager().getResource(UNKNOWN_PACK_TEXTURE).getInputStream());
         } catch (IOException ioexception) {
             throw new Error("Couldn't bind resource pack icon", ioexception);
         }

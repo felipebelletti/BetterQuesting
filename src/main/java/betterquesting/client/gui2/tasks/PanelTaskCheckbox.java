@@ -31,7 +31,7 @@ public class PanelTaskCheckbox extends CanvasMinimum {
     public void initPanel() {
         super.initPanel();
 
-        boolean isComplete = task.isComplete(QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player));
+        boolean isComplete = task.isComplete(QuestingAPI.getQuestingUUID(Minecraft.getInstance().player));
         final int questID = quest.getID();
         final int taskID = quest.getValue().getTasks().getID(task);
 

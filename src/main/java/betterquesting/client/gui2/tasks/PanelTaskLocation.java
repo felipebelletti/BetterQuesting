@@ -47,7 +47,7 @@ public class PanelTaskLocation extends CanvasMinimum {
 
             if (task.range >= 0) {
                 desc += "\n" + QuestTranslation.translate("bq_standard.gui.location", "(" + task.x + ", " + task.y + ", " + task.z + ")");
-                desc += "\n" + QuestTranslation.translate("bq_standard.gui.distance", (int) Minecraft.getMinecraft().player.getDistance(task.x, task.y, task.z) + "m");
+                desc += "\n" + QuestTranslation.translate("bq_standard.gui.distance", (int) Minecraft.getInstance().player.getDistance(task.x, task.y, task.z) + "m");
             }
 
             if (!StringUtils.isEmpty(task.biome)) {
@@ -60,7 +60,7 @@ public class PanelTaskLocation extends CanvasMinimum {
             }
         }
 
-        if (task.isComplete(QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player))) {
+        if (task.isComplete(QuestingAPI.getQuestingUUID(Minecraft.getInstance().player))) {
             desc += "\n" + TextFormatting.BOLD + TextFormatting.GREEN + QuestTranslation.translate("bq_standard.gui.found");
         } else {
             desc += "\n" + TextFormatting.BOLD + TextFormatting.RED + QuestTranslation.translate("bq_standard.gui.undiscovered");
@@ -77,7 +77,7 @@ public class PanelTaskLocation extends CanvasMinimum {
 
             @Override
             public void drawTexture(int x, int y, int width, int height, float zDepth, float partialTick, IGuiColor color) {
-                Minecraft mc = Minecraft.getMinecraft();
+                Minecraft mc = Minecraft.getInstance();
 
                 double la = Math.atan2(task.z - mc.player.posZ, task.x - mc.player.posX);
                 int radius = width / 2 - 12;

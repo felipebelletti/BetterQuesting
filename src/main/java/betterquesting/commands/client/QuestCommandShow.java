@@ -50,7 +50,7 @@ public class QuestCommandShow extends QuestCommandBase {
                 questId = Integer.parseInt(args[1]);
                 if (sentViaClick) {
                     sentViaClick = false;
-                    Minecraft.getMinecraft().addScheduledTask(() -> Minecraft.getMinecraft().displayGuiScreen(new GuiQuest(new GuiQuestLines(null), questId)));
+                    Minecraft.getInstance().addScheduledTask(() -> Minecraft.getInstance().displayGuiScreen(new GuiQuest(new GuiQuestLines(null), questId)));
                 } else {
                     IQuest quest = QuestDatabase.INSTANCE.getValue(questId);
                     if (quest != null) {

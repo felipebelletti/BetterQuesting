@@ -54,7 +54,7 @@ public class NetInviteSync {
             PartyInvitations.INSTANCE.readFromNBT(message.getTagList("data", 10), true);
             MinecraftForge.EVENT_BUS.post(new DatabaseEvent.Update(DBType.PARTY));
         } else if (action == 1) {
-            UUID playerID = QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player);
+            UUID playerID = QuestingAPI.getQuestingUUID(Minecraft.getInstance().player);
             PartyInvitations.INSTANCE.revokeInvites(playerID, message.getIntArray("IDs"));
             MinecraftForge.EVENT_BUS.post(new DatabaseEvent.Update(DBType.PARTY));
         }

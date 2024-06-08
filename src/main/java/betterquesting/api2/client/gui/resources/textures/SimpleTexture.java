@@ -57,7 +57,7 @@ public class SimpleTexture implements IGuiTexture {
         GlStateManager.enableBlend();
         GlStateManager.tryBlendFuncSeparate(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA, 1, 0);
 
-        Minecraft.getMinecraft().renderEngine.bindTexture(texture);
+        Minecraft.getInstance().renderEngine.bindTexture(texture);
         GuiUtils.drawTexturedModalRect(0, 0, texBounds.getX(), texBounds.getY(), texBounds.getWidth(), texBounds.getHeight(), zLevel);
 
         GlStateManager.popMatrix();

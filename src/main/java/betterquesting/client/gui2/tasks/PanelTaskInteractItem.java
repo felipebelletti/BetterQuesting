@@ -43,7 +43,7 @@ public class PanelTaskInteractItem extends CanvasMinimum {
         this.addPanel(targetSlot);
 
         this.addPanel(new PanelGeneric(new GuiTransform(GuiAlign.TOP_LEFT, centerWidth - 8, 0, 16, 16, 0), PresetIcon.ICON_RIGHT.getTexture()));
-        UUID playerID = QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player);
+        UUID playerID = QuestingAPI.getQuestingUUID(Minecraft.getInstance().player);
         int prog = task.getUsersProgress(playerID);
         this.addPanel(new PanelTextBox(new GuiTransform(GuiAlign.TOP_LEFT, centerWidth - 16, 18, 32, 14, 0), prog + "/" + task.required).setAlignment(1).setColor(PresetColor.TEXT_MAIN.getColor()));
 

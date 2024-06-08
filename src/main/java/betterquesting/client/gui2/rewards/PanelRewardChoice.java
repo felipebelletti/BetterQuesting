@@ -35,7 +35,7 @@ public class PanelRewardChoice extends CanvasMinimum {
     public void initPanel() {
         super.initPanel();
 
-        UUID uuid = QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player);
+        UUID uuid = QuestingAPI.getQuestingUUID(Minecraft.getInstance().player);
         int sel = reward.getSelecton(uuid);
         PanelItemSlot slot = new PanelItemSlot(new GuiTransform(new Vector4f(0F, 0F, 0F, 0F), 0, 0, 32, 32, 0), -1, sel < 0 ? null : reward.choices.get(sel));
         this.addPanel(slot);

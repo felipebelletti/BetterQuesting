@@ -36,13 +36,13 @@ public class PanelTaskHunt extends CanvasMinimum {
         Entity target;
 
         if (EntityList.isRegistered(targetRes)) {
-            target = EntityList.createEntityByIDFromName(targetRes, Minecraft.getMinecraft().world);
+            target = EntityList.createEntityByIDFromName(targetRes, Minecraft.getInstance().world);
             if (target != null) target.readFromNBT(task.targetTags);
         } else {
             target = null;
         }
 
-        int progress = task.getUsersProgress(QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player));
+        int progress = task.getUsersProgress(QuestingAPI.getQuestingUUID(Minecraft.getInstance().player));
         String tnm = target != null ? target.getName() : task.idName;
 
         this.addPanel(new PanelTextBox(new GuiTransform(GuiAlign.TOP_EDGE, 0, 0, width, 12, 0), QuestTranslation.translate("bq_standard.gui.kill", tnm) + " " + progress + "/" + task.required).setAlignment(1).setColor(PresetColor.TEXT_MAIN.getColor()));

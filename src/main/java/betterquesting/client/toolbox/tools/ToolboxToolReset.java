@@ -60,7 +60,7 @@ public class ToolboxToolReset implements IToolboxTool {
         payload.setBoolean("state", false);
         payload.setInteger("action", 2);
         NetQuestEdit.sendEdit(payload);
-        DirtyPlayerMarker.markDirty(Minecraft.getMinecraft().player.getUniqueID());
+        DirtyPlayerMarker.markDirty(Minecraft.getInstance().player.getUniqueID());
 
         return true;
     }
@@ -104,7 +104,7 @@ public class ToolboxToolReset implements IToolboxTool {
         payload.setBoolean("state", false);
         payload.setInteger("action", 2);
         NetQuestEdit.sendEdit(payload);
-        DirtyPlayerMarker.markDirty(Minecraft.getMinecraft().player.getUniqueID());
+        DirtyPlayerMarker.markDirty(Minecraft.getInstance().player.getUniqueID());
 
         return true;
     }

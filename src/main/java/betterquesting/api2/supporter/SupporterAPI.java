@@ -74,7 +74,7 @@ public class SupporterAPI {
                     rgb[i] = dis.readInt() ^ flip;
                 }
                 final RgbTexture texture = new RgbTexture(w, h, rgb);
-                Minecraft.getMinecraft().addScheduledTask(() -> Minecraft.getMinecraft().getTextureManager().loadTexture(resID, texture));
+                Minecraft.getInstance().addScheduledTask(() -> Minecraft.getInstance().getTextureManager().loadTexture(resID, texture));
             }
 
             // TODO: Support other resource types?
@@ -210,7 +210,7 @@ public class SupporterAPI {
             String service = new String(Base64.getDecoder().decode(dis.readUTF()));
             int threshold = dis.readInt();
 
-            UUID playerID = QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player);
+            UUID playerID = QuestingAPI.getQuestingUUID(Minecraft.getInstance().player);
             SupporterEntry entry = SupporterDB.INSTANCE.getValue(playerID);
 
             int m = 0;

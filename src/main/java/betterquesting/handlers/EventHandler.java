@@ -100,7 +100,7 @@ public class EventHandler {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public void onKey(InputEvent.KeyInputEvent event) {
-        Minecraft mc = Minecraft.getMinecraft();
+        Minecraft mc = Minecraft.getInstance();
 
         if (mc.currentScreen == null && BQ_Keybindings.openQuests.isPressed()) {
             if (BQ_Settings.useBookmark && GuiHome.bookmark != null) {
@@ -142,7 +142,7 @@ public class EventHandler {
                 Component translated = new TextComponentTranslation("betterquesting.msg.share_quest", questName);
                 Component newMessage = new TextComponentString(text.substring(0, index) + translated.getFormattedText() + text.substring(endIndex));
                 Style newMessageStyle;
-                EntityPlayerSP player = Minecraft.getMinecraft().player;
+                EntityPlayerSP player = Minecraft.getInstance().player;
                 if (QuestCache.isQuestShown(quest, QuestingAPI.getQuestingUUID(player), player)) {
                     QuestCommandShow.sentViaClick = true;
                     newMessageStyle = newMessage.getStyle()
@@ -391,7 +391,7 @@ public class EventHandler {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public void onTextureStitch(TextureStitchEvent.Pre event) {
-        if (event.getMap() == Minecraft.getMinecraft().getTextureMapBlocks()) {
+        if (event.getMap() == Minecraft.getInstance().getTextureMapBlocks()) {
             event.getMap().registerSprite(FluidPlaceholder.fluidPlaceholder.getStill());
         }
     }
@@ -400,9 +400,9 @@ public class EventHandler {
     @OnlyIn(Dist.CLIENT)
     public void onDataUpdated(DatabaseEvent.Update event) {
         // TODO: Change this to a proper panel event. Also explain WHAT updated
-        final Screen screen = Minecraft.getMinecraft().currentScreen;
+        final Screen screen = Minecraft.getInstance().currentScreen;
         if (screen instanceof INeedsRefresh)
-            Minecraft.getMinecraft().addScheduledTask(((INeedsRefresh) screen)::refreshGui);
+            Minecraft.getInstance().addScheduledTask(((INeedsRefresh) screen)::refreshGui);
     }
 
     @SubscribeEvent

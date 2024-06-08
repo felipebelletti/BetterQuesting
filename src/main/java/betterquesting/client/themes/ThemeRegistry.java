@@ -187,7 +187,7 @@ public class ThemeRegistry implements IThemeRegistry {
         loadedThemes.forEach(themes::remove);
         loadedThemes.clear();
 
-        IResourceManager resManager = Minecraft.getMinecraft().getResourceManager();
+        IResourceManager resManager = Minecraft.getInstance().getResourceManager();
 
         for (String domain : resManager.getResourceDomains()) {
             ResourceLocation res = new ResourceLocation(domain, "bq_themes.json");

@@ -40,7 +40,7 @@ public class PanelButtonQuest extends PanelButtonStorage<DBEntry<IQuest>> {
         super(rect, id, txt, value);
         this.rect = rect;
 
-        player = Minecraft.getMinecraft().player;
+        player = Minecraft.getInstance().player;
         EnumQuestState qState = value == null ? EnumQuestState.LOCKED : value.getValue().getState(player);
         IGuiColor txIconCol = null;
         boolean main = value == null ? false : value.getValue().getProperty(NativeProps.MAIN);
@@ -89,7 +89,7 @@ public class PanelButtonQuest extends PanelButtonStorage<DBEntry<IQuest>> {
     private List<String> getQuestTooltip(IQuest quest, Player player, int qID) {
         List<String> tooltip = getStandardTooltip(quest, player, qID);
 
-        if (Minecraft.getMinecraft().gameSettings.advancedItemTooltips && QuestSettings.INSTANCE.getProperty(NativeProps.EDIT_MODE)) {
+        if (Minecraft.getInstance().gameSettings.advancedItemTooltips && QuestSettings.INSTANCE.getProperty(NativeProps.EDIT_MODE)) {
             tooltip.add("");
             tooltip.addAll(this.getAdvancedTooltip(quest, player, qID));
         }
@@ -100,7 +100,7 @@ public class PanelButtonQuest extends PanelButtonStorage<DBEntry<IQuest>> {
     private List<String> getStandardTooltip(IQuest quest, Player player, int qID) {
         List<String> list = new ArrayList<>();
 
-        list.add(QuestTranslation.translate(quest.getProperty(NativeProps.NAME)) + (Minecraft.getMinecraft().gameSettings.advancedItemTooltips && QuestSettings.INSTANCE.getProperty(NativeProps.EDIT_MODE) ? (" #" + qID) : ""));
+        list.add(QuestTranslation.translate(quest.getProperty(NativeProps.NAME)) + (Minecraft.getInstance().gameSettings.advancedItemTooltips && QuestSettings.INSTANCE.getProperty(NativeProps.EDIT_MODE) ? (" #" + qID) : ""));
 
         UUID playerID = QuestingAPI.getQuestingUUID(player);
 

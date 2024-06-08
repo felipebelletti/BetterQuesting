@@ -29,7 +29,7 @@ public class PanelTaskAdvancement extends CanvasEmpty {
     public void initPanel() {
         super.initPanel();
 
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        EntityPlayerSP player = Minecraft.getInstance().player;
         boolean isComplete = task.isComplete(QuestingAPI.getQuestingUUID(player));
 
         String title = "" + task.advID;

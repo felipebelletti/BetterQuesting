@@ -127,7 +127,7 @@ public class GuiHome extends GuiScreenCanvas {
             inCan.addPanel(btnEdit);
         }
 
-        if (Minecraft.getMinecraft().isIntegratedServerRunning() && SaveLoadHandler.INSTANCE.hasUpdate()) {
+        if (Minecraft.getInstance().isIntegratedServerRunning() && SaveLoadHandler.INSTANCE.hasUpdate()) {
             PanelButton tstBtn = new PanelButton(new GuiTransform(GuiAlign.TOP_RIGHT, -16, 0, 16, 16, 0), 5, "");
             tstBtn.setIcon(PresetIcon.ICON_NOTICE.getTexture(), PresetColor.UPDATE_NOTICE.getColor(), 0);
             tstBtn.setTooltip(Collections.singletonList(QuestTranslation.translateTrimmed("betterquesting.tooltip.update_quests", true)));
@@ -149,7 +149,7 @@ public class GuiHome extends GuiScreenCanvas {
     private void onButtonPress(PanelEvent event) {
         if (!(event instanceof PEventButton)) return;
 
-        Minecraft mc = Minecraft.getMinecraft();
+        Minecraft mc = Minecraft.getInstance();
         IPanelButton btn = ((PEventButton) event).getButton();
 
         if (btn.getButtonID() == 0) // Exit

@@ -51,8 +51,8 @@ public class ClientProxy extends CommonProxy {
     public void registerHandlers() {
         super.registerHandlers();
 
-        if (!Minecraft.getMinecraft().getFramebuffer().isStencilEnabled()) {
-            if (!Minecraft.getMinecraft().getFramebuffer().enableStencil()) {
+        if (!Minecraft.getInstance().getFramebuffer().isStencilEnabled()) {
+            if (!Minecraft.getInstance().getFramebuffer().enableStencil()) {
                 BetterQuesting.logger.error("[!] FAILED TO ENABLE STENCIL BUFFER. GUIS WILL BREAK! [!]");
             }
         }
@@ -66,13 +66,13 @@ public class ClientProxy extends CommonProxy {
 
         try {
             //String tmp = "defaultResourcePacks";
-            ArrayList list = ObfuscationReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), "field_110449_ao", "defaultResourcePacks");
+            ArrayList list = ObfuscationReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getInstance(), "field_110449_ao", "defaultResourcePacks");
             QuestResourcesFolder qRes1 = new QuestResourcesFolder();
             QuestResourcesFile qRes2 = new QuestResourcesFile();
             list.add(qRes1);
             list.add(qRes2);
-            ((SimpleReloadableResourceManager) Minecraft.getMinecraft().getResourceManager()).reloadResourcePack(qRes1); // Make sure the pack(s) are visible to everything
-            ((SimpleReloadableResourceManager) Minecraft.getMinecraft().getResourceManager()).reloadResourcePack(qRes2); // Make sure the pack(s) are visible to everything
+            ((SimpleReloadableResourceManager) Minecraft.getInstance().getResourceManager()).reloadResourcePack(qRes1); // Make sure the pack(s) are visible to everything
+            ((SimpleReloadableResourceManager) Minecraft.getInstance().getResourceManager()).reloadResourcePack(qRes2); // Make sure the pack(s) are visible to everything
         } catch (Exception e) {
             BetterQuesting.logger.error("Unable to install questing resource loaders", e);
         }

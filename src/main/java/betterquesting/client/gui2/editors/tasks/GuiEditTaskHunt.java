@@ -61,7 +61,7 @@ public class GuiEditTaskHunt extends GuiScreenCanvas implements IVolatileScreen 
         final Entity target;
 
         if (EntityList.isRegistered(targetRes)) {
-            target = EntityList.createEntityByIDFromName(targetRes, Minecraft.getMinecraft().world);
+            target = EntityList.createEntityByIDFromName(targetRes, Minecraft.getInstance().world);
             if (target != null) target.readFromNBT(task.targetTags);
         } else target = null;
 

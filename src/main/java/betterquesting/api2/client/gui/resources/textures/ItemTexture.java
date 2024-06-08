@@ -70,7 +70,7 @@ public class ItemTexture implements IGuiTexture {
         GlStateManager.scale(sx, sy, 1F);
         color.applyGlColor();
 
-        RenderUtils.RenderItemStack(Minecraft.getMinecraft(), stack.getBaseStack(), 0, 0, zDepth, (showCount && stack.stackSize > 1) ? ("" + stack.stackSize) : "", 0xFFFFFFFF);
+        RenderUtils.RenderItemStack(Minecraft.getInstance(), stack.getBaseStack(), 0, 0, zDepth, (showCount && stack.stackSize > 1) ? ("" + stack.stackSize) : "", 0xFFFFFFFF);
 
         GlStateManager.popMatrix();
     }

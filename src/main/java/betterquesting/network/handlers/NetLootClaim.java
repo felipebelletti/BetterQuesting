@@ -49,6 +49,6 @@ public class NetLootClaim {
             rewards.add(new BigItemStack(list.getCompoundTagAt(i)));
         }
 
-        Minecraft.getMinecraft().displayGuiScreen(new GuiLootChest(null, rewards, title));
+        Minecraft.getInstance().displayGuiScreen(new GuiLootChest(null, rewards, title));
     }
 }

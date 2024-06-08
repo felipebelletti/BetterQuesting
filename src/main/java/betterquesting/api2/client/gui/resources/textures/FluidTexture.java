@@ -78,7 +78,7 @@ public class FluidTexture implements IGuiTexture {
 
         // TODO: Add tiling option
 
-        Minecraft mc = Minecraft.getMinecraft();
+        Minecraft mc = Minecraft.getInstance();
         mc.renderEngine.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
         TextureAtlasSprite fluidTx = mc.getTextureMapBlocks().getAtlasSprite(fluid.getFluid().getStill().toString());
         this.drawTexturedModalRect(0, 0, 0, fluidTx, 16, 16);

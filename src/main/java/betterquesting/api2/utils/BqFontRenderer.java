@@ -16,8 +16,8 @@ public class BqFontRenderer extends FontRenderer {
     private boolean isSmall = false;
 
     public BqFontRenderer(boolean unicode) {
-        super(Minecraft.getMinecraft().gameSettings, new ResourceLocation("minecraft:textures/font/ascii.png"), Minecraft.getMinecraft().renderEngine, unicode);
-        ((IReloadableResourceManager) Minecraft.getMinecraft().getResourceManager()).registerReloadListener(this);
+        super(Minecraft.getInstance().gameSettings, new ResourceLocation("minecraft:textures/font/ascii.png"), Minecraft.getInstance().renderEngine, unicode);
+        ((IReloadableResourceManager) Minecraft.getInstance().getResourceManager()).registerReloadListener(this);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class BqFontRenderer extends FontRenderer {
     public int drawStringScaled(String text, float x, float y, int color, boolean shadow, float scale) {
         if (scale <= 0F) return 0;
 
-        Minecraft mc = Minecraft.getMinecraft();
+        Minecraft mc = Minecraft.getInstance();
 
         if (scale == 1F && !(mc.gameSettings.guiScale > 0 && mc.gameSettings.guiScale < 3)) {
             isSmall = false;

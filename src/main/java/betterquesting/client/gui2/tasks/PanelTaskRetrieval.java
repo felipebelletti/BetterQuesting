@@ -33,7 +33,7 @@ public class PanelTaskRetrieval extends CanvasMinimum {
         super.initPanel();
         int listW = initialRect.getWidth();
 
-        UUID uuid = QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player);
+        UUID uuid = QuestingAPI.getQuestingUUID(Minecraft.getInstance().player);
         int[] progress = task.getUsersProgress(uuid);
         boolean isComplete = task.isComplete(uuid);
 

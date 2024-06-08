@@ -44,7 +44,7 @@ public class PanelTaskInteractEntity extends CanvasMinimum {
 
         this.addPanel(new PanelGeneric(new GuiTransform(GuiAlign.TOP_LEFT, 32, 8, 16, 16, 0), PresetIcon.ICON_RIGHT.getTexture()));
 
-        UUID playerID = QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player);
+        UUID playerID = QuestingAPI.getQuestingUUID(Minecraft.getInstance().player);
         int prog = task.getUsersProgress(playerID);
         this.addPanel(new PanelTextBox(new GuiTransform(GuiAlign.TOP_LEFT, 0, 34, 32, 14, 0), prog + "/" + task.required).setAlignment(1).setColor(PresetColor.TEXT_MAIN.getColor()));
 
@@ -66,7 +66,7 @@ public class PanelTaskInteractEntity extends CanvasMinimum {
         Entity target;
 
         if (EntityList.isRegistered(targetRes)) {
-            target = EntityList.createEntityByIDFromName(targetRes, Minecraft.getMinecraft().world);
+            target = EntityList.createEntityByIDFromName(targetRes, Minecraft.getInstance().world);
             if (target != null) target.readFromNBT(task.entityTags);
         } else {
             target = null;

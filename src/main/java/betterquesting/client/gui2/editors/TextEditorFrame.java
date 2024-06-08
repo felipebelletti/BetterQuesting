@@ -326,7 +326,7 @@ public class TextEditorFrame extends JFrame {
 
     private static void initLogoCache() {
         if (logoCache == null) {
-            try (InputStream stream = Minecraft.getMinecraft()
+            try (InputStream stream = Minecraft.getInstance()
                     .getResourceManager()
                     .getResource(new ResourceLocation(ModReference.MODID, "textures/items/quest_book.png"))
                     .getInputStream()) {

@@ -45,7 +45,7 @@ public class GuiEntitySelection extends GuiScreenCanvas implements IPEventListen
     private PanelEntityPreview pnPreview;
 
     public GuiEntitySelection(Screen parent, CompoundTag tag, ICallback<Entity> callback) {
-        this(parent, JsonHelper.JsonToEntity(tag, Minecraft.getMinecraft().world), callback);
+        this(parent, JsonHelper.JsonToEntity(tag, Minecraft.getInstance().world), callback);
     }
 
     public GuiEntitySelection(Screen parent, Entity entity, ICallback<Entity> callback) {

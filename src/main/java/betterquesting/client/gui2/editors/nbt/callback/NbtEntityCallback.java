@@ -20,7 +20,7 @@ public class NbtEntityCallback implements ICallback<Entity> {
         if (entity != null) {
             baseEntity = entity;
         } else {
-            baseEntity = new EntityPig(Minecraft.getMinecraft().world);
+            baseEntity = new EntityPig(Minecraft.getInstance().world);
         }
 
         JsonHelper.ClearCompoundTag(json);

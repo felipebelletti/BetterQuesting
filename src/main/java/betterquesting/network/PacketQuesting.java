@@ -93,7 +93,7 @@ public class PacketQuesting implements IMessage {
                 BetterQuesting.logger.log(Level.WARN, "Recieved a packet server side with an invalid ID: " + message.getString("ID"));
                 return null;
             } else {
-                Minecraft.getMinecraft().addScheduledTask(() -> method.accept(message));
+                Minecraft.getInstance().addScheduledTask(() -> method.accept(message));
             }
 
             return null;

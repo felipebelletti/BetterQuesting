@@ -326,7 +326,7 @@ public class GuiQuestLines extends GuiScreenCanvas implements IPEventListener, I
                     return false;
                 }
                 if (click == 1) {
-                    FontRenderer fr = Minecraft.getMinecraft().fontRenderer;
+                    FontRenderer fr = Minecraft.getInstance().fontRenderer;
                     boolean questExistsUnderMouse = cvQuest.getButtonAt(mx, my) != null;
                     int maxWidth = questExistsUnderMouse ? RenderUtils.getStringWidth(QuestTranslation.translate("betterquesting.btn.share_quest"), fr) : 0;
                     if (canEdit) {
@@ -453,7 +453,7 @@ public class GuiQuestLines extends GuiScreenCanvas implements IPEventListener, I
 
     // TODO: Change CanvasQuestLine to NOT need these panel events anymore
     private void onButtonPress(PEventButton event) {
-        Minecraft mc = Minecraft.getMinecraft();
+        Minecraft mc = Minecraft.getInstance();
         IPanelButton btn = event.getButton();
 
         if (btn.getButtonID() == 2 && btn instanceof PanelButtonStorage) // Quest Instance Select

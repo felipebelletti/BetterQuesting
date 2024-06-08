@@ -441,7 +441,7 @@ public class PanelScrollingNBT extends CanvasScrolling implements IPEventListene
         }
     }
 
-    private final Minecraft mc = Minecraft.getMinecraft();
+    private final Minecraft mc = Minecraft.getInstance();
 
     private String getButtonTitle(CompoundTag tag) {
         if (JsonHelper.isItem(tag)) {

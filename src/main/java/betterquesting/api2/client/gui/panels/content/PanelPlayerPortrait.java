@@ -30,7 +30,7 @@ public class PanelPlayerPortrait implements IGuiPanel {
     private float zDepth = 100F;
 
     public PanelPlayerPortrait(IGuiRect rect, UUID playerID, String username) {
-        this(rect, new EntityPlayerPreview(Minecraft.getMinecraft().world, new GameProfile(playerID, username)));
+        this(rect, new EntityPlayerPreview(Minecraft.getInstance().world, new GameProfile(playerID, username)));
     }
 
     public PanelPlayerPortrait(IGuiRect rect, AbstractClientPlayer player) {
@@ -42,7 +42,7 @@ public class PanelPlayerPortrait implements IGuiPanel {
 
         ResourceLocation resource = this.player.getLocationSkin();
 
-        if (Minecraft.getMinecraft().getTextureManager().getTexture(resource) == null) {
+        if (Minecraft.getInstance().getTextureManager().getTexture(resource) == null) {
             AbstractClientPlayer.getDownloadImageSkin(resource, player.getGameProfile().getName());
         }
 

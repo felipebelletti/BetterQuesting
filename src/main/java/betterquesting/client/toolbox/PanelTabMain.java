@@ -55,7 +55,7 @@ public class PanelTabMain extends CanvasEmpty {
         this.addPanel(new PanelButton(new GuiRectangle(w / 2, 0, w / 2, 16, 0), -1, "") {
             @Override
             public void onButtonClick() {
-                Minecraft mc = Minecraft.getMinecraft();
+                Minecraft mc = Minecraft.getInstance();
                 mc.displayGuiScreen(new GuiNbtEditor(mc.currentScreen, cvQuestLine.getQuestLine().writeToNBT(new CompoundTag(), null), value -> {
                     CompoundTag payload = new CompoundTag();
                     ListTag dataList = new ListTag();
@@ -105,7 +105,7 @@ public class PanelTabMain extends CanvasEmpty {
     private static List<String> makeToolTip(String title, String desc) {
         List<String> list = new ArrayList<>();
         list.add(title);
-        list.addAll(Minecraft.getMinecraft().fontRenderer.listFormattedStringToWidth(TextFormatting.GRAY + desc, 128));
+        list.addAll(Minecraft.getInstance().fontRenderer.listFormattedStringToWidth(TextFormatting.GRAY + desc, 128));
         return list;
     }
 

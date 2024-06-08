@@ -46,7 +46,7 @@ public class QuestNotification {
             return;
         }
 
-        Minecraft mc = Minecraft.getMinecraft();
+        Minecraft mc = Minecraft.getInstance();
         ScaledResolution resolution = new ScaledResolution(mc);
         int width = resolution.getScaledWidth();
         int height = resolution.getScaledHeight();

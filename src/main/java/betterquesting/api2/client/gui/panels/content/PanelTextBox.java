@@ -70,7 +70,7 @@ public class PanelTextBox implements IGuiPanel {
 
     private void refreshText() {
         IGuiRect bounds = this.getTransform();
-        FontRenderer fr = Minecraft.getMinecraft().fontRenderer;
+        FontRenderer fr = Minecraft.getInstance().fontRenderer;
         float scale = fontScale / relScale;
 
         if (!autoFit) {
@@ -117,7 +117,7 @@ public class PanelTextBox implements IGuiPanel {
         if (lines < 0) return;
 
         IGuiRect bounds = this.getTransform();
-        FontRenderer fr = Minecraft.getMinecraft().fontRenderer;
+        FontRenderer fr = Minecraft.getInstance().fontRenderer;
         //FontRenderer fr = BqFontRenderer.FONT_UNICODE;
         //FontRenderer fr = BqFontRenderer.FONT_STANDARD;
 

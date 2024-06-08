@@ -36,7 +36,7 @@ public class NetCacheSync {
 
     @OnlyIn(Dist.CLIENT)
     private static void onClient(CompoundTag message) {
-        Player player = Minecraft.getMinecraft().player;
+        Player player = Minecraft.getInstance().player;
         QuestCache qc = player != null ? player.getCapability(CapabilityProviderQuestCache.CAP_QUEST_CACHE, null) : null;
         if (qc != null) qc.deserializeNBT(message.getCompoundTag("data"));
     }

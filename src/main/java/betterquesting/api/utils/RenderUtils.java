@@ -149,7 +149,7 @@ public class RenderUtils {
             }
 
             RenderHelper.enableStandardItemLighting();
-            RenderManager rendermanager = Minecraft.getMinecraft().getRenderManager();
+            RenderManager rendermanager = Minecraft.getInstance().getRenderManager();
             rendermanager.setPlayerViewY(180.0F);
             rendermanager.renderEntity(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
             entity.rotationYaw = f3;
@@ -402,8 +402,8 @@ public class RenderUtils {
     }
 
     private static void fillScreen() {
-        int w = Minecraft.getMinecraft().displayWidth;
-        int h = Minecraft.getMinecraft().displayHeight;
+        int w = Minecraft.getInstance().displayWidth;
+        int h = Minecraft.getInstance().displayHeight;
 
         GL11.glPushAttrib(GL11.GL_TEXTURE_BIT | GL11.GL_DEPTH_TEST | GL11.GL_LIGHTING);
 

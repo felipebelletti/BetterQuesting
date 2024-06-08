@@ -436,7 +436,7 @@ public class GuiQuest extends GuiScreenCanvas implements IPEventListener, INeeds
     }
 
     private void updateButtons() {
-        Minecraft mc = Minecraft.getMinecraft();
+        Minecraft mc = Minecraft.getInstance();
 
         if (btnClaim != null) {
             // Claim button state

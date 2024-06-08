@@ -30,7 +30,7 @@ public class PanelTaskScoreboard extends CanvasMinimum {
         super.initPanel();
         int width = initialRect.getWidth();
 
-        int score = ScoreboardBQ.INSTANCE.getScore(QuestingAPI.getQuestingUUID(Minecraft.getMinecraft().player), task.scoreName);
+        int score = ScoreboardBQ.INSTANCE.getScore(QuestingAPI.getQuestingUUID(Minecraft.getInstance().player), task.scoreName);
         DecimalFormat df = new DecimalFormat("0.##");
         String value = df.format(score / task.conversion) + task.suffix;
 

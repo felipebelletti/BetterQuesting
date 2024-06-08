@@ -84,7 +84,7 @@ public class CanvasQuestLine extends CanvasScrolling {
 
         if (line == null) return;
 
-        Player player = Minecraft.getMinecraft().player;
+        Player player = Minecraft.getInstance().player;
         UUID pid = QuestingAPI.getQuestingUUID(player);
 
         String bgString = line.getProperty(NativeProps.BG_IMAGE);

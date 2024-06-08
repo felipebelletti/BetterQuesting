@@ -247,7 +247,7 @@ public class GuiQuestEditor extends GuiScreenCanvas implements IPEventListener, 
         payload.setInteger("action", 0);
         NetQuestEdit.sendEdit(payload);
 
-        Screen screen = Minecraft.getMinecraft().currentScreen;
+        Screen screen = Minecraft.getInstance().currentScreen;
         if (screen instanceof GuiQuestEditor gui) {
             gui.pnTitle.setText(QuestTranslation.translate("betterquesting.title.edit_quest", QuestTranslation.translate(quest.getProperty(NativeProps.NAME))));
             gui.flName.setText(quest.getProperty(NativeProps.NAME));

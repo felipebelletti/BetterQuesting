@@ -519,7 +519,7 @@ public class PanelTextField<T> implements IGuiPanel {
         if (selectEnd != position) {
             this.selectEnd = position;
 
-            FontRenderer font = Minecraft.getMinecraft().fontRenderer;
+            FontRenderer font = Minecraft.getInstance().fontRenderer;
 
             if (canWrap) {
                 List<String> lines = RenderUtils.splitStringWithoutFormat(text, getTransform().getWidth() - 8, font);
@@ -572,7 +572,7 @@ public class PanelTextField<T> implements IGuiPanel {
     }
 
     public void updateScrollBounds() {
-        FontRenderer font = Minecraft.getMinecraft().fontRenderer;
+        FontRenderer font = Minecraft.getInstance().fontRenderer;
 
         int prevX = getScrollX();
         int prevY = getScrollY();
@@ -613,9 +613,9 @@ public class PanelTextField<T> implements IGuiPanel {
     public void drawPanel(int mx, int my, float partialTick) {
         if (isActive && dragging && Mouse.isButtonDown(0)) {
             if (canWrap) {
-                setSelectionPos(RenderUtils.getCursorPos(text, mx - (transform.getX() + 4) + getScrollX(), my - (transform.getY() + 4) + getScrollY(), transform.getWidth() - 8, Minecraft.getMinecraft().fontRenderer));
+                setSelectionPos(RenderUtils.getCursorPos(text, mx - (transform.getX() + 4) + getScrollX(), my - (transform.getY() + 4) + getScrollY(), transform.getWidth() - 8, Minecraft.getInstance().fontRenderer));
             } else {
-                setSelectionPos(RenderUtils.getCursorPos(text, mx - (transform.getX() + 4) + getScrollX(), Minecraft.getMinecraft().fontRenderer));
+                setSelectionPos(RenderUtils.getCursorPos(text, mx - (transform.getX() + 4) + getScrollX(), Minecraft.getInstance().fontRenderer));
             }
         } else if (dragging) {
             dragging = false;
@@ -623,7 +623,7 @@ public class PanelTextField<T> implements IGuiPanel {
 
         IGuiRect bounds = this.getTransform();
         int state = !this.isActive() ? 0 : (isFocused ? 2 : 1);
-        Minecraft mc = Minecraft.getMinecraft();
+        Minecraft mc = Minecraft.getInstance();
         IGuiTexture t = texState[state];
         GlStateManager.pushMatrix();
 
@@ -666,9 +666,9 @@ public class PanelTextField<T> implements IGuiPanel {
             }
 
             if (canWrap) {
-                setCursorPosition(RenderUtils.getCursorPos(text, mx - (transform.getX() + 4) + getScrollX(), my - (transform.getY() + 4) + getScrollY(), transform.getWidth() - 8, Minecraft.getMinecraft().fontRenderer));
+                setCursorPosition(RenderUtils.getCursorPos(text, mx - (transform.getX() + 4) + getScrollX(), my - (transform.getY() + 4) + getScrollY(), transform.getWidth() - 8, Minecraft.getInstance().fontRenderer));
             } else {
-                setCursorPosition(RenderUtils.getCursorPos(text, mx - (transform.getX() + 4) + getScrollX(), Minecraft.getMinecraft().fontRenderer));
+                setCursorPosition(RenderUtils.getCursorPos(text, mx - (transform.getX() + 4) + getScrollX(), Minecraft.getInstance().fontRenderer));
             }
             dragging = true;
 

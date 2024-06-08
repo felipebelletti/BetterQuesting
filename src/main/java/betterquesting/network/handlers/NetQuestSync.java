@@ -132,7 +132,7 @@ public class NetQuestSync {
             if (tag.hasKey("progress", 10) && quest != null) {
                 // TODO: Fix this properly
                 // If there we're not running the LAN server off this client then we overwrite always
-                quest.readProgressFromNBT(tag.getCompoundTag("progress"), merge || Minecraft.getMinecraft().isIntegratedServerRunning());
+                quest.readProgressFromNBT(tag.getCompoundTag("progress"), merge || Minecraft.getInstance().isIntegratedServerRunning());
             }
         }
 

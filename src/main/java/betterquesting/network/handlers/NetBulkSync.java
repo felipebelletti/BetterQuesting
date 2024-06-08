@@ -85,7 +85,7 @@ public class NetBulkSync // Clears local data and negotiates a full resync with 
 
     @OnlyIn(Dist.CLIENT)
     private static void onClient(CompoundTag message) {
-        if (message.getBoolean("reset") && !Minecraft.getMinecraft().isIntegratedServerRunning()) // DON'T do this on LAN hosts
+        if (message.getBoolean("reset") && !Minecraft.getInstance().isIntegratedServerRunning()) // DON'T do this on LAN hosts
         {
             SaveLoadHandler.INSTANCE.unloadDatabases();
         }
