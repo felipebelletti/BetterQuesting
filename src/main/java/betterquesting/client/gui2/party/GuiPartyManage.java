@@ -39,7 +39,7 @@ import betterquesting.questing.party.PartyManager;
 import betterquesting.storage.LifeDatabase;
 import betterquesting.storage.NameCache;
 import betterquesting.storage.QuestSettings;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import org.lwjgl.input.Keyboard;
 
@@ -52,7 +52,7 @@ public class GuiPartyManage extends GuiScreenCanvas implements IPEventListener, 
     private PanelTextField<String> flName;
     private PanelVScrollBar scUserList;
 
-    public GuiPartyManage(GuiScreen parent) {
+    public GuiPartyManage(Screen parent) {
         super(parent);
     }
 

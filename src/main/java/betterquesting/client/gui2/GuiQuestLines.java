@@ -53,7 +53,7 @@ import betterquesting.questing.QuestDatabase;
 import betterquesting.questing.QuestLineDatabase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -100,7 +100,7 @@ public class GuiQuestLines extends GuiScreenCanvas implements IPEventListener, I
 
     private final List<PanelButtonStorage<DBEntry<IQuestLine>>> btnListRef = new ArrayList<>();
 
-    public GuiQuestLines(GuiScreen parent) {
+    public GuiQuestLines(Screen parent) {
         super(parent);
         trayLock = BQ_Settings.lockTray;
         viewMode = BQ_Settings.viewMode;
@@ -354,7 +354,7 @@ public class GuiQuestLines extends GuiScreenCanvas implements IPEventListener, I
                         Runnable questId = () -> {
                             String id = String.valueOf(cvQuest.getButtonAt(mx, my).getStoredValue().getID());
                             try {
-                                GuiScreen.setClipboardString(id);
+                                Screen.setClipboardString(id);
                                 mc.player.sendMessage(new TextComponentTranslation("betterquesting.msg.copy_quest_copied", id));
                                 closePopup();
                             } catch (IllegalStateException e) {

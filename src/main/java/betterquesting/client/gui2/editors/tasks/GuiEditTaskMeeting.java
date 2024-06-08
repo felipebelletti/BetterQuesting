@@ -26,7 +26,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.core.ModReference;
 import betterquesting.questing.tasks.TaskMeeting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.passive.EntityVillager;
@@ -39,7 +39,7 @@ public class GuiEditTaskMeeting extends GuiScreenCanvas implements IVolatileScre
     private final DBEntry<IQuest> quest;
     private final TaskMeeting task;
 
-    public GuiEditTaskMeeting(GuiScreen parent, DBEntry<IQuest> quest, TaskMeeting task) {
+    public GuiEditTaskMeeting(Screen parent, DBEntry<IQuest> quest, TaskMeeting task) {
         super(parent);
         this.quest = quest;
         this.task = task;
@@ -70,7 +70,7 @@ public class GuiEditTaskMeeting extends GuiScreenCanvas implements IVolatileScre
         cvBackground.addPanel(new PanelTextBox(new GuiTransform(GuiAlign.MID_CENTER, -100, 4, 96, 12, 0), QuestTranslation.translate("bq_standard.gui.amount")).setAlignment(2).setColor(PresetColor.TEXT_MAIN.getColor()));
         cvBackground.addPanel(new PanelTextField<>(new GuiTransform(GuiAlign.MID_CENTER, 0, 0, 100, 16, 0), "" + task.amount, FieldFilterNumber.INT).setCallback(value -> task.amount = value));
 
-        final GuiScreen screenRef = this;
+        final Screen screenRef = this;
         cvBackground.addPanel(new PanelButton(new GuiTransform(GuiAlign.MID_CENTER, -100, 16, 200, 16, 0), -1, QuestTranslation.translate("bq_standard.btn.select_mob")) {
             @Override
             public void onButtonClick() {

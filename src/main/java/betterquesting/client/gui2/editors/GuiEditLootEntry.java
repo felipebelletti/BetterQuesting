@@ -21,7 +21,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.network.handlers.NetLootImport;
 import betterquesting.questing.rewards.loot.LootGroup;
 import betterquesting.questing.rewards.loot.LootRegistry;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector4f;
@@ -43,7 +43,7 @@ public class GuiEditLootEntry extends GuiScreenCanvas {
 
     private final DecimalFormat numFormat = new DecimalFormat("0.##");
 
-    public GuiEditLootEntry(GuiScreen parent, LootGroup group) {
+    public GuiEditLootEntry(Screen parent, LootGroup group) {
         super(parent);
         this.lootGroup = group;
         this.groupID = LootRegistry.INSTANCE.getID(group);
@@ -108,7 +108,7 @@ public class GuiEditLootEntry extends GuiScreenCanvas {
         textWeight = new PanelTextBox(new GuiTransform(new Vector4f(0.5F, 0F, 1F, 0F), new GuiPadding(4, 52, 0, -64), 0), "/1 (100%)").setColor(PresetColor.TEXT_MAIN.getColor());
         cvRight.addPanel(textWeight);
 
-        final GuiScreen screenRef = this;
+        final Screen screenRef = this;
         cvRight.addPanel(new PanelButton(new GuiTransform(GuiAlign.BOTTOM_EDGE, new GuiPadding(0, -16, 0, 0), 0), -1, QuestTranslation.translate("bq_standard.btn.add_remove_drops")) {
             @Override
             public void onButtonClick() {

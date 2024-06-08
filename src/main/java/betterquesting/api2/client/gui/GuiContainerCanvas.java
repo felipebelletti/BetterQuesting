@@ -11,7 +11,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.client.BQ_Keybindings;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.util.ITooltipFlag.TooltipFlags;
@@ -37,12 +37,12 @@ public class GuiContainerCanvas extends GuiContainer implements IScene {
     private boolean useDefaultBG = false;
     private boolean isVolatile = false;
 
-    public final GuiScreen parent;
+    public final Screen parent;
 
     private IGuiPanel popup = null;
     //private IGuiPanel focused = null;
 
-    public GuiContainerCanvas(GuiScreen parent, Container container) {
+    public GuiContainerCanvas(Screen parent, Container container) {
         super(container);
         this.parent = parent;
     }

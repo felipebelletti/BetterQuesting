@@ -31,7 +31,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.client.gui.themes.presets.PresetLine;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.api2.utils.QuestTranslation;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -47,11 +47,11 @@ public class GuiFluidSelection extends GuiScreenCanvas implements IPEventListene
     private PanelTextField<Integer> fieldSize;
     private PanelFluidSlot itemPreview;
 
-    public GuiFluidSelection(GuiScreen parent, CompoundTag tag, ICallback<FluidStack> callback) {
+    public GuiFluidSelection(Screen parent, CompoundTag tag, ICallback<FluidStack> callback) {
         this(parent, JsonHelper.JsonToFluidStack(tag), callback);
     }
 
-    public GuiFluidSelection(GuiScreen parent, FluidStack stack, ICallback<FluidStack> callback) {
+    public GuiFluidSelection(Screen parent, FluidStack stack, ICallback<FluidStack> callback) {
         super(parent);
         this.callback = callback;
         this.itemStack = stack;

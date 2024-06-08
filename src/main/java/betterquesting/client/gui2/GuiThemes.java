@@ -29,7 +29,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.client.themes.ThemeRegistry;
 import betterquesting.core.BetterQuesting;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.util.vector.Vector4f;
 
@@ -39,7 +39,7 @@ public class GuiThemes extends GuiScreenCanvas {
     // Last value of the scrollbar before loading new theme
     private PanelVScrollBar scrollPanel;
 
-    public GuiThemes(GuiScreen parent) {
+    public GuiThemes(Screen parent) {
         super(parent);
     }
 

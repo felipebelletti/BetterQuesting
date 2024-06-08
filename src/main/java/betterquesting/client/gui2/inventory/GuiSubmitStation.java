@@ -29,7 +29,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.blocks.TileSubmitStation;
 import betterquesting.network.handlers.NetStationEdit;
 import betterquesting.questing.QuestDatabase;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.NonNullList;
 import org.lwjgl.input.Keyboard;
@@ -62,7 +62,7 @@ public class GuiSubmitStation extends GuiContainerCanvas implements INeedsRefres
     private int selQuest = 0;
     private int selTask = 0;
 
-    public GuiSubmitStation(GuiScreen parent, InventoryPlayer playerInvo, TileSubmitStation submitStation) {
+    public GuiSubmitStation(Screen parent, InventoryPlayer playerInvo, TileSubmitStation submitStation) {
         super(parent, new ContainerSubmitStation(playerInvo, submitStation));
         this.ssContainer = (ContainerSubmitStation) this.inventorySlots;
         this.tile = submitStation;

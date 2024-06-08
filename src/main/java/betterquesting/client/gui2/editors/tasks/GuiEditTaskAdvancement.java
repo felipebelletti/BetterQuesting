@@ -29,7 +29,7 @@ import betterquesting.core.ModReference;
 import betterquesting.questing.tasks.TaskAdvancement;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.DisplayInfo;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
@@ -44,7 +44,7 @@ public class GuiEditTaskAdvancement extends GuiScreenCanvas implements IVolatile
 
     private ResourceLocation selected;
 
-    public GuiEditTaskAdvancement(GuiScreen parent, DBEntry<IQuest> quest, TaskAdvancement task) {
+    public GuiEditTaskAdvancement(Screen parent, DBEntry<IQuest> quest, TaskAdvancement task) {
         super(parent);
         this.quest = quest;
         this.task = task;

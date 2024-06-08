@@ -39,7 +39,7 @@ import betterquesting.storage.QuestSettings;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
@@ -106,7 +106,7 @@ public class EventHandler {
             if (BQ_Settings.useBookmark && GuiHome.bookmark != null) {
                 mc.displayGuiScreen(GuiHome.bookmark);
             } else {
-                GuiScreen guiToDisplay = ThemeRegistry.INSTANCE.getGui(PresetGUIs.HOME, GArgsNone.NONE);
+                Screen guiToDisplay = ThemeRegistry.INSTANCE.getGui(PresetGUIs.HOME, GArgsNone.NONE);
                 if (BQ_Settings.useBookmark && BQ_Settings.skipHome)
                     guiToDisplay = new GuiQuestLines(guiToDisplay);
                 mc.displayGuiScreen(guiToDisplay);
@@ -400,7 +400,7 @@ public class EventHandler {
     @SideOnly(Side.CLIENT)
     public void onDataUpdated(DatabaseEvent.Update event) {
         // TODO: Change this to a proper panel event. Also explain WHAT updated
-        final GuiScreen screen = Minecraft.getMinecraft().currentScreen;
+        final Screen screen = Minecraft.getMinecraft().currentScreen;
         if (screen instanceof INeedsRefresh)
             Minecraft.getMinecraft().addScheduledTask(((INeedsRefresh) screen)::refreshGui);
     }

@@ -24,7 +24,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.core.ModReference;
 import betterquesting.questing.tasks.TaskScoreboard;
 import betterquesting.questing.tasks.TaskScoreboard.ScoreOperation;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
@@ -34,7 +34,7 @@ public class GuiEditTaskScoreboard extends GuiScreenCanvas {
     private final DBEntry<IQuest> quest;
     private final TaskScoreboard task;
 
-    public GuiEditTaskScoreboard(GuiScreen parent, DBEntry<IQuest> quest, TaskScoreboard task) {
+    public GuiEditTaskScoreboard(Screen parent, DBEntry<IQuest> quest, TaskScoreboard task) {
         super(parent);
         this.quest = quest;
         this.task = task;
@@ -71,7 +71,7 @@ public class GuiEditTaskScoreboard extends GuiScreenCanvas {
 
         cvBackground.addPanel(new PanelTextField<>(new GuiTransform(GuiAlign.MID_CENTER, -50, 0, 150, 16, 0), "" + task.target, FieldFilterNumber.INT).setCallback(value -> task.target = value));
 
-        final GuiScreen screenRef = this;
+        final Screen screenRef = this;
         cvBackground.addPanel(new PanelButton(new GuiTransform(GuiAlign.MID_CENTER, -100, 16, 200, 16, 0), -1, QuestTranslation.translate("betterquesting.btn.advanced")) {
             @Override
             public void onButtonClick() {

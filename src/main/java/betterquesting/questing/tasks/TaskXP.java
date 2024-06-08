@@ -9,7 +9,7 @@ import betterquesting.api2.utils.ParticipantInfo;
 import betterquesting.client.gui2.tasks.PanelTaskXP;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskXP;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
@@ -194,7 +194,7 @@ public class TaskXP implements ITaskTickable {
     }
 
     @Override
-    public GuiScreen getTaskEditor(GuiScreen screen, DBEntry<IQuest> quest) {
+    public Screen getTaskEditor(Screen screen, DBEntry<IQuest> quest) {
         return null;
     }
 

@@ -2,7 +2,7 @@ package betterquesting.client.gui;
 
 import betterquesting.core.ModReference;
 import betterquesting.handlers.ConfigHandler;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraftforge.common.config.ConfigElement;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.config.GuiConfig;
@@ -15,7 +15,7 @@ import java.util.List;
 
 @SideOnly(Side.CLIENT)
 public class GuiBQConfig extends GuiConfig {
-    public GuiBQConfig(GuiScreen parent) {
+    public GuiBQConfig(Screen parent) {
         super(parent, getCategories(ConfigHandler.config), ModReference.MODID, false, false, ModReference.NAME);
     }
 

@@ -41,7 +41,7 @@ import betterquesting.network.handlers.NetPartyAction;
 import betterquesting.questing.party.PartyInvitations;
 import betterquesting.questing.party.PartyManager;
 import betterquesting.storage.LifeDatabase;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import org.lwjgl.input.Keyboard;
 
@@ -55,7 +55,7 @@ public class GuiPartyCreate extends GuiScreenCanvas implements IPEventListener, 
     private PanelVScrollBar inviteScroll;
     private UUID playerID;
 
-    public GuiPartyCreate(GuiScreen parent) {
+    public GuiPartyCreate(Screen parent) {
         super(parent);
     }
 

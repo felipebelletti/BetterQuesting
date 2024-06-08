@@ -12,7 +12,7 @@ import betterquesting.api2.storage.DBEntry;
 import betterquesting.client.gui2.rewards.PanelRewardItem;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.rewards.factory.FactoryRewardItem;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -89,7 +89,7 @@ public class RewardItem implements IReward {
     }
 
     @Override
-    public GuiScreen getRewardEditor(GuiScreen screen, DBEntry<IQuest> quest) {
+    public Screen getRewardEditor(Screen screen, DBEntry<IQuest> quest) {
         return null;
     }
 }

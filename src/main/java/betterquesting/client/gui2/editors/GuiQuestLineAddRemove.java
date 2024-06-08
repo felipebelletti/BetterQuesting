@@ -38,7 +38,7 @@ import betterquesting.network.handlers.NetQuestEdit;
 import betterquesting.questing.QuestDatabase;
 import betterquesting.questing.QuestLineDatabase;
 import betterquesting.questing.QuestLineEntry;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import org.lwjgl.input.Keyboard;
@@ -56,7 +56,7 @@ public class GuiQuestLineAddRemove extends GuiScreenCanvas implements IPEventLis
     private CanvasScrolling canvasQL;
     private PanelGeneric pnLoading;
 
-    public GuiQuestLineAddRemove(GuiScreen parent, @Nullable IQuestLine questLine) {
+    public GuiQuestLineAddRemove(Screen parent, @Nullable IQuestLine questLine) {
         super(parent);
         this.questLine = questLine;
         this.lineID = QuestLineDatabase.INSTANCE.getID(questLine);

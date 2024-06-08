@@ -11,7 +11,7 @@ import betterquesting.client.gui2.editors.tasks.GuiEditTaskHunt;
 import betterquesting.client.gui2.tasks.PanelTaskHunt;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskHunt;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
@@ -206,7 +206,7 @@ public class TaskHunt implements ITask {
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public GuiScreen getTaskEditor(GuiScreen parent, DBEntry<IQuest> quest) {
+    public Screen getTaskEditor(Screen parent, DBEntry<IQuest> quest) {
         return new GuiEditTaskHunt(parent, quest, this);
     }
 

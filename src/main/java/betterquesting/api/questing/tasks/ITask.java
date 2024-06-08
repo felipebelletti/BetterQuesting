@@ -7,7 +7,7 @@ import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.storage.INBTProgress;
 import betterquesting.api2.storage.INBTSaveLoad;
 import betterquesting.api2.utils.ParticipantInfo;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -36,7 +36,7 @@ public interface ITask extends INBTSaveLoad<CompoundTag>, INBTProgress<CompoundT
 
     @Nullable
     @SideOnly(Side.CLIENT)
-    GuiScreen getTaskEditor(GuiScreen parent, DBEntry<IQuest> quest);
+    Screen getTaskEditor(Screen parent, DBEntry<IQuest> quest);
 
     /**
      * Tasks that set this to true will be ignored by quest completion logic.

@@ -28,7 +28,7 @@ import betterquesting.client.gui2.editors.nbt.GuiNbtEditor;
 import betterquesting.network.handlers.NetQuestEdit;
 import betterquesting.questing.QuestDatabase;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import org.lwjgl.input.Keyboard;
@@ -46,7 +46,7 @@ public class GuiQuestEditor extends GuiScreenCanvas implements IPEventListener, 
     private PanelButton btnLogic;
     private PanelButton btnVis;
 
-    public GuiQuestEditor(GuiScreen parent, int questID) {
+    public GuiQuestEditor(Screen parent, int questID) {
         super(parent);
         this.questID = questID;
     }
@@ -247,7 +247,7 @@ public class GuiQuestEditor extends GuiScreenCanvas implements IPEventListener, 
         payload.setInteger("action", 0);
         NetQuestEdit.sendEdit(payload);
 
-        GuiScreen screen = Minecraft.getMinecraft().currentScreen;
+        Screen screen = Minecraft.getMinecraft().currentScreen;
         if (screen instanceof GuiQuestEditor gui) {
             gui.pnTitle.setText(QuestTranslation.translate("betterquesting.title.edit_quest", QuestTranslation.translate(quest.getProperty(NativeProps.NAME))));
             gui.flName.setText(quest.getProperty(NativeProps.NAME));

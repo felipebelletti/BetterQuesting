@@ -21,7 +21,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.client.gui.themes.presets.PresetLine;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.api2.utils.QuestTranslation;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -32,7 +32,7 @@ public class GuiNbtEditor extends GuiScreenCanvas implements IPEventListener, IV
     private final ICallback<CompoundTag> comCallback;
     private final ICallback<ListTag> lstCallback;
 
-    public GuiNbtEditor(GuiScreen parent, CompoundTag tag, ICallback<CompoundTag> callback) {
+    public GuiNbtEditor(Screen parent, CompoundTag tag, ICallback<CompoundTag> callback) {
         super(parent);
 
         this.nbt = tag;
@@ -40,7 +40,7 @@ public class GuiNbtEditor extends GuiScreenCanvas implements IPEventListener, IV
         this.lstCallback = null;
     }
 
-    public GuiNbtEditor(GuiScreen parent, ListTag tag, ICallback<ListTag> callback) {
+    public GuiNbtEditor(Screen parent, ListTag tag, ICallback<ListTag> callback) {
         super(parent);
 
         this.nbt = tag;

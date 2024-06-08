@@ -5,7 +5,7 @@ import betterquesting.api2.client.gui.panels.IGuiPanel;
 
 import javax.annotation.Nonnull;
 
-// The root canvas in charge of extra top level functions. Should idealy be attached to a GuiScreen but left open for other embedded use cases
+// The root canvas in charge of extra top level functions. Should idealy be attached to a Screen but left open for other embedded use cases
 // Inner panels can make use of the fact that this is an IGuiCanvas to search through the whole heirachy of panel content on screen
 public interface IScene extends IGuiCanvas {
     // Unadjusted canvas representing the entire screen's bounds

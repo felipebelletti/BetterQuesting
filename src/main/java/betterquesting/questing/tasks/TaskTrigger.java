@@ -20,7 +20,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.CriterionTrigger;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
@@ -154,7 +154,7 @@ public class TaskTrigger implements ITask {
     @Override
     @Nullable
     @SideOnly(Side.CLIENT)
-    public GuiScreen getTaskEditor(GuiScreen parent, DBEntry<IQuest> quest) {
+    public Screen getTaskEditor(Screen parent, DBEntry<IQuest> quest) {
         return null;
     }
 

@@ -12,7 +12,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ChatAllowedCharacters;
 import net.minecraft.util.math.MathHelper;
@@ -363,27 +363,27 @@ public class PanelTextField<T> implements IGuiPanel {
     }
 
     /**
-     * Call this method from your GuiScreen to process the keys into the textbox
+     * Call this method from your Screen to process the keys into the textbox
      */
     @Override
     public boolean onKeyTyped(char typedChar, int keyCode) {
         if (!this.isFocused) {
             return false;
-        } else if (GuiScreen.isKeyComboCtrlA(keyCode)) {
+        } else if (Screen.isKeyComboCtrlA(keyCode)) {
             this.setCursorPosition(text.length());
             this.setSelectionPos(0);
             return true;
-        } else if (GuiScreen.isKeyComboCtrlC(keyCode)) {
-            GuiScreen.setClipboardString(this.getSelectedText());
+        } else if (Screen.isKeyComboCtrlC(keyCode)) {
+            Screen.setClipboardString(this.getSelectedText());
             return true;
-        } else if (GuiScreen.isKeyComboCtrlV(keyCode)) {
+        } else if (Screen.isKeyComboCtrlV(keyCode)) {
             if (this.isActive) {
-                this.writeText(GuiScreen.getClipboardString());
+                this.writeText(Screen.getClipboardString());
             }
 
             return true;
-        } else if (GuiScreen.isKeyComboCtrlX(keyCode)) {
-            GuiScreen.setClipboardString(this.getSelectedText());
+        } else if (Screen.isKeyComboCtrlX(keyCode)) {
+            Screen.setClipboardString(this.getSelectedText());
 
             if (this.isActive) {
                 this.writeText("");
@@ -394,7 +394,7 @@ public class PanelTextField<T> implements IGuiPanel {
             switch (keyCode) {
                 case 14: // Backspace
                 {
-                    if (GuiScreen.isCtrlKeyDown()) {
+                    if (Screen.isCtrlKeyDown()) {
                         if (this.isActive) {
                             this.deleteWords(-1);
                         }
@@ -414,7 +414,7 @@ public class PanelTextField<T> implements IGuiPanel {
                 }
                 case 199: // Home
                 {
-                    if (GuiScreen.isShiftKeyDown()) {
+                    if (Screen.isShiftKeyDown()) {
                         this.setSelectionPos(0);
                     } else {
                         this.setCursorPosition(0);
@@ -424,13 +424,13 @@ public class PanelTextField<T> implements IGuiPanel {
                 }
                 case 203: // Left arrow
                 {
-                    if (GuiScreen.isShiftKeyDown()) {
-                        if (GuiScreen.isCtrlKeyDown()) {
+                    if (Screen.isShiftKeyDown()) {
+                        if (Screen.isCtrlKeyDown()) {
                             this.setSelectionPos(this.getNthWordFromPos(-1, selectEnd));
                         } else {
                             this.setSelectionPos(selectEnd - 1);
                         }
-                    } else if (GuiScreen.isCtrlKeyDown()) {
+                    } else if (Screen.isCtrlKeyDown()) {
                         this.setCursorPosition(this.getNthWordFromCursor(-1));
                     } else {
                         this.moveCursorBy(-1);
@@ -440,13 +440,13 @@ public class PanelTextField<T> implements IGuiPanel {
                 }
                 case 205: // Right arrow
                 {
-                    if (GuiScreen.isShiftKeyDown()) {
-                        if (GuiScreen.isCtrlKeyDown()) {
+                    if (Screen.isShiftKeyDown()) {
+                        if (Screen.isCtrlKeyDown()) {
                             this.setSelectionPos(this.getNthWordFromPos(1, selectEnd));
                         } else {
                             this.setSelectionPos(selectEnd + 1);
                         }
-                    } else if (GuiScreen.isCtrlKeyDown()) {
+                    } else if (Screen.isCtrlKeyDown()) {
                         this.setCursorPosition(this.getNthWordFromCursor(1));
                     } else {
                         this.moveCursorBy(1);
@@ -456,7 +456,7 @@ public class PanelTextField<T> implements IGuiPanel {
                 }
                 case 207: // End
                 {
-                    if (GuiScreen.isShiftKeyDown()) {
+                    if (Screen.isShiftKeyDown()) {
                         this.setSelectionPos(this.text.length());
                     } else {
                         this.setCursorPosition(text.length());
@@ -476,7 +476,7 @@ public class PanelTextField<T> implements IGuiPanel {
                 }
                 case 211: // Delete
                 {
-                    if (GuiScreen.isCtrlKeyDown()) {
+                    if (Screen.isCtrlKeyDown()) {
                         if (this.isActive) {
                             this.deleteWords(1);
                         }

@@ -31,7 +31,7 @@ import betterquesting.client.gui2.editors.nbt.GuiNbtEditor;
 import betterquesting.network.handlers.NetQuestEdit;
 import betterquesting.questing.QuestDatabase;
 import betterquesting.questing.tasks.TaskRegistry;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.util.text.TextFormatting;
@@ -48,7 +48,7 @@ public class GuiTaskEditor extends GuiScreenCanvas implements IPEventListener, I
     private IQuest quest;
     private final int qID;
 
-    public GuiTaskEditor(GuiScreen parent, IQuest quest) {
+    public GuiTaskEditor(Screen parent, IQuest quest) {
         super(parent);
 
         this.quest = quest;
@@ -167,7 +167,7 @@ public class GuiTaskEditor extends GuiScreenCanvas implements IPEventListener, I
         } else if (btn.getButtonID() == 3 && btn instanceof PanelButtonStorage) // Edit
         {
             ITask task = ((PanelButtonStorage<ITask>) btn).getStoredValue();
-            GuiScreen editor = task.getTaskEditor(this, new DBEntry<>(qID, quest));
+            Screen editor = task.getTaskEditor(this, new DBEntry<>(qID, quest));
 
             if (editor != null) {
                 mc.displayGuiScreen(editor);

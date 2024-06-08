@@ -11,7 +11,7 @@ import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
 import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.client.themes.BQSTextures;
 import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 
@@ -21,7 +21,7 @@ public class GuiLootChest extends GuiScreenCanvas {
     private final String title;
     private final List<BigItemStack> rewards;
 
-    public GuiLootChest(GuiScreen parent, List<BigItemStack> rewards, String title) {
+    public GuiLootChest(Screen parent, List<BigItemStack> rewards, String title) {
         super(parent);
         this.rewards = rewards;
         this.title = title;

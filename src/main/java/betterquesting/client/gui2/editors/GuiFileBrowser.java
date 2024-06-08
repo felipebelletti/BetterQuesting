@@ -25,7 +25,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetIcon;
 import betterquesting.api2.client.gui.themes.presets.PresetLine;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.api2.utils.QuestTranslation;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nullable;
@@ -46,7 +46,7 @@ public class GuiFileBrowser extends GuiScreenCanvas implements IPEventListener {
     private CanvasFileDirectory cvDirectory;
     private boolean multiSelect = true;
 
-    public GuiFileBrowser(GuiScreen parent, ICallback<File[]> callback, File directory, @Nullable FileFilter filter) {
+    public GuiFileBrowser(Screen parent, ICallback<File[]> callback, File directory, @Nullable FileFilter filter) {
         super(parent);
         this.callback = callback;
         this.curDirectory = directory == null ? null : directory.getAbsoluteFile();

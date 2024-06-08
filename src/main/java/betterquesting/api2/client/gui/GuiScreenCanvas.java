@@ -11,7 +11,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.client.BQ_Keybindings;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.input.Keyboard;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class GuiScreenCanvas extends GuiScreen implements IScene {
+public class GuiScreenCanvas extends Screen implements IScene {
     private final List<IGuiPanel> guiPanels = new CopyOnWriteArrayList<>();
     private final GuiRectangle rootTransform = new GuiRectangle(0, 0, 0, 0, 0);
     private final GuiTransform transform = new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(16, 16, 16, 16), 0);
@@ -33,12 +33,12 @@ public class GuiScreenCanvas extends GuiScreen implements IScene {
     private boolean useDefaultBG = false;
     private boolean isVolatile = false;
 
-    public final GuiScreen parent;
+    public final Screen parent;
 
     private IGuiPanel popup = null;
     //private IGuiPanel focused = null;
 
-    public GuiScreenCanvas(GuiScreen parent) {
+    public GuiScreenCanvas(Screen parent) {
         this.parent = parent;
     }
 

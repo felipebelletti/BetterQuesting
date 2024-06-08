@@ -23,7 +23,7 @@ import betterquesting.api2.client.gui.panels.lists.CanvasScrolling;
 import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.api2.utils.QuestTranslation;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.input.Keyboard;
 
@@ -33,7 +33,7 @@ public class GuiTextEditor extends GuiScreenCanvas implements IPEventListener, I
 
     private PanelTextField<String> flText;
 
-    public GuiTextEditor(GuiScreen parent, String text, ICallback<String> callback) {
+    public GuiTextEditor(Screen parent, String text, ICallback<String> callback) {
         super(parent);
 
         textIn = text;

@@ -10,7 +10,7 @@ import betterquesting.api2.storage.DBEntry;
 import betterquesting.client.gui2.rewards.PanelRewardCommand;
 import betterquesting.questing.rewards.factory.FactoryRewardCommand;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.command.FunctionObject;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.world.entity.Entity;
@@ -105,7 +105,7 @@ public class RewardCommand implements IReward {
     }
 
     @Override
-    public GuiScreen getRewardEditor(GuiScreen screen, DBEntry<IQuest> quest) {
+    public Screen getRewardEditor(Screen screen, DBEntry<IQuest> quest) {
         return null;
     }
 

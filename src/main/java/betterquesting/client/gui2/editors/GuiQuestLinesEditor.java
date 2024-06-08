@@ -32,7 +32,7 @@ import betterquesting.client.gui2.editors.designer.GuiDesigner;
 import betterquesting.client.gui2.editors.nbt.GuiItemSelection;
 import betterquesting.network.handlers.NetChapterEdit;
 import betterquesting.questing.QuestLineDatabase;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import org.lwjgl.input.Keyboard;
@@ -52,7 +52,7 @@ public class GuiQuestLinesEditor extends GuiScreenCanvas implements IPEventListe
     private IQuestLine selected;
     private int selID = -1;
 
-    public GuiQuestLinesEditor(GuiScreen parent) {
+    public GuiQuestLinesEditor(Screen parent) {
         super(parent);
     }
 

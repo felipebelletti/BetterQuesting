@@ -6,7 +6,7 @@ import betterquesting.api2.client.gui.misc.IGuiRect;
 import betterquesting.api2.client.gui.panels.IGuiPanel;
 import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.utils.ParticipantInfo;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 
@@ -88,7 +88,7 @@ public class TaskPlaceholder implements ITask {
     }
 
     @Override
-    public GuiScreen getTaskEditor(GuiScreen parent, DBEntry<IQuest> quest) {
+    public Screen getTaskEditor(Screen parent, DBEntry<IQuest> quest) {
         return null;
     }
 }

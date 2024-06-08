@@ -25,7 +25,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.client.gui2.editors.nbt.GuiNbtEditor;
 import betterquesting.core.ModReference;
 import betterquesting.questing.tasks.TaskRetrieval;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
@@ -37,7 +37,7 @@ public class GuiEditTaskRetrieval extends GuiScreenCanvas implements IVolatileSc
     private final TaskRetrieval task;
     private CompoundTag current;
 
-    public GuiEditTaskRetrieval(GuiScreen parent, DBEntry<IQuest> quest, TaskRetrieval task) {
+    public GuiEditTaskRetrieval(Screen parent, DBEntry<IQuest> quest, TaskRetrieval task) {
         super(parent);
         this.quest = quest;
         this.task = task;

@@ -37,7 +37,7 @@ import betterquesting.network.handlers.NetQuestAction;
 import betterquesting.questing.QuestDatabase;
 import betterquesting.questing.tasks.TaskRetrieval;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.I18n;
 import org.lwjgl.util.vector.Vector4f;
 
@@ -77,7 +77,7 @@ public class GuiQuest extends GuiScreenCanvas implements IPEventListener, INeeds
     private final int rewardIndex = 0;
     private final int taskIndex = 0;
 
-    public GuiQuest(GuiScreen parent, int questID) {
+    public GuiQuest(Screen parent, int questID) {
         super(parent);
         this.questID = questID;
         scrollPosition = scrollsPositions.get(questID);

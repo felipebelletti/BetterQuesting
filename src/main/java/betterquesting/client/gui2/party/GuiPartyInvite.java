@@ -29,7 +29,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.network.handlers.NetPartyAction;
 import betterquesting.questing.party.PartyManager;
 import betterquesting.storage.NameCache;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import org.lwjgl.input.Keyboard;
 
@@ -43,7 +43,7 @@ public class GuiPartyInvite extends GuiScreenCanvas implements IPEventListener {
     private int partyID;
     private PanelTextField<String> flName;
 
-    public GuiPartyInvite(GuiScreen parent) {
+    public GuiPartyInvite(Screen parent) {
         super(parent);
     }
 

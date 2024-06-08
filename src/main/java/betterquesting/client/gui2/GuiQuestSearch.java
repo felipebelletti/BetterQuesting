@@ -16,7 +16,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.misc.QuestSearchEntry;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 
 import java.util.function.Consumer;
 
@@ -24,7 +24,7 @@ public class GuiQuestSearch extends GuiScreenCanvas {
 
     private PanelTextField<String> searchBox;
 
-    public GuiQuestSearch(GuiScreen parent) {
+    public GuiQuestSearch(Screen parent) {
         super(parent);
     }
 

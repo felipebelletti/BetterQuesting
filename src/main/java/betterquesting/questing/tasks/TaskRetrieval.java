@@ -14,7 +14,7 @@ import betterquesting.client.gui2.editors.tasks.GuiEditTaskRetrieval;
 import betterquesting.client.gui2.tasks.PanelTaskRetrieval;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskRetrieval;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
@@ -400,7 +400,7 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public GuiScreen getTaskEditor(GuiScreen parent, DBEntry<IQuest> quest) {
+    public Screen getTaskEditor(Screen parent, DBEntry<IQuest> quest) {
         return new GuiEditTaskRetrieval(parent, quest, this);
     }
 

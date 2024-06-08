@@ -8,7 +8,7 @@ import betterquesting.api2.utils.ParticipantInfo;
 import betterquesting.client.gui2.tasks.PanelTaskLocation;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskLocation;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
@@ -188,7 +188,7 @@ public class TaskLocation implements ITaskTickable {
     }
 
     @Override
-    public GuiScreen getTaskEditor(GuiScreen parent, DBEntry<IQuest> quest) {
+    public Screen getTaskEditor(Screen parent, DBEntry<IQuest> quest) {
         return null;
     }
 

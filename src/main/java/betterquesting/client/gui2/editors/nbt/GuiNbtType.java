@@ -19,13 +19,13 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.client.gui2.editors.nbt.callback.NbtEntityCallback;
 import betterquesting.client.gui2.editors.nbt.callback.NbtFluidCallback;
 import betterquesting.client.gui2.editors.nbt.callback.NbtItemCallback;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 
 public class GuiNbtType extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {
     private final CompoundTag tagCompound;
 
-    public GuiNbtType(GuiScreen parent, CompoundTag tagCompound) {
+    public GuiNbtType(Screen parent, CompoundTag tagCompound) {
         super(parent);
         this.tagCompound = tagCompound;
     }

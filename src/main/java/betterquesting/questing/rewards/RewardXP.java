@@ -8,7 +8,7 @@ import betterquesting.api2.client.gui.panels.IGuiPanel;
 import betterquesting.api2.storage.DBEntry;
 import betterquesting.client.gui2.rewards.PanelRewardXP;
 import betterquesting.questing.rewards.factory.FactoryRewardXP;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -60,7 +60,7 @@ public class RewardXP implements IReward {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public GuiScreen getRewardEditor(GuiScreen screen, DBEntry<IQuest> quest) {
+    public Screen getRewardEditor(Screen screen, DBEntry<IQuest> quest) {
         return null;
     }
 }

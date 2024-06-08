@@ -11,7 +11,7 @@ import betterquesting.client.gui2.tasks.PanelTaskScoreboard;
 import betterquesting.core.BetterQuesting;
 import betterquesting.network.handlers.NetScoreSync;
 import betterquesting.questing.tasks.factory.FactoryTaskScoreboard;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -204,7 +204,7 @@ public class TaskScoreboard implements ITaskTickable {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public GuiScreen getTaskEditor(GuiScreen parent, DBEntry<IQuest> quest) {
+    public Screen getTaskEditor(Screen parent, DBEntry<IQuest> quest) {
         return new GuiEditTaskScoreboard(parent, quest, this);
     }
 

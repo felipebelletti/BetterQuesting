@@ -26,7 +26,7 @@ import betterquesting.api2.client.toolbox.IToolTab;
 import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.client.toolbox.ToolboxRegistry;
 import betterquesting.questing.QuestLineDatabase;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector4f;
 
@@ -48,7 +48,7 @@ public class GuiDesigner extends GuiScreenCanvas implements IVolatileScreen, INe
 
     private CanvasQuestLine cvQuest;
 
-    public GuiDesigner(GuiScreen parent, IQuestLine line) {
+    public GuiDesigner(Screen parent, IQuestLine line) {
         super(parent);
         this.questLine = line;
         this.lineID = QuestLineDatabase.INSTANCE.getID(line);

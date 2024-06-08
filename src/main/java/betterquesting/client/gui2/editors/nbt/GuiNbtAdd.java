@@ -23,7 +23,7 @@ import betterquesting.api2.client.gui.panels.lists.CanvasScrolling;
 import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.api2.utils.QuestTranslation;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.*;
@@ -46,13 +46,13 @@ public class GuiNbtAdd extends GuiScreenCanvas implements IPEventListener, IVola
     private PanelButton btnConfirm;
     //private PanelTextBox txtKey;
 
-    public GuiNbtAdd(GuiScreen parent, CompoundTag compoundTag) {
+    public GuiNbtAdd(Screen parent, CompoundTag compoundTag) {
         super(parent);
         this.nbt = compoundTag;
         this.index = -1;
     }
 
-    public GuiNbtAdd(GuiScreen parent, ListTag list, int index) {
+    public GuiNbtAdd(Screen parent, ListTag list, int index) {
         super(parent);
         this.nbt = list;
         this.index = index;

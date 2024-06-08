@@ -13,7 +13,7 @@ import betterquesting.client.gui2.tasks.PanelTaskInteractItem;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskInteractItem;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -136,7 +136,7 @@ public class TaskInteractItem implements ITask {
     @Override
     @Nullable
     @SideOnly(Side.CLIENT)
-    public GuiScreen getTaskEditor(GuiScreen parent, DBEntry<IQuest> quest) {
+    public Screen getTaskEditor(Screen parent, DBEntry<IQuest> quest) {
         return null;
     }
 

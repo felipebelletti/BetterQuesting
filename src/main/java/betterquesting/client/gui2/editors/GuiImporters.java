@@ -26,7 +26,7 @@ import betterquesting.client.importers.ImportedQuestLines;
 import betterquesting.client.importers.ImportedQuests;
 import betterquesting.client.importers.ImporterRegistry;
 import betterquesting.network.handlers.NetImport;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import org.lwjgl.input.Keyboard;
 
 import java.io.File;
@@ -38,7 +38,7 @@ public class GuiImporters extends GuiScreenCanvas implements IPEventListener, IC
     private PanelTextBox impDescTX;
     private PanelButtonStorage<IImporter> impBtn;
 
-    public GuiImporters(GuiScreen parent) {
+    public GuiImporters(Screen parent) {
         super(parent);
     }
 

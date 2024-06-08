@@ -32,7 +32,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.client.gui2.GuiQuest;
 import betterquesting.network.handlers.NetQuestEdit;
 import betterquesting.questing.QuestDatabase;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import org.lwjgl.input.Keyboard;
@@ -49,7 +49,7 @@ public class GuiPrerequisiteEditor extends GuiScreenCanvas implements IPEventLis
     private CanvasScrolling canvasPreReq;
     private PanelButton btnLogic;
 
-    public GuiPrerequisiteEditor(GuiScreen parent, IQuest quest) {
+    public GuiPrerequisiteEditor(Screen parent, IQuest quest) {
         super(parent);
         this.quest = quest;
         this.questID = QuestDatabase.INSTANCE.getID(quest);

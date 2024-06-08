@@ -11,7 +11,7 @@ import betterquesting.api2.utils.ParticipantInfo;
 import betterquesting.client.gui2.tasks.PanelTaskInteractEntity;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskInteractEntity;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.init.Items;
@@ -140,7 +140,7 @@ public class TaskInteractEntity implements ITask {
     @Override
     @Nullable
     @SideOnly(Side.CLIENT)
-    public GuiScreen getTaskEditor(GuiScreen parent, DBEntry<IQuest> quest) {
+    public Screen getTaskEditor(Screen parent, DBEntry<IQuest> quest) {
         return null;
     }
 

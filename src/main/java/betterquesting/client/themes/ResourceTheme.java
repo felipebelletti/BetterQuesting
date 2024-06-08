@@ -9,7 +9,7 @@ import betterquesting.api2.client.gui.themes.IGuiTheme;
 import betterquesting.core.BetterQuesting;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -161,7 +161,7 @@ public class ResourceTheme implements IGuiTheme {
 
     @Nullable
     @Override
-    public <T> Function<T, GuiScreen> getGui(GuiKey<T> key) {
+    public <T> Function<T, Screen> getGui(GuiKey<T> key) {
         return null;
     }
 }

@@ -11,7 +11,7 @@ import betterquesting.api2.utils.ParticipantInfo;
 import betterquesting.client.gui2.tasks.PanelTaskFluid;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskFluid;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
@@ -309,7 +309,7 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public GuiScreen getTaskEditor(GuiScreen screen, DBEntry<IQuest> quest) {
+    public Screen getTaskEditor(Screen screen, DBEntry<IQuest> quest) {
         return null;
     }
 

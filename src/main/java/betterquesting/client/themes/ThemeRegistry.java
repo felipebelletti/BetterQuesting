@@ -25,7 +25,7 @@ import betterquesting.core.BetterQuesting;
 import betterquesting.handlers.ConfigHandler;
 import com.google.gson.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.nbt.CompoundTag;
@@ -51,7 +51,7 @@ public class ThemeRegistry implements IThemeRegistry {
     private final HashMap<ResourceLocation, IGuiTexture> defTextures = new HashMap<>();
     private final HashMap<ResourceLocation, IGuiLine> defLines = new HashMap<>();
     private final HashMap<ResourceLocation, IGuiColor> defColors = new HashMap<>();
-    private final HashMap<GuiKey<?>, Function<?, GuiScreen>> defGuis = new HashMap<>();
+    private final HashMap<GuiKey<?>, Function<?, Screen>> defGuis = new HashMap<>();
 
     private final HashMap<ResourceLocation, IGuiTheme> themes = new HashMap<>();
     private final List<ResourceLocation> loadedThemes = new ArrayList<>();
@@ -140,7 +140,7 @@ public class ThemeRegistry implements IThemeRegistry {
     }
 
     @Override
-    public <T> void setDefaultGui(GuiKey<T> key, Function<T, GuiScreen> func) {
+    public <T> void setDefaultGui(GuiKey<T> key, Function<T, Screen> func) {
         if (key == null || func == null) {
             throw new NullPointerException("Tried to register a default gui with one or more NULL arguments");
         }
@@ -285,13 +285,13 @@ public class ThemeRegistry implements IThemeRegistry {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> GuiScreen getGui(GuiKey<T> key, T args) {
+    public <T> Screen getGui(GuiKey<T> key, T args) {
         if (key == null) return null;
 
-        Function<T, GuiScreen> func = null;
+        Function<T, Screen> func = null;
 
         if (getCurrentTheme() != null) func = activeTheme.getGui(key);
-        if (func == null) func = (Function<T, GuiScreen>) defGuis.get(key);
+        if (func == null) func = (Function<T, Screen>) defGuis.get(key);
 
         return func == null ? null : func.apply(args);
     }

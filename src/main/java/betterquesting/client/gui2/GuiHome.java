@@ -40,7 +40,7 @@ import betterquesting.questing.QuestLineDatabase;
 import betterquesting.questing.party.PartyManager;
 import betterquesting.storage.QuestSettings;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -57,9 +57,9 @@ import java.util.function.Consumer;
 
 @SideOnly(Side.CLIENT)
 public class GuiHome extends GuiScreenCanvas {
-    public static GuiScreen bookmark;
+    public static Screen bookmark;
 
-    public GuiHome(GuiScreen parent) {
+    public GuiHome(Screen parent) {
         super(parent);
     }
 

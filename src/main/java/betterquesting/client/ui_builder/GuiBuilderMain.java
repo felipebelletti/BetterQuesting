@@ -20,7 +20,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.storage.SimpleDatabase;
 import betterquesting.client.gui2.editors.nbt.PanelScrollingNBT;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -61,7 +61,7 @@ public class GuiBuilderMain extends GuiScreenCanvas implements IVolatileScreen {
     private int dragType = -1; // What kind of drag are we performing
 
     // TODO: Add context information about what this GUI is being built for
-    public GuiBuilderMain(GuiScreen parent) {
+    public GuiBuilderMain(Screen parent) {
         super(parent);
 
         // We're using the entire screen including areas normally reserved for margins to make space for tools

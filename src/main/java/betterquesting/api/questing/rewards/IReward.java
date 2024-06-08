@@ -5,7 +5,7 @@ import betterquesting.api2.client.gui.misc.IGuiRect;
 import betterquesting.api2.client.gui.panels.IGuiPanel;
 import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.storage.INBTSaveLoad;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -28,5 +28,5 @@ public interface IReward extends INBTSaveLoad<CompoundTag> {
 
     @Nullable
     @SideOnly(Side.CLIENT)
-    GuiScreen getRewardEditor(GuiScreen parent, DBEntry<IQuest> quest);
+    Screen getRewardEditor(Screen parent, DBEntry<IQuest> quest);
 }

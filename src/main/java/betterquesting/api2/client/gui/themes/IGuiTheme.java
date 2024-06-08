@@ -3,7 +3,7 @@ package betterquesting.api2.client.gui.themes;
 import betterquesting.api2.client.gui.resources.colors.IGuiColor;
 import betterquesting.api2.client.gui.resources.lines.IGuiLine;
 import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -24,5 +24,5 @@ public interface IGuiTheme {
     IGuiColor getColor(ResourceLocation key);
 
     @Nullable
-    <T> Function<T, GuiScreen> getGui(GuiKey<T> key);
+    <T> Function<T, Screen> getGui(GuiKey<T> key);
 }

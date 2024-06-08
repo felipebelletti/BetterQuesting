@@ -13,7 +13,7 @@ import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskBlockBreak;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
@@ -239,7 +239,7 @@ public class TaskBlockBreak implements ITask {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public GuiScreen getTaskEditor(GuiScreen screen, DBEntry<IQuest> context) {
+    public Screen getTaskEditor(Screen screen, DBEntry<IQuest> context) {
         return null;
     }
 

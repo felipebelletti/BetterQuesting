@@ -31,7 +31,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetLine;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.api2.utils.QuestTranslation;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.CompoundTag;
@@ -44,11 +44,11 @@ public class GuiEntitySelection extends GuiScreenCanvas implements IPEventListen
 
     private PanelEntityPreview pnPreview;
 
-    public GuiEntitySelection(GuiScreen parent, CompoundTag tag, ICallback<Entity> callback) {
+    public GuiEntitySelection(Screen parent, CompoundTag tag, ICallback<Entity> callback) {
         this(parent, JsonHelper.JsonToEntity(tag, Minecraft.getMinecraft().world), callback);
     }
 
-    public GuiEntitySelection(GuiScreen parent, Entity entity, ICallback<Entity> callback) {
+    public GuiEntitySelection(Screen parent, Entity entity, ICallback<Entity> callback) {
         super(parent);
         this.selEntity = entity;
         this.callback = callback;
