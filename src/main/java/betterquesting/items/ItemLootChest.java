@@ -12,7 +12,7 @@ import betterquesting.questing.rewards.loot.LootRegistry;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -48,7 +48,7 @@ public class ItemLootChest extends Item {
         if (hand != EnumHand.MAIN_HAND) return new ActionResult<>(EnumActionResult.PASS, stack);
 
         if (stack.getItemDamage() == 104) {
-            if (world.isRemote || !(player instanceof EntityPlayerMP)) {
+            if (world.isRemote || !(player instanceof ServerPlayer)) {
                 if (!player.capabilities.isCreativeMode) stack.shrink(1);
                 return new ActionResult<>(EnumActionResult.PASS, stack);
             }
@@ -80,14 +80,14 @@ public class ItemLootChest extends Item {
                 player.inventoryContainer.detectAndSendChanges();
             }
 
-            NetLootClaim.sendReward((EntityPlayerMP) player, lootName, lootItems.toArray(new BigItemStack[0]));
+            NetLootClaim.sendReward((ServerPlayer) player, lootName, lootItems.toArray(new BigItemStack[0]));
         } else if (stack.getItemDamage() == 103) {
-            if (world.isRemote || !(player instanceof EntityPlayerMP)) {
+            if (world.isRemote || !(player instanceof ServerPlayer)) {
                 if (!player.capabilities.isCreativeMode) stack.shrink(1);
                 return new ActionResult<>(EnumActionResult.PASS, stack);
             }
 
-            LootContext lootcontext = (new LootContext.Builder(((EntityPlayerMP) player).getServerWorld())).withLootedEntity(player).withPlayer(player).withLuck(player.getLuck()).build();
+            LootContext lootcontext = (new LootContext.Builder(((ServerPlayer) player).getServerWorld())).withLootedEntity(player).withPlayer(player).withLuck(player.getLuck()).build();
             String loottable = (stack.getTagCompound() != null && stack.getTagCompound().hasKey("loottable", 8)) ? stack.getTagCompound().getString("loottable") : "minecraft:chests/simple_dungeon";
 
             List<BigItemStack> loot = new ArrayList<>();
@@ -111,7 +111,7 @@ public class ItemLootChest extends Item {
                 player.inventoryContainer.detectAndSendChanges();
             }
 
-            NetLootClaim.sendReward((EntityPlayerMP) player, "Loot", loot.toArray(new BigItemStack[0]));
+            NetLootClaim.sendReward((ServerPlayer) player, "Loot", loot.toArray(new BigItemStack[0]));
         } else if (stack.getItemDamage() >= 102) {
             if (QuestingAPI.getAPI(ApiReference.SETTINGS).canUserEdit(player)) {
                 player.openGui(BetterQuesting.instance, 2, world, (int) player.posX, (int) player.posY, (int) player.posZ);
@@ -145,8 +145,8 @@ public class ItemLootChest extends Item {
                 player.inventoryContainer.detectAndSendChanges();
             }
 
-            if (player instanceof EntityPlayerMP) {
-                NetLootClaim.sendReward((EntityPlayerMP) player, title, loot.toArray(new BigItemStack[0]));
+            if (player instanceof ServerPlayer) {
+                NetLootClaim.sendReward((ServerPlayer) player, title, loot.toArray(new BigItemStack[0]));
             }
         }
 

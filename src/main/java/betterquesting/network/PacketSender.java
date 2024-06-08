@@ -4,7 +4,7 @@ import betterquesting.api.network.IPacketSender;
 import betterquesting.api.network.QuestingPacket;
 import betterquesting.api2.utils.BQThreadedIO;
 import betterquesting.core.BetterQuesting;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
@@ -14,12 +14,12 @@ public class PacketSender implements IPacketSender {
     public static final PacketSender INSTANCE = new PacketSender();
 
     @Override
-    public void sendToPlayers(QuestingPacket payload, EntityPlayerMP... players) {
+    public void sendToPlayers(QuestingPacket payload, ServerPlayer... players) {
         payload.getPayload().setString("ID", payload.getHandler().toString());
 
         BQThreadedIO.INSTANCE.enqueue(() -> {
             List<NBTTagCompound> fragments = PacketAssembly.INSTANCE.splitPacket(payload.getPayload());
-            for (EntityPlayerMP p : players) {
+            for (ServerPlayer p : players) {
                 for (NBTTagCompound tag : fragments) {
                     BetterQuesting.instance.network.sendTo(new PacketQuesting(tag), p);
                 }

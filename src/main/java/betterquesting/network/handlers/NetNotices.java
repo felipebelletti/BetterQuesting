@@ -6,7 +6,7 @@ import betterquesting.core.BetterQuesting;
 import betterquesting.core.ModReference;
 import betterquesting.network.PacketSender;
 import betterquesting.network.PacketTypeRegistry;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -25,7 +25,7 @@ public class NetNotices {
         }
     }
 
-    public static void sendNotice(@Nullable EntityPlayerMP[] players, ItemStack icon, String mainText, String subText, String sound) {
+    public static void sendNotice(@Nullable ServerPlayer[] players, ItemStack icon, String mainText, String subText, String sound) {
         NBTTagCompound payload = new NBTTagCompound();
         payload.setTag("icon", (icon != null ? icon : ItemStack.EMPTY).writeToNBT(new NBTTagCompound()));
         if (mainText != null) payload.setString("mainText", mainText);

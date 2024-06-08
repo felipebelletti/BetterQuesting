@@ -9,7 +9,7 @@ import betterquesting.network.PacketSender;
 import betterquesting.network.PacketTypeRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -26,7 +26,7 @@ public class NetCacheSync {
         }
     }
 
-    public static void sendSync(@Nonnull EntityPlayerMP player) {
+    public static void sendSync(@Nonnull ServerPlayer player) {
         QuestCache qc = player.getCapability(CapabilityProviderQuestCache.CAP_QUEST_CACHE, null);
         if (qc == null) return;
         NBTTagCompound payload = new NBTTagCompound();

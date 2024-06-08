@@ -10,7 +10,7 @@ import betterquesting.network.PacketSender;
 import betterquesting.network.PacketTypeRegistry;
 import betterquesting.questing.party.PartyManager;
 import betterquesting.storage.NameCache;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
@@ -19,7 +19,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -63,7 +63,7 @@ public class NetNameSync {
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    public static void quickSync(@Nullable EntityPlayerMP player, int partyID) {
+    public static void quickSync(@Nullable ServerPlayer player, int partyID) {
         IParty party = PartyManager.INSTANCE.getValue(partyID);
         if (party == null) return;
 
@@ -74,18 +74,18 @@ public class NetNameSync {
         if (player != null) {
             PacketSender.INSTANCE.sendToPlayers(new QuestingPacket(ID_NAME, payload), player);
         } else {
-            MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-            List<EntityPlayerMP> playerList = new ArrayList<>();
+            MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+            List<ServerPlayer> playerList = new ArrayList<>();
             for (UUID playerID : party.getMembers()) {
-                EntityPlayerMP p = server.getPlayerList().getPlayerByUUID(playerID);
+                ServerPlayer p = server.getPlayerList().getPlayerByUUID(playerID);
                 //noinspection ConstantConditions
                 if (p != null) playerList.add(p);
             }
-            PacketSender.INSTANCE.sendToPlayers(new QuestingPacket(ID_NAME, payload), playerList.toArray(new EntityPlayerMP[0]));
+            PacketSender.INSTANCE.sendToPlayers(new QuestingPacket(ID_NAME, payload), playerList.toArray(new ServerPlayer[0]));
         }
     }
 
-    public static void sendNames(@Nullable EntityPlayerMP[] players, @Nullable UUID[] uuids, @Nullable String[] names) {
+    public static void sendNames(@Nullable ServerPlayer[] players, @Nullable UUID[] uuids, @Nullable String[] names) {
         List<UUID> idList = (uuids == null && names == null) ? null : new ArrayList<>();
         if (uuids != null) idList.addAll(Arrays.asList(uuids));
         if (names != null) {
@@ -106,7 +106,7 @@ public class NetNameSync {
         }
     }
 
-    private static void onServer(Tuple<NBTTagCompound, EntityPlayerMP> message) {
+    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
         UUID[] uuids = null;
         String[] names = null;
 
@@ -127,7 +127,7 @@ public class NetNameSync {
                 names[i] = uList.getStringTagAt(i);
             }
         }
-        sendNames(new EntityPlayerMP[]{message.getSecond()}, uuids, names);
+        sendNames(new ServerPlayer[]{message.getSecond()}, uuids, names);
     }
 
     @SideOnly(Side.CLIENT)

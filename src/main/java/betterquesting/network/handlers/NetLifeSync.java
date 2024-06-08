@@ -6,7 +6,7 @@ import betterquesting.core.ModReference;
 import betterquesting.network.PacketSender;
 import betterquesting.network.PacketTypeRegistry;
 import betterquesting.storage.LifeDatabase;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -25,7 +25,7 @@ public class NetLifeSync {
         }
     }
 
-    public static void sendSync(@Nullable EntityPlayerMP[] players, @Nullable UUID[] playerIDs) {
+    public static void sendSync(@Nullable ServerPlayer[] players, @Nullable UUID[] playerIDs) {
         NBTTagCompound payload = new NBTTagCompound();
         payload.setTag("data", LifeDatabase.INSTANCE.writeToNBT(new NBTTagCompound(), playerIDs == null ? null : Arrays.asList(playerIDs)));
         payload.setBoolean("merge", playerIDs != null);

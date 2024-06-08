@@ -2,7 +2,7 @@ package betterquesting.network;
 
 import betterquesting.api.network.IPacketRegistry;
 import betterquesting.network.handlers.*;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -17,7 +17,7 @@ import java.util.function.Consumer;
 public class PacketTypeRegistry implements IPacketRegistry {
     public static final PacketTypeRegistry INSTANCE = new PacketTypeRegistry();
 
-    private final HashMap<ResourceLocation, Consumer<Tuple<NBTTagCompound, EntityPlayerMP>>> serverHandlers = new HashMap<>();
+    private final HashMap<ResourceLocation, Consumer<Tuple<NBTTagCompound, ServerPlayer>>> serverHandlers = new HashMap<>();
     private final HashMap<ResourceLocation, Consumer<NBTTagCompound>> clientHandlers = new HashMap<>();
 
     public void init() {
@@ -44,7 +44,7 @@ public class PacketTypeRegistry implements IPacketRegistry {
     }
 
     @Override
-    public void registerServerHandler(@Nonnull ResourceLocation idName, @Nonnull Consumer<Tuple<NBTTagCompound, EntityPlayerMP>> method) {
+    public void registerServerHandler(@Nonnull ResourceLocation idName, @Nonnull Consumer<Tuple<NBTTagCompound, ServerPlayer>> method) {
         if (serverHandlers.containsKey(idName)) {
             throw new IllegalArgumentException("Cannot register dupliate packet handler: " + idName);
         }
@@ -63,7 +63,7 @@ public class PacketTypeRegistry implements IPacketRegistry {
     }
 
     @Nullable
-    public Consumer<Tuple<NBTTagCompound, EntityPlayerMP>> getServerHandler(@Nonnull ResourceLocation idName) {
+    public Consumer<Tuple<NBTTagCompound, ServerPlayer>> getServerHandler(@Nonnull ResourceLocation idName) {
         return serverHandlers.get(idName);
     }
 

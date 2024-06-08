@@ -8,7 +8,7 @@ import betterquesting.api.questing.tasks.ITask;
 import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.utils.ParticipantInfo;
 import betterquesting.questing.tasks.TaskInteractItem;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -35,8 +35,8 @@ public class NetTaskInteract {
         QuestingAPI.getAPI(ApiReference.PACKET_SENDER).sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, EntityPlayerMP> message) {
-        EntityPlayerMP sender = message.getSecond();
+    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+        ServerPlayer sender = message.getSecond();
         NBTTagCompound tag = message.getFirst();
 
         ParticipantInfo pInfo = new ParticipantInfo(sender);

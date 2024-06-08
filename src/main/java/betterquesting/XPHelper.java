@@ -1,7 +1,7 @@
 package betterquesting;
 
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.play.server.SPacketSetExperience;
 
 public class XPHelper {
@@ -26,10 +26,10 @@ public class XPHelper {
         player.experience = (float) ((double) (experience - expForLevel) / (double) xpBarCap(player));
         player.experience = Math.max(0F, player.experience); // Sanity check
 
-        if (sync && player instanceof EntityPlayerMP) syncXP((EntityPlayerMP) player);
+        if (sync && player instanceof ServerPlayer) syncXP((ServerPlayer) player);
     }
 
-    public static void syncXP(EntityPlayerMP player) {
+    public static void syncXP(ServerPlayer player) {
         // Make sure the client isn't being stupid about syncing the experience bars which routinely fail
         player.connection.sendPacket(new SPacketSetExperience(player.experience, player.experienceTotal, player.experienceLevel));
     }

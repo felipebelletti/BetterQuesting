@@ -8,12 +8,12 @@ import betterquesting.handlers.SaveLoadHandler;
 import betterquesting.network.PacketSender;
 import betterquesting.network.PacketTypeRegistry;
 import betterquesting.storage.QuestSettings;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Level;
@@ -38,7 +38,7 @@ public class NetSettingSync {
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    public static void sendSync(@Nullable EntityPlayerMP player) {
+    public static void sendSync(@Nullable ServerPlayer player) {
         NBTTagCompound payload = new NBTTagCompound();
         payload.setTag("data", QuestSettings.INSTANCE.writeToNBT(new NBTTagCompound()));
         if (player != null) {
@@ -53,8 +53,8 @@ public class NetSettingSync {
         QuestSettings.INSTANCE.readFromNBT(message.getCompoundTag("data"));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, EntityPlayerMP> message) {
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
         if (!server.getPlayerList().canSendCommands(message.getSecond().getGameProfile())) {
             BetterQuesting.logger.log(Level.WARN, "Player " + message.getSecond().getName() + " (UUID:" + QuestingAPI.getQuestingUUID(message.getSecond()) + ") tried to edit settings without OP permissions!");
             sendSync(message.getSecond());

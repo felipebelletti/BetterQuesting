@@ -1,11 +1,11 @@
 package betterquesting.api.network;
 
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 
 public interface IPacketSender {
     // Server to Client
-    void sendToPlayers(QuestingPacket payload, EntityPlayerMP... players);
+    void sendToPlayers(QuestingPacket payload, ServerPlayer... players);
 
     void sendToAll(QuestingPacket payload);
 

@@ -17,7 +17,7 @@ import betterquesting.questing.QuestLineDatabase;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap.Entry;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
@@ -46,8 +46,8 @@ public class NetImport {
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, EntityPlayerMP> message) {
-        EntityPlayerMP sender = message.getSecond();
+    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+        ServerPlayer sender = message.getSecond();
         if (sender.getServer() == null)
             return;
 

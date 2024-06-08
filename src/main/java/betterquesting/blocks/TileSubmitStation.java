@@ -12,7 +12,7 @@ import betterquesting.core.BetterQuesting;
 import betterquesting.questing.QuestDatabase;
 import betterquesting.storage.QuestSettings;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
@@ -236,7 +236,7 @@ public class TileSubmitStation extends TileEntity implements IFluidHandler, ISid
             DBEntry<IQuest> q = getQuest();
             IItemTask t = getItemTask();
             MinecraftServer server = world.getMinecraftServer();
-            EntityPlayerMP player = server == null ? null : server.getPlayerList().getPlayerByUUID(owner);
+            ServerPlayer player = server == null ? null : server.getPlayerList().getPlayerByUUID(owner);
             QuestCache qc = player == null ? null : player.getCapability(CapabilityProviderQuestCache.CAP_QUEST_CACHE, null);
 
             // Check quest & task is present. Check input is populated and output is clear.

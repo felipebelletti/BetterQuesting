@@ -22,7 +22,7 @@ import net.minecraft.advancements.ICriterionInstance;
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
@@ -98,7 +98,7 @@ public class TaskTrigger implements ITask {
         return !this.needsSetup;
     }
 
-    public void onCriteriaComplete(EntityPlayerMP player, BqsAdvListener advList, int questID) {
+    public void onCriteriaComplete(ServerPlayer player, BqsAdvListener advList, int questID) {
         if (advList != this.listener) return;
         UUID playerID = QuestingAPI.getQuestingUUID(player);
         setComplete(playerID);

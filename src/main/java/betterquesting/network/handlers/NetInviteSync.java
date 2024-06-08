@@ -10,7 +10,7 @@ import betterquesting.network.PacketSender;
 import betterquesting.network.PacketTypeRegistry;
 import betterquesting.questing.party.PartyInvitations;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
@@ -32,7 +32,7 @@ public class NetInviteSync {
     }
 
     // If I need to send other people's invites to players then I'll deal with that another time
-    public static void sendSync(@Nonnull EntityPlayerMP player) {
+    public static void sendSync(@Nonnull ServerPlayer player) {
         NBTTagCompound payload = new NBTTagCompound();
         UUID playerID = QuestingAPI.getQuestingUUID(player);
         payload.setInteger("action", 0);
@@ -40,7 +40,7 @@ public class NetInviteSync {
         PacketSender.INSTANCE.sendToPlayers(new QuestingPacket(ID_NAME, payload), player);
     }
 
-    public static void sendRevoked(@Nonnull EntityPlayerMP player, int... IDs) {
+    public static void sendRevoked(@Nonnull ServerPlayer player, int... IDs) {
         NBTTagCompound payload = new NBTTagCompound();
         payload.setInteger("action", 1);
         payload.setIntArray("IDs", IDs);

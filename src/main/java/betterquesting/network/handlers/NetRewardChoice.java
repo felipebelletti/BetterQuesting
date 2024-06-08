@@ -11,7 +11,7 @@ import betterquesting.core.BetterQuesting;
 import betterquesting.questing.rewards.RewardChoice;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -41,7 +41,7 @@ public class NetRewardChoice {
         QuestingAPI.getAPI(ApiReference.PACKET_SENDER).sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    public static void sendChoice(@Nonnull EntityPlayerMP player, int questID, int rewardID, int index) {
+    public static void sendChoice(@Nonnull ServerPlayer player, int questID, int rewardID, int index) {
         NBTTagCompound payload = new NBTTagCompound();
         payload.setInteger("questID", questID);
         payload.setInteger("rewardID", rewardID);
@@ -49,8 +49,8 @@ public class NetRewardChoice {
         QuestingAPI.getAPI(ApiReference.PACKET_SENDER).sendToPlayers(new QuestingPacket(ID_NAME, payload), player);
     }
 
-    private static void onServer(Tuple<NBTTagCompound, EntityPlayerMP> message) {
-        EntityPlayerMP sender = message.getSecond();
+    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+        ServerPlayer sender = message.getSecond();
         NBTTagCompound tag = message.getFirst();
 
         int qID = tag.hasKey("questID") ? tag.getInteger("questID") : -1;

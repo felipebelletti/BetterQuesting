@@ -16,13 +16,13 @@ import betterquesting.questing.party.PartyInvitations;
 import betterquesting.questing.party.PartyManager;
 import betterquesting.storage.NameCache;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Level;
@@ -45,8 +45,8 @@ public class NetPartyAction {
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, EntityPlayerMP> message) {
-        EntityPlayerMP sender = message.getSecond();
+    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+        ServerPlayer sender = message.getSecond();
 
         int action = !message.getFirst().hasKey("action", 99) ? -1 : message.getFirst().getInteger("action");
         int partyID = !message.getFirst().hasKey("partyID", 99) ? -1 : message.getFirst().getInteger("partyID");
@@ -87,7 +87,7 @@ public class NetPartyAction {
         }
     }
 
-    private static void createParty(EntityPlayerMP sender, String name) {
+    private static void createParty(ServerPlayer sender, String name) {
         UUID playerID = QuestingAPI.getQuestingUUID(sender);
         if (PartyManager.INSTANCE.getParty(playerID) != null) return;
 
@@ -95,7 +95,7 @@ public class NetPartyAction {
         IParty party = PartyManager.INSTANCE.createNew(partyID);
         party.getProperties().setProperty(NativeProps.NAME, name);
         party.setStatus(playerID, EnumPartyStatus.OWNER);
-        NetPartySync.sendSync(new EntityPlayerMP[]{sender}, new int[]{partyID});
+        NetPartySync.sendSync(new ServerPlayer[]{sender}, new int[]{partyID});
     }
 
     private static void deleteParty(int partyID) {
@@ -115,14 +115,14 @@ public class NetPartyAction {
 
     private static void inviteUser(int partyID, String username, long expiry) {
         UUID uuid = null;
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-        EntityPlayerMP player = server.getPlayerList().getPlayerByUsername(username);
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+        ServerPlayer player = server.getPlayerList().getPlayerByUsername(username);
         if (player != null) uuid = QuestingAPI.getQuestingUUID(player);
         if (uuid == null) uuid = NameCache.INSTANCE.getUUID(username);
         if (uuid != null) {
             PartyInvitations.INSTANCE.postInvite(uuid, partyID, expiry);
             if (player != null) {
-                NetPartySync.sendSync(new EntityPlayerMP[]{player}, new int[]{partyID});
+                NetPartySync.sendSync(new ServerPlayer[]{player}, new int[]{partyID});
                 NetInviteSync.sendSync(player);
             }
         } else {
@@ -130,7 +130,7 @@ public class NetPartyAction {
         }
     }
 
-    private static void acceptInvite(int partyID, EntityPlayerMP sender) {
+    private static void acceptInvite(int partyID, ServerPlayer sender) {
         UUID playerID = QuestingAPI.getQuestingUUID(sender);
         DBEntry<IParty> party = PartyManager.INSTANCE.getParty(playerID);
         if (party != null) return;
@@ -143,7 +143,7 @@ public class NetPartyAction {
         NetInviteSync.sendSync(sender);
     }
 
-    private static void kickUser(int partyID, EntityPlayerMP sender, IParty party, String username, int permission) // Is also the leave action (self kick if you will)
+    private static void kickUser(int partyID, ServerPlayer sender, IParty party, String username, int permission) // Is also the leave action (self kick if you will)
     {
         if (party == null) {
             BetterQuesting.logger.error("Tried to kick a player from a non-existant party (" + partyID + ")");
@@ -151,8 +151,8 @@ public class NetPartyAction {
         }
 
         UUID uuid = null;
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-        EntityPlayerMP player = server.getPlayerList().getPlayerByUsername(username);
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+        ServerPlayer player = server.getPlayerList().getPlayerByUsername(username);
         if (player != null) uuid = QuestingAPI.getQuestingUUID(player);
         if (uuid == null) uuid = NameCache.INSTANCE.getUUID(username);
         if (uuid == null) {
@@ -189,8 +189,8 @@ public class NetPartyAction {
     }
 
     private static int checkPermission(UUID playerID, IParty party) {
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-        EntityPlayerMP player = server == null ? null : server.getPlayerList().getPlayerByUUID(playerID);
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+        ServerPlayer player = server == null ? null : server.getPlayerList().getPlayerByUUID(playerID);
         if (player != null && server.getPlayerList().canSendCommands(player.getGameProfile()))
             return 4; // Can kick owners or force invites without needing to be a member of the party
         EnumPartyStatus status = party.getStatus(playerID);

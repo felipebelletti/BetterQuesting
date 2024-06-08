@@ -9,7 +9,7 @@ import betterquesting.questing.party.PartyManager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.server.ServerLifecycleHooks;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -29,7 +29,7 @@ public class ParticipantInfo {
         this.UUID = QuestingAPI.getQuestingUUID(player);
         this.PARTY_INSTANCE = PartyManager.INSTANCE.getParty(this.UUID);
 
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
 
         if (PARTY_INSTANCE == null || server == null || player instanceof FakePlayer) {
             ACTIVE_PLAYERS = Collections.singletonList(player);

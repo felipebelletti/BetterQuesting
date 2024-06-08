@@ -11,7 +11,7 @@ import betterquesting.core.ModReference;
 import betterquesting.network.PacketSender;
 import betterquesting.network.PacketTypeRegistry;
 import betterquesting.questing.QuestLineDatabase;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
@@ -34,7 +34,7 @@ public class NetChapterSync {
         }
     }
 
-    public static void sendSync(@Nullable EntityPlayerMP player, @Nullable int[] chapterIDs) {
+    public static void sendSync(@Nullable ServerPlayer player, @Nullable int[] chapterIDs) {
         if (chapterIDs != null && chapterIDs.length <= 0) return;
 
         BQThreadedIO.INSTANCE.enqueue(() -> {
@@ -75,7 +75,7 @@ public class NetChapterSync {
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, EntityPlayerMP> message) {
+    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
         NBTTagCompound payload = message.getFirst();
         int[] reqIDs = !payload.hasKey("requestIDs") ? null : payload.getIntArray("requestIDs");
         sendSync(message.getSecond(), reqIDs);

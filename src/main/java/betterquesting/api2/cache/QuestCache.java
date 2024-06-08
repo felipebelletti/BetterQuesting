@@ -10,7 +10,7 @@ import betterquesting.api2.storage.DBEntry;
 import betterquesting.network.handlers.NetCacheSync;
 import betterquesting.questing.QuestDatabase;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
@@ -141,7 +141,7 @@ public class QuestCache implements INBTSerializable<NBTTagCompound> {
         autoClaims.clear();
         autoClaims.addAll(tmpAutoClaim);
 
-        if (player instanceof EntityPlayerMP) NetCacheSync.sendSync((EntityPlayerMP) player);
+        if (player instanceof ServerPlayer) NetCacheSync.sendSync((ServerPlayer) player);
     }
 
     @Override

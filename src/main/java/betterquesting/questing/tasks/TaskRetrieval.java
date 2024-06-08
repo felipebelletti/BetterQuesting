@@ -15,7 +15,7 @@ import betterquesting.client.gui2.tasks.PanelTaskRetrieval;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskRetrieval;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -26,7 +26,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Level;
@@ -381,8 +381,8 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
         if (updated) {
             setUserProgress(owner, progress);
 
-            MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-            EntityPlayerMP player = server == null ? null : server.getPlayerList().getPlayerByUUID(owner);
+            MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+            ServerPlayer player = server == null ? null : server.getPlayerList().getPlayerByUUID(owner);
 
             if (player != null) {
                 checkAndComplete(new ParticipantInfo(player), quest, true);

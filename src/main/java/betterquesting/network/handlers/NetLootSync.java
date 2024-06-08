@@ -5,7 +5,7 @@ import betterquesting.api.api.QuestingAPI;
 import betterquesting.api.network.QuestingPacket;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.rewards.loot.LootRegistry;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -35,7 +35,7 @@ public class NetLootSync {
         QuestingAPI.getAPI(ApiReference.PACKET_SENDER).sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    public static void sendSync(@Nullable EntityPlayerMP player) {
+    public static void sendSync(@Nullable ServerPlayer player) {
         NBTTagCompound payload = new NBTTagCompound();
         payload.setTag("data", LootRegistry.INSTANCE.writeToNBT(new NBTTagCompound(), null));
 
@@ -46,8 +46,8 @@ public class NetLootSync {
         }
     }
 
-    private static void onServer(Tuple<NBTTagCompound, EntityPlayerMP> message) {
-        EntityPlayerMP sender = message.getSecond();
+    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+        ServerPlayer sender = message.getSecond();
         NBTTagCompound data = message.getFirst();
 
         if (sender.getServer() == null) return;

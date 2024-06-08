@@ -13,7 +13,7 @@ import betterquesting.questing.tasks.factory.FactoryTaskAdvancement;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
@@ -47,11 +47,11 @@ public class TaskAdvancement implements ITask {
 
     @Override
     public void detect(ParticipantInfo pInfo, DBEntry<IQuest> quest) {
-        if (!(pInfo.PLAYER instanceof EntityPlayerMP) || pInfo.PLAYER.getServer() == null || advID == null) return;
+        if (!(pInfo.PLAYER instanceof ServerPlayer) || pInfo.PLAYER.getServer() == null || advID == null) return;
 
         Advancement adv = pInfo.PLAYER.getServer().getAdvancementManager().getAdvancement(advID);
         if (adv == null) return;
-        PlayerAdvancements playerAdv = pInfo.PLAYER.getServer().getPlayerList().getPlayerAdvancements((EntityPlayerMP) pInfo.PLAYER);
+        PlayerAdvancements playerAdv = pInfo.PLAYER.getServer().getPlayerList().getPlayerAdvancements((ServerPlayer) pInfo.PLAYER);
 
         if (playerAdv.getProgress(adv).isDone()) setComplete(pInfo.UUID);
         pInfo.markDirty(Collections.singletonList(quest.getID()));

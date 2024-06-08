@@ -5,7 +5,7 @@ import betterquesting.api.api.ApiReference;
 import betterquesting.api.api.QuestingAPI;
 import betterquesting.api.network.QuestingPacket;
 import betterquesting.core.BetterQuesting;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
@@ -22,7 +22,7 @@ public class NetScoreSync {
         }
     }
 
-    public static void sendScore(@Nullable EntityPlayerMP player) {
+    public static void sendScore(@Nullable ServerPlayer player) {
         NBTTagCompound payload = new NBTTagCompound();
         payload.setTag("data", ScoreboardBQ.INSTANCE.writeToNBT(new NBTTagList(), player == null ? null : Collections.singletonList(QuestingAPI.getQuestingUUID(player))));
         payload.setBoolean("merge", player != null);

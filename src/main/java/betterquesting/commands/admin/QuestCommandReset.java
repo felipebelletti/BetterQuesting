@@ -11,7 +11,7 @@ import betterquesting.storage.NameCache;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.commands.CommandSource;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
@@ -70,7 +70,7 @@ public class QuestCommandReset extends QuestCommandBase {
         }
 
         String pName = uuid == null ? "NULL" : NameCache.INSTANCE.getName(uuid);
-        EntityPlayerMP player = uuid == null ? null : server.getPlayerList().getPlayerByUUID(uuid);
+        ServerPlayer player = uuid == null ? null : server.getPlayerList().getPlayerByUUID(uuid);
 
         if (action.equalsIgnoreCase("all")) {
             for (DBEntry<IQuest> entry : QuestDatabase.INSTANCE.getEntries()) {

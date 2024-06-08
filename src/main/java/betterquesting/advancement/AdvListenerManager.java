@@ -1,8 +1,8 @@
 package betterquesting.advancement;
 
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.server.ServerLifecycleHooks;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +13,14 @@ public class AdvListenerManager {
     private final List<BqsAdvListener<?>> listenerList = new ArrayList<>();
 
     public void registerListener(final BqsAdvListener<?> listener) {
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
-        if (server != null) server.addScheduledTask(() -> listenerList.add(listener));
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+        if (server != null) server.execute(() -> listenerList.add(listener));
     }
 
     public void updateAll() {
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
 
-        for (EntityPlayerMP player : server.getPlayerList().getPlayers()) {
+        for (ServerPlayer player : server.getPlayerList().getPlayers()) {
             for (BqsAdvListener<?> advl : listenerList) {
                 advl.unregisterSelf(player.getAdvancements());
                 if (advl.verify()) advl.registerSelf(player.getAdvancements());

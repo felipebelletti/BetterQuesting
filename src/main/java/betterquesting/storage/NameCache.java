@@ -1,11 +1,11 @@
 package betterquesting.storage;
 
 import betterquesting.api.storage.INameCache;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.server.ServerLifecycleHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -19,8 +19,8 @@ public final class NameCache implements INameCache {
     private final HashMap<UUID, NBTTagCompound> cache = new HashMap<>();
 
     @Override
-    public synchronized boolean updateName(@Nonnull EntityPlayerMP player) {
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+    public synchronized boolean updateName(@Nonnull ServerPlayer player) {
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
         NBTTagCompound tag = cache.computeIfAbsent(player.getGameProfile().getId(), (key) -> new NBTTagCompound());
 
         String name = player.getGameProfile().getName();

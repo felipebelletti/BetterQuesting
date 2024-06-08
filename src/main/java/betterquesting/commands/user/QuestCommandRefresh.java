@@ -10,7 +10,7 @@ import betterquesting.questing.party.PartyManager;
 import betterquesting.storage.NameCache;
 import net.minecraft.command.CommandBase;
 import net.minecraft.commands.CommandSource;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
@@ -23,8 +23,8 @@ public class QuestCommandRefresh extends QuestCommandBase {
 
     @Override
     public void runCommand(MinecraftServer server, CommandBase command, CommandSource sender, String[] args) {
-        if (!(sender instanceof EntityPlayerMP)) return;
-        EntityPlayerMP player = (EntityPlayerMP) sender;
+        if (!(sender instanceof ServerPlayer)) return;
+        ServerPlayer player = (ServerPlayer) sender;
 
         if (server.isDedicatedServer() || !server.getServerOwner().equals(player.getGameProfile().getName())) {
             NetBulkSync.sendReset(player, true, true);

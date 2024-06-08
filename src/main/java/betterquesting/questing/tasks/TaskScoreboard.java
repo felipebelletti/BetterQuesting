@@ -12,7 +12,7 @@ import betterquesting.core.BetterQuesting;
 import betterquesting.network.handlers.NetScoreSync;
 import betterquesting.questing.tasks.factory.FactoryTaskScoreboard;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
@@ -94,7 +94,7 @@ public class TaskScoreboard implements ITaskTickable {
 
         if (points != lastValue) {
             ScoreboardBQ.INSTANCE.setScore(pInfo.UUID, scoreName, points);
-            if (pInfo.PLAYER instanceof EntityPlayerMP) NetScoreSync.sendScore((EntityPlayerMP) pInfo.PLAYER);
+            if (pInfo.PLAYER instanceof ServerPlayer) NetScoreSync.sendScore((ServerPlayer) pInfo.PLAYER);
         }
 
         if (operation.checkValues(points, target)) {

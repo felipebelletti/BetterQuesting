@@ -9,7 +9,7 @@ import betterquesting.questing.tasks.TaskTrigger;
 import net.minecraft.advancements.ICriterionInstance;
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
@@ -45,7 +45,7 @@ public class BqsAdvListener<T extends ICriterionInstance> extends ICriterionTrig
             ITask t = q.getTasks().getValue(mappedIDs.getSecond());
             if (!(t instanceof TaskTrigger)) return;
 
-            ((TaskTrigger) t).onCriteriaComplete(((EntityPlayerMP) f_playerAdv.get(playerAdv)), this, mappedIDs.getFirst());
+            ((TaskTrigger) t).onCriteriaComplete(((ServerPlayer) f_playerAdv.get(playerAdv)), this, mappedIDs.getFirst());
         } catch (Exception e) {
             BetterQuesting.logger.error(e);
         }

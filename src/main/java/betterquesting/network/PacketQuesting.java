@@ -4,7 +4,7 @@ import betterquesting.api.api.QuestingAPI;
 import betterquesting.core.BetterQuesting;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -47,7 +47,7 @@ public class PacketQuesting implements IMessage {
                 return null;
             }
 
-            final EntityPlayerMP sender = ctx.getServerHandler().player;
+            final ServerPlayer sender = ctx.getServerHandler().player;
             final NBTTagCompound message = PacketAssembly.INSTANCE.assemblePacket(sender == null ? null : QuestingAPI.getQuestingUUID(sender), packet.tags);
 
             if (message == null) {
@@ -57,7 +57,7 @@ public class PacketQuesting implements IMessage {
                 return null;
             }
 
-            final Consumer<Tuple<NBTTagCompound, EntityPlayerMP>> method = PacketTypeRegistry.INSTANCE.getServerHandler(new ResourceLocation(message.getString("ID")));
+            final Consumer<Tuple<NBTTagCompound, ServerPlayer>> method = PacketTypeRegistry.INSTANCE.getServerHandler(new ResourceLocation(message.getString("ID")));
 
             if (method == null) {
                 BetterQuesting.logger.log(Level.WARN, "Recieved a packet server side with an invalid ID: " + message.getString("ID"));

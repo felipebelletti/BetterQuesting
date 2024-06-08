@@ -13,7 +13,7 @@ import betterquesting.questing.party.PartyInvitations;
 import betterquesting.questing.party.PartyManager;
 import betterquesting.storage.NameCache;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -38,7 +38,7 @@ public class NetBulkSync // Clears local data and negotiates a full resync with 
         }
     }
 
-    public static void sendReset(@Nullable EntityPlayerMP player, boolean reset, boolean respond) {
+    public static void sendReset(@Nullable ServerPlayer player, boolean reset, boolean respond) {
         NBTTagCompound payload = new NBTTagCompound();
         payload.setBoolean("reset", reset);
         payload.setBoolean("respond", respond);
@@ -51,14 +51,14 @@ public class NetBulkSync // Clears local data and negotiates a full resync with 
         }
     }
 
-    public static void sendSync(@Nonnull EntityPlayerMP player) {
+    public static void sendSync(@Nonnull ServerPlayer player) {
         boolean nameChanged = NameCache.INSTANCE.updateName(player);
         UUID playerID = QuestingAPI.getQuestingUUID(player);
 
         NetSettingSync.sendSync(player);
         NetQuestSync.sendSync(player, null, true, true);
         NetChapterSync.sendSync(player, null);
-        NetLifeSync.sendSync(new EntityPlayerMP[]{player}, new UUID[]{playerID});
+        NetLifeSync.sendSync(new ServerPlayer[]{player}, new UUID[]{playerID});
         DBEntry<IParty> party = PartyManager.INSTANCE.getParty(playerID);
         List<Entry<Integer, Long>> invites = PartyInvitations.INSTANCE.getPartyInvites(playerID);
         int partyCount = invites.size() + (party == null ? 0 : 1);
@@ -68,18 +68,18 @@ public class NetBulkSync // Clears local data and negotiates a full resync with 
                 pids[i] = invites.get(i).getKey();
             }
             if (party != null) pids[partyCount - 1] = party.getID();
-            NetPartySync.sendSync(new EntityPlayerMP[]{player}, pids);
+            NetPartySync.sendSync(new ServerPlayer[]{player}, pids);
         }
         if (party != null) {
             NetNameSync.quickSync(nameChanged ? null : player, party.getID());
         } else {
-            NetNameSync.sendNames(new EntityPlayerMP[]{player}, new UUID[]{playerID}, null);
+            NetNameSync.sendNames(new ServerPlayer[]{player}, new UUID[]{playerID}, null);
         }
         NetInviteSync.sendSync(player);
         NetCacheSync.sendSync(player);
     }
 
-    private static void onServer(Tuple<NBTTagCompound, EntityPlayerMP> message) {
+    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
         sendSync(message.getSecond()); // Can include more sync options at a later date
     }
 

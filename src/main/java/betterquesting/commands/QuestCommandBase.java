@@ -6,7 +6,7 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.command.WrongUsageException;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
 import net.minecraftforge.server.permission.PermissionAPI;
@@ -66,10 +66,10 @@ public abstract class QuestCommandBase {
     public UUID findPlayerID(MinecraftServer server, CommandSource sender, String name) {
         UUID playerID;
 
-        EntityPlayerMP player = null;
+        ServerPlayer player = null;
 
         try {
-            player = CommandBase.getEntity(server, sender, name, EntityPlayerMP.class);
+            player = CommandBase.getEntity(server, sender, name, ServerPlayer.class);
         } catch (Exception ignored) {
         }
 

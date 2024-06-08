@@ -10,14 +10,14 @@ import betterquesting.core.ModReference;
 import betterquesting.network.PacketSender;
 import betterquesting.network.PacketTypeRegistry;
 import betterquesting.questing.party.PartyManager;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -39,22 +39,22 @@ public class NetPartySync {
     }
 
     public static void quickSync(int partyID) {
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
         IParty party = PartyManager.INSTANCE.getValue(partyID);
 
         if (server == null || party == null) return;
 
-        List<EntityPlayerMP> players = new ArrayList<>();
+        List<ServerPlayer> players = new ArrayList<>();
         for (UUID uuid : party.getMembers()) {
-            EntityPlayerMP p = server.getPlayerList().getPlayerByUUID(uuid);
+            ServerPlayer p = server.getPlayerList().getPlayerByUUID(uuid);
             //noinspection ConstantConditions
             if (p != null) players.add(p);
         }
 
-        sendSync(players.toArray(new EntityPlayerMP[0]), new int[]{partyID});
+        sendSync(players.toArray(new ServerPlayer[0]), new int[]{partyID});
     }
 
-    public static void sendSync(@Nullable EntityPlayerMP[] players, @Nullable int[] partyIDs) {
+    public static void sendSync(@Nullable ServerPlayer[] players, @Nullable int[] partyIDs) {
         if (partyIDs != null && partyIDs.length <= 0) return;
         if (players != null && players.length <= 0) return;
 
@@ -85,10 +85,10 @@ public class NetPartySync {
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, EntityPlayerMP> message) {
+    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
         NBTTagCompound payload = message.getFirst();
         int[] reqIDs = !payload.hasKey("partyIDs") ? null : payload.getIntArray("partyIDs");
-        sendSync(new EntityPlayerMP[]{message.getSecond()}, reqIDs);
+        sendSync(new ServerPlayer[]{message.getSecond()}, reqIDs);
     }
 
     @SideOnly(Side.CLIENT)

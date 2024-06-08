@@ -15,7 +15,7 @@ import betterquesting.network.PacketSender;
 import betterquesting.network.PacketTypeRegistry;
 import betterquesting.questing.QuestDatabase;
 import betterquesting.questing.QuestLineDatabase;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
@@ -24,7 +24,7 @@ import net.minecraft.util.Tuple;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Level;
@@ -49,8 +49,8 @@ public class NetQuestEdit {
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, EntityPlayerMP> message) {
-        EntityPlayerMP sender = message.getSecond();
+    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+        ServerPlayer sender = message.getSecond();
         MinecraftServer server = sender.getServer();
         if (server == null) return; // Here mostly just to keep intellisense happy
 
@@ -155,9 +155,9 @@ public class NetQuestEdit {
 
         SaveLoadHandler.INSTANCE.markDirty();
 
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
         if (server == null) return;
-        EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(targetID);
+        ServerPlayer player = server.getPlayerList().getPlayerByUUID(targetID);
         //noinspection ConstantConditions
         if (player == null) return;
         NetQuestSync.sendSync(player, questIDs, false, true);

@@ -13,14 +13,14 @@ import betterquesting.network.PacketSender;
 import betterquesting.network.PacketTypeRegistry;
 import betterquesting.questing.QuestDatabase;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -49,21 +49,21 @@ public class NetQuestSync {
 
         if (progress) // Send everyone's individual progression
         {
-            MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+            MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
             if (server == null) return;
 
-            for (EntityPlayerMP player : server.getPlayerList().getPlayers()) {
+            for (ServerPlayer player : server.getPlayerList().getPlayers()) {
                 sendSync(player, IDs, false, true); // Progression only this pass
             }
         }
     }
 
     @Deprecated
-    public static void sendSync(@Nullable EntityPlayerMP player, @Nullable int[] questIDs, boolean config, boolean progress) {
+    public static void sendSync(@Nullable ServerPlayer player, @Nullable int[] questIDs, boolean config, boolean progress) {
         sendSync(player, questIDs, null, config, progress);
     }
 
-    public static void sendSync(@Nullable EntityPlayerMP player, @Nullable int[] questIDs, @Nullable int[] resetIDs, boolean config, boolean progress) {
+    public static void sendSync(@Nullable ServerPlayer player, @Nullable int[] questIDs, @Nullable int[] resetIDs, boolean config, boolean progress) {
         if ((!config && !progress) || (questIDs != null && questIDs.length <= 0)) return;
 
         // Offload this to another thread as it could take a while to build
@@ -105,7 +105,7 @@ public class NetQuestSync {
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, EntityPlayerMP> message) {
+    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
         NBTTagCompound payload = message.getFirst();
         int[] reqIDs = !payload.hasKey("requestIDs", 11) ? null : payload.getIntArray("requestIDs");
         sendSync(message.getSecond(), reqIDs, payload.getBoolean("getConfig"), payload.getBoolean("getProgress"));

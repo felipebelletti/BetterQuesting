@@ -10,7 +10,7 @@ import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskLocation;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
@@ -80,9 +80,9 @@ public class TaskLocation implements ITaskTickable {
     }
 
     private void internalDetect(@Nonnull ParticipantInfo pInfo, DBEntry<IQuest> quest) {
-        if (!pInfo.PLAYER.isEntityAlive() || !(pInfo.PLAYER instanceof EntityPlayerMP)) return;
+        if (!pInfo.PLAYER.isEntityAlive() || !(pInfo.PLAYER instanceof ServerPlayer)) return;
 
-        EntityPlayerMP playerMP = (EntityPlayerMP) pInfo.PLAYER;
+        ServerPlayer playerMP = (ServerPlayer) pInfo.PLAYER;
 
         boolean flag = false;
 

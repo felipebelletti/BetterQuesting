@@ -7,7 +7,7 @@ import betterquesting.api.utils.BigItemStack;
 import betterquesting.client.gui2.GuiLootChest;
 import betterquesting.core.BetterQuesting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
@@ -27,7 +27,7 @@ public class NetLootClaim {
         }
     }
 
-    public static void sendReward(@Nonnull EntityPlayerMP player, @Nonnull String title, BigItemStack... items) {
+    public static void sendReward(@Nonnull ServerPlayer player, @Nonnull String title, BigItemStack... items) {
         NBTTagCompound payload = new NBTTagCompound();
         NBTTagList list = new NBTTagList();
         for (BigItemStack stack : items) {

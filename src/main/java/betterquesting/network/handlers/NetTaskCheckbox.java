@@ -8,7 +8,7 @@ import betterquesting.api.questing.tasks.ITask;
 import betterquesting.api2.cache.CapabilityProviderQuestCache;
 import betterquesting.api2.cache.QuestCache;
 import betterquesting.questing.tasks.TaskCheckbox;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -30,9 +30,9 @@ public class NetTaskCheckbox {
         QuestingAPI.getAPI(ApiReference.PACKET_SENDER).sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, EntityPlayerMP> message) {
+    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
         NBTTagCompound data = message.getFirst();
-        EntityPlayerMP sender = message.getSecond();
+        ServerPlayer sender = message.getSecond();
 
         int qId = !data.hasKey("questID", 99) ? -1 : data.getInteger("questID");
         int tId = !data.hasKey("taskID", 99) ? -1 : data.getInteger("taskID");

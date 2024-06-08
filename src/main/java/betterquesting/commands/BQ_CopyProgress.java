@@ -10,7 +10,7 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
@@ -58,7 +58,7 @@ public class BQ_CopyProgress extends CommandBase {
             }
 
             UUID ownUUID = args.length == 2 ? getPlayer(server, sender, args[1]).getPersistentID() : ((Player) sender).getPersistentID();
-            EntityPlayerMP addPlayer = getPlayer(server, sender, args[0]);
+            ServerPlayer addPlayer = getPlayer(server, sender, args[0]);
             UUID addUUID = addPlayer.getPersistentID();
 
             long current = System.currentTimeMillis();

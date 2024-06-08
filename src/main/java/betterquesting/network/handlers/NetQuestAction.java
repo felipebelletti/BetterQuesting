@@ -8,7 +8,7 @@ import betterquesting.core.ModReference;
 import betterquesting.network.PacketSender;
 import betterquesting.network.PacketTypeRegistry;
 import betterquesting.questing.QuestDatabase;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -44,7 +44,7 @@ public class NetQuestAction {
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, EntityPlayerMP> message) {
+    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
         int action = !message.getFirst().hasKey("action", 99) ? -1 : message.getFirst().getInteger("action");
 
         switch (action) {
@@ -62,7 +62,7 @@ public class NetQuestAction {
         }
     }
 
-    public static void claimQuest(int[] questIDs, EntityPlayerMP player) {
+    public static void claimQuest(int[] questIDs, ServerPlayer player) {
         List<DBEntry<IQuest>> qLists = QuestDatabase.INSTANCE.bulkLookup(questIDs);
 
         for (DBEntry<IQuest> entry : qLists) {
@@ -71,7 +71,7 @@ public class NetQuestAction {
         }
     }
 
-    public static void detectQuest(int[] questIDs, EntityPlayerMP player) {
+    public static void detectQuest(int[] questIDs, ServerPlayer player) {
         List<DBEntry<IQuest>> qLists = QuestDatabase.INSTANCE.bulkLookup(questIDs);
 
         for (DBEntry<IQuest> entry : qLists) {

@@ -5,11 +5,11 @@ import betterquesting.api.questing.party.IParty;
 import betterquesting.api2.storage.INBTPartial;
 import betterquesting.core.BetterQuesting;
 import betterquesting.network.handlers.NetInviteSync;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.server.ServerLifecycleHooks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -73,7 +73,7 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
     }
 
     public synchronized void cleanExpired() {
-        MinecraftServer server = FMLCommonHandler.instance().getMinecraftServerInstance();
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
         Iterator<Entry<UUID, HashMap<Integer, Long>>> iterA = invites.entrySet().iterator();
         while (iterA.hasNext()) {
             Entry<UUID, HashMap<Integer, Long>> userInvites = iterA.next();
@@ -87,7 +87,7 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
                     iterB.remove();
                 }
             }
-            EntityPlayerMP player = server.getPlayerList().getPlayerByUUID(userInvites.getKey());
+            ServerPlayer player = server.getPlayerList().getPlayerByUUID(userInvites.getKey());
             //noinspection ConstantConditions
             if (player != null && revoked.size() >= 0) {
                 int[] revAry = new int[revoked.size()];
