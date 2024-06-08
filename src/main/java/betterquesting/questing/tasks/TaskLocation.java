@@ -15,7 +15,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.phys.Vec3;

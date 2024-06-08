@@ -1,7 +1,9 @@
 package betterquesting.api.network;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.network.simple.SimpleChannel;
 
 public interface IPacketSender {
     // Server to Client
@@ -13,7 +15,7 @@ public interface IPacketSender {
     void sendToServer(QuestingPacket payload);
 
     // Misc.
-    void sendToAround(QuestingPacket payload, TargetPoint point);
+    void sendToAround(QuestingPacket payload, PacketDistributor.TargetPoint point);
 
     void sendToDimension(QuestingPacket payload, int dimension);
 }

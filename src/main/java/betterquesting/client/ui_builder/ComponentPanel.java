@@ -10,7 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.util.vector.Vector4f;
 
 import javax.annotation.Nonnull;

@@ -6,7 +6,7 @@ import betterquesting.api2.utils.BQThreadedIO;
 import betterquesting.core.BetterQuesting;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
+import net.minecraftforge.fml.common.network.NetworkRegistry.PacketDistributor.TargetPoint;
 
 import java.util.List;
 
@@ -50,7 +50,7 @@ public class PacketSender implements IPacketSender {
     }
 
     @Override
-    public void sendToAround(QuestingPacket payload, TargetPoint point) {
+    public void sendToAround(QuestingPacket payload, PacketDistributor.TargetPoint point) {
         payload.getPayload().setString("ID", payload.getHandler().toString());
 
         BQThreadedIO.INSTANCE.enqueue(() -> {

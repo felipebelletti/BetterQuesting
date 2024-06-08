@@ -27,7 +27,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 import org.apache.logging.log4j.Level;
