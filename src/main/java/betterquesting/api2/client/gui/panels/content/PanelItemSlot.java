@@ -16,7 +16,7 @@ import mezz.jei.api.recipe.IFocus.Mode;
 import mezz.jei.config.KeyBindings;
 import mezz.jei.gui.Focus;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.util.ITooltipFlag.TooltipFlags;
+import net.minecraft.world.item.TooltipFlag.TooltipFlags;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.NonNullList;

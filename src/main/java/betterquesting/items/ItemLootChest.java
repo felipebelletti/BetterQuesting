@@ -9,7 +9,7 @@ import betterquesting.core.BetterQuesting;
 import betterquesting.network.handlers.NetLootClaim;
 import betterquesting.questing.rewards.loot.LootGroup;
 import betterquesting.questing.rewards.loot.LootRegistry;
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;

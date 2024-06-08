@@ -15,7 +15,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
-import net.minecraft.client.util.ITooltipFlag.TooltipFlags;
+import net.minecraft.world.item.TooltipFlag.TooltipFlags;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.world.item.ItemStack;

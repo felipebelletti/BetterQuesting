@@ -1,6 +1,6 @@
 package betterquesting.api.placeholders;
 
-import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.Item;
