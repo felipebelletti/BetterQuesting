@@ -9,8 +9,10 @@ import betterquesting.api2.client.gui.misc.GuiRectangle;
 import betterquesting.api2.client.gui.misc.IGuiRect;
 import betterquesting.api2.client.gui.panels.IGuiCanvas;
 import betterquesting.api2.client.gui.panels.IGuiPanel;
-import net.minecraft.client.renderer.GlStateManager;
-import org.lwjgl.input.Mouse;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
+import org.lwjgl.glfw.GLFW;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -157,7 +159,7 @@ public class CanvasScrolling implements IGuiCanvas {
     }
 
     @Override
-    public void drawPanel(int mx, int my, float partialTick) {
+    public void drawPanel(int mx, int my, float partialTick, PoseStack poseStack) {
         if (!isRectEqual(refRect, transform)) refreshScrollBounds();
 
         float zs = zoomScale.readValue();
@@ -165,7 +167,7 @@ public class CanvasScrolling implements IGuiCanvas {
         int tx = transform.getX();
         int ty = transform.getY();
 
-        if (isDragging && (Mouse.isButtonDown(0) || Mouse.isButtonDown(2))) // Extra fallback incase something used the usual release event
+        if (isDragging && (GLFW.glfwGetMouseButton(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_MOUSE_BUTTON_1) == GLFW.GLFW_PRESS || GLFW.glfwGetMouseButton(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_MOUSE_BUTTON_2) == GLFW.GLFW_PRESS)) // Extra fallback incase something used the usual release event
         {
             int dx = (int) ((dragMX - mx) / zs);
             int dy = (int) ((dragMY - my) / zs);
@@ -247,24 +249,24 @@ public class CanvasScrolling implements IGuiCanvas {
             this.updatePanelScroll();
         }
 
-        GlStateManager.pushMatrix();
+        poseStack.pushPose();
 
         RenderUtils.startScissor(transform);
 
-        GlStateManager.translate(tx - lsx * zs, ty - lsy * zs, 0F);
-        GlStateManager.scale(zs, zs, zs);
+        poseStack.translate(tx - lsx * zs, ty - lsy * zs, 0F);
+        poseStack.scale(zs, zs, zs);
 
         int smx = (int) ((mx - tx) / zs) + lsx;
         int smy = (int) ((my - ty) / zs) + lsy;
 
         for (IGuiPanel panel : getVisiblePanels()) {
             if (panel.isEnabled()) {
-                panel.drawPanel(smx, smy, partialTick);
+                panel.drawPanel(smx, smy, partialTick, poseStack);
             }
         }
 
         RenderUtils.endScissor();
-        GlStateManager.popMatrix();
+        poseStack.popPose();
     }
 
     @Override
@@ -328,7 +330,9 @@ public class CanvasScrolling implements IGuiCanvas {
         }
 
         if (isDragging) {
-            if (!Mouse.isButtonDown(0) && !Mouse.isButtonDown(2)) isDragging = false;
+            if (GLFW.glfwGetMouseButton(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_MOUSE_BUTTON_1) == GLFW.GLFW_RELEASE && GLFW.glfwGetMouseButton(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_MOUSE_BUTTON_2) == GLFW.GLFW_RELEASE) {
+                isDragging = false;
+            }
             return true;
         }
 

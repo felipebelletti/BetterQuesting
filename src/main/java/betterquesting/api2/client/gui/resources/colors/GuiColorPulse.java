@@ -1,7 +1,8 @@
 package betterquesting.api2.client.gui.resources.colors;
 
 import betterquesting.api.utils.RenderUtils;
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import org.lwjgl.glfw.GLFW;
 
 public class GuiColorPulse implements IGuiColor {
     // Saves me having to run the math function every frame

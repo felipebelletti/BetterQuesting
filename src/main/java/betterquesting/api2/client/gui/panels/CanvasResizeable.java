@@ -5,7 +5,10 @@ import betterquesting.api2.client.gui.misc.ComparatorGuiDepth;
 import betterquesting.api2.client.gui.misc.GuiRectLerp;
 import betterquesting.api2.client.gui.misc.IGuiRect;
 import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
+import org.lwjgl.glfw.GLFW;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -77,19 +80,19 @@ public class CanvasResizeable implements IGuiCanvas {
     }
 
     @Override
-    public void drawPanel(int mx, int my, float partialTick) {
+    public void drawPanel(int mx, int my, float partialTick, PoseStack poseStack) {
         if (crop) RenderUtils.startScissor(rectLerp);
 
         if (bgTexture != null) {
             IGuiRect bounds = rectLerp;
-            GlStateManager.pushMatrix();
-            GlStateManager.color(1F, 1F, 1F, 1F);
-            bgTexture.drawTexture(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), 0F, partialTick);
-            GlStateManager.popMatrix();
+            poseStack.pushPose();
+            RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
+            bgTexture.drawTexture(poseStack, bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), 0F, partialTick);
+            poseStack.popPose();
         }
 
         for (IGuiPanel entry : guiPanels) {
-            if (entry.isEnabled()) entry.drawPanel(mx, my, partialTick);
+            if (entry.isEnabled()) entry.drawPanel(mx, my, partialTick, poseStack);
         }
 
         if (crop) RenderUtils.endScissor();

@@ -1,6 +1,7 @@
 package betterquesting.api2.client.gui.panels;
 
 import betterquesting.api2.client.gui.misc.IGuiRect;
+import com.mojang.blaze3d.vertex.PoseStack;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface IGuiPanel {
 
     boolean isEnabled();
 
-    void drawPanel(int mx, int my, float partialTick);
+    void drawPanel(int mx, int my, float partialTick, PoseStack poseStack);
 
     boolean onMouseClick(int mx, int my, int button);
 

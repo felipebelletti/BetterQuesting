@@ -1,6 +1,7 @@
 package betterquesting.api2.client.gui.resources.colors;
 
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import org.lwjgl.glfw.GLFW;
 
 import java.awt.*;
 

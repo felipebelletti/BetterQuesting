@@ -6,7 +6,8 @@ import betterquesting.api2.client.gui.controls.io.ValueFuncIO;
 import betterquesting.api2.client.gui.misc.GuiRectangle;
 import betterquesting.api2.client.gui.misc.IGuiRect;
 import betterquesting.api2.client.gui.panels.IGuiPanel;
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import org.lwjgl.glfw.GLFW;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 

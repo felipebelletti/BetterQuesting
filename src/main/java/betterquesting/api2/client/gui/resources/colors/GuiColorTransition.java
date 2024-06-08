@@ -2,7 +2,8 @@ package betterquesting.api2.client.gui.resources.colors;
 
 import betterquesting.api.utils.RenderUtils;
 import betterquesting.api2.client.gui.controls.IValueIO;
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import org.lwjgl.glfw.GLFW;
 
 public class GuiColorTransition implements IGuiColor {
     private final IGuiColor cNorm;

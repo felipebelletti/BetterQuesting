@@ -8,7 +8,8 @@ import betterquesting.api2.client.gui.resources.colors.GuiColorStatic;
 import betterquesting.api2.client.gui.resources.colors.IGuiColor;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import org.lwjgl.glfw.GLFW;
 import net.minecraft.resources.ResourceLocation;
 
 // Wrapper to allow embedding items into panels as IGuiTextures

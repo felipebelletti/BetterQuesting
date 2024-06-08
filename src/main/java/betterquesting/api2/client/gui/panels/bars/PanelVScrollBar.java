@@ -4,7 +4,8 @@ import betterquesting.api.storage.BQ_Settings;
 import betterquesting.api2.client.gui.misc.IGuiRect;
 import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import org.lwjgl.glfw.GLFW;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.input.Mouse;
 

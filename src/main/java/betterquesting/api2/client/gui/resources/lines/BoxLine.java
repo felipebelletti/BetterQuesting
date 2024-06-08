@@ -2,7 +2,8 @@ package betterquesting.api2.client.gui.resources.lines;
 
 import betterquesting.api2.client.gui.misc.IGuiRect;
 import betterquesting.api2.client.gui.resources.colors.IGuiColor;
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL11;
 
 public class BoxLine implements IGuiLine {

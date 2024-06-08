@@ -10,7 +10,8 @@ import betterquesting.api2.utils.EntityPlayerPreview;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
-import net.minecraft.client.renderer.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
+import org.lwjgl.glfw.GLFW;
 import net.minecraft.resources.ResourceLocation;
 
 import java.util.List;
