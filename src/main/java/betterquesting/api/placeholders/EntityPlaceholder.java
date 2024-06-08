@@ -4,13 +4,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class EntityPlaceholder extends Entity {
     private final EntityItem eItem;
     private NBTTagCompound original = new NBTTagCompound();
 
-    public EntityPlaceholder(World world) {
+    public EntityPlaceholder(Level world) {
         super(world);
         eItem = new EntityItem(world);
         eItem.setItem(new ItemStack(ItemPlaceholder.placeholder));

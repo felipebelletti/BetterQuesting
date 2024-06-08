@@ -5,7 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -14,7 +14,7 @@ import net.minecraftforge.fluids.FluidStack;
  * In charge of safely converting to or from placeholder objects
  */
 public class PlaceholderConverter {
-    public static Entity convertEntity(Entity orig, World world, NBTTagCompound nbt) {
+    public static Entity convertEntity(Entity orig, Level world, NBTTagCompound nbt) {
         Entity entity = orig;
 
         if (orig == null) {

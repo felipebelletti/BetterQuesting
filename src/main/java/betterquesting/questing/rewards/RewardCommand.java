@@ -21,7 +21,7 @@ import net.minecraft.tileentity.CommandBlockBaseLogic;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 import java.util.Arrays;
@@ -130,7 +130,7 @@ public class RewardCommand implements IReward {
 
         @Nonnull
         @Override
-        public World getEntityWorld() {
+        public Level getEntityWorld() {
             return entity.getEntityWorld();
         }
 

@@ -12,7 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatAllowedCharacters;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -307,7 +307,7 @@ public class JsonHelper {
         return json;
     }
 
-    public static Entity JsonToEntity(NBTTagCompound tags, World world) {
+    public static Entity JsonToEntity(NBTTagCompound tags, Level world) {
         Entity entity = null;
 
         if (tags.hasKey("id") && EntityList.isRegistered(new ResourceLocation(tags.getString("id")))) {

@@ -8,7 +8,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
 
@@ -52,7 +52,7 @@ public class AdminExecute implements ICommandSender {
 
     @Nonnull
     @Override
-    public World getEntityWorld() {
+    public Level getEntityWorld() {
         return player.getEntityWorld();
     }
 

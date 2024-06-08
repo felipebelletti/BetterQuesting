@@ -11,7 +11,7 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 
 public class BlockSubmitStation extends BlockContainer {
     public BlockSubmitStation() {
@@ -22,7 +22,7 @@ public class BlockSubmitStation extends BlockContainer {
     }
 
     @Override
-    public TileEntity createNewTileEntity(World world, int meta) {
+    public TileEntity createNewTileEntity(Level world, int meta) {
         return new TileSubmitStation();
     }
 
@@ -38,14 +38,14 @@ public class BlockSubmitStation extends BlockContainer {
      * Called upon block activation (right click on the block.)
      */
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing heldItem, float side, float hitX, float hitY) {
+    public boolean onBlockActivated(Level world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing heldItem, float side, float hitX, float hitY) {
         if (!world.isRemote) {
             player.openGui(BetterQuesting.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
     }
 
-    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+    public void breakBlock(Level world, BlockPos pos, IBlockState state) {
         TileSubmitStation tileStation = (TileSubmitStation) world.getTileEntity(pos);
 
         if (tileStation != null) {

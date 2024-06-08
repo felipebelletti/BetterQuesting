@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -27,7 +27,7 @@ public class ItemPlaceholder extends Item {
      */
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+    public void addInformation(ItemStack stack, @Nullable Level worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         if (!stack.hasTagCompound()) {
             tooltip.add("ERROR: Original information missing!");
             return;
@@ -41,7 +41,7 @@ public class ItemPlaceholder extends Item {
      * update it's contents.
      */
     @Override
-    public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean held) {
+    public void onUpdate(ItemStack stack, Level world, Entity entity, int slot, boolean held) {
         if (!stack.hasTagCompound() || !(entity instanceof EntityPlayer) || world.getTotalWorldTime() % 100 != 0) // Process this only once a second
         {
             return;
