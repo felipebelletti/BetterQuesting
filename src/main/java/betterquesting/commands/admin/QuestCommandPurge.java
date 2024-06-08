@@ -9,7 +9,7 @@ import betterquesting.network.handlers.NetQuestEdit;
 import betterquesting.questing.QuestDatabase;
 import betterquesting.questing.QuestLineDatabase;
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
@@ -26,7 +26,7 @@ public class QuestCommandPurge extends QuestCommandBase {
     }
 
     @Override
-    public void runCommand(MinecraftServer server, CommandBase command, ICommandSender sender, String[] args) {
+    public void runCommand(MinecraftServer server, CommandBase command, CommandSource sender, String[] args) {
         TreeSet<Integer> knownKeys = new TreeSet<>();
 
         for (DBEntry<IQuestLine> entry : QuestLineDatabase.INSTANCE.getEntries()) {

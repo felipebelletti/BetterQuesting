@@ -8,7 +8,7 @@ import betterquesting.questing.QuestDatabase;
 import betterquesting.storage.NameCache;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -48,7 +48,7 @@ public class QuestCommandCheckCompletion extends QuestCommandBase {
     }
 
     @Override
-    public List<String> autoComplete(MinecraftServer server, ICommandSender sender, @Nonnull String[] args) {
+    public List<String> autoComplete(MinecraftServer server, CommandSource sender, @Nonnull String[] args) {
         ArrayList<String> list = new ArrayList<>();
 
         if (args.length == 2) {
@@ -68,7 +68,7 @@ public class QuestCommandCheckCompletion extends QuestCommandBase {
     }
 
     @Override
-    public void runCommand(MinecraftServer server, CommandBase command, ICommandSender sender, @Nonnull String[] args) throws CommandException {
+    public void runCommand(MinecraftServer server, CommandBase command, CommandSource sender, @Nonnull String[] args) throws CommandException {
         UUID uuid;
 
         uuid = this.findPlayerID(server, sender, args[1]);

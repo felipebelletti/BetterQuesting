@@ -1,7 +1,7 @@
 package betterquesting;
 
 import net.minecraft.command.CommandResultStats.Type;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.MinecraftServer;
@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
 /**
  * Elevates the player's privileges to OP level for use in command rewards
  */
-public class AdminExecute implements ICommandSender {
+public class AdminExecute implements CommandSource {
     private final Player player;
 
     public AdminExecute(Player player) {

@@ -4,7 +4,7 @@ import betterquesting.commands.QuestCommandBase;
 import betterquesting.core.BetterQuesting;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
@@ -17,7 +17,7 @@ public class QuestCommandHelp extends QuestCommandBase {
     }
 
     @Override
-    public void runCommand(MinecraftServer server, CommandBase command, ICommandSender sender, String[] args) throws CommandException {
+    public void runCommand(MinecraftServer server, CommandBase command, CommandSource sender, String[] args) throws CommandException {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (!player.inventory.addItemStackToInventory(new ItemStack(BetterQuesting.guideBook))) {

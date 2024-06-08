@@ -7,7 +7,7 @@ import betterquesting.network.handlers.NetSettingSync;
 import betterquesting.storage.QuestSettings;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
@@ -20,7 +20,7 @@ public class QuestCommandSPHardcore extends QuestCommandBase {
     }
 
     @Override
-    public void runCommand(MinecraftServer server, CommandBase command, ICommandSender sender, String[] args) throws CommandException {
+    public void runCommand(MinecraftServer server, CommandBase command, CommandSource sender, String[] args) throws CommandException {
         if (!server.isSinglePlayer() || !server.getServerOwner().equalsIgnoreCase(sender.getName())) {
             TextComponentTranslation cc = new TextComponentTranslation("commands.generic.permission");
             cc.getStyle().setColor(TextFormatting.RED);

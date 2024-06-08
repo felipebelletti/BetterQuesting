@@ -5,7 +5,7 @@ import betterquesting.commands.user.QuestCommandRefresh;
 import betterquesting.commands.user.QuestCommandSPHardcore;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.MinecraftServer;
@@ -41,12 +41,12 @@ public class BQ_CommandUser extends CommandBase {
     }
 
     @Override
-    public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
+    public boolean checkPermission(MinecraftServer server, CommandSource sender) {
         return !(sender instanceof Player) || PermissionAPI.hasPermission((Player) sender, "betterquesting.command.user");
     }
 
     @Override
-    public String getUsage(ICommandSender sender) {
+    public String getUsage(CommandSource sender) {
         StringBuilder txt = new StringBuilder();
 
         for (int i = 0; i < coms.size(); i++) {
@@ -69,7 +69,7 @@ public class BQ_CommandUser extends CommandBase {
      * Adds the strings available in this command to the given list of tab completion options.
      */
     @Override
-    public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] strings, BlockPos pos) {
+    public List<String> getTabCompletions(MinecraftServer server, CommandSource sender, String[] strings, BlockPos pos) {
         if (strings.length == 1) {
             List<String> base = new ArrayList<>();
             for (QuestCommandBase c : coms) {
@@ -92,7 +92,7 @@ public class BQ_CommandUser extends CommandBase {
     }
 
     @Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+    public void execute(MinecraftServer server, CommandSource sender, String[] args) throws CommandException {
         if (args.length < 1) {
             throw new WrongUsageException(this.getUsage(sender));
         }

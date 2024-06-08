@@ -30,7 +30,7 @@ import com.google.common.collect.MultimapBuilder;
 import com.google.gson.JsonObject;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
@@ -74,7 +74,7 @@ public class QuestCommandDefaults extends QuestCommandBase {
     }
 
     @Override
-    public List<String> autoComplete(MinecraftServer server, ICommandSender sender, String[] args) {
+    public List<String> autoComplete(MinecraftServer server, CommandSource sender, String[] args) {
         if (args.length == 2) {
             return CommandBase.getListOfStringsMatchingLastWord(args, "save", "load", "set", "saveLegacy", "loadLegacy");
         } else if (args.length == 3) {
@@ -90,7 +90,7 @@ public class QuestCommandDefaults extends QuestCommandBase {
     }
 
     @Override
-    public void runCommand(MinecraftServer server, CommandBase command, ICommandSender sender, String[] args) throws CommandException {
+    public void runCommand(MinecraftServer server, CommandBase command, CommandSource sender, String[] args) throws CommandException {
         String databaseName;
         File dataDir;
         // The location of the legacy single huge file.
@@ -125,7 +125,7 @@ public class QuestCommandDefaults extends QuestCommandBase {
         }
     }
 
-    public static void save(@Nullable ICommandSender sender, String databaseName, File dataDir) {
+    public static void save(@Nullable CommandSource sender, String databaseName, File dataDir) {
 
         BiFunction<String, Integer, String> buildFileName =
                 (name, id) -> {
@@ -241,7 +241,7 @@ public class QuestCommandDefaults extends QuestCommandBase {
         }
     }
 
-    public static void saveLegacy(@Nullable ICommandSender sender, String databaseName, File legacyFile) {
+    public static void saveLegacy(@Nullable CommandSource sender, String databaseName, File legacyFile) {
         boolean editMode = QuestSettings.INSTANCE.getProperty(NativeProps.EDIT_MODE);
 
         NBTTagCompound base = new NBTTagCompound();
@@ -262,7 +262,7 @@ public class QuestCommandDefaults extends QuestCommandBase {
         }
     }
 
-    public static void load(@Nullable ICommandSender sender, @Nullable String databaseName, File dataDir, boolean loadWorldSettings) {
+    public static void load(@Nullable CommandSource sender, @Nullable String databaseName, File dataDir, boolean loadWorldSettings) {
         if (!dataDir.exists()) {
             sendChatMessage(sender, "betterquesting.cmd.default.none");
             return;
@@ -354,7 +354,7 @@ public class QuestCommandDefaults extends QuestCommandBase {
         SaveLoadHandler.INSTANCE.markDirty();
     }
 
-    public static void loadLegacy(@Nullable ICommandSender sender, @Nullable String databaseName, File legacyFile, boolean loadWorldSettings) {
+    public static void loadLegacy(@Nullable CommandSource sender, @Nullable String databaseName, File legacyFile, boolean loadWorldSettings) {
         if (legacyFile.exists()) {
             boolean editMode = QuestSettings.INSTANCE.getProperty(NativeProps.EDIT_MODE);
             boolean hardMode = QuestSettings.INSTANCE.getProperty(NativeProps.HARDCORE);
@@ -396,7 +396,7 @@ public class QuestCommandDefaults extends QuestCommandBase {
         }
     }
 
-    public static void set(@Nullable ICommandSender sender, String databaseName, File dataDir) {
+    public static void set(@Nullable CommandSource sender, String databaseName, File dataDir) {
         if (!dataDir.exists() || databaseName.equalsIgnoreCase(DEFAULT_FILE)) {
             sendChatMessage(sender, "betterquesting.cmd.default.none");
             return;
@@ -425,7 +425,7 @@ public class QuestCommandDefaults extends QuestCommandBase {
         sendChatMessage(sender, "betterquesting.cmd.default.set", databaseName);
     }
 
-    public static void setLegacy(@Nullable ICommandSender sender, String databaseName, File legacyFile) {
+    public static void setLegacy(@Nullable CommandSource sender, String databaseName, File legacyFile) {
         if (legacyFile.exists() && !databaseName.equalsIgnoreCase(DEFAULT_FILE)) {
             File defFile = new File(BQ_Settings.defaultDir, DEFAULT_FILE + ".json");
 
@@ -461,7 +461,7 @@ public class QuestCommandDefaults extends QuestCommandBase {
 
     /** Helper method that handles having null sender. */
     private static void sendChatMessage(
-            @Nullable ICommandSender sender, String translationKey, Object... args) {
+            @Nullable CommandSource sender, String translationKey, Object... args) {
         if (sender == null) {
             return;
         }

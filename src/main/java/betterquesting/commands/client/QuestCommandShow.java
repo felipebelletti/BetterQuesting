@@ -12,7 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.event.GuiOpenEvent;
@@ -44,7 +44,7 @@ public class QuestCommandShow extends QuestCommandBase {
     }
 
     @Override
-    public void runCommand(MinecraftServer server, CommandBase command, ICommandSender sender, String[] args) throws CommandException {
+    public void runCommand(MinecraftServer server, CommandBase command, CommandSource sender, String[] args) throws CommandException {
         if (sender instanceof EntityPlayerSP && args.length == 2) {
             try {
                 questId = Integer.parseInt(args[1]);
@@ -81,7 +81,7 @@ public class QuestCommandShow extends QuestCommandBase {
     }
 
     @Override
-    public List<String> autoComplete(MinecraftServer server, ICommandSender sender, String[] args) {
+    public List<String> autoComplete(MinecraftServer server, CommandSource sender, String[] args) {
         return args.length == 2 ? QuestDatabase.INSTANCE.getEntries().stream().map(DBEntry::getID).map(Object::toString).collect(Collectors.toList()) : Collections.emptyList();
     }
 

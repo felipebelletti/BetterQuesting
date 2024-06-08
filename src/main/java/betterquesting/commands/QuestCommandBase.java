@@ -4,7 +4,7 @@ import betterquesting.api.api.QuestingAPI;
 import betterquesting.storage.NameCache;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
@@ -44,11 +44,11 @@ public abstract class QuestCommandBase {
         return args.length == 1;
     }
 
-    public List<String> autoComplete(MinecraftServer server, ICommandSender sender, String[] args) {
+    public List<String> autoComplete(MinecraftServer server, CommandSource sender, String[] args) {
         return Collections.emptyList();
     }
 
-    public abstract void runCommand(MinecraftServer server, CommandBase command, ICommandSender sender, String[] args) throws CommandException;
+    public abstract void runCommand(MinecraftServer server, CommandBase command, CommandSource sender, String[] args) throws CommandException;
 
     public final WrongUsageException getException(CommandBase command) {
         String message = command.getName() + " " + getCommand();
@@ -63,7 +63,7 @@ public abstract class QuestCommandBase {
     /**
      * Attempts to find the players ID from the given name or convert it to a UUID if valid
      */
-    public UUID findPlayerID(MinecraftServer server, ICommandSender sender, String name) {
+    public UUID findPlayerID(MinecraftServer server, CommandSource sender, String name) {
         UUID playerID;
 
         EntityPlayerMP player = null;

@@ -2,7 +2,7 @@ package betterquesting.commands.bqs;
 
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.server.MinecraftServer;
 
@@ -13,7 +13,7 @@ public class BqsComDumpAdvancements extends CommandBase {
     }
 
     @Override
-    public String getUsage(ICommandSender sender) {
+    public String getUsage(CommandSource sender) {
         return "/bqs_advancement_dump";
     }
 
@@ -23,7 +23,7 @@ public class BqsComDumpAdvancements extends CommandBase {
     }
 
     @Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+    public void execute(MinecraftServer server, CommandSource sender, String[] args) throws CommandException {
         if (args.length != 0) {
             throw new WrongUsageException(getUsage(sender));
         }

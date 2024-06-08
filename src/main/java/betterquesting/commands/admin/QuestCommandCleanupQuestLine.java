@@ -9,7 +9,7 @@ import betterquesting.core.BetterQuesting;
 import betterquesting.questing.QuestDatabase;
 import betterquesting.questing.QuestLineDatabase;
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
@@ -20,7 +20,7 @@ import java.util.WeakHashMap;
 
 public class QuestCommandCleanupQuestLine extends QuestCommandBase {
 
-    private static final Set<ICommandSender> confirm = Collections.newSetFromMap(new WeakHashMap<>());
+    private static final Set<CommandSource> confirm = Collections.newSetFromMap(new WeakHashMap<>());
 
     @Override
     public String getCommand() {
@@ -43,7 +43,7 @@ public class QuestCommandCleanupQuestLine extends QuestCommandBase {
     }
 
     @Override
-    public void runCommand(MinecraftServer server, CommandBase command, ICommandSender sender, String[] args) {
+    public void runCommand(MinecraftServer server, CommandBase command, CommandSource sender, String[] args) {
         if (confirm.add(sender)) {
             sender.sendMessage(new TextComponentTranslation("betterquesting.cmd.cleanup_questline.confirm"));
             return;

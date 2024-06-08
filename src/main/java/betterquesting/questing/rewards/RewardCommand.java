@@ -12,7 +12,7 @@ import betterquesting.questing.rewards.factory.FactoryRewardCommand;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.command.FunctionObject;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.NBTTagCompound;
@@ -63,7 +63,7 @@ public class RewardCommand implements IReward {
         String[] comAry = finCom.split("\n");
 
         MinecraftServer server = player.world.getMinecraftServer();
-        ICommandSender sender = viaPlayer ? new AdminExecute(player) : new RewardCommandSender(player);
+        CommandSource sender = viaPlayer ? new AdminExecute(player) : new RewardCommandSender(player);
 
         if (asScript) {
             // New functions don't support preceeding forward slash so we remove them on legacy commands

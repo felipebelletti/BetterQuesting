@@ -12,7 +12,7 @@ import betterquesting.questing.QuestDatabase;
 import betterquesting.questing.QuestLineDatabase;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
@@ -33,7 +33,7 @@ public class QuestCommandDelete extends QuestCommandBase {
     }
 
     @Override
-    public List<String> autoComplete(MinecraftServer server, ICommandSender sender, String[] args) {
+    public List<String> autoComplete(MinecraftServer server, CommandSource sender, String[] args) {
         if (args.length == 2) {
             List<String> list = new ArrayList<>();
             list.add("all");
@@ -53,7 +53,7 @@ public class QuestCommandDelete extends QuestCommandBase {
     }
 
     @Override
-    public void runCommand(MinecraftServer server, CommandBase command, ICommandSender sender, String[] args) throws CommandException {
+    public void runCommand(MinecraftServer server, CommandBase command, CommandSource sender, String[] args) throws CommandException {
         if (args[1].equalsIgnoreCase("all")) {
             QuestDatabase.INSTANCE.reset();
             QuestLineDatabase.INSTANCE.reset();

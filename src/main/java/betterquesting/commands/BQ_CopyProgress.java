@@ -8,7 +8,7 @@ import betterquesting.network.PacketSender;
 import betterquesting.questing.QuestDatabase;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
@@ -40,7 +40,7 @@ public class BQ_CopyProgress extends CommandBase {
 
     @Nonnull
     @Override
-    public String getUsage(@Nonnull ICommandSender sender) {
+    public String getUsage(@Nonnull CommandSource sender) {
         return COMMAND_USAGE;
     }
 
@@ -51,7 +51,7 @@ public class BQ_CopyProgress extends CommandBase {
     }
 
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) throws CommandException {
+    public void execute(@Nonnull MinecraftServer server, @Nonnull CommandSource sender, @Nonnull String[] args) throws CommandException {
         if (sender instanceof Player) {
             if (args.length == 0 || args.length > 2) {
                 throw new CommandException(COMMAND_USAGE);

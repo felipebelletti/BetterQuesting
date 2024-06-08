@@ -7,7 +7,7 @@ import betterquesting.client.themes.ThemeRegistry;
 import com.google.gson.JsonObject;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -23,12 +23,12 @@ public class BQ_CommandDebug extends CommandBase {
     }
 
     @Override
-    public String getUsage(ICommandSender sender) {
+    public String getUsage(CommandSource sender) {
         return "TO BE USED IN DEV ONLY";
     }
 
     @Override
-    public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+    public void execute(MinecraftServer server, CommandSource sender, String[] args) throws CommandException {
         final String dir = "D:/Jon Stuff/Github/Repositories/BetterQuesting - 1.12/jars/test_dlc_theme";
 
         JsonObject manifest = new JsonObject();

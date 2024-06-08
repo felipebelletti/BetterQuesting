@@ -9,7 +9,7 @@ import betterquesting.storage.NameCache;
 import betterquesting.storage.QuestSettings;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
+import net.minecraft.commands.CommandSource;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -36,7 +36,7 @@ public class QuestCommandLives extends QuestCommandBase {
     }
 
     @Override
-    public List<String> autoComplete(MinecraftServer server, ICommandSender sender, String[] args) {
+    public List<String> autoComplete(MinecraftServer server, CommandSource sender, String[] args) {
         if (args.length == 4 && (args[1].equalsIgnoreCase("add") || args[1].equalsIgnoreCase("set"))) {
             return CommandBase.getListOfStringsMatchingLastWord(args, NameCache.INSTANCE.getAllNames());
         } else if (args.length == 2) {
@@ -47,7 +47,7 @@ public class QuestCommandLives extends QuestCommandBase {
     }
 
     @Override
-    public void runCommand(MinecraftServer server, CommandBase command, ICommandSender sender, String[] args) throws CommandException {
+    public void runCommand(MinecraftServer server, CommandBase command, CommandSource sender, String[] args) throws CommandException {
         String action = args[1];
         int value;
         UUID playerID = null;
