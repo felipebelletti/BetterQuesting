@@ -15,7 +15,6 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
-import net.minecraft.util.ChatAllowedCharacters;
 import net.minecraft.util.Mth;
 import org.lwjgl.input.Mouse;
 
@@ -488,7 +487,7 @@ public class PanelTextField<T> implements IGuiPanel {
                     return true;
                 }
                 default: {
-                    if (ChatAllowedCharacters.isAllowedCharacter(typedChar)) {
+                    if (isAllowedCharacter(typedChar)) {
                         if (this.isActive) {
                             this.writeText(Character.toString(typedChar));
                         }
@@ -500,6 +499,10 @@ public class PanelTextField<T> implements IGuiPanel {
                 }
             }
         }
+    }
+
+    public boolean isAllowedCharacter(char c) {
+        return !Character.isISOControl(c) && c != '\u00A7';
     }
 
     /**
