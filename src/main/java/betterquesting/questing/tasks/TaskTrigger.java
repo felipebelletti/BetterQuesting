@@ -19,7 +19,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.ICriterionInstance;
-import net.minecraft.advancements.ICriterionTrigger;
+import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
@@ -80,7 +80,7 @@ public class TaskTrigger implements ITask {
 
         int tskID = quest.getValue().getTasks().getID(this);
 
-        ICriterionTrigger trig = CriteriaTriggers.get(new ResourceLocation(triggerID));
+        CriterionTrigger trig = CriteriaTriggers.get(new ResourceLocation(triggerID));
         if (trig == null) return;
 
         try {

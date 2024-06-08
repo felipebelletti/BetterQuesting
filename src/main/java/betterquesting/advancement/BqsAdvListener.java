@@ -6,8 +6,9 @@ import betterquesting.api.questing.IQuest;
 import betterquesting.api.questing.tasks.ITask;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.TaskTrigger;
+import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.advancements.ICriterionInstance;
-import net.minecraft.advancements.ICriterionTrigger;
+import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Tuple;
@@ -16,12 +17,12 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import javax.annotation.Nonnull;
 import java.lang.reflect.Field;
 
-public class BqsAdvListener<T extends ICriterionInstance> extends ICriterionTrigger.Listener<T> {
-    private final ICriterionTrigger<T> trigType;
+public class BqsAdvListener<T extends ICriterionInstance & CriterionTriggerInstance> extends CriterionTrigger.Listener<T> {
+    private final CriterionTrigger<T> trigType;
     private final Tuple<Integer, Integer> mappedIDs;
 
     @SuppressWarnings("ConstantConditions")
-    public BqsAdvListener(@Nonnull ICriterionTrigger<T> trigType, @Nonnull T critereon, int questID, int taskID) {
+    public BqsAdvListener(@Nonnull CriterionTrigger<T> trigType, @Nonnull T critereon, int questID, int taskID) {
         super(critereon, null, "BQ_PROXY");
         this.trigType = trigType;
         this.mappedIDs = new Tuple<>(questID, taskID);
@@ -69,7 +70,7 @@ public class BqsAdvListener<T extends ICriterionInstance> extends ICriterionTrig
         if (this == p_equals_1_) {
             return true;
         } else if (p_equals_1_ != null && this.getClass() == p_equals_1_.getClass()) {
-            ICriterionTrigger.Listener<?> listener = (ICriterionTrigger.Listener) p_equals_1_;
+            CriterionTrigger.Listener<?> listener = (CriterionTrigger.Listener) p_equals_1_;
             return this.getCriterionInstance().equals(listener.getCriterionInstance());
         } else {
             return false;
