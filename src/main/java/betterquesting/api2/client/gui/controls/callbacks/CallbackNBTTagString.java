@@ -4,7 +4,7 @@ import betterquesting.api.misc.ICallback;
 import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.NBTTagString;
+import net.minecraft.nbt.StringTag;
 
 public class CallbackNBTTagString implements ICallback<String> {
     private final Tag tag;
@@ -25,10 +25,10 @@ public class CallbackNBTTagString implements ICallback<String> {
 
     @Override
     public void setValue(String value) {
-        if (tag.getId() == 10) {
-            ((CompoundTag) tag).setString(sKey, value);
+        if (tag.getId() == Tag.TAG_COMPOUND) {
+            ((CompoundTag) tag).putString(sKey, value);
         } else {
-            ((ListTag) tag).set(iKey, new NBTTagString(value));
+            ((ListTag) tag).set(iKey, StringTag.valueOf(value));
         }
     }
 }
