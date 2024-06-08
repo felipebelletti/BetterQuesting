@@ -31,22 +31,22 @@ public class BqsAdvListener<T extends AbstractCriterionTriggerInstance & Criteri
     }
 
     public void registerSelf(PlayerAdvancements playerAdv) {
-        trigType.addListener(playerAdv, this);
+        trigType.addPlayerListener(playerAdv, this);
     }
 
     public void unregisterSelf(PlayerAdvancements playerAdv) {
-        trigType.removeListener(playerAdv, this);
+        trigType.removePlayerListener(playerAdv, this);
     }
 
     @Override
     public void grantCriterion(PlayerAdvancements playerAdv) {
         try {
-            IQuest q = QuestingAPI.getAPI(ApiReference.QUEST_DB).getValue(mappedIDs.getFirst());
+            IQuest q = QuestingAPI.getAPI(ApiReference.QUEST_DB).getValue(mappedIDs.getA());
             if (q == null) return;
-            ITask t = q.getTasks().getValue(mappedIDs.getSecond());
+            ITask t = q.getTasks().getValue(mappedIDs.getB());
             if (!(t instanceof TaskTrigger)) return;
 
-            ((TaskTrigger) t).onCriteriaComplete(((ServerPlayer) f_playerAdv.get(playerAdv)), this, mappedIDs.getFirst());
+            ((TaskTrigger) t).onCriteriaComplete(((ServerPlayer) f_playerAdv.get(playerAdv)), this, mappedIDs.getA());
         } catch (Exception e) {
             BetterQuesting.logger.error(e);
         }
@@ -54,9 +54,9 @@ public class BqsAdvListener<T extends AbstractCriterionTriggerInstance & Criteri
 
     //
     public boolean verify() {
-        IQuest q = QuestingAPI.getAPI(ApiReference.QUEST_DB).getValue(mappedIDs.getFirst());
+        IQuest q = QuestingAPI.getAPI(ApiReference.QUEST_DB).getValue(mappedIDs.getA());
         if (q == null) return false;
-        ITask t = q.getTasks().getValue(mappedIDs.getSecond());
+        ITask t = q.getTasks().getValue(mappedIDs.getB());
         if (t instanceof TaskTrigger) {
             TaskTrigger tCon = (TaskTrigger) t;
             return tCon.getListener() == this;
@@ -71,7 +71,7 @@ public class BqsAdvListener<T extends AbstractCriterionTriggerInstance & Criteri
             return true;
         } else if (p_equals_1_ != null && this.getClass() == p_equals_1_.getClass()) {
             CriterionTrigger.Listener<?> listener = (CriterionTrigger.Listener) p_equals_1_;
-            return this.getCriterionInstance().equals(listener.getCriterionInstance());
+            return this.getTriggerInstance().equals(listener.getTriggerInstance());
         } else {
             return false;
         }
@@ -79,7 +79,7 @@ public class BqsAdvListener<T extends AbstractCriterionTriggerInstance & Criteri
 
     @Override
     public int hashCode() {
-        int i = this.getCriterionInstance().hashCode();
+        int i = this.getTriggerInstance().hashCode();
         i = 31 * i;// + this.advancement.hashCode();
         i = 31 * i + "BQ_PROXY".hashCode();
         return i;
@@ -88,7 +88,7 @@ public class BqsAdvListener<T extends AbstractCriterionTriggerInstance & Criteri
     private static final Field f_playerAdv;
 
     static {
-        f_playerAdv = ObfuscationReflectionHelper.findField(PlayerAdvancements.class, "field_192762_j", "player");
+        f_playerAdv = ObfuscationReflectionHelper.findField(PlayerAdvancements.class, "field_192762_j");
         f_playerAdv.setAccessible(true);
     }
 }
