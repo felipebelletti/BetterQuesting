@@ -24,13 +24,13 @@ import betterquesting.api2.utils.QuestTranslation;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import org.lwjgl.input.Keyboard;
 
 public class GuiNbtEditor extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {
     private final NBTBase nbt;
     private final ICallback<CompoundTag> comCallback;
-    private final ICallback<NBTTagList> lstCallback;
+    private final ICallback<ListTag> lstCallback;
 
     public GuiNbtEditor(GuiScreen parent, CompoundTag tag, ICallback<CompoundTag> callback) {
         super(parent);
@@ -40,7 +40,7 @@ public class GuiNbtEditor extends GuiScreenCanvas implements IPEventListener, IV
         this.lstCallback = null;
     }
 
-    public GuiNbtEditor(GuiScreen parent, NBTTagList tag, ICallback<NBTTagList> callback) {
+    public GuiNbtEditor(GuiScreen parent, ListTag tag, ICallback<ListTag> callback) {
         super(parent);
 
         this.nbt = tag;
@@ -68,7 +68,7 @@ public class GuiNbtEditor extends GuiScreenCanvas implements IPEventListener, IV
         if (nbt.getId() == 10) {
             pnEdit = new PanelScrollingNBT(new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(16, 32, 24, 32), 0), (CompoundTag) nbt, 1, 2, 3, 4);
         } else {
-            pnEdit = new PanelScrollingNBT(new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(16, 32, 24, 32), 0), (NBTTagList) nbt, 1, 2, 3, 4);
+            pnEdit = new PanelScrollingNBT(new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(16, 32, 24, 32), 0), (ListTag) nbt, 1, 2, 3, 4);
         }
         cvBackground.addPanel(pnEdit);
 
@@ -110,7 +110,7 @@ public class GuiNbtEditor extends GuiScreenCanvas implements IPEventListener, IV
             if (nbt.getId() == 10 && comCallback != null) {
                 comCallback.setValue((CompoundTag) nbt);
             } else if (nbt.getId() == 9 && lstCallback != null) {
-                lstCallback.setValue((NBTTagList) nbt);
+                lstCallback.setValue((ListTag) nbt);
             }
         }
     }

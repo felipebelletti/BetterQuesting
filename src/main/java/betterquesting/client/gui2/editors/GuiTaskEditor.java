@@ -33,7 +33,7 @@ import betterquesting.questing.QuestDatabase;
 import betterquesting.questing.tasks.TaskRegistry;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.text.TextFormatting;
 import org.lwjgl.util.vector.Vector4f;
 
@@ -195,7 +195,7 @@ public class GuiTaskEditor extends GuiScreenCanvas implements IPEventListener, I
 
     private void SendChanges() {
         CompoundTag payload = new CompoundTag();
-        NBTTagList dataList = new NBTTagList();
+        ListTag dataList = new ListTag();
         CompoundTag entry = new CompoundTag();
         entry.setInteger("questID", qID);
         entry.setTag("config", quest.writeToNBT(new CompoundTag()));

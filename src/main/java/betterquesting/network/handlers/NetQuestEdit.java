@@ -17,7 +17,7 @@ import betterquesting.questing.QuestDatabase;
 import betterquesting.questing.QuestLineDatabase;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -92,7 +92,7 @@ public class NetQuestEdit {
     }
 
     // Serverside only
-    public static void editQuests(NBTTagList data) {
+    public static void editQuests(ListTag data) {
         int[] ids = new int[data.tagCount()];
         for (int i = 0; i < data.tagCount(); i++) {
             CompoundTag entry = data.getCompoundTagAt(i);
@@ -164,7 +164,7 @@ public class NetQuestEdit {
     }
 
     // Serverside only
-    public static void createQuests(NBTTagList data) {
+    public static void createQuests(ListTag data) {
         int[] ids = new int[data.tagCount()];
         for (int i = 0; i < data.tagCount(); i++) {
             CompoundTag entry = data.getCompoundTagAt(i);

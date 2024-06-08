@@ -17,7 +17,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NBTTagInt;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.NonNullList;
@@ -192,7 +192,7 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
         nbt.setBoolean("groupDetect", groupDetect);
         nbt.setBoolean("autoConsume", autoConsume);
 
-        NBTTagList itemArray = new NBTTagList();
+        ListTag itemArray = new ListTag();
         for (FluidStack stack : this.requiredFluids) {
             itemArray.appendTag(stack.writeToNBT(new CompoundTag()));
         }
@@ -210,7 +210,7 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
         autoConsume = nbt.getBoolean("autoConsume");
 
         requiredFluids.clear();
-        NBTTagList fList = nbt.getTagList("requiredFluids", 10);
+        ListTag fList = nbt.getTagList("requiredFluids", 10);
         for (int i = 0; i < fList.tagCount(); i++) {
             requiredFluids.add(JsonHelper.JsonToFluidStack(fList.getCompoundTagAt(i)));
         }
@@ -223,7 +223,7 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
             userProgress.clear();
         }
 
-        NBTTagList cList = nbt.getTagList("completeUsers", 8);
+        ListTag cList = nbt.getTagList("completeUsers", 8);
         for (int i = 0; i < cList.tagCount(); i++) {
             try {
                 completeUsers.add(UUID.fromString(cList.getStringTagAt(i)));
@@ -232,14 +232,14 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
             }
         }
 
-        NBTTagList pList = nbt.getTagList("userProgress", 10);
+        ListTag pList = nbt.getTagList("userProgress", 10);
         for (int n = 0; n < pList.tagCount(); n++) {
             try {
                 CompoundTag pTag = pList.getCompoundTagAt(n);
                 UUID uuid = UUID.fromString(pTag.getString("uuid"));
 
                 int[] data = new int[requiredFluids.size()];
-                NBTTagList dNbt = pTag.getTagList("data", 3);
+                ListTag dNbt = pTag.getTagList("data", 3);
                 for (int i = 0; i < data.length && i < dNbt.tagCount(); i++) // TODO: Change this to an int array. This is dumb...
                 {
                     data[i] = dNbt.getIntAt(i);
@@ -254,8 +254,8 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
 
     @Override
     public CompoundTag writeProgressToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
-        NBTTagList jArray = new NBTTagList();
-        NBTTagList progArray = new NBTTagList();
+        ListTag jArray = new ListTag();
+        ListTag progArray = new ListTag();
 
         if (users != null) {
             users.forEach((uuid) -> {
@@ -265,7 +265,7 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
                 if (data != null) {
                     CompoundTag pJson = new CompoundTag();
                     pJson.setString("uuid", uuid.toString());
-                    NBTTagList pArray = new NBTTagList(); // TODO: Why the heck isn't this just an int array?!
+                    ListTag pArray = new ListTag(); // TODO: Why the heck isn't this just an int array?!
                     for (int i : data) pArray.appendTag(new NBTTagInt(i));
                     pJson.setTag("data", pArray);
                     progArray.appendTag(pJson);
@@ -277,7 +277,7 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
             userProgress.forEach((uuid, data) -> {
                 CompoundTag pJson = new CompoundTag();
                 pJson.setString("uuid", uuid.toString());
-                NBTTagList pArray = new NBTTagList(); // TODO: Why the heck isn't this just an int array?!
+                ListTag pArray = new ListTag(); // TODO: Why the heck isn't this just an int array?!
                 for (int i : data) pArray.appendTag(new NBTTagInt(i));
                 pJson.setTag("data", pArray);
                 progArray.appendTag(pJson);

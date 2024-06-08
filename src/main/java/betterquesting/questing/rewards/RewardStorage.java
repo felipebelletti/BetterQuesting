@@ -6,7 +6,7 @@ import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.storage.IDatabaseNBT;
 import betterquesting.api2.storage.SimpleDatabase;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class RewardStorage extends SimpleDatabase<IReward> implements IDatabaseNBT<IReward, NBTTagList, NBTTagList> {
+public class RewardStorage extends SimpleDatabase<IReward> implements IDatabaseNBT<IReward, ListTag, ListTag> {
     @Override
-    public NBTTagList writeToNBT(NBTTagList json, @Nullable List<Integer> subset) {
+    public ListTag writeToNBT(ListTag json, @Nullable List<Integer> subset) {
         for (DBEntry<IReward> rew : getEntries()) {
             if (subset != null && !subset.contains(rew.getID())) continue;
             ResourceLocation rewardID = rew.getValue().getFactoryID();
@@ -30,7 +30,7 @@ public class RewardStorage extends SimpleDatabase<IReward> implements IDatabaseN
     }
 
     @Override
-    public void readFromNBT(NBTTagList json, boolean merge) {
+    public void readFromNBT(ListTag json, boolean merge) {
         if (!merge) reset();
         List<IReward> unassigned = new ArrayList<>();
 
@@ -79,11 +79,11 @@ public class RewardStorage extends SimpleDatabase<IReward> implements IDatabaseN
     // === Future support ===
 
     @Override
-    public NBTTagList writeProgressToNBT(NBTTagList nbt, @Nullable List<UUID> user) {
+    public ListTag writeProgressToNBT(ListTag nbt, @Nullable List<UUID> user) {
         return nbt;
     }
 
     @Override
-    public void readProgressFromNBT(NBTTagList nbt, boolean merge) {
+    public void readProgressFromNBT(ListTag nbt, boolean merge) {
     }
 }

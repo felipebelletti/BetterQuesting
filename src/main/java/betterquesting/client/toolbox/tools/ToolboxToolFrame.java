@@ -7,7 +7,7 @@ import betterquesting.api2.client.gui.panels.lists.CanvasQuestLine;
 import betterquesting.client.gui2.editors.designer.PanelToolController;
 import betterquesting.network.handlers.NetQuestEdit;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.NonNullList;
 import org.lwjgl.input.Keyboard;
 
@@ -63,7 +63,7 @@ public class ToolboxToolFrame implements IToolboxTool {
     private void changeFrame(List<PanelButtonQuest> btnList) {
         boolean state = !btnList.get(0).getStoredValue().getValue().getProperty(NativeProps.MAIN);
 
-        NBTTagList dataList = new NBTTagList();
+        ListTag dataList = new ListTag();
         for (PanelButtonQuest btn : btnList) {
             btn.getStoredValue().getValue().setProperty(NativeProps.MAIN, state);
 

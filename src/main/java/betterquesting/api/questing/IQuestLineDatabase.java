@@ -3,11 +3,11 @@ package betterquesting.api.questing;
 import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.storage.IDatabase;
 import betterquesting.api2.storage.INBTPartial;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 
 import java.util.List;
 
-public interface IQuestLineDatabase extends IDatabase<IQuestLine>, INBTPartial<NBTTagList, Integer> {
+public interface IQuestLineDatabase extends IDatabase<IQuestLine>, INBTPartial<ListTag, Integer> {
     IQuestLine createNew(int id);
 
     /**

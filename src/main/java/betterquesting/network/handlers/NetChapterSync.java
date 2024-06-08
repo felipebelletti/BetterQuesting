@@ -13,7 +13,7 @@ import betterquesting.network.PacketTypeRegistry;
 import betterquesting.questing.QuestLineDatabase;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.common.MinecraftForge;
@@ -38,7 +38,7 @@ public class NetChapterSync {
         if (chapterIDs != null && chapterIDs.length <= 0) return;
 
         BQThreadedIO.INSTANCE.enqueue(() -> {
-            NBTTagList data = new NBTTagList();
+            ListTag data = new ListTag();
             final List<DBEntry<IQuestLine>> chapterSubset = chapterIDs == null ? QuestLineDatabase.INSTANCE.getEntries() : QuestLineDatabase.INSTANCE.bulkLookup(chapterIDs);
 
             for (DBEntry<IQuestLine> chapter : chapterSubset) {
@@ -83,7 +83,7 @@ public class NetChapterSync {
 
     @SideOnly(Side.CLIENT)
     private static void onClient(CompoundTag message) {
-        NBTTagList data = message.getTagList("data", 10);
+        ListTag data = message.getTagList("data", 10);
         if (!message.getBoolean("merge")) QuestLineDatabase.INSTANCE.reset();
 
         for (int i = 0; i < data.tagCount(); i++) {

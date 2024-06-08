@@ -368,12 +368,12 @@ public class QuestInstance implements IQuest {
     }
 
     @Override
-    public IDatabaseNBT<ITask, NBTTagList, NBTTagList> getTasks() {
+    public IDatabaseNBT<ITask, ListTag, ListTag> getTasks() {
         return tasks;
     }
 
     @Override
-    public IDatabaseNBT<IReward, NBTTagList, NBTTagList> getRewards() {
+    public IDatabaseNBT<IReward, ListTag, ListTag> getRewards() {
         return rewards;
     }
 
@@ -406,8 +406,8 @@ public class QuestInstance implements IQuest {
     @Override
     public CompoundTag writeToNBT(CompoundTag jObj) {
         jObj.setTag("properties", qInfo.writeToNBT(new CompoundTag()));
-        jObj.setTag("tasks", tasks.writeToNBT(new NBTTagList(), null));
-        jObj.setTag("rewards", rewards.writeToNBT(new NBTTagList(), null));
+        jObj.setTag("tasks", tasks.writeToNBT(new ListTag(), null));
+        jObj.setTag("rewards", rewards.writeToNBT(new ListTag(), null));
         jObj.setTag("preRequisites", new NBTTagIntArray(getRequirements()));
         if (!prereqTypes.isEmpty()) {
             byte[] types = new byte[preRequisites.length];
@@ -429,9 +429,9 @@ public class QuestInstance implements IQuest {
         if (jObj.getTagId("preRequisites") == Constants.NBT.TAG_INT_ARRAY) // Native NBT
         {
             setRequirements(jObj.getIntArray("preRequisites"));
-        } else // Probably an NBTTagList
+        } else // Probably an ListTag
         {
-            NBTTagList rList = jObj.getTagList("preRequisites", 4);
+            ListTag rList = jObj.getTagList("preRequisites", 4);
             int[] req = new int[rList.tagCount()];
             for (int i = 0; i < rList.tagCount(); i++) {
                 NBTBase pTag = rList.get(i);
@@ -455,7 +455,7 @@ public class QuestInstance implements IQuest {
     @Override
     public CompoundTag writeProgressToNBT(CompoundTag json, @Nullable List<UUID> users) {
         synchronized (completeUsers) {
-            NBTTagList comJson = new NBTTagList();
+            ListTag comJson = new ListTag();
             for (Entry<UUID, CompoundTag> entry : completeUsers.entrySet()) {
                 if (entry.getValue() == null || entry.getKey() == null) continue;
                 if (users != null && !users.contains(entry.getKey())) continue;
@@ -465,7 +465,7 @@ public class QuestInstance implements IQuest {
             }
             json.setTag("completed", comJson);
 
-            NBTTagList tskJson = tasks.writeProgressToNBT(new NBTTagList(), users);
+            ListTag tskJson = tasks.writeProgressToNBT(new ListTag(), users);
             json.setTag("tasks", tskJson);
 
             return json;
@@ -476,7 +476,7 @@ public class QuestInstance implements IQuest {
     public void readProgressFromNBT(CompoundTag json, boolean merge) {
         synchronized (completeUsers) {
             if (!merge) completeUsers.clear();
-            NBTTagList comList = json.getTagList("completed", 10);
+            ListTag comList = json.getTagList("completed", 10);
             for (int i = 0; i < comList.tagCount(); i++) {
                 CompoundTag entry = comList.getCompoundTagAt(i).copy();
 

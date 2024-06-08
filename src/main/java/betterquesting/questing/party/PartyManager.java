@@ -8,7 +8,7 @@ import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.storage.SimpleDatabase;
 import betterquesting.storage.QuestSettings;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -61,7 +61,7 @@ public class PartyManager extends SimpleDatabase<IParty> implements IPartyDataba
     }
 
     @Override
-    public synchronized NBTTagList writeToNBT(NBTTagList json, List<Integer> subset) {
+    public synchronized ListTag writeToNBT(ListTag json, List<Integer> subset) {
         for (DBEntry<IParty> entry : getEntries()) {
             if (subset != null && !subset.contains(entry.getID())) continue;
             CompoundTag jp = entry.getValue().writeToNBT(new CompoundTag());
@@ -73,7 +73,7 @@ public class PartyManager extends SimpleDatabase<IParty> implements IPartyDataba
     }
 
     @Override
-    public synchronized void readFromNBT(NBTTagList json, boolean merge) {
+    public synchronized void readFromNBT(ListTag json, boolean merge) {
         if (!merge) reset();
 
         for (int i = 0; i < json.tagCount(); i++) {

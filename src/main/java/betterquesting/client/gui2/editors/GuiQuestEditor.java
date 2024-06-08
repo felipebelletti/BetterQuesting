@@ -30,7 +30,7 @@ import betterquesting.questing.QuestDatabase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import org.lwjgl.input.Keyboard;
 
 import java.util.Collections;
@@ -238,7 +238,7 @@ public class GuiQuestEditor extends GuiScreenCanvas implements IPEventListener, 
     public static void sendChanges(int questID) {
         IQuest quest = QuestDatabase.INSTANCE.getValue(questID);
         CompoundTag payload = new CompoundTag();
-        NBTTagList dataList = new NBTTagList();
+        ListTag dataList = new ListTag();
         CompoundTag entry = new CompoundTag();
         entry.setInteger("questID", questID);
         entry.setTag("config", quest.writeToNBT(new CompoundTag()));

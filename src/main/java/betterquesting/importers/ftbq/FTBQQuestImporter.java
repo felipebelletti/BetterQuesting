@@ -23,7 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.math.MathHelper;
 import org.apache.commons.lang3.tuple.Pair;
@@ -91,7 +91,7 @@ public class FTBQQuestImporter implements IImporter {
         String[] indexIDs; // Read out the chapter index names
         if (isSnbt) {
             //String
-            NBTTagList tagList = tagIndex.getTagList("index", 8);
+            ListTag tagList = tagIndex.getTagList("index", 8);
             indexIDs = new String[tagList.tagCount()];
             int i = 0;
             for (NBTBase index : tagList) {
@@ -142,7 +142,7 @@ public class FTBQQuestImporter implements IImporter {
 
                 if (questFile.getName().equalsIgnoreCase("chapter.nbt") || questFile.getName().equalsIgnoreCase("chapter.snbt")) {
                     questLine.setProperty(NativeProps.NAME, qTag.getString("title"));
-                    NBTTagList desc = qTag.getTagList("description", 8);
+                    ListTag desc = qTag.getTagList("description", 8);
                     StringBuilder sb = new StringBuilder();
                     for (int i = 0; i < desc.tagCount(); i++) {
                         sb.append(desc.getStringTagAt(i));
@@ -180,14 +180,14 @@ public class FTBQQuestImporter implements IImporter {
                     quest.setProperty(NativeProps.NAME, qTag.getString("title"));
                 } else {
                     quest.setProperty(NativeProps.NAME, hexID);
-                    NBTTagList taskList = qTag.getTagList("tasks", 10);
+                    ListTag taskList = qTag.getTagList("tasks", 10);
                     if (taskList.tagCount() >= 1) {
                         CompoundTag compoundTag = taskList.getCompoundTagAt(0);
                         if (compoundTag.hasKey("title"))
                             quest.setProperty(NativeProps.NAME, compoundTag.getString("title"));
                     }
                 }
-                NBTTagList desc = qTag.getTagList("text", 8);
+                ListTag desc = qTag.getTagList("text", 8);
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < desc.tagCount(); i++) {
                     sb.append(desc.getStringTagAt(i));
@@ -205,7 +205,7 @@ public class FTBQQuestImporter implements IImporter {
                     requestQuestIcon(null);
                 } else {
                     requestQuestIcon(quest);
-                    NBTTagList taskList = qTag.getTagList("tasks", 10);
+                    ListTag taskList = qTag.getTagList("tasks", 10);
                     if (taskList.tagCount() >= 1) {
                         CompoundTag compoundTag = taskList.getCompoundTagAt(0);
                         if (compoundTag.hasKey("icon")) {
@@ -232,7 +232,7 @@ public class FTBQQuestImporter implements IImporter {
                 String[] depKeys = null;
                 if (isSnbt) {
                     if (qTag.hasKey("dependencies", 9)) {
-                        NBTTagList tagList = qTag.getTagList("dependencies", 8);
+                        ListTag tagList = qTag.getTagList("dependencies", 8);
                         depKeys = new String[tagList.tagCount()];
                         for (int i = 0; i < tagList.tagCount(); i++) {
                             depKeys[i] = tagList.getStringTagAt(i);
@@ -286,7 +286,7 @@ public class FTBQQuestImporter implements IImporter {
 
                 // === IMPORT TASKS ===
 
-                NBTTagList taskList = qTag.getTagList("tasks", 10);
+                ListTag taskList = qTag.getTagList("tasks", 10);
                 for (int i = 0; i < taskList.tagCount(); i++) {
                     CompoundTag taskTag = taskList.getCompoundTagAt(i);
                     String tType = taskTag.getString("type");
@@ -298,7 +298,7 @@ public class FTBQQuestImporter implements IImporter {
                     ITask[] tsks = taskConverters.get(tType).apply(taskTag);
 
                     if (tsks != null && tsks.length > 0) {
-                        IDatabaseNBT<ITask, NBTTagList, NBTTagList> taskReg = quest.getTasks();
+                        IDatabaseNBT<ITask, ListTag, ListTag> taskReg = quest.getTasks();
                         for (ITask t : tsks) {
                             taskReg.add(taskReg.nextID(), t);
                         }
@@ -310,7 +310,7 @@ public class FTBQQuestImporter implements IImporter {
 
                 // === IMPORT REWARDS ===
 
-                NBTTagList rewardList = qTag.getTagList("rewards", 10);
+                ListTag rewardList = qTag.getTagList("rewards", 10);
                 for (int i = 0; i < rewardList.tagCount(); i++) {
                     CompoundTag rewTag = rewardList.getCompoundTagAt(i);
                     String rType = rewTag.getString("type");
@@ -322,7 +322,7 @@ public class FTBQQuestImporter implements IImporter {
                     IReward[] tsks = rewardConverters.get(rType).apply(rewTag);
 
                     if (tsks != null && tsks.length > 0) {
-                        IDatabaseNBT<IReward, NBTTagList, NBTTagList> rewardReg = quest.getRewards();
+                        IDatabaseNBT<IReward, ListTag, ListTag> rewardReg = quest.getRewards();
                         for (IReward t : tsks) {
                             rewardReg.add(rewardReg.nextID(), t);
                         }

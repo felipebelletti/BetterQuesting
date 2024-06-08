@@ -7,7 +7,7 @@ import betterquesting.core.BetterQuesting;
 import betterquesting.network.handlers.NetInviteSync;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
@@ -17,7 +17,7 @@ import java.util.*;
 import java.util.Map.Entry;
 
 // NOTE: This is in a separate class because it could later be moved to a dedicated inbox system
-public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
+public class PartyInvitations implements INBTPartial<ListTag, UUID> {
     public static final PartyInvitations INSTANCE = new PartyInvitations();
 
     private final HashMap<UUID, HashMap<Integer, Long>> invites = new HashMap<>();
@@ -103,7 +103,7 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
     }
 
     @Override
-    public synchronized NBTTagList writeToNBT(NBTTagList nbt, @Nullable List<UUID> subset) // Don't bother saving this to disk. We do need to send packets though
+    public synchronized ListTag writeToNBT(ListTag nbt, @Nullable List<UUID> subset) // Don't bother saving this to disk. We do need to send packets though
     {
         if (subset != null) {
             subset.forEach((uuid) -> {
@@ -112,7 +112,7 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
 
                 Map<Integer, Long> userMap = invites.get(uuid);
                 if (userMap == null) userMap = Collections.emptyMap();
-                NBTTagList invList = new NBTTagList();
+                ListTag invList = new ListTag();
 
                 for (Entry<Integer, Long> invEntry : userMap.entrySet()) {
                     CompoundTag invTag = new CompoundTag();
@@ -129,7 +129,7 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
                 CompoundTag userTag = new CompoundTag();
                 userTag.setString("uuid", userMap.getKey().toString());
 
-                NBTTagList invList = new NBTTagList();
+                ListTag invList = new ListTag();
                 for (Entry<Integer, Long> invEntry : userMap.getValue().entrySet()) {
                     CompoundTag invTag = new CompoundTag();
                     invTag.setInteger("partyID", invEntry.getKey());
@@ -144,7 +144,7 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
     }
 
     @Override
-    public synchronized void readFromNBT(NBTTagList nbt, boolean merge) {
+    public synchronized void readFromNBT(ListTag nbt, boolean merge) {
         if (!merge) invites.clear();
         for (int i = 0; i < nbt.tagCount(); i++) {
             CompoundTag userEntry = nbt.getCompoundTagAt(i);
@@ -155,7 +155,7 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
                 continue;
             }
 
-            NBTTagList invList = userEntry.getTagList("invites", 10);
+            ListTag invList = userEntry.getTagList("invites", 10);
             HashMap<Integer, Long> map = invites.compute(uuid, (key, old) -> new HashMap<>());
             map.clear();
             for (int n = 0; n < invList.tagCount(); n++) {

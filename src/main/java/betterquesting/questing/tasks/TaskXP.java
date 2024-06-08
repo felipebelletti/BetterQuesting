@@ -11,7 +11,7 @@ import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskXP;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.Level;
@@ -122,7 +122,7 @@ public class TaskXP implements ITaskTickable {
             userProgress.clear();
         }
 
-        NBTTagList cList = nbt.getTagList("completeUsers", 8);
+        ListTag cList = nbt.getTagList("completeUsers", 8);
         for (int i = 0; i < cList.tagCount(); i++) {
             try {
                 completeUsers.add(UUID.fromString(cList.getStringTagAt(i)));
@@ -131,7 +131,7 @@ public class TaskXP implements ITaskTickable {
             }
         }
 
-        NBTTagList pList = nbt.getTagList("userProgress", 10);
+        ListTag pList = nbt.getTagList("userProgress", 10);
         for (int n = 0; n < pList.tagCount(); n++) {
             try {
                 CompoundTag pTag = pList.getCompoundTagAt(n);
@@ -145,8 +145,8 @@ public class TaskXP implements ITaskTickable {
 
     @Override
     public CompoundTag writeProgressToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
-        NBTTagList jArray = new NBTTagList();
-        NBTTagList progArray = new NBTTagList();
+        ListTag jArray = new ListTag();
+        ListTag progArray = new ListTag();
 
         if (users != null) {
             users.forEach((uuid) -> {

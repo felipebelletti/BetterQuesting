@@ -40,7 +40,7 @@ import betterquesting.questing.QuestLineDatabase;
 import betterquesting.questing.QuestLineEntry;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nullable;
@@ -229,7 +229,7 @@ public class GuiQuestLineAddRemove extends GuiScreenCanvas implements IPEventLis
         } else if (btn.getButtonID() == 5) // New
         {
             CompoundTag payload = new CompoundTag();
-            NBTTagList dataList = new NBTTagList();
+            ListTag dataList = new ListTag();
             CompoundTag entry = new CompoundTag();
             entry.setInteger("questID", -1);
             dataList.appendTag(entry);
@@ -280,7 +280,7 @@ public class GuiQuestLineAddRemove extends GuiScreenCanvas implements IPEventLis
         if (questLine == null) return;
 
         CompoundTag payload = new CompoundTag();
-        NBTTagList dataList = new NBTTagList();
+        ListTag dataList = new ListTag();
         CompoundTag entry = new CompoundTag();
         entry.setInteger("chapterID", lineID);
         entry.setTag("config", questLine.writeToNBT(new CompoundTag(), null));

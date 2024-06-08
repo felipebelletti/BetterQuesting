@@ -16,7 +16,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -105,7 +105,7 @@ public class RewardChoice implements IReward {
     @Override
     public void readFromNBT(CompoundTag nbt) {
         choices.clear();
-        NBTTagList cList = nbt.getTagList("choices", 10);
+        ListTag cList = nbt.getTagList("choices", 10);
         for (int i = 0; i < cList.tagCount(); i++) {
             choices.add(JsonHelper.JsonToItemStack(cList.getCompoundTagAt(i)));
         }
@@ -113,7 +113,7 @@ public class RewardChoice implements IReward {
 
     @Override
     public CompoundTag writeToNBT(CompoundTag nbt) {
-        NBTTagList rJson = new NBTTagList();
+        ListTag rJson = new ListTag();
         for (BigItemStack stack : choices) {
             rJson.appendTag(JsonHelper.ItemStackToJson(stack, new CompoundTag()));
         }

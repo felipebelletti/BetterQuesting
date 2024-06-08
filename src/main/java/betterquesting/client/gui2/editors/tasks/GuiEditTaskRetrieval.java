@@ -27,7 +27,7 @@ import betterquesting.core.ModReference;
 import betterquesting.questing.tasks.TaskRetrieval;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 
@@ -92,7 +92,7 @@ public class GuiEditTaskRetrieval extends GuiScreenCanvas implements IVolatileSc
         addBoolean("ignoreNBT", cvList);
         addBoolean("partialMatch", cvList);
         cvList.addPanel("requiredItems", rect -> new PanelButton(rect, -1, "List...").setClickAction(b -> {
-            mc.displayGuiScreen(new GuiNbtEditor(mc.currentScreen, (NBTTagList) current.getTag("requiredItems"), null));
+            mc.displayGuiScreen(new GuiNbtEditor(mc.currentScreen, (ListTag) current.getTag("requiredItems"), null));
         }));
     }
 
@@ -104,7 +104,7 @@ public class GuiEditTaskRetrieval extends GuiScreenCanvas implements IVolatileSc
 
     private void sendChanges() {
         CompoundTag payload = new CompoundTag();
-        NBTTagList dataList = new NBTTagList();
+        ListTag dataList = new ListTag();
         CompoundTag entry = new CompoundTag();
         entry.setInteger("questID", quest.getID());
         entry.setTag("config", quest.getValue().writeToNBT(new CompoundTag()));

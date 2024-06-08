@@ -19,7 +19,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap.Entry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.text.TextComponentString;
@@ -41,8 +41,8 @@ public class NetImport {
 
     public static void sendImport(@Nonnull IQuestDatabase questDB, @Nonnull IQuestLineDatabase chapterDB) {
         CompoundTag payload = new CompoundTag();
-        payload.setTag("quests", questDB.writeToNBT(new NBTTagList(), null));
-        payload.setTag("chapters", chapterDB.writeToNBT(new NBTTagList(), null));
+        payload.setTag("quests", questDB.writeToNBT(new ListTag(), null));
+        payload.setTag("chapters", chapterDB.writeToNBT(new ListTag(), null));
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 

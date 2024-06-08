@@ -52,9 +52,9 @@ public class ItemComparison {
 
         if (tag1 instanceof CompoundTag && tag2 instanceof CompoundTag) {
             return CompareNBTTagCompound((CompoundTag) tag1, (CompoundTag) tag2, partial);
-        } else if (tag1 instanceof NBTTagList && tag2 instanceof NBTTagList) {
-            NBTTagList list1 = (NBTTagList) tag1;
-            NBTTagList list2 = (NBTTagList) tag2;
+        } else if (tag1 instanceof ListTag && tag2 instanceof ListTag) {
+            ListTag list1 = (ListTag) tag1;
+            ListTag list2 = (ListTag) tag2;
 
             if (list1.tagCount() > list2.tagCount() || (!partial && list1.tagCount() != list2.tagCount())) {
                 return false; // Sample is missing requested tags or is not exact

@@ -3,7 +3,7 @@ package betterquesting.storage;
 import betterquesting.api.properties.NativeProps;
 import betterquesting.api.storage.ILifeDatabase;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.math.MathHelper;
 
 import javax.annotation.Nonnull;
@@ -30,7 +30,7 @@ public final class LifeDatabase implements ILifeDatabase {
 
     @Override
     public synchronized CompoundTag writeToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
-        NBTTagList jul = new NBTTagList();
+        ListTag jul = new ListTag();
         for (Entry<UUID, Integer> entry : playerLives.entrySet()) {
             if (users != null && !users.contains(entry.getKey())) continue;
             CompoundTag j = new CompoundTag();
@@ -46,7 +46,7 @@ public final class LifeDatabase implements ILifeDatabase {
     @Override
     public synchronized void readFromNBT(CompoundTag nbt, boolean merge) {
         if (!merge) playerLives.clear();
-        NBTTagList tagList = nbt.getTagList("playerLives", 10);
+        ListTag tagList = nbt.getTagList("playerLives", 10);
         for (int i = 0; i < tagList.tagCount(); i++) {
             CompoundTag j = tagList.getCompoundTagAt(i);
 

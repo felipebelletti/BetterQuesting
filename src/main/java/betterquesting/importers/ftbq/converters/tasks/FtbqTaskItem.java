@@ -8,7 +8,7 @@ import betterquesting.importers.ftbq.FTBQQuestImporter;
 import betterquesting.importers.ftbq.FTBQUtils;
 import betterquesting.questing.tasks.TaskRetrieval;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 
 public class FtbqTaskItem {
     public ITask[] convertTask(CompoundTag nbt) {
@@ -30,7 +30,7 @@ public class FtbqTaskItem {
             FTBQQuestImporter.provideQuestIcon(item);
         } else if (nbt.hasKey("items", 9)) {
             // Note: Non-NBT items in this list are stored in Compound > String because... I have no idea
-            NBTTagList tagList = nbt.getTagList("items", 10);
+            ListTag tagList = nbt.getTagList("items", 10);
             for (int i = 0; i < tagList.tagCount(); i++) {
                 CompoundTag tagItemBase = tagList.getCompoundTagAt(i);
                 BigItemStack item;

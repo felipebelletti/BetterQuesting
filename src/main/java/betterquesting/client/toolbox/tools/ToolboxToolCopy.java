@@ -15,7 +15,7 @@ import betterquesting.questing.QuestDatabase;
 import betterquesting.questing.QuestLineDatabase;
 import betterquesting.questing.QuestLineEntry;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.NonNullList;
 
 import java.util.*;
@@ -125,7 +125,7 @@ public class ToolboxToolCopy implements IToolboxTool {
         for (int i = 0; i < grabList.size(); i++)
             remappedIDs.put(grabList.get(i).btn.getStoredValue().getID(), nextIDs[i]);
 
-        NBTTagList qdList = new NBTTagList();
+        ListTag qdList = new ListTag();
 
         for (int i = 0; i < grabList.size(); i++) {
             GrabEntry grab = grabList.get(i);
@@ -164,7 +164,7 @@ public class ToolboxToolCopy implements IToolboxTool {
 
         // Send quest line edits
         CompoundTag chPayload = new CompoundTag();
-        NBTTagList cdList = new NBTTagList();
+        ListTag cdList = new ListTag();
         CompoundTag tagEntry = new CompoundTag();
         tagEntry.setInteger("chapterID", lID);
         tagEntry.setTag("config", qLine.writeToNBT(new CompoundTag(), null));

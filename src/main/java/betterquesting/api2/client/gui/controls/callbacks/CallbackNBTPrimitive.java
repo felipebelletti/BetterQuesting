@@ -16,7 +16,7 @@ public class CallbackNBTPrimitive<T extends Number> implements ICallback<T> {
         this.tagID = getTagID(c);
     }
 
-    public CallbackNBTPrimitive(NBTTagList tag, int key, Class<T> c) {
+    public CallbackNBTPrimitive(ListTag tag, int key, Class<T> c) {
         this.tag = tag;
         this.sKey = null;
         this.iKey = key;
@@ -28,7 +28,7 @@ public class CallbackNBTPrimitive<T extends Number> implements ICallback<T> {
         if (tag.getId() == 10) {
             setCompoundTag((CompoundTag) tag, value);
         } else {
-            setListTag((NBTTagList) tag, value);
+            setListTag((ListTag) tag, value);
         }
     }
 
@@ -55,7 +55,7 @@ public class CallbackNBTPrimitive<T extends Number> implements ICallback<T> {
         }
     }
 
-    private void setListTag(NBTTagList list, T value) {
+    private void setListTag(ListTag list, T value) {
         switch (tagID) {
             case 1:
                 list.set(iKey, new NBTTagByte(value.byteValue()));

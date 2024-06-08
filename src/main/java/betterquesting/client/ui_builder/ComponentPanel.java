@@ -7,7 +7,7 @@ import betterquesting.api2.client.gui.panels.IGuiPanel;
 import betterquesting.api2.storage.INBTSaveLoad;
 import betterquesting.core.ModReference;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
@@ -89,7 +89,7 @@ public class ComponentPanel implements INBTSaveLoad<CompoundTag> {
         nbt.setTag("transform", transTag.copy());
         nbt.setTag("panel_data", panelData.copy());
 
-        NBTTagList sList = new NBTTagList();
+        ListTag sList = new ListTag();
         scripts.forEach((str) -> sList.appendTag(new NBTTagString(str)));
         nbt.setTag("script_hooks", sList);
 
@@ -109,7 +109,7 @@ public class ComponentPanel implements INBTSaveLoad<CompoundTag> {
         panelData = nbt.getCompoundTag("panel_data").copy();
 
         scripts.clear();
-        NBTTagList sList = nbt.getTagList("script_hooks", 8);
+        ListTag sList = nbt.getTagList("script_hooks", 8);
         for (int i = 0; i < sList.tagCount(); i++) {
             scripts.add(sList.getStringTagAt(i));
         }

@@ -12,7 +12,7 @@ import betterquesting.questing.party.PartyInvitations;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
@@ -36,7 +36,7 @@ public class NetInviteSync {
         CompoundTag payload = new CompoundTag();
         UUID playerID = QuestingAPI.getQuestingUUID(player);
         payload.setInteger("action", 0);
-        payload.setTag("data", PartyInvitations.INSTANCE.writeToNBT(new NBTTagList(), Collections.singletonList(playerID)));
+        payload.setTag("data", PartyInvitations.INSTANCE.writeToNBT(new ListTag(), Collections.singletonList(playerID)));
         PacketSender.INSTANCE.sendToPlayers(new QuestingPacket(ID_NAME, payload), player);
     }
 

@@ -13,7 +13,7 @@ import betterquesting.questing.tasks.TaskAdvancement;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.advancements.FrameType;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.server.MinecraftServer;
 
 import java.util.*;
@@ -38,7 +38,7 @@ public class AdvancementDump {
 
             int id = questDB.nextID();
             IQuest quest = questDB.createNew(id);
-            IDatabaseNBT<ITask, NBTTagList, NBTTagList> taskDB = quest.getTasks();
+            IDatabaseNBT<ITask, ListTag, ListTag> taskDB = quest.getTasks();
             DisplayInfo disp = adv.getDisplay();
 
             if (adv.getParent() == null) {

@@ -4,7 +4,7 @@ import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.storage.INBTPartial;
 import betterquesting.api2.storage.SimpleDatabase;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public class LootRegistry extends SimpleDatabase<LootGroup> implements INBTParti
 
     @Override
     public synchronized CompoundTag writeToNBT(CompoundTag tag, @Nullable List<Integer> subset) {
-        NBTTagList jRew = new NBTTagList();
+        ListTag jRew = new ListTag();
         for (DBEntry<LootGroup> entry : getEntries()) {
             if (subset != null && !subset.contains(entry.getID())) continue;
             CompoundTag jGrp = entry.getValue().writeToNBT(new CompoundTag());
@@ -82,7 +82,7 @@ public class LootRegistry extends SimpleDatabase<LootGroup> implements INBTParti
 
         List<LootGroup> legacyGroups = new ArrayList<>();
 
-        NBTTagList list = tag.getTagList("groups", 10);
+        ListTag list = tag.getTagList("groups", 10);
         for (int i = 0; i < list.tagCount(); i++) {
             CompoundTag entry = list.getCompoundTagAt(i);
             int id = entry.hasKey("ID", 99) ? entry.getInteger("ID") : -1;

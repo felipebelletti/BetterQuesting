@@ -12,7 +12,7 @@ import betterquesting.questing.QuestDatabase;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -153,7 +153,7 @@ public class QuestCache implements INBTSerializable<CompoundTag> {
         tags.setIntArray("autoClaims", getPendingAutoClaims());
         tags.setIntArray("markedDirty", getDirtyQuests());
 
-        NBTTagList tagSchedule = new NBTTagList();
+        ListTag tagSchedule = new ListTag();
         for (QResetTime entry : getScheduledResets()) {
             CompoundTag tagEntry = new CompoundTag();
             tagEntry.setInteger("quest", entry.questID);
@@ -178,7 +178,7 @@ public class QuestCache implements INBTSerializable<CompoundTag> {
         for (int i : nbt.getIntArray("autoClaims")) autoClaims.add(i);
         for (int i : nbt.getIntArray("markedDirty")) markedDirty.add(i);
 
-        NBTTagList tagList = nbt.getTagList("resetSchedule", 10);
+        ListTag tagList = nbt.getTagList("resetSchedule", 10);
         for (int i = 0; i < tagList.tagCount(); i++) {
             CompoundTag tagEntry = tagList.getCompoundTagAt(i);
             if (tagEntry.hasKey("quest", 99)) {

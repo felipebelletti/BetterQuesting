@@ -12,7 +12,7 @@ import betterquesting.network.PacketTypeRegistry;
 import betterquesting.questing.party.PartyManager;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -58,7 +58,7 @@ public class NetPartySync {
         if (partyIDs != null && partyIDs.length <= 0) return;
         if (players != null && players.length <= 0) return;
 
-        NBTTagList dataList = new NBTTagList();
+        ListTag dataList = new ListTag();
         final List<DBEntry<IParty>> partySubset = partyIDs == null ? PartyManager.INSTANCE.getEntries() : PartyManager.INSTANCE.bulkLookup(partyIDs);
         for (DBEntry<IParty> party : partySubset) {
             CompoundTag entry = new CompoundTag();
@@ -93,7 +93,7 @@ public class NetPartySync {
 
     @SideOnly(Side.CLIENT)
     private static void onClient(CompoundTag message) {
-        NBTTagList data = message.getTagList("data", 10);
+        ListTag data = message.getTagList("data", 10);
         if (!message.getBoolean("merge")) PartyManager.INSTANCE.reset();
 
         for (int i = 0; i < data.tagCount(); i++) {

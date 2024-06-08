@@ -7,7 +7,7 @@ import betterquesting.api.network.QuestingPacket;
 import betterquesting.core.BetterQuesting;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -24,7 +24,7 @@ public class NetScoreSync {
 
     public static void sendScore(@Nullable ServerPlayer player) {
         CompoundTag payload = new CompoundTag();
-        payload.setTag("data", ScoreboardBQ.INSTANCE.writeToNBT(new NBTTagList(), player == null ? null : Collections.singletonList(QuestingAPI.getQuestingUUID(player))));
+        payload.setTag("data", ScoreboardBQ.INSTANCE.writeToNBT(new ListTag(), player == null ? null : Collections.singletonList(QuestingAPI.getQuestingUUID(player))));
         payload.setBoolean("merge", player != null);
 
         if (player == null) {

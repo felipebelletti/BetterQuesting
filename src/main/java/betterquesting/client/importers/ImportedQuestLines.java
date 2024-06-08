@@ -7,7 +7,7 @@ import betterquesting.api2.storage.SimpleDatabase;
 import betterquesting.api2.utils.QuestLineSorter;
 import betterquesting.questing.QuestLine;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,7 +47,7 @@ public class ImportedQuestLines extends SimpleDatabase<IQuestLine> implements IQ
     }
 
     @Override
-    public NBTTagList writeToNBT(NBTTagList json, List<Integer> subset) {
+    public ListTag writeToNBT(ListTag json, List<Integer> subset) {
         for (DBEntry<IQuestLine> entry : getEntries()) {
             if (subset != null && !subset.contains(entry.getID())) continue;
             CompoundTag jObj = entry.getValue().writeToNBT(new CompoundTag(), null);
@@ -60,7 +60,7 @@ public class ImportedQuestLines extends SimpleDatabase<IQuestLine> implements IQ
     }
 
     @Override
-    public void readFromNBT(NBTTagList json, boolean merge) {
+    public void readFromNBT(ListTag json, boolean merge) {
         if (!merge) reset();
 
         List<IQuestLine> unassigned = new ArrayList<>();

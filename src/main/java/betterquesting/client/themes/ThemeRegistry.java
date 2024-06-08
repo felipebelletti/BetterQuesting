@@ -29,7 +29,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.Level;
@@ -74,9 +74,9 @@ public class ThemeRegistry implements IThemeRegistry {
             if (arg.value instanceof CompoundTag) {
                 //noinspection unchecked
                 return new GuiNbtEditor(arg.parent, (CompoundTag) arg.value, arg.callback);
-            } else if (arg.value instanceof NBTTagList) {
+            } else if (arg.value instanceof ListTag) {
                 //noinspection unchecked
-                return new GuiNbtEditor(arg.parent, (NBTTagList) arg.value, arg.callback);
+                return new GuiNbtEditor(arg.parent, (ListTag) arg.value, arg.callback);
             } else {
                 return null;
             }

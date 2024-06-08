@@ -31,7 +31,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 
@@ -106,7 +106,7 @@ public class GuiEditTaskTame extends GuiScreenCanvas implements IVolatileScreen 
 
     private void sendChanges() {
         CompoundTag payload = new CompoundTag();
-        NBTTagList dataList = new NBTTagList();
+        ListTag dataList = new ListTag();
         CompoundTag entry = new CompoundTag();
         entry.setInteger("questID", quest.getID());
         entry.setTag("config", quest.getValue().writeToNBT(new CompoundTag()));

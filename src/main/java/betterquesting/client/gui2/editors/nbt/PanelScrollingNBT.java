@@ -57,7 +57,7 @@ public class PanelScrollingNBT extends CanvasScrolling implements IPEventListene
         this.setNBT(tag);
     }
 
-    public PanelScrollingNBT(IGuiRect rect, NBTTagList tag, int btnEdit, int btnAdv, int btnInsert, int btnDelete) {
+    public PanelScrollingNBT(IGuiRect rect, ListTag tag, int btnEdit, int btnAdv, int btnInsert, int btnDelete) {
         this(rect, btnEdit, btnAdv, btnInsert, btnDelete);
 
         this.setNBT(tag);
@@ -106,7 +106,7 @@ public class PanelScrollingNBT extends CanvasScrolling implements IPEventListene
         return this;
     }
 
-    public PanelScrollingNBT setNBT(NBTTagList list) {
+    public PanelScrollingNBT setNBT(ListTag list) {
         this.nbt = list;
         refreshList();
         return this;
@@ -245,9 +245,9 @@ public class PanelScrollingNBT extends CanvasScrolling implements IPEventListene
             PanelButtonStorage<String> btnI = new PanelButtonStorage<>(new GuiRectangle(width - 32, i * 16, 16, 16, 0), btnInsert, "+", "");
             btnI.setTextHighlight(new GuiColorStatic(128, 128, 128, 255), new GuiColorStatic(0, 255, 0, 255), new GuiColorStatic(0, 255, 0, 255));
             this.addPanel(btnI);
-        } else if (nbt.getId() == 9) // NBTTagList
+        } else if (nbt.getId() == 9) // ListTag
         {
-            NBTTagList list = (NBTTagList) nbt;
+            ListTag list = (ListTag) nbt;
 
             int i = 0;
 
@@ -380,7 +380,7 @@ public class PanelScrollingNBT extends CanvasScrolling implements IPEventListene
         if (nbt.getId() == 10) {
             entry = ((CompoundTag) nbt).getTag(((PanelButtonStorage<String>) btn).getStoredValue());
         } else if (nbt.getId() == 9) {
-            entry = ((NBTTagList) nbt).get(((PanelButtonStorage<Integer>) btn).getStoredValue());
+            entry = ((ListTag) nbt).get(((PanelButtonStorage<Integer>) btn).getStoredValue());
         } else {
             throw new RuntimeException("Invalid NBT tag type!");
         }
@@ -402,13 +402,13 @@ public class PanelScrollingNBT extends CanvasScrolling implements IPEventListene
                 }
             } else if (entry.getId() == 9) // List editor
             {
-                mc.displayGuiScreen(new GuiNbtEditor(mc.currentScreen, (NBTTagList) entry, null));
+                mc.displayGuiScreen(new GuiNbtEditor(mc.currentScreen, (ListTag) entry, null));
             } else if (entry.getId() == 8) // Text editor
             {
                 if (nbt.getId() == 10) {
                     mc.displayGuiScreen(new GuiTextEditor(mc.currentScreen, ((NBTTagString) entry).getString(), new CallbackNBTTagString((CompoundTag) nbt, ((PanelButtonStorage<String>) btn).getStoredValue())));
                 } else if (nbt.getId() == 9) {
-                    mc.displayGuiScreen(new GuiTextEditor(mc.currentScreen, ((NBTTagString) entry).getString(), new CallbackNBTTagString((NBTTagList) nbt, ((PanelButtonStorage<Integer>) btn).getStoredValue())));
+                    mc.displayGuiScreen(new GuiTextEditor(mc.currentScreen, ((NBTTagString) entry).getString(), new CallbackNBTTagString((ListTag) nbt, ((PanelButtonStorage<Integer>) btn).getStoredValue())));
                 }
             } else if (entry.getId() == 7 || entry.getId() == 11 || entry.getId() == 12) // Byte/Integer/Long array
             {
@@ -422,20 +422,20 @@ public class PanelScrollingNBT extends CanvasScrolling implements IPEventListene
             } else if (entry.getId() == 9) // Not currently available but will be when context list editors (enchantments/inventories/etc) are available
             {
                 // TODO: Replace with context based list editors
-                mc.displayGuiScreen(new GuiNbtEditor(mc.currentScreen, (NBTTagList) entry, null));
+                mc.displayGuiScreen(new GuiNbtEditor(mc.currentScreen, (ListTag) entry, null));
             }
         } else if (btn.getButtonID() == btnInsert) {
             if (nbt.getId() == 10) {
                 mc.displayGuiScreen(new GuiNbtAdd(mc.currentScreen, (CompoundTag) nbt));
             } else if (nbt.getId() == 9) {
-                mc.displayGuiScreen(new GuiNbtAdd(mc.currentScreen, (NBTTagList) nbt, ((PanelButtonStorage<Integer>) btn).getStoredValue()));
+                mc.displayGuiScreen(new GuiNbtAdd(mc.currentScreen, (ListTag) nbt, ((PanelButtonStorage<Integer>) btn).getStoredValue()));
             }
         } else if (btn.getButtonID() == btnDelete) {
             if (nbt.getId() == 10) {
                 ((CompoundTag) nbt).removeTag(((PanelButtonStorage<String>) btn).getStoredValue());
                 refreshList();
             } else if (nbt.getId() == 9) {
-                ((NBTTagList) nbt).removeTag(((PanelButtonStorage<Integer>) btn).getStoredValue());
+                ((ListTag) nbt).removeTag(((PanelButtonStorage<Integer>) btn).getStoredValue());
                 refreshList();
             }
         }

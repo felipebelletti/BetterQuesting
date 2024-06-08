@@ -10,7 +10,7 @@ import betterquesting.api2.storage.SimpleDatabase;
 import betterquesting.storage.PropertyContainer;
 import net.minecraft.init.Items;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -90,7 +90,7 @@ public class QuestLine extends SimpleDatabase<IQuestLineEntry> implements IQuest
     public CompoundTag writeToNBT(CompoundTag json, @Nullable List<Integer> subset) {
         json.setTag("properties", info.writeToNBT(new CompoundTag()));
 
-        NBTTagList jArr = new NBTTagList();
+        ListTag jArr = new ListTag();
 
         for (DBEntry<IQuestLineEntry> entry : getEntries()) {
             if (subset != null && !subset.contains(entry.getID())) continue;
@@ -109,7 +109,7 @@ public class QuestLine extends SimpleDatabase<IQuestLineEntry> implements IQuest
 
         if (!merge) reset();
 
-        NBTTagList qList = json.getTagList("quests", 10);
+        ListTag qList = json.getTagList("quests", 10);
         for (int i = 0; i < qList.tagCount(); i++) {
             CompoundTag qTag = qList.getCompoundTagAt(i);
 

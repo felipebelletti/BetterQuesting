@@ -2,7 +2,7 @@ package betterquesting;
 
 import betterquesting.api2.storage.INBTPartial;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -11,7 +11,7 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.UUID;
 
-public class ScoreBQ implements INBTPartial<NBTTagList, UUID> {
+public class ScoreBQ implements INBTPartial<ListTag, UUID> {
     private final TreeMap<UUID, Integer> playerScores = new TreeMap<>();
 
     public synchronized int getScore(@Nonnull UUID uuid) {
@@ -28,7 +28,7 @@ public class ScoreBQ implements INBTPartial<NBTTagList, UUID> {
     }
 
     @Override
-    public synchronized NBTTagList writeToNBT(NBTTagList nbt, @Nullable List<UUID> subset) {
+    public synchronized ListTag writeToNBT(ListTag nbt, @Nullable List<UUID> subset) {
         for (Entry<UUID, Integer> entry : playerScores.entrySet()) {
             if (subset != null && !subset.contains(entry.getKey())) continue;
             CompoundTag jObj = new CompoundTag();
@@ -41,7 +41,7 @@ public class ScoreBQ implements INBTPartial<NBTTagList, UUID> {
     }
 
     @Override
-    public synchronized void readFromNBT(NBTTagList nbt, boolean merge) {
+    public synchronized void readFromNBT(ListTag nbt, boolean merge) {
         if (!merge) playerScores.clear();
 
         for (int i = 0; i < nbt.tagCount(); i++) {

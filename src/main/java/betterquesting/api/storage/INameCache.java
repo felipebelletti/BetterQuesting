@@ -2,13 +2,13 @@ package betterquesting.api.storage;
 
 import betterquesting.api2.storage.INBTPartial;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.UUID;
 
-public interface INameCache extends INBTPartial<NBTTagList, UUID> {
+public interface INameCache extends INBTPartial<ListTag, UUID> {
     boolean updateName(@Nonnull ServerPlayer player);
 
     String getName(@Nonnull UUID uuid);

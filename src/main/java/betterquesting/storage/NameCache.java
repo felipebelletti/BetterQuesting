@@ -3,7 +3,7 @@ package betterquesting.storage;
 import betterquesting.api.storage.INameCache;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.server.ServerLifecycleHooks;
 
@@ -64,7 +64,7 @@ public final class NameCache implements INameCache {
     }
 
     @Override
-    public synchronized NBTTagList writeToNBT(NBTTagList nbt, @Nullable List<UUID> users) {
+    public synchronized ListTag writeToNBT(ListTag nbt, @Nullable List<UUID> users) {
         for (Entry<UUID, CompoundTag> entry : cache.entrySet()) {
             if (users != null && !users.contains(entry.getKey())) continue;
             CompoundTag jn = new CompoundTag();
@@ -78,7 +78,7 @@ public final class NameCache implements INameCache {
     }
 
     @Override
-    public synchronized void readFromNBT(NBTTagList nbt, boolean merge) {
+    public synchronized void readFromNBT(ListTag nbt, boolean merge) {
         if (!merge) cache.clear();
         for (int i = 0; i < nbt.tagCount(); i++) {
             CompoundTag jn = nbt.getCompoundTagAt(i);

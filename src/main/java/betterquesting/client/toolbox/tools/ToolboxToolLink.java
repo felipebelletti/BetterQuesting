@@ -10,7 +10,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetLine;
 import betterquesting.client.gui2.editors.designer.PanelToolController;
 import betterquesting.network.handlers.NetQuestEdit;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.NonNullList;
 
 import java.util.ArrayList;
@@ -100,7 +100,7 @@ public class ToolboxToolLink implements IToolboxTool {
                 IQuest q2 = b2.getStoredValue().getValue();
                 boolean mod2 = false;
 
-                NBTTagList dataList = new NBTTagList();
+                ListTag dataList = new ListTag();
 
                 for (PanelButtonQuest b1 : linking) {
                     IQuest q1 = b1.getStoredValue().getValue();

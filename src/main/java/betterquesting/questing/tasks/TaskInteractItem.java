@@ -18,7 +18,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
@@ -147,7 +147,7 @@ public class TaskInteractItem implements ITask {
             userProgress.clear();
         }
 
-        NBTTagList cList = nbt.getTagList("completeUsers", 8);
+        ListTag cList = nbt.getTagList("completeUsers", 8);
         for (int i = 0; i < cList.tagCount(); i++) {
             try {
                 completeUsers.add(UUID.fromString(cList.getStringTagAt(i)));
@@ -156,7 +156,7 @@ public class TaskInteractItem implements ITask {
             }
         }
 
-        NBTTagList pList = nbt.getTagList("userProgress", 10);
+        ListTag pList = nbt.getTagList("userProgress", 10);
         for (int n = 0; n < pList.tagCount(); n++) {
             try {
                 CompoundTag pTag = pList.getCompoundTagAt(n);
@@ -170,8 +170,8 @@ public class TaskInteractItem implements ITask {
 
     @Override
     public CompoundTag writeProgressToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
-        NBTTagList jArray = new NBTTagList();
-        NBTTagList progArray = new NBTTagList();
+        ListTag jArray = new ListTag();
+        ListTag progArray = new ListTag();
 
         if (users != null) {
             users.forEach((uuid) -> {

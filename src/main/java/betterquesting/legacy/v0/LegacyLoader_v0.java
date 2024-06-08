@@ -21,7 +21,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -124,7 +124,7 @@ public final class LegacyLoader_v0 implements ILegacyLoader {
         }
         quest.setRequirements(req);
 
-        IDatabaseNBT<ITask, NBTTagList, NBTTagList> taskDB = quest.getTasks();
+        IDatabaseNBT<ITask, ListTag, ListTag> taskDB = quest.getTasks();
         List<ITask> uaTasks = new ArrayList<>();
 
         for (JsonElement entry : JsonHelper.GetArray(json, "tasks")) {
@@ -175,7 +175,7 @@ public final class LegacyLoader_v0 implements ILegacyLoader {
             taskDB.add(taskDB.nextID(), t);
         }
 
-        IDatabaseNBT<IReward, NBTTagList, NBTTagList> rewardDB = quest.getRewards();
+        IDatabaseNBT<IReward, ListTag, ListTag> rewardDB = quest.getRewards();
         List<IReward> unassigned = new ArrayList<>();
 
         for (JsonElement entry : JsonHelper.GetArray(json, "rewards")) {

@@ -2,7 +2,7 @@ package betterquesting;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
 
 public class NBTReplaceUtil {
@@ -18,8 +18,8 @@ public class NBTReplaceUtil {
             for (String k : compound.getKeySet()) {
                 compound.setTag(k, replaceStrings(compound.getTag(k), key, replace));
             }
-        } else if (baseTag instanceof NBTTagList) {
-            NBTTagList list = (NBTTagList) baseTag;
+        } else if (baseTag instanceof ListTag) {
+            ListTag list = (ListTag) baseTag;
 
             for (int i = 0; i < list.tagCount(); i++) {
                 list.set(i, replaceStrings(list.get(i), key, replace));

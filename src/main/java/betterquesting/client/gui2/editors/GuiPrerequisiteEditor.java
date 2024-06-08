@@ -34,7 +34,7 @@ import betterquesting.network.handlers.NetQuestEdit;
 import betterquesting.questing.QuestDatabase;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import org.lwjgl.input.Keyboard;
 
 import java.util.Arrays;
@@ -221,7 +221,7 @@ public class GuiPrerequisiteEditor extends GuiScreenCanvas implements IPEventLis
             NetQuestEdit.sendEdit(payload);
         } else if (btn.getButtonID() == 5) { // New
             CompoundTag payload = new CompoundTag();
-            NBTTagList dataList = new NBTTagList();
+            ListTag dataList = new ListTag();
             CompoundTag entry = new CompoundTag();
             entry.setInteger("questID", -1);
             dataList.appendTag(entry);
@@ -305,7 +305,7 @@ public class GuiPrerequisiteEditor extends GuiScreenCanvas implements IPEventLis
 
     private void SendChanges() {
         CompoundTag payload = new CompoundTag();
-        NBTTagList dataList = new NBTTagList();
+        ListTag dataList = new ListTag();
         CompoundTag entry = new CompoundTag();
         entry.setInteger("questID", questID);
         entry.setTag("config", quest.writeToNBT(new CompoundTag()));

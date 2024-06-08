@@ -15,7 +15,7 @@ import betterquesting.questing.QuestDatabase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -68,7 +68,7 @@ public class NetQuestSync {
 
         // Offload this to another thread as it could take a while to build
         BQThreadedIO.INSTANCE.enqueue(() -> {
-            NBTTagList dataList = new NBTTagList();
+            ListTag dataList = new ListTag();
             final List<DBEntry<IQuest>> questSubset = questIDs == null ? QuestDatabase.INSTANCE.getEntries() : QuestDatabase.INSTANCE.bulkLookup(questIDs);
             final List<UUID> pidList = player == null ? null : Collections.singletonList(QuestingAPI.getQuestingUUID(player));
 
@@ -113,7 +113,7 @@ public class NetQuestSync {
 
     @SideOnly(Side.CLIENT)
     private static void onClient(CompoundTag message) {
-        NBTTagList data = message.getTagList("data", 10);
+        ListTag data = message.getTagList("data", 10);
         boolean merge = message.getBoolean("merge");
         if (!merge) QuestDatabase.INSTANCE.reset();
 

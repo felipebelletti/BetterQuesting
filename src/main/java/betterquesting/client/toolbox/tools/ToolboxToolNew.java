@@ -13,7 +13,7 @@ import betterquesting.questing.QuestDatabase;
 import betterquesting.questing.QuestLineDatabase;
 import betterquesting.questing.QuestLineEntry;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.NonNullList;
 
 import java.util.Collections;
@@ -89,7 +89,7 @@ public class ToolboxToolNew implements IToolboxTool {
 
         // Sync Quest
         CompoundTag quPayload = new CompoundTag();
-        NBTTagList qdList = new NBTTagList();
+        ListTag qdList = new ListTag();
         CompoundTag qTag = new CompoundTag();
         qTag.setInteger("questID", qID);
         qdList.appendTag(qTag);
@@ -99,7 +99,7 @@ public class ToolboxToolNew implements IToolboxTool {
 
         // Sync Line
         CompoundTag chPayload = new CompoundTag();
-        NBTTagList cdList = new NBTTagList();
+        ListTag cdList = new ListTag();
         CompoundTag cTag = new CompoundTag();
         cTag.setInteger("chapterID", lID);
         cTag.setTag("config", qLine.writeToNBT(new CompoundTag(), null));

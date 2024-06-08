@@ -10,7 +10,7 @@ import betterquesting.client.toolbox.ToolboxTabMain;
 import betterquesting.network.handlers.NetChapterEdit;
 import betterquesting.questing.QuestLineDatabase;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.NonNullList;
 
 import java.util.ArrayList;
@@ -135,7 +135,7 @@ public class ToolboxToolGrab implements IToolboxTool {
 
             // Send quest line edits
             CompoundTag chPayload = new CompoundTag();
-            NBTTagList cdList = new NBTTagList();
+            ListTag cdList = new ListTag();
             CompoundTag tagEntry = new CompoundTag();
             tagEntry.setInteger("chapterID", lID);
             tagEntry.setTag("config", qLine.writeToNBT(new CompoundTag(), null));

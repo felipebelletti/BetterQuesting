@@ -10,7 +10,7 @@ import betterquesting.client.gui2.editors.nbt.GuiItemSelection;
 import betterquesting.network.handlers.NetQuestEdit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.NonNullList;
 import org.lwjgl.input.Keyboard;
 
@@ -50,7 +50,7 @@ public class ToolboxToolIcon implements IToolboxTool {
     private void changeIcon(List<PanelButtonQuest> list, BigItemStack refItem) {
         Minecraft mc = Minecraft.getMinecraft();
         mc.displayGuiScreen(new GuiItemSelection(mc.currentScreen, refItem, value -> {
-            NBTTagList dataList = new NBTTagList();
+            ListTag dataList = new ListTag();
             for (PanelButtonQuest b : list) {
                 b.getStoredValue().getValue().setProperty(NativeProps.ICON, value);
 

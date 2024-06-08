@@ -9,7 +9,7 @@ import betterquesting.core.BetterQuesting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -29,7 +29,7 @@ public class NetLootClaim {
 
     public static void sendReward(@Nonnull ServerPlayer player, @Nonnull String title, BigItemStack... items) {
         CompoundTag payload = new CompoundTag();
-        NBTTagList list = new NBTTagList();
+        ListTag list = new ListTag();
         for (BigItemStack stack : items) {
             list.appendTag(stack.writeToNBT(new CompoundTag()));
         }
@@ -43,7 +43,7 @@ public class NetLootClaim {
         String title = data.getString("title");
         List<BigItemStack> rewards = new ArrayList<>();
 
-        NBTTagList list = data.getTagList("rewards", 10);
+        ListTag list = data.getTagList("rewards", 10);
 
         for (int i = 0; i < list.tagCount(); i++) {
             rewards.add(new BigItemStack(list.getCompoundTagAt(i)));

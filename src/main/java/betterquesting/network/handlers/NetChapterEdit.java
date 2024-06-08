@@ -13,7 +13,7 @@ import betterquesting.network.PacketTypeRegistry;
 import betterquesting.questing.QuestLineDatabase;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
@@ -81,7 +81,7 @@ public class NetChapterEdit {
         }
     }
 
-    private static void editChapters(NBTTagList data) {
+    private static void editChapters(ListTag data) {
         int[] ids = new int[data.tagCount()];
         for (int i = 0; i < data.tagCount(); i++) {
             CompoundTag entry = data.getCompoundTagAt(i);
@@ -122,7 +122,7 @@ public class NetChapterEdit {
         PacketSender.INSTANCE.sendToAll(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void createChapters(NBTTagList data) // Includes future copy potential
+    private static void createChapters(ListTag data) // Includes future copy potential
     {
         int[] ids = new int[data.tagCount()];
         for (int i = 0; i < data.tagCount(); i++) {

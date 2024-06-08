@@ -9,7 +9,7 @@ import betterquesting.api.utils.FileExtensionFilter;
 import betterquesting.api.utils.JsonHelper;
 import betterquesting.api.utils.NBTConverter;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -48,7 +48,7 @@ public class NativeFileImporter implements IImporter {
         }
     }
 
-    private HashMap<Integer, Integer> readQuests(NBTTagList json, IQuestDatabase questDB) {
+    private HashMap<Integer, Integer> readQuests(ListTag json, IQuestDatabase questDB) {
         HashMap<Integer, Integer> remappedIDs = new HashMap<>();
         List<IQuest> loadedQuests = new ArrayList<>();
 
@@ -78,12 +78,12 @@ public class NativeFileImporter implements IImporter {
         return remappedIDs;
     }
 
-    private void readQuestLines(NBTTagList json, IQuestLineDatabase lineDB, HashMap<Integer, Integer> remappeIDs) {
+    private void readQuestLines(ListTag json, IQuestLineDatabase lineDB, HashMap<Integer, Integer> remappeIDs) {
         for (int i = 0; i < json.tagCount(); i++) {
             CompoundTag jql = json.getCompoundTagAt(i).copy();
 
             if (jql.hasKey("quests", 9)) {
-                NBTTagList qList = jql.getTagList("quests", 10);
+                ListTag qList = jql.getTagList("quests", 10);
                 for (int n = 0; n < qList.tagCount(); n++) {
                     CompoundTag qTag = qList.getCompoundTagAt(n);
 

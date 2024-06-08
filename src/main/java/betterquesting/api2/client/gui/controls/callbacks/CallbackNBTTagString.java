@@ -3,7 +3,7 @@ package betterquesting.api2.client.gui.controls.callbacks;
 import betterquesting.api.misc.ICallback;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
 
 public class CallbackNBTTagString implements ICallback<String> {
@@ -17,7 +17,7 @@ public class CallbackNBTTagString implements ICallback<String> {
         this.iKey = -1;
     }
 
-    public CallbackNBTTagString(NBTTagList tag, int key) {
+    public CallbackNBTTagString(ListTag tag, int key) {
         this.tag = tag;
         this.sKey = null;
         this.iKey = key;
@@ -28,7 +28,7 @@ public class CallbackNBTTagString implements ICallback<String> {
         if (tag.getId() == 10) {
             ((CompoundTag) tag).setString(sKey, value);
         } else {
-            ((NBTTagList) tag).set(iKey, new NBTTagString(value));
+            ((ListTag) tag).set(iKey, new NBTTagString(value));
         }
     }
 }

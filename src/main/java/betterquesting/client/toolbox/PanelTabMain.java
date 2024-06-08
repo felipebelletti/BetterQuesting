@@ -19,7 +19,7 @@ import betterquesting.network.handlers.NetChapterEdit;
 import betterquesting.questing.QuestLineDatabase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.text.TextFormatting;
 
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class PanelTabMain extends CanvasEmpty {
                 Minecraft mc = Minecraft.getMinecraft();
                 mc.displayGuiScreen(new GuiNbtEditor(mc.currentScreen, cvQuestLine.getQuestLine().writeToNBT(new CompoundTag(), null), value -> {
                     CompoundTag payload = new CompoundTag();
-                    NBTTagList dataList = new NBTTagList();
+                    ListTag dataList = new ListTag();
                     CompoundTag entry = new CompoundTag();
                     entry.setInteger("chapterID", QuestLineDatabase.INSTANCE.getID(cvQuestLine.getQuestLine()));
                     entry.setTag("config", value);

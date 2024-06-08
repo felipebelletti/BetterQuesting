@@ -34,7 +34,7 @@ import betterquesting.network.handlers.NetChapterEdit;
 import betterquesting.questing.QuestLineDatabase;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector4f;
 
@@ -242,7 +242,7 @@ public class GuiQuestLinesEditor extends GuiScreenCanvas implements IPEventListe
         } else if (btn.getButtonID() == 1) // New Quest Line
         {
             CompoundTag payload = new CompoundTag();
-            NBTTagList dataList = new NBTTagList();
+            ListTag dataList = new ListTag();
             CompoundTag entry = new CompoundTag();
             entry.setInteger("chapterID", -1);
             dataList.appendTag(entry);
@@ -317,7 +317,7 @@ public class GuiQuestLinesEditor extends GuiScreenCanvas implements IPEventListe
 
     private void SendChanges(DBEntry<IQuestLine> chapter) {
         CompoundTag payload = new CompoundTag();
-        NBTTagList dataList = new NBTTagList();
+        ListTag dataList = new ListTag();
         CompoundTag entry = new CompoundTag();
         entry.setInteger("chapterID", chapter.getID());
         entry.setTag("config", chapter.getValue().writeToNBT(new CompoundTag(), null));

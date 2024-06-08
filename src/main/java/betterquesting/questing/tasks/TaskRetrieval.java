@@ -20,7 +20,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NBTTagInt;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.NonNullList;
@@ -198,7 +198,7 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
         json.setBoolean("autoConsume", autoConsume);
         json.setString("entryLogic", entryLogic.name());
 
-        NBTTagList itemArray = new NBTTagList();
+        ListTag itemArray = new ListTag();
         for (BigItemStack stack : this.requiredItems) {
             itemArray.appendTag(JsonHelper.ItemStackToJson(stack, new CompoundTag()));
         }
@@ -224,7 +224,7 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
         }
 
         requiredItems.clear();
-        NBTTagList iList = nbt.getTagList("requiredItems", 10);
+        ListTag iList = nbt.getTagList("requiredItems", 10);
         for (int i = 0; i < iList.tagCount(); i++) {
             requiredItems.add(JsonHelper.JsonToItemStack(iList.getCompoundTagAt(i)));
         }
@@ -237,7 +237,7 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
             userProgress.clear();
         }
 
-        NBTTagList cList = nbt.getTagList("completeUsers", 8);
+        ListTag cList = nbt.getTagList("completeUsers", 8);
         for (int i = 0; i < cList.tagCount(); i++) {
             try {
                 completeUsers.add(UUID.fromString(cList.getStringTagAt(i)));
@@ -246,14 +246,14 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
             }
         }
 
-        NBTTagList pList = nbt.getTagList("userProgress", 10);
+        ListTag pList = nbt.getTagList("userProgress", 10);
         for (int n = 0; n < pList.tagCount(); n++) {
             try {
                 CompoundTag pTag = pList.getCompoundTagAt(n);
                 UUID uuid = UUID.fromString(pTag.getString("uuid"));
 
                 int[] data = new int[requiredItems.size()];
-                NBTTagList dNbt = pTag.getTagList("data", 3);
+                ListTag dNbt = pTag.getTagList("data", 3);
                 for (int i = 0; i < data.length && i < dNbt.tagCount(); i++) // TODO: Change this to an int array. This is dumb...
                 {
                     data[i] = dNbt.getIntAt(i);
@@ -268,8 +268,8 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
 
     @Override
     public CompoundTag writeProgressToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
-        NBTTagList jArray = new NBTTagList();
-        NBTTagList progArray = new NBTTagList();
+        ListTag jArray = new ListTag();
+        ListTag progArray = new ListTag();
 
         if (users != null) {
             users.forEach((uuid) -> {
@@ -280,7 +280,7 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
                 if (data != null) {
                     CompoundTag pJson = new CompoundTag();
                     pJson.setString("uuid", uuid.toString());
-                    NBTTagList pArray = new NBTTagList(); // TODO: Why the heck isn't this just an int array?!
+                    ListTag pArray = new ListTag(); // TODO: Why the heck isn't this just an int array?!
                     for (int i : data) {
                         pArray.appendTag(new NBTTagInt(i));
                     }
@@ -294,7 +294,7 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
             userProgress.forEach((uuid, data) -> {
                 CompoundTag pJson = new CompoundTag();
                 pJson.setString("uuid", uuid.toString());
-                NBTTagList pArray = new NBTTagList(); // TODO: Why the heck isn't this just an int array?!
+                ListTag pArray = new ListTag(); // TODO: Why the heck isn't this just an int array?!
                 for (int i : data) {
                     pArray.appendTag(new NBTTagInt(i));
                 }

@@ -5,7 +5,7 @@ import betterquesting.api.questing.IQuestDatabase;
 import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.storage.RandomIndexDatabase;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -55,7 +55,7 @@ public final class QuestDatabase extends RandomIndexDatabase<IQuest> implements 
     }
 
     @Override
-    public synchronized NBTTagList writeToNBT(NBTTagList json, @Nullable List<Integer> subset) {
+    public synchronized ListTag writeToNBT(ListTag json, @Nullable List<Integer> subset) {
         for (DBEntry<IQuest> entry : this.getEntries()) {
             if (subset != null && !subset.contains(entry.getID())) continue;
             CompoundTag jq = entry.getValue().writeToNBT(new CompoundTag());
@@ -68,7 +68,7 @@ public final class QuestDatabase extends RandomIndexDatabase<IQuest> implements 
     }
 
     @Override
-    public synchronized void readFromNBT(NBTTagList nbt, boolean merge) {
+    public synchronized void readFromNBT(ListTag nbt, boolean merge) {
         if (!merge) this.reset();
 
         for (int i = 0; i < nbt.tagCount(); i++) {
@@ -84,7 +84,7 @@ public final class QuestDatabase extends RandomIndexDatabase<IQuest> implements 
     }
 
     @Override
-    public synchronized NBTTagList writeProgressToNBT(NBTTagList json, @Nullable List<UUID> users) {
+    public synchronized ListTag writeProgressToNBT(ListTag json, @Nullable List<UUID> users) {
         for (DBEntry<IQuest> entry : this.getEntries()) {
             CompoundTag jq = entry.getValue().writeProgressToNBT(new CompoundTag(), users);
             jq.setInteger("questID", entry.getID());
@@ -95,7 +95,7 @@ public final class QuestDatabase extends RandomIndexDatabase<IQuest> implements 
     }
 
     @Override
-    public synchronized void readProgressFromNBT(NBTTagList json, boolean merge) {
+    public synchronized void readProgressFromNBT(ListTag json, boolean merge) {
         for (int i = 0; i < json.tagCount(); i++) {
             CompoundTag qTag = json.getCompoundTagAt(i);
 

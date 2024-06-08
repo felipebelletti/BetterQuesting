@@ -52,7 +52,7 @@ public class GuiNbtAdd extends GuiScreenCanvas implements IPEventListener, IVola
         this.index = -1;
     }
 
-    public GuiNbtAdd(GuiScreen parent, NBTTagList list, int index) {
+    public GuiNbtAdd(GuiScreen parent, ListTag list, int index) {
         super(parent);
         this.nbt = list;
         this.index = index;
@@ -114,7 +114,7 @@ public class GuiNbtAdd extends GuiScreenCanvas implements IPEventListener, IVola
         // NBT types
         options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, NBTTagString.class.getSimpleName(), new NBTTagString("")));
         options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, CompoundTag.class.getSimpleName(), new CompoundTag()));
-        options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, NBTTagList.class.getSimpleName(), new NBTTagList()));
+        options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, ListTag.class.getSimpleName(), new ListTag()));
         options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, NBTTagByte.class.getSimpleName(), new NBTTagByte((byte) 0)));
         options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, NBTTagShort.class.getSimpleName(), new NBTTagShort((short) 0)));
         options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, NBTTagInt.class.getSimpleName(), new NBTTagInt(0)));
@@ -161,7 +161,7 @@ public class GuiNbtAdd extends GuiScreenCanvas implements IPEventListener, IVola
                 } else if (nbt.getId() == 10) {
                     ((CompoundTag) nbt).setTag(flKey.getValue(), selected);
                 } else if (nbt.getId() == 9) {
-                    NBTTagList l = (NBTTagList) nbt;
+                    ListTag l = (ListTag) nbt;
 
                     if (index == l.tagCount()) {
                         l.appendTag(selected);

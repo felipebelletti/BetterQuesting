@@ -26,7 +26,7 @@ import betterquesting.questing.tasks.TaskScoreboard;
 import betterquesting.questing.tasks.TaskScoreboard.ScoreOperation;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 
@@ -92,7 +92,7 @@ public class GuiEditTaskScoreboard extends GuiScreenCanvas {
 
     private void sendChanges() {
         CompoundTag payload = new CompoundTag();
-        NBTTagList dataList = new NBTTagList();
+        ListTag dataList = new ListTag();
         CompoundTag entry = new CompoundTag();
         entry.setInteger("questID", quest.getID());
         entry.setTag("config", quest.getValue().writeToNBT(new CompoundTag()));

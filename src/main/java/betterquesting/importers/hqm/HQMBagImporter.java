@@ -13,7 +13,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -113,7 +113,7 @@ public class HQMBagImporter implements IImporter {
 
         CompoundTag tags = new CompoundTag();
         CompoundTag base = new CompoundTag();
-        NBTTagList jAry = new NBTTagList();
+        ListTag jAry = new ListTag();
 
         for (LootGroup group : hqmLoot) {
             CompoundTag jGrp = new CompoundTag();

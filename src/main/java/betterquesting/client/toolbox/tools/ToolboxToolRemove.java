@@ -8,7 +8,7 @@ import betterquesting.client.gui2.editors.designer.PanelToolController;
 import betterquesting.network.handlers.NetChapterEdit;
 import betterquesting.questing.QuestLineDatabase;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.NonNullList;
 import org.lwjgl.input.Keyboard;
 
@@ -50,7 +50,7 @@ public class ToolboxToolRemove implements IToolboxTool {
 
             // Sync Line
             CompoundTag chPayload = new CompoundTag();
-            NBTTagList cdList = new NBTTagList();
+            ListTag cdList = new ListTag();
             CompoundTag cTag = new CompoundTag();
             cTag.setInteger("chapterID", QuestLineDatabase.INSTANCE.getID(line));
             cTag.setTag("config", line.writeToNBT(new CompoundTag(), null));
@@ -95,7 +95,7 @@ public class ToolboxToolRemove implements IToolboxTool {
 
             // Sync Line
             CompoundTag chPayload = new CompoundTag();
-            NBTTagList cdList = new NBTTagList();
+            ListTag cdList = new ListTag();
             CompoundTag cTag = new CompoundTag();
             cTag.setInteger("chapterID", QuestLineDatabase.INSTANCE.getID(line));
             cTag.setTag("config", line.writeToNBT(new CompoundTag(), null));

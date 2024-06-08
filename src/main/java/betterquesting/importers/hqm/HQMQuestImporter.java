@@ -20,7 +20,7 @@ import betterquesting.importers.hqm.converters.rewards.HQMRewardStandard;
 import betterquesting.importers.hqm.converters.tasks.*;
 import com.google.gson.*;
 import net.minecraft.init.Items;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import org.apache.logging.log4j.Level;
 
 import java.io.File;
@@ -289,7 +289,7 @@ public class HQMQuestImporter implements IImporter {
                 ITask[] tsks = taskConverters.get(tType).apply(jTask);
 
                 if (tsks != null && tsks.length > 0) {
-                    IDatabaseNBT<ITask, NBTTagList, NBTTagList> taskReg = quest.getTasks();
+                    IDatabaseNBT<ITask, ListTag, ListTag> taskReg = quest.getTasks();
                     for (ITask t : tsks) taskReg.add(taskReg.nextID(), t);
                 }
             }
@@ -302,7 +302,7 @@ public class HQMQuestImporter implements IImporter {
                 IReward[] rews = entry.getValue().apply(jQuest.get(entry.getKey()));
 
                 if (rews != null && rews.length > 0) {
-                    IDatabaseNBT<IReward, NBTTagList, NBTTagList> rewardReg = quest.getRewards();
+                    IDatabaseNBT<IReward, ListTag, ListTag> rewardReg = quest.getRewards();
                     for (IReward r : rews) {
                         rewardReg.add(rewardReg.nextID(), r);
                     }

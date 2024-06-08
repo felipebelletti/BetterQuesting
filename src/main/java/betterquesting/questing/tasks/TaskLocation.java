@@ -12,7 +12,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.StringUtils;
@@ -158,7 +158,7 @@ public class TaskLocation implements ITaskTickable {
 
     @Override
     public CompoundTag writeProgressToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
-        NBTTagList jArray = new NBTTagList();
+        ListTag jArray = new ListTag();
 
         completeUsers.forEach((uuid) -> {
             if (users == null || users.contains(uuid)) jArray.appendTag(new NBTTagString(uuid.toString()));
@@ -172,7 +172,7 @@ public class TaskLocation implements ITaskTickable {
     @Override
     public void readProgressFromNBT(CompoundTag nbt, boolean merge) {
         if (!merge) completeUsers.clear();
-        NBTTagList cList = nbt.getTagList("completeUsers", 8);
+        ListTag cList = nbt.getTagList("completeUsers", 8);
         for (int i = 0; i < cList.tagCount(); i++) {
             try {
                 completeUsers.add(UUID.fromString(cList.getStringTagAt(i)));

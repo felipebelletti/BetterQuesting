@@ -43,7 +43,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.server.ServerLifecycleHooks;
@@ -186,7 +186,7 @@ public class GuiHome extends GuiScreenCanvas {
                     boolean editMode = QuestSettings.INSTANCE.getProperty(NativeProps.EDIT_MODE);
                     boolean hardMode = QuestSettings.INSTANCE.getProperty(NativeProps.HARDCORE);
 
-                    NBTTagList jsonP = QuestDatabase.INSTANCE.writeProgressToNBT(new NBTTagList(), null);
+                    ListTag jsonP = QuestDatabase.INSTANCE.writeProgressToNBT(new ListTag(), null);
                     CompoundTag j1 = NBTConverter.JSONtoNBT_Object(JsonHelper.ReadFromFile(qFile), new CompoundTag(), true);
                     QuestSettings.INSTANCE.readFromNBT(j1.getCompoundTag("questSettings"));
                     QuestDatabase.INSTANCE.readFromNBT(j1.getTagList("questDatabase", 10), false);

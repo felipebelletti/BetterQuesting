@@ -7,7 +7,7 @@ import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.storage.IDatabaseNBT;
 import betterquesting.api2.storage.SimpleDatabase;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class TaskStorage extends SimpleDatabase<ITask> implements IDatabaseNBT<ITask, NBTTagList, NBTTagList> {
+public class TaskStorage extends SimpleDatabase<ITask> implements IDatabaseNBT<ITask, ListTag, ListTag> {
     @Override
-    public NBTTagList writeToNBT(NBTTagList json, @Nullable List<Integer> subset) {
+    public ListTag writeToNBT(ListTag json, @Nullable List<Integer> subset) {
         for (DBEntry<ITask> entry : getEntries()) {
             if (subset != null && !subset.contains(entry.getID())) continue;
             ResourceLocation taskID = entry.getValue().getFactoryID();
@@ -30,7 +30,7 @@ public class TaskStorage extends SimpleDatabase<ITask> implements IDatabaseNBT<I
     }
 
     @Override
-    public void readFromNBT(NBTTagList json, boolean merge) {
+    public void readFromNBT(ListTag json, boolean merge) {
         if (!merge) reset();
         List<ITask> unassigned = new ArrayList<>();
 
@@ -70,7 +70,7 @@ public class TaskStorage extends SimpleDatabase<ITask> implements IDatabaseNBT<I
     }
 
     @Override
-    public NBTTagList writeProgressToNBT(NBTTagList json, @Nullable List<UUID> user) {
+    public ListTag writeProgressToNBT(ListTag json, @Nullable List<UUID> user) {
         for (DBEntry<ITask> entry : getEntries()) {
             ResourceLocation taskID = entry.getValue().getFactoryID();
 
@@ -83,7 +83,7 @@ public class TaskStorage extends SimpleDatabase<ITask> implements IDatabaseNBT<I
     }
 
     @Override
-    public void readProgressFromNBT(NBTTagList json, boolean merge) {
+    public void readProgressFromNBT(ListTag json, boolean merge) {
         for (int i = 0; i < json.tagCount(); i++) {
             CompoundTag jsonTask = json.getCompoundTagAt(i);
             int index = jsonTask.hasKey("index", 99) ? jsonTask.getInteger("index") : -1;

@@ -6,7 +6,7 @@ import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.storage.INBTSaveLoad;
 import betterquesting.api2.storage.SimpleDatabase;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,7 +52,7 @@ public class LootGroup extends SimpleDatabase<LootGroup.LootEntry> implements IN
         // Old entries that were never given IDs
         List<LootEntry> legacyEntry = new ArrayList<>();
 
-        NBTTagList jRew = tag.getTagList("rewards", 10);
+        ListTag jRew = tag.getTagList("rewards", 10);
         for (int i = 0; i < jRew.tagCount(); i++) {
             CompoundTag entry = jRew.getCompoundTagAt(i);
             int id = entry.hasKey("ID", 99) ? entry.getInteger("ID") : -1;
@@ -77,7 +77,7 @@ public class LootGroup extends SimpleDatabase<LootGroup.LootEntry> implements IN
         tag.setString("name", name);
         tag.setInteger("weight", weight);
 
-        NBTTagList jRew = new NBTTagList();
+        ListTag jRew = new ListTag();
         for (DBEntry<LootEntry> entry : getEntries()) {
             if (entry == null) continue;
 
@@ -100,7 +100,7 @@ public class LootGroup extends SimpleDatabase<LootGroup.LootEntry> implements IN
             weight = Math.max(1, weight);
 
             items.clear();
-            NBTTagList jItm = json.getTagList("items", 10);
+            ListTag jItm = json.getTagList("items", 10);
             for (int i = 0; i < jItm.tagCount(); i++) {
                 items.add(JsonHelper.JsonToItemStack(jItm.getCompoundTagAt(i)));
             }
@@ -110,7 +110,7 @@ public class LootGroup extends SimpleDatabase<LootGroup.LootEntry> implements IN
         public CompoundTag writeToNBT(CompoundTag tag) {
             tag.setInteger("weight", weight);
 
-            NBTTagList jItm = new NBTTagList();
+            ListTag jItm = new ListTag();
             for (BigItemStack stack : items) {
                 jItm.appendTag(JsonHelper.ItemStackToJson(stack, new CompoundTag()));
             }

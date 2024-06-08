@@ -16,7 +16,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.Level;
 
@@ -62,7 +62,7 @@ public class RewardItem implements IReward {
     @Override
     public void readFromNBT(CompoundTag nbt) {
         items.clear();
-        NBTTagList rList = nbt.getTagList("rewards", 10);
+        ListTag rList = nbt.getTagList("rewards", 10);
         for (int i = 0; i < rList.tagCount(); i++) {
             try {
                 BigItemStack item = JsonHelper.JsonToItemStack(rList.getCompoundTagAt(i));
@@ -75,7 +75,7 @@ public class RewardItem implements IReward {
 
     @Override
     public CompoundTag writeToNBT(CompoundTag nbt) {
-        NBTTagList rJson = new NBTTagList();
+        ListTag rJson = new ListTag();
         for (BigItemStack stack : items) {
             rJson.appendTag(JsonHelper.ItemStackToJson(stack, new CompoundTag()));
         }

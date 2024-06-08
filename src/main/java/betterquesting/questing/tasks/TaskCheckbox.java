@@ -11,7 +11,7 @@ import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskCheckbox;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -67,7 +67,7 @@ public class TaskCheckbox implements ITask {
 
     @Override
     public CompoundTag writeProgressToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
-        NBTTagList jArray = new NBTTagList();
+        ListTag jArray = new ListTag();
 
         completeUsers.forEach((uuid) -> {
             if (users == null || users.contains(uuid)) jArray.appendTag(new NBTTagString(uuid.toString()));
@@ -81,7 +81,7 @@ public class TaskCheckbox implements ITask {
     @Override
     public void readProgressFromNBT(CompoundTag nbt, boolean merge) {
         if (!merge) completeUsers.clear();
-        NBTTagList cList = nbt.getTagList("completeUsers", 8);
+        ListTag cList = nbt.getTagList("completeUsers", 8);
         for (int i = 0; i < cList.tagCount(); i++) {
             try {
                 completeUsers.add(UUID.fromString(cList.getStringTagAt(i)));

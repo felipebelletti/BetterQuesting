@@ -6,7 +6,7 @@ import betterquesting.api2.storage.DBEntry;
 import betterquesting.api2.storage.SimpleDatabase;
 import betterquesting.questing.QuestInstance;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class ImportedQuests extends SimpleDatabase<IQuest> implements IQuestData
     }
 
     @Override
-    public NBTTagList writeToNBT(NBTTagList nbt, List<Integer> subset) {
+    public ListTag writeToNBT(ListTag nbt, List<Integer> subset) {
         for (DBEntry<IQuest> entry : this.getEntries()) {
             if (subset != null && !subset.contains(entry.getID())) continue;
             CompoundTag jq = new CompoundTag();
@@ -50,7 +50,7 @@ public class ImportedQuests extends SimpleDatabase<IQuest> implements IQuestData
     }
 
     @Override
-    public void readFromNBT(NBTTagList nbt, boolean merge) {
+    public void readFromNBT(ListTag nbt, boolean merge) {
         if (!merge) this.reset();
 
         for (int i = 0; i < nbt.tagCount(); i++) {
@@ -66,11 +66,11 @@ public class ImportedQuests extends SimpleDatabase<IQuest> implements IQuestData
     }
 
     @Override
-    public NBTTagList writeProgressToNBT(NBTTagList nbt, @Nullable List<UUID> users) {
+    public ListTag writeProgressToNBT(ListTag nbt, @Nullable List<UUID> users) {
         return nbt;
     }
 
     @Override
-    public void readProgressFromNBT(NBTTagList nbt, boolean merge) {
+    public void readProgressFromNBT(ListTag nbt, boolean merge) {
     }
 }

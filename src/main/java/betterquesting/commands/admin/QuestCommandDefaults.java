@@ -32,7 +32,7 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.server.permission.DefaultPermissionLevel;
@@ -249,8 +249,8 @@ public class QuestCommandDefaults extends QuestCommandBase {
         QuestSettings.INSTANCE.setProperty(NativeProps.EDIT_MODE, false);
         base.setTag("questSettings", QuestSettings.INSTANCE.writeToNBT(new CompoundTag()));
         QuestSettings.INSTANCE.setProperty(NativeProps.EDIT_MODE, editMode);
-        base.setTag("questDatabase", QuestDatabase.INSTANCE.writeToNBT(new NBTTagList(), null));
-        base.setTag("questLines", QuestLineDatabase.INSTANCE.writeToNBT(new NBTTagList(), null));
+        base.setTag("questDatabase", QuestDatabase.INSTANCE.writeToNBT(new ListTag(), null));
+        base.setTag("questLines", QuestLineDatabase.INSTANCE.writeToNBT(new ListTag(), null));
         base.setString("format", BetterQuesting.FORMAT);
         base.setString("build", ModReference.VERSION);
         JsonHelper.WriteToFile(legacyFile, NBTConverter.NBTtoJSON_Compound(base, new JsonObject(), true));
@@ -273,7 +273,7 @@ public class QuestCommandDefaults extends QuestCommandBase {
 
         boolean editMode = QuestSettings.INSTANCE.getProperty(NativeProps.EDIT_MODE);
         boolean hardMode = QuestSettings.INSTANCE.getProperty(NativeProps.HARDCORE);
-        NBTTagList jsonP = QuestDatabase.INSTANCE.writeProgressToNBT(new NBTTagList(), null);
+        ListTag jsonP = QuestDatabase.INSTANCE.writeProgressToNBT(new ListTag(), null);
         
         File settingsFile = new File(dataDir, SETTINGS_FILE);
         if (!settingsFile.exists()) {
@@ -283,7 +283,7 @@ public class QuestCommandDefaults extends QuestCommandBase {
         }
         QuestSettings.INSTANCE.readFromNBT(readNbt.apply(settingsFile));
         File questLineDir = new File(dataDir, QUEST_LINE_DIR);
-        NBTTagList questLineDatabase = new NBTTagList();
+        ListTag questLineDatabase = new ListTag();
         List<File> sortedQuestLineFiles = new ArrayList<>();
         try (Stream<Path> paths = Files.walk(questLineDir.toPath())) {
             paths.filter(Files::isRegularFile).forEach(
@@ -359,7 +359,7 @@ public class QuestCommandDefaults extends QuestCommandBase {
             boolean editMode = QuestSettings.INSTANCE.getProperty(NativeProps.EDIT_MODE);
             boolean hardMode = QuestSettings.INSTANCE.getProperty(NativeProps.HARDCORE);
 
-            NBTTagList jsonP = QuestDatabase.INSTANCE.writeProgressToNBT(new NBTTagList(), null);
+            ListTag jsonP = QuestDatabase.INSTANCE.writeProgressToNBT(new ListTag(), null);
 
             JsonObject j1 = JsonHelper.ReadFromFile(legacyFile);
             CompoundTag nbt1 = NBTConverter.JSONtoNBT_Object(j1, new CompoundTag(), true);

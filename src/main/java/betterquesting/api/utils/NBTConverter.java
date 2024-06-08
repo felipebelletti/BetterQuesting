@@ -34,8 +34,8 @@ public class NBTConverter {
                 out.value(b);
             }
             out.endArray();
-        } else if (value instanceof NBTTagList) {
-            NBTTagList tagList = (NBTTagList) value;
+        } else if (value instanceof ListTag) {
+            ListTag tagList = (ListTag) value;
             if (format) {
                 out.beginObject();
                 for (int i = 0; i < tagList.tagCount(); i++) {
@@ -91,11 +91,11 @@ public class NBTConverter {
             return new JsonPrimitive(((NBTTagString) tag).getString());
         } else if (tag instanceof CompoundTag) {
             return NBTtoJSON_Compound((CompoundTag) tag, new JsonObject(), format);
-        } else if (tag instanceof NBTTagList) {
+        } else if (tag instanceof ListTag) {
             if (format) {
                 JsonObject jAry = new JsonObject();
 
-                NBTTagList tagList = (NBTTagList) tag;
+                ListTag tagList = (ListTag) tag;
 
                 for (int i = 0; i < tagList.tagCount(); i++) {
                     jAry.add(i + ":" + tagList.get(i).getId(), NBTtoJSON_Base(tagList.get(i), true));
@@ -105,7 +105,7 @@ public class NBTConverter {
             } else {
                 JsonArray jAry = new JsonArray();
 
-                NBTTagList tagList = (NBTTagList) tag;
+                ListTag tagList = (ListTag) tag;
 
                 for (NBTBase t : tagList) {
                     jAry.add(NBTtoJSON_Base(t, false));
@@ -264,7 +264,7 @@ public class NBTConverter {
 
                 return new NBTTagLongArray(lAry);
             } else if (tagID == 9) {
-                NBTTagList tList = new NBTTagList();
+                ListTag tList = new ListTag();
 
                 if (jObj.isJsonArray()) {
                     JsonArray jAry = jObj.getAsJsonArray();

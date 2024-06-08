@@ -31,7 +31,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 
@@ -118,7 +118,7 @@ public class GuiEditTaskAdvancement extends GuiScreenCanvas implements IVolatile
     private void sendChanges() {
         task.advID = selected;
         CompoundTag payload = new CompoundTag();
-        NBTTagList dataList = new NBTTagList();
+        ListTag dataList = new ListTag();
         CompoundTag entry = new CompoundTag();
         entry.setInteger("questID", quest.getID());
         entry.setTag("config", quest.getValue().writeToNBT(new CompoundTag()));

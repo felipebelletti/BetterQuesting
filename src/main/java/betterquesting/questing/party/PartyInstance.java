@@ -8,7 +8,7 @@ import betterquesting.api.questing.party.IParty;
 import betterquesting.core.BetterQuesting;
 import betterquesting.storage.PropertyContainer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -138,7 +138,7 @@ public class PartyInstance implements IParty {
 
     @Override
     public CompoundTag writeToNBT(CompoundTag json) {
-        NBTTagList memJson = new NBTTagList();
+        ListTag memJson = new ListTag();
         for (Entry<UUID, EnumPartyStatus> mem : members.entrySet()) {
             CompoundTag jm = new CompoundTag();
             jm.setString("uuid", mem.getKey().toString());
@@ -163,7 +163,7 @@ public class PartyInstance implements IParty {
         }
 
         members.clear();
-        NBTTagList memList = jObj.getTagList("members", 10);
+        ListTag memList = jObj.getTagList("members", 10);
         for (int i = 0; i < memList.tagCount(); i++) {
             try {
                 CompoundTag jMem = memList.getCompoundTagAt(i);

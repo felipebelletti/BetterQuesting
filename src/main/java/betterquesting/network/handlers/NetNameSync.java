@@ -12,7 +12,7 @@ import betterquesting.questing.party.PartyManager;
 import betterquesting.storage.NameCache;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
@@ -45,7 +45,7 @@ public class NetNameSync {
         // NOTE: You can make an empty request if you want EVERYTHING (but I would not recommend it on large servers)
         CompoundTag payload = new CompoundTag();
         if (uuids != null) {
-            NBTTagList uList = new NBTTagList();
+            ListTag uList = new ListTag();
             for (UUID id : uuids) {
                 if (id == null) continue;
                 uList.appendTag(new NBTTagString(id.toString()));
@@ -53,7 +53,7 @@ public class NetNameSync {
             payload.setTag("uuids", uList);
         }
         if (names != null) {
-            NBTTagList nList = new NBTTagList();
+            ListTag nList = new ListTag();
             for (String s : names) {
                 if (StringUtils.isNullOrEmpty(s)) continue;
                 nList.appendTag(new NBTTagString(s));
@@ -68,7 +68,7 @@ public class NetNameSync {
         if (party == null) return;
 
         CompoundTag payload = new CompoundTag();
-        payload.setTag("data", NameCache.INSTANCE.writeToNBT(new NBTTagList(), party.getMembers()));
+        payload.setTag("data", NameCache.INSTANCE.writeToNBT(new ListTag(), party.getMembers()));
         payload.setBoolean("merge", true);
 
         if (player != null) {
@@ -96,7 +96,7 @@ public class NetNameSync {
         }
 
         CompoundTag payload = new CompoundTag();
-        payload.setTag("data", NameCache.INSTANCE.writeToNBT(new NBTTagList(), idList));
+        payload.setTag("data", NameCache.INSTANCE.writeToNBT(new ListTag(), idList));
         payload.setBoolean("merge", idList != null);
 
         if (players == null) {
@@ -111,7 +111,7 @@ public class NetNameSync {
         String[] names = null;
 
         if (message.getFirst().hasKey("uuids", 9)) {
-            NBTTagList uList = message.getFirst().getTagList("uuids", 8);
+            ListTag uList = message.getFirst().getTagList("uuids", 8);
             uuids = new UUID[uList.tagCount()];
             for (int i = 0; i < uuids.length; i++) {
                 try {
@@ -121,7 +121,7 @@ public class NetNameSync {
             }
         }
         if (message.getFirst().hasKey("names", 9)) {
-            NBTTagList uList = message.getFirst().getTagList("names", 8);
+            ListTag uList = message.getFirst().getTagList("names", 8);
             names = new String[uList.tagCount()];
             for (int i = 0; i < names.length; i++) {
                 names[i] = uList.getStringTagAt(i);

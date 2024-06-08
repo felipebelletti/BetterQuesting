@@ -10,7 +10,7 @@ import betterquesting.api2.storage.INBTProgress;
 import betterquesting.api2.storage.INBTSaveLoad;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -55,9 +55,9 @@ public interface IQuest extends INBTSaveLoad<CompoundTag>, INBTProgress<Compound
 
     void resetUser(@Nullable UUID uuid, boolean fullReset);
 
-    IDatabaseNBT<ITask, NBTTagList, NBTTagList> getTasks();
+    IDatabaseNBT<ITask, ListTag, ListTag> getTasks();
 
-    IDatabaseNBT<IReward, NBTTagList, NBTTagList> getRewards();
+    IDatabaseNBT<IReward, ListTag, ListTag> getRewards();
 
     @Nonnull
     int[] getRequirements();

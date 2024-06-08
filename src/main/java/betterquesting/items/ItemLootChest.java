@@ -17,7 +17,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.level.Level;
@@ -58,7 +58,7 @@ public class ItemLootChest extends Item {
 
             List<BigItemStack> lootItems = new ArrayList<>();
             String lootName = tag.getString("fixedLootName");
-            NBTTagList lootList = tag.getTagList("fixedLootList", 10);
+            ListTag lootList = tag.getTagList("fixedLootList", 10);
 
             for (int i = 0; i < lootList.tagCount(); i++) {
                 lootItems.add(new BigItemStack(lootList.getCompoundTagAt(i)));
@@ -201,7 +201,7 @@ public class ItemLootChest extends Item {
         // FIXED ITEM SET
         tag = new CompoundTag();
         tag.setBoolean("hideLootInfo", true);
-        NBTTagList tagList = new NBTTagList();
+        ListTag tagList = new ListTag();
         tagList.appendTag(new BigItemStack(Blocks.STONE).writeToNBT(new CompoundTag()));
         ItemStack fixedLootStack = new ItemStack(this, 1, 104);
         tag.setTag("fixedLootList", tagList);

@@ -24,7 +24,7 @@ import betterquesting.storage.QuestSettings;
 import com.google.gson.JsonObject;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Loader;
@@ -311,8 +311,8 @@ public class SaveLoadHandler {
         CompoundTag json = new CompoundTag();
 
         json.setTag("questSettings", QuestSettings.INSTANCE.writeToNBT(new CompoundTag()));
-        json.setTag("questDatabase", QuestDatabase.INSTANCE.writeToNBT(new NBTTagList(), null));
-        json.setTag("questLines", QuestLineDatabase.INSTANCE.writeToNBT(new NBTTagList(), null));
+        json.setTag("questDatabase", QuestDatabase.INSTANCE.writeToNBT(new ListTag(), null));
+        json.setTag("questLines", QuestLineDatabase.INSTANCE.writeToNBT(new ListTag(), null));
 
         json.setString("format", BetterQuesting.FORMAT);
         json.setString("build", ModReference.VERSION);
@@ -329,7 +329,7 @@ public class SaveLoadHandler {
     private Future<Void> saveParties() {
         CompoundTag json = new CompoundTag();
 
-        json.setTag("parties", PartyManager.INSTANCE.writeToNBT(new NBTTagList(), null));
+        json.setTag("parties", PartyManager.INSTANCE.writeToNBT(new ListTag(), null));
 
         return JsonHelper.WriteToFile(fileParties, NBTConverter.NBTtoJSON_Compound(json, new JsonObject(), true));
     }
@@ -337,7 +337,7 @@ public class SaveLoadHandler {
     private Future<Void> saveNames() {
         CompoundTag json = new CompoundTag();
 
-        json.setTag("nameCache", NameCache.INSTANCE.writeToNBT(new NBTTagList(), null));
+        json.setTag("nameCache", NameCache.INSTANCE.writeToNBT(new ListTag(), null));
 
         return JsonHelper.WriteToFile(fileNames, NBTConverter.NBTtoJSON_Compound(json, new JsonObject(), true));
     }
@@ -353,7 +353,7 @@ public class SaveLoadHandler {
     public Future<Void> savePlayerProgress(UUID player) {
         CompoundTag json = new CompoundTag();
 
-        json.setTag("questProgress", QuestDatabase.INSTANCE.writeProgressToNBT(new NBTTagList(), Collections.singletonList(player)));
+        json.setTag("questProgress", QuestDatabase.INSTANCE.writeProgressToNBT(new ListTag(), Collections.singletonList(player)));
 
         return JsonHelper.WriteToFile(new File(dirProgress, player.toString() + ".json"), NBTConverter.NBTtoJSON_Compound(json, new JsonObject(), true));
     }
