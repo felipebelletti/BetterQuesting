@@ -2,7 +2,7 @@ package betterquesting.api.client.toolbox;
 
 import betterquesting.api2.client.gui.controls.PanelButtonQuest;
 import betterquesting.api2.client.gui.panels.lists.CanvasQuestLine;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.NonNullList;
 
 import java.util.List;
 

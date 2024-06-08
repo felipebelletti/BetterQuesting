@@ -31,7 +31,7 @@ import betterquesting.network.handlers.NetStationEdit;
 import betterquesting.questing.QuestDatabase;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.NonNullList;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector4f;
 

@@ -19,7 +19,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag.TooltipFlags;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.NonNullList;
 import net.minecraftforge.fml.common.Optional.Method;
 import net.minecraftforge.oredict.OreDictionary;
 import org.lwjgl.input.Keyboard;

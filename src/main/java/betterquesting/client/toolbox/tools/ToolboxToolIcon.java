@@ -11,7 +11,7 @@ import betterquesting.network.handlers.NetQuestEdit;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.NonNullList;
 import org.lwjgl.input.Keyboard;
 
 import java.util.Collections;

@@ -18,7 +18,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.api.distmarker.OnlyIn;

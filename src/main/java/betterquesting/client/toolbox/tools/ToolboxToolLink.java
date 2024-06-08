@@ -11,7 +11,7 @@ import betterquesting.client.gui2.editors.designer.PanelToolController;
 import betterquesting.network.handlers.NetQuestEdit;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.NonNullList;
 
 import java.util.ArrayList;
 import java.util.Arrays;

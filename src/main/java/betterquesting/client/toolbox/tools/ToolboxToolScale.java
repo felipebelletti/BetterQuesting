@@ -16,7 +16,7 @@ import betterquesting.network.handlers.NetChapterEdit;
 import betterquesting.questing.QuestLineDatabase;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.NonNullList;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector4f;
 

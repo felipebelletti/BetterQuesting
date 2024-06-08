@@ -11,7 +11,7 @@ import betterquesting.network.handlers.NetChapterEdit;
 import betterquesting.questing.QuestLineDatabase;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.NonNullList;
 
 import java.util.ArrayList;
 import java.util.Collections;

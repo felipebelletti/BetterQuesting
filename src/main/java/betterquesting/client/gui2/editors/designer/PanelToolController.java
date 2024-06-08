@@ -18,7 +18,7 @@ import betterquesting.api2.client.gui.resources.textures.ColorTexture;
 import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.input.Keyboard;
 

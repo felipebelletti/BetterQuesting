@@ -16,7 +16,7 @@ import betterquesting.questing.QuestLineDatabase;
 import betterquesting.questing.QuestLineEntry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.util.NonNullList;
+import net.minecraft.core.NonNullList;
 
 import java.util.*;
 
