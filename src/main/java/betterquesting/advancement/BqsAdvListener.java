@@ -9,7 +9,7 @@ import betterquesting.questing.tasks.TaskTrigger;
 import net.minecraft.advancements.CriterionTriggerInstance;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.CriterionTrigger;
-import net.minecraft.advancements.PlayerAdvancements;
+import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;

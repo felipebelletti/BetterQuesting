@@ -11,7 +11,7 @@ import betterquesting.client.gui2.tasks.PanelTaskAdvancement;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskAdvancement;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.PlayerAdvancements;
+import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.NBTTagCompound;
