@@ -20,7 +20,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.CommandBlockBaseLogic;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
@@ -124,7 +124,7 @@ public class RewardCommand implements IReward {
 
         @Nonnull
         @Override
-        public Vec3d getPositionVector() {
+        public Vec3 getPositionVector() {
             return entity.getPositionVector();
         }
 
