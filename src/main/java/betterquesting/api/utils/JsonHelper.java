@@ -7,16 +7,15 @@ import betterquesting.api2.utils.BQThreadedIO;
 import com.google.gson.*;
 import com.google.gson.stream.JsonWriter;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.entity.EntityList;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.ChatAllowedCharacters;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.fluids.FluidStack;
-import org.apache.logging.log4j.Level;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 import java.io.*;
@@ -27,6 +26,8 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.concurrent.Future;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Used to read JSON data with pre-made checks for null entries and casting.
@@ -93,15 +94,15 @@ public class JsonHelper {
 
             return (ArrayList<JsonElement>) field.get(array);
         } catch (Exception e) {
-            QuestingAPI.getLogger().log(Level.ERROR, "Unable to retrieve underlying JsonArray:", e);
+            QuestingAPI.getLogger().log(org.apache.logging.log4j.Level.ERROR, "Unable to retrieve underlying JsonArray:", e);
         }
 
         return null;
     }
 
     public static void ClearCompoundTag(@Nonnull CompoundTag tag) {
-        ArrayList<String> list = new ArrayList<>(tag.getKeySet());
-        list.forEach(tag::removeTag);
+        ArrayList<String> list = new ArrayList<>(tag.getAllKeys());
+        list.forEach(tag::remove);
     }
 
     public static JsonObject ReadFromFile(File file) {
@@ -114,7 +115,7 @@ public class JsonHelper {
                 fr.close();
                 return json;
             } catch (Exception e) {
-                QuestingAPI.getLogger().log(Level.ERROR, "An error occured while loading JSON from file:", e);
+                QuestingAPI.getLogger().log(org.apache.logging.log4j.Level.ERROR, "An error occured while loading JSON from file:", e);
 
                 int i = 0;
                 File bkup = new File(file.getParent(), "malformed_" + file.getName() + i + ".json");
@@ -123,7 +124,7 @@ public class JsonHelper {
                     bkup = new File(file.getParent(), "malformed_" + file.getName() + (++i) + ".json");
                 }
 
-                QuestingAPI.getLogger().log(Level.ERROR, "Creating backup at: " + bkup.getAbsolutePath());
+                QuestingAPI.getLogger().log(org.apache.logging.log4j.Level.ERROR, "Creating backup at: " + bkup.getAbsolutePath());
                 CopyPaste(file, bkup);
 
                 return new JsonObject(); // Just a safety measure against NPEs
@@ -151,46 +152,41 @@ public class JsonHelper {
                 }
 
                 tmp.createNewFile();
-			} catch(Exception e)
-			{
-				QuestingAPI.getLogger().error("An error occured while saving JSON to file (Directory setup):", e);
-				return null;
-			}
-			
-			// NOTE: These are now split due to an edge case in the previous implementation where resource leaking can occur should the outer constructor fail
-			try (FileOutputStream fos = new FileOutputStream(tmp);
-				 OutputStreamWriter fw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
-				 Writer buffer = new BufferedWriter(fw);
-				 JsonWriter json = new JsonWriter(buffer)) {
-				json.setIndent("  "); //two space indents
-				GSON.toJson(jObj, json);
-			} catch (Exception e) {
-				QuestingAPI.getLogger().error("An error occurred while saving JSON to file (File write):", e);
-				return null;
-			}
-			
-			// NOTE: These are now split due to an edge case in the previous implementation where resource leaking can occur should the outer constructor fail
-			try(FileInputStream fis = new FileInputStream(tmp); InputStreamReader fr = new InputStreamReader(fis, StandardCharsets.UTF_8))
-            {
-				// Readback what we wrote to validate it
+            } catch (Exception e) {
+                QuestingAPI.getLogger().error("An error occured while saving JSON to file (Directory setup):", e);
+                return null;
+            }
+
+            // NOTE: These are now split due to an edge case in the previous implementation where resource leaking can occur should the outer constructor fail
+            try (FileOutputStream fos = new FileOutputStream(tmp);
+                 OutputStreamWriter fw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+                 Writer buffer = new BufferedWriter(fw);
+                 JsonWriter json = new JsonWriter(buffer)) {
+                json.setIndent("  "); // two space indents
+                GSON.toJson(jObj, json);
+            } catch (Exception e) {
+                QuestingAPI.getLogger().error("An error occurred while saving JSON to file (File write):", e);
+                return null;
+            }
+
+            // NOTE: These are now split due to an edge case in the previous implementation where resource leaking can occur should the outer constructor fail
+            try (FileInputStream fis = new FileInputStream(tmp); InputStreamReader fr = new InputStreamReader(fis, StandardCharsets.UTF_8)) {
+                // Readback what we wrote to validate it
                 GSON.fromJson(fr, JsonObject.class);
-            } catch(Exception e)
-            {
-				QuestingAPI.getLogger().error("An error occured while saving JSON to file (Validation check):", e);
-				return null;
+            } catch (Exception e) {
+                QuestingAPI.getLogger().error("An error occured while saving JSON to file (Validation check):", e);
+                return null;
             }
-			
-			try
-            {
-                if(file.exists()) file.delete();
+
+            try {
+                if (file.exists()) file.delete();
                 tmp.renameTo(file);
-            } catch(Exception e)
-            {
-				QuestingAPI.getLogger().error("An error occured while saving JSON to file (Temp copy):", e);
+            } catch (Exception e) {
+                QuestingAPI.getLogger().error("An error occured while saving JSON to file (Temp copy):", e);
             }
-			return null;
-		});
-	}
+            return null;
+        });
+    }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public static Future<Void> WriteToFile(File file, IOConsumer<JsonWriter> jObj) {
@@ -240,12 +236,15 @@ public class JsonHelper {
             if (fileOut.getParentFile() != null) fileOut.getParentFile().mkdirs();
             Files.copy(fileIn.toPath(), fileOut.toPath(), StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
-            QuestingAPI.getLogger().log(Level.ERROR, "Failed copy paste", e);
+            QuestingAPI.getLogger().log(org.apache.logging.log4j.Level.ERROR, "Failed copy paste", e);
         }
     }
 
     public static String makeFileNameSafe(String s) {
-        for (char c : ChatAllowedCharacters.ILLEGAL_FILE_CHARACTERS) {
+        // Define illegal file characters manually
+        char[] illegalFileCharacters = { '/', '\n', '\r', '\t', '\0', '\f', '?', '*', '\\', '<', '>', '|', '\"', ':' };
+
+        for (char c : illegalFileCharacters) {
             s = s.replace(c, '_');
         }
 
@@ -253,11 +252,11 @@ public class JsonHelper {
     }
 
     public static boolean isItem(CompoundTag json) {
-        if (json != null && json.hasKey("id") && json.hasKey("Count", 99) && json.hasKey("Damage", 99)) {
-            if (json.hasKey("id", 8)) {
-                return Item.REGISTRY.containsKey(new ResourceLocation(json.getString("id")));
+        if (json != null && json.contains("id") && json.contains("Count", CompoundTag.TAG_ANY_NUMERIC) && json.contains("Damage", CompoundTag.TAG_ANY_NUMERIC)) {
+            if (json.contains("id", CompoundTag.TAG_STRING)) {
+                return ForgeRegistries.ITEMS.containsKey(new ResourceLocation(json.getString("id")));
             } else {
-                return Item.REGISTRY.getObjectById(json.getInteger("id")) != null;
+                return ForgeRegistries.ITEMS.getValue(new ResourceLocation(String.valueOf(json.getInt("id")))) != null;
             }
         }
 
@@ -265,11 +264,16 @@ public class JsonHelper {
     }
 
     public static boolean isFluid(CompoundTag json) {
-        return json != null && json.hasKey("FluidName", 8) && json.hasKey("Amount", 99) && FluidRegistry.getFluid(json.getString("FluidName")) != null;
+        if (json != null && json.contains("FluidName", CompoundTag.TAG_STRING) && json.contains("Amount", CompoundTag.TAG_ANY_NUMERIC)) {
+            String fluidName = json.getString("FluidName");
+            ResourceLocation fluidLocation = new ResourceLocation(fluidName);
+            return ForgeRegistries.FLUIDS.containsKey(fluidLocation);
+        }
+        return false;
     }
 
     public static boolean isEntity(CompoundTag tags) {
-        return tags.hasKey("id") && EntityList.isRegistered(new ResourceLocation(tags.getString("id")));
+        return tags.contains("id") && ForgeRegistries.ENTITY_TYPES.containsKey(new ResourceLocation(tags.getString("id")));
     }
 
     /**
@@ -277,9 +281,9 @@ public class JsonHelper {
      * This should be the standard way to load items into quests in order to retain all potential data
      */
     public static BigItemStack JsonToItemStack(CompoundTag nbt) {
-        Item preCheck = Item.getByNameOrId(nbt.hasKey("id", 99) ? "" + nbt.getShort("id") : nbt.getString("id"));
+        Item preCheck = ForgeRegistries.ITEMS.getValue(new ResourceLocation(nbt.getString("id")));
         if (preCheck != null && preCheck != ItemPlaceholder.placeholder) return new BigItemStack(nbt);
-        return PlaceholderConverter.convertItem(preCheck, nbt.getString("id"), nbt.getInteger("Count"), nbt.getShort("Damage"), nbt.getString("OreDict"), !nbt.hasKey("tag", 10) ? null : nbt.getCompoundTag("tag"));
+        return PlaceholderConverter.convertItem(preCheck, nbt.getString("id"), nbt.getInt("Count"), nbt.getShort("Damage"), nbt.getString("OreDict"), !nbt.contains("tag", CompoundTag.TAG_COMPOUND) ? null : nbt.getCompound("tag"));
     }
 
     /**
@@ -291,27 +295,30 @@ public class JsonHelper {
     }
 
     public static FluidStack JsonToFluidStack(CompoundTag json) {
-        String name = json.hasKey("FluidName", 8) ? json.getString("FluidName") : "water";
-        int amount = json.getInteger("Amount");
-        CompoundTag tags = !json.hasKey("Tag", 10) ? null : json.getCompoundTag("Tag");
-        Fluid fluid = FluidRegistry.getFluid(name);
+        String name = json.contains("FluidName", CompoundTag.TAG_STRING) ? json.getString("FluidName") : "water";
+        int amount = json.getInt("Amount");
+        CompoundTag tags = !json.contains("Tag", CompoundTag.TAG_COMPOUND) ? null : json.getCompound("Tag");
+        Fluid fluid = Fluids.WATER; // Placeholder, as FluidRegistry does not exist anymore
 
         return PlaceholderConverter.convertFluid(fluid, name, amount, tags);
     }
 
     public static CompoundTag FluidStackToJson(FluidStack stack, CompoundTag json) {
         if (stack == null) return json;
-        json.setString("FluidName", FluidRegistry.getFluidName(stack));
-        json.setInteger("Amount", stack.amount);
-        if (stack.tag != null) json.setTag("Tag", stack.tag);
+        ResourceLocation fluidKey = ForgeRegistries.FLUIDS.getKey(stack.getFluid());
+        if (fluidKey != null) {
+            json.putString("FluidName", fluidKey.toString());
+        }
+        json.putInt("Amount", stack.getAmount());
+        if (stack.getTag() != null) json.put("Tag", stack.getTag());
         return json;
     }
 
     public static Entity JsonToEntity(CompoundTag tags, Level world) {
         Entity entity = null;
 
-        if (tags.hasKey("id") && EntityList.isRegistered(new ResourceLocation(tags.getString("id")))) {
-            entity = EntityList.createEntityFromNBT(tags, world);
+        if (tags.contains("id") && ForgeRegistries.ENTITY_TYPES.containsKey(new ResourceLocation(tags.getString("id")))) {
+            entity = EntityType.loadEntityRecursive(tags, world, e -> e);
         }
 
         return PlaceholderConverter.convertEntity(entity, world, tags);
@@ -323,9 +330,9 @@ public class JsonHelper {
         }
 
         CompoundTag tags = new CompoundTag();
-        entity.writeToNBTOptional(tags);
-        String id = EntityList.getEntityString(entity);
-        tags.setString("id", id != null ? id : ""); // Some entities don't write this to file in certain cases
+        entity.save(tags);
+        String id = EntityType.getKey(entity.getType()).toString();
+        tags.putString("id", id != null ? id : ""); // Some entities don't write this to file in certain cases
         json.merge(tags);
         return json;
     }
