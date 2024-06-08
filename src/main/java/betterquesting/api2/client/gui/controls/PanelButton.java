@@ -16,7 +16,7 @@ import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.Font;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import org.lwjgl.input.Mouse;

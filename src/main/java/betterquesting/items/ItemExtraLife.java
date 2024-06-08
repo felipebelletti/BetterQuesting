@@ -7,7 +7,7 @@ import betterquesting.storage.LifeDatabase;
 import betterquesting.storage.QuestSettings;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;

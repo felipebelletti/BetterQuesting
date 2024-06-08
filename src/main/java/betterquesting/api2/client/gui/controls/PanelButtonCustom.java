@@ -8,7 +8,7 @@ import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
-import net.minecraft.init.SoundEvents;
+import net.minecraft.sounds.SoundEvents;
 import org.lwjgl.input.Mouse;
 
 import java.util.function.Consumer;
