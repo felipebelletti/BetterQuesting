@@ -2,7 +2,7 @@ package betterquesting.api2.client.gui.resources.textures;
 
 import betterquesting.api.utils.BigItemStack;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 

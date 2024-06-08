@@ -2,7 +2,7 @@ package betterquesting.api.utils;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import org.apache.commons.lang3.StringUtils;
 import net.minecraftforge.oredict.OreDictionary;

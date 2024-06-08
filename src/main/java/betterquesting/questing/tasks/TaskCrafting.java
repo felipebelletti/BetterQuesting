@@ -13,7 +13,7 @@ import betterquesting.client.gui2.tasks.PanelTaskCrafting;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskCrafting;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.ListTag;

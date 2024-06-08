@@ -2,7 +2,7 @@ package betterquesting.api.questing.tasks;
 
 import betterquesting.api.questing.IQuest;
 import betterquesting.api2.storage.DBEntry;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.UUID;
 

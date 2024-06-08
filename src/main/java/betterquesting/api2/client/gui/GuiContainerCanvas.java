@@ -18,7 +18,7 @@ import org.lwjgl.glfw.GLFW;
 import net.minecraft.client.util.ITooltipFlag.TooltipFlags;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 

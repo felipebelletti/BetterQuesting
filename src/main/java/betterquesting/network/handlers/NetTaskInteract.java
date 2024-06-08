@@ -10,7 +10,7 @@ import betterquesting.api2.utils.ParticipantInfo;
 import betterquesting.questing.tasks.TaskInteractItem;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.EnumHand;
 import net.minecraft.resources.ResourceLocation;

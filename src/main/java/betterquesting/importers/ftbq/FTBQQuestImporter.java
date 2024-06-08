@@ -19,7 +19,7 @@ import betterquesting.importers.ftbq.converters.rewards.FtbqRewardXP;
 import betterquesting.importers.ftbq.converters.tasks.*;
 import betterquesting.questing.tasks.TaskCheckbox;
 import net.minecraft.world.item.Items;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.CompoundTag;
