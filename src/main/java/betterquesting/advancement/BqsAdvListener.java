@@ -7,7 +7,7 @@ import betterquesting.api.questing.tasks.ITask;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.TaskTrigger;
 import net.minecraft.advancements.CriterionTriggerInstance;
-import net.minecraft.advancements.ICriterionInstance;
+import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,7 +17,7 @@ import net.minecraftforge.fml.relauncher.ReflectionHelper;
 import javax.annotation.Nonnull;
 import java.lang.reflect.Field;
 
-public class BqsAdvListener<T extends ICriterionInstance & CriterionTriggerInstance> extends CriterionTrigger.Listener<T> {
+public class BqsAdvListener<T extends AbstractCriterionTriggerInstance & CriterionTriggerInstance> extends CriterionTrigger.Listener<T> {
     private final CriterionTrigger<T> trigType;
     private final Tuple<Integer, Integer> mappedIDs;
 

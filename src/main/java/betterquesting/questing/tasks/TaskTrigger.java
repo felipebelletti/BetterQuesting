@@ -18,7 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.advancements.ICriterionInstance;
+import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.world.entity.player.Player;
@@ -84,7 +84,7 @@ public class TaskTrigger implements ITask {
         if (trig == null) return;
 
         try {
-            ICriterionInstance in = trig.deserializeInstance(GSON.fromJson(critJson, JsonObject.class), null);
+            AbstractCriterionTriggerInstance in = trig.deserializeInstance(GSON.fromJson(critJson, JsonObject.class), null);
             listener = new BqsAdvListener(trig, in, quest.getID(), tskID);
         } catch (Exception ignored) {
         }
