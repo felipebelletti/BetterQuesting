@@ -4,7 +4,7 @@ import betterquesting.api.utils.BigItemStack;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.NonNullList;
-import net.minecraftforge.oredict.OreDictionary;
+import net.minecraft.world.item.CreativeModeTab;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,58 +25,13 @@ public class OreDictTexture extends SlideShowTexture {
         return list;
     }
 
-    // TODO: Put this somewhere useful
-    /*private static Collection<BigItemStack> splitVariants(BigItemStack stack)
-    {
-        Set<BigItemStack> list = new HashSet<>();
-        
-        if(!stack.hasOreDict())
-        {
-            if(stack.getBaseStack().getItemDamage() == OreDictionary.WILDCARD_VALUE)
-            {
-                NonNullList<ItemStack> subItems = NonNullList.create();
-                stack.getBaseStack().getItem().getSubItems(CreativeModeTabs.SEARCH, subItems);
-                subItems.forEach((is) -> {
-                    BigItemStack bis = new BigItemStack(is);
-                    bis.stackSize = stack.stackSize;
-                    list.add(bis);
-                });
-            } else
-            {
-                list.add(stack);
-            }
-            return list;
-        }
-        
-        for(ItemStack iStack : stack.getOreIngredient().getMatchingStacks())
-        {
-            if(iStack.getItemDamage() == OreDictionary.WILDCARD_VALUE)
-            {
-                NonNullList<ItemStack> subItems = NonNullList.create();
-                iStack.getItem().getSubItems(CreativeModeTabs.SEARCH, subItems);
-                subItems.forEach((is) -> {
-                    BigItemStack bis = new BigItemStack(is);
-                    bis.stackSize = stack.stackSize;
-                    list.add(bis);
-                });
-            } else
-            {
-                BigItemStack bStack = new BigItemStack(iStack);
-                bStack.stackSize = stack.stackSize;
-                list.add(bStack);
-            }
-        }
-        
-        return list;
-    }*/
-
     private static List<ItemTexture> splitOreTextures(BigItemStack stack, boolean showCount, boolean keepAspect) {
         List<ItemTexture> list = new ArrayList<>();
 
         if (!stack.hasOreDict()) {
-            if (stack.getBaseStack().getItemDamage() == OreDictionary.WILDCARD_VALUE) {
+            if (stack.getBaseStack().getDamageValue() == ItemStack.EMPTY.getDamageValue()) {
                 NonNullList<ItemStack> subItems = NonNullList.create();
-                stack.getBaseStack().getItem().getSubItems(CreativeModeTabs.SEARCH, subItems);
+//                stack.getBaseStack().getItem().fillItemCategory(CreativeModeTab.TAB_SEARCH, subItems);
                 subItems.forEach((is) -> {
                     BigItemStack bis = new BigItemStack(is);
                     bis.stackSize = stack.stackSize;
@@ -88,10 +43,10 @@ public class OreDictTexture extends SlideShowTexture {
             return list;
         }
 
-        for (ItemStack iStack : stack.getOreIngredient().getMatchingStacks()) {
-            if (iStack.getItemDamage() == OreDictionary.WILDCARD_VALUE) {
+        for (ItemStack iStack : stack.getOreIngredient().getItems()) {
+            if (iStack.getDamageValue() == ItemStack.EMPTY.getDamageValue()) {
                 NonNullList<ItemStack> subItems = NonNullList.create();
-                iStack.getItem().getSubItems(CreativeModeTabs.SEARCH, subItems);
+//                iStack.getItem().fillItemCategory(CreativeModeTab.TAB_SEARCH, subItems);
 
                 for (ItemStack sStack : subItems) {
                     BigItemStack bStack = new BigItemStack(sStack);
