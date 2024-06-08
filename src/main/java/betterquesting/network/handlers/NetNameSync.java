@@ -55,7 +55,7 @@ public class NetNameSync {
         if (names != null) {
             ListTag nList = new ListTag();
             for (String s : names) {
-                if (StringUtils.isNullOrEmpty(s)) continue;
+                if (StringUtils.isEmpty(s)) continue;
                 nList.appendTag(new NBTTagString(s));
             }
             payload.setTag("names", nList);

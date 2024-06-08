@@ -125,7 +125,7 @@ public class TaskAdvancement implements ITask {
     @Override
     public void readFromNBT(CompoundTag nbt) {
         String id = nbt.getString("advancement_id");
-        advID = StringUtils.isNullOrEmpty(id) ? null : new ResourceLocation(id);
+        advID = StringUtils.isEmpty(id) ? null : new ResourceLocation(id);
     }
 
     @Override

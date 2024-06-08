@@ -54,7 +54,7 @@ public class TaskTrigger implements ITask {
 
     public void setCriteriaJson(String json) {
         if (critJson.equals(json)) return;
-        critJson = StringUtils.isNullOrEmpty(json) ? "{}" : json;
+        critJson = StringUtils.isEmpty(json) ? "{}" : json;
         try {
             GSON.fromJson(json, JsonObject.class);
         } catch (Exception e) {

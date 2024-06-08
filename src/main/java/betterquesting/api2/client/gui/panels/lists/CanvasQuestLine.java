@@ -89,7 +89,7 @@ public class CanvasQuestLine extends CanvasScrolling {
 
         String bgString = line.getProperty(NativeProps.BG_IMAGE);
 
-        if (!StringUtils.isNullOrEmpty(bgString)) {
+        if (!StringUtils.isEmpty(bgString)) {
             int bgSize = line.getProperty(NativeProps.BG_SIZE);
             this.addPanel(new PanelGeneric(new GuiRectangle(0, 0, bgSize, bgSize, 1), new SimpleTexture(new ResourceLocation(bgString), new GuiRectangle(0, 0, 256, 256))));
         }

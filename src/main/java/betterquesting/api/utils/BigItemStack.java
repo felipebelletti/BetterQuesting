@@ -62,7 +62,7 @@ public class BigItemStack {
     }
 
     public boolean hasOreDict() {
-        return !StringUtils.isNullOrEmpty(this.oreDict) && this.oreIng.getMatchingStacks().length > 0;
+        return !StringUtils.isEmpty(this.oreDict) && this.oreIng.getMatchingStacks().length > 0;
     }
 
     @Nonnull

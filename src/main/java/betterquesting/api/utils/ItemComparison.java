@@ -186,12 +186,12 @@ public class ItemComparison {
 
     @Deprecated
     public static boolean OreDictionaryMatch(String name, ItemStack stack) {
-        return stack != null && !StringUtils.isNullOrEmpty(name) && new OreIngredient(name).apply(stack);
+        return stack != null && !StringUtils.isEmpty(name) && new OreIngredient(name).apply(stack);
     }
 
     @Deprecated
     public static boolean OreDictionaryMatch(String name, CompoundTag tags, ItemStack stack, boolean nbtCheck, boolean partialNBT) {
-        if (!nbtCheck) return stack != null && !StringUtils.isNullOrEmpty(name) && new OreIngredient(name).apply(stack);
+        if (!nbtCheck) return stack != null && !StringUtils.isEmpty(name) && new OreIngredient(name).apply(stack);
         return OreDictionaryMatch(new OreIngredient(name), tags, stack, nbtCheck, partialNBT);
     }
 

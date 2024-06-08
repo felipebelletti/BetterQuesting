@@ -87,9 +87,9 @@ public class TaskLocation implements ITaskTickable {
         boolean flag = false;
 
         if (playerMP.dimension == dim && (range <= 0 || getDistance(playerMP) <= range)) {
-            if (!StringUtils.isNullOrEmpty(biome) && !new ResourceLocation(biome).equals(playerMP.getServerWorld().getBiome(playerMP.getPosition()).getRegistryName())) {
+            if (!StringUtils.isEmpty(biome) && !new ResourceLocation(biome).equals(playerMP.getServerWorld().getBiome(playerMP.getPosition()).getRegistryName())) {
                 if (!invert) return;
-            } else if (!StringUtils.isNullOrEmpty(structure) && !playerMP.getServerWorld().getChunkProvider().isInsideStructure(playerMP.world, structure, playerMP.getPosition())) {
+            } else if (!StringUtils.isEmpty(structure) && !playerMP.getServerWorld().getChunkProvider().isInsideStructure(playerMP.world, structure, playerMP.getPosition())) {
                 if (!invert) return;
             } else if (visible && range > 0) // Do not do ray casting with infinite range!
             {
