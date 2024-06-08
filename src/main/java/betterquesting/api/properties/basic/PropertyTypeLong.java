@@ -1,6 +1,6 @@
 package betterquesting.api.properties.basic;
 
-import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagLong;
 import net.minecraft.util.ResourceLocation;
@@ -11,7 +11,7 @@ public class PropertyTypeLong extends PropertyTypeBase<Long> {
     }
 
     @Override
-    public Long readValue(NBTBase nbt) {
+    public Long readValue(Tag nbt) {
         if (nbt == null || !(nbt instanceof NBTPrimitive)) {
             return this.getDefault();
         }
@@ -20,7 +20,7 @@ public class PropertyTypeLong extends PropertyTypeBase<Long> {
     }
 
     @Override
-    public NBTBase writeValue(Long value) {
+    public Tag writeValue(Long value) {
         if (value == null) {
             return new NBTTagLong(this.getDefault());
         }

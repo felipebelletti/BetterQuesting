@@ -18,7 +18,7 @@ public class NBTConverter {
     /**
      * Convert NBT tags to a JSON object
      */
-    private static void NBTtoJSON_Base(NBTBase value, boolean format, JsonWriter out) throws IOException {
+    private static void NBTtoJSON_Base(Tag value, boolean format, JsonWriter out) throws IOException {
         if (value == null || value.getId() == 0) out.beginObject().endObject();
         else if (value instanceof NBTPrimitive) out.value(NBTConverter.getNumber(value));
         else if (value instanceof NBTTagString) out.value(((NBTTagString) value).getString());
@@ -39,14 +39,14 @@ public class NBTConverter {
             if (format) {
                 out.beginObject();
                 for (int i = 0; i < tagList.tagCount(); i++) {
-                    NBTBase tag = tagList.get(i);
+                    Tag tag = tagList.get(i);
                     out.name(i + ":" + tag.getId());
                     NBTtoJSON_Base(tag, true, out);
                 }
                 out.endObject();
             } else {
                 out.beginArray();
-                for (NBTBase tag : tagList) {
+                for (Tag tag : tagList) {
                     NBTtoJSON_Base(tag, false, out);
                 }
             }
@@ -63,7 +63,7 @@ public class NBTConverter {
 
         if (parent != null)
             for (String key : parent.getKeySet()) {
-                NBTBase tag = parent.getTag(key);
+                Tag tag = parent.getTag(key);
 
                 if (format) {
                     out.name(key + ":" + tag.getId());
@@ -79,7 +79,7 @@ public class NBTConverter {
     /**
      * Convert NBT tags to a JSON object
      */
-    private static JsonElement NBTtoJSON_Base(NBTBase tag, boolean format) {
+    private static JsonElement NBTtoJSON_Base(Tag tag, boolean format) {
         if (tag == null) {
             return new JsonObject();
         }
@@ -107,7 +107,7 @@ public class NBTConverter {
 
                 ListTag tagList = (ListTag) tag;
 
-                for (NBTBase t : tagList) {
+                for (Tag t : tagList) {
                     jAry.add(NBTtoJSON_Base(t, false));
                 }
 
@@ -166,7 +166,7 @@ public class NBTConverter {
 
         Set<String> keySet = new TreeSet<>(parent.getKeySet());
         for (String key : keySet) {
-            NBTBase tag = parent.getTag(key);
+            Tag tag = parent.getTag(key);
 
             if (format) {
                 jObj.add(key + ":" + tag.getId(), NBTtoJSON_Base(tag, true));
@@ -215,7 +215,7 @@ public class NBTConverter {
     /**
      * Tries to interpret the tagID from the JsonElement's contents
      */
-    private static NBTBase JSONtoNBT_Element(JsonElement jObj, byte id, boolean format) {
+    private static Tag JSONtoNBT_Element(JsonElement jObj, byte id, boolean format) {
         if (jObj == null) {
             return new NBTTagString();
         }
@@ -291,7 +291,7 @@ public class NBTConverter {
                 return tList;
             }
         } catch (Exception e) {
-            QuestingAPI.getLogger().log(Level.ERROR, "An error occured while parsing JsonElement to NBTBase (" + tagID + "):", e);
+            QuestingAPI.getLogger().log(Level.ERROR, "An error occured while parsing JsonElement to Tag (" + tagID + "):", e);
         }
 
         QuestingAPI.getLogger().log(Level.WARN, "Unknown NBT representation for " + jObj.toString() + " (ID: " + tagID + ")");
@@ -299,7 +299,7 @@ public class NBTConverter {
     }
 
     @SuppressWarnings("WeakerAccess")
-    public static Number getNumber(NBTBase tag) {
+    public static Number getNumber(Tag tag) {
         if (tag instanceof NBTTagByte) {
             return ((NBTTagByte) tag).getByte();
         } else if (tag instanceof NBTTagShort) {
@@ -318,7 +318,7 @@ public class NBTConverter {
     }
 
     @SuppressWarnings("WeakerAccess")
-    public static NBTBase instanceNumber(Number num, byte type) {
+    public static Tag instanceNumber(Number num, byte type) {
         switch (type) {
             case 1:
                 return new NBTTagByte(num.byteValue());

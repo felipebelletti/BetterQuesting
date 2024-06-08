@@ -40,7 +40,7 @@ public class ItemComparison {
         return true;
     }
 
-    public static boolean CompareNBTTag(NBTBase tag1, NBTBase tag2, boolean partial) {
+    public static boolean CompareNBTTag(Tag tag1, Tag tag2, boolean partial) {
         if (isEmptyNBT(tag1) != isEmptyNBT(tag2)) // One is null, the other is not
         {
             return false;
@@ -62,7 +62,7 @@ public class ItemComparison {
 
             topLoop:
             for (int i = 0; i < list1.tagCount(); i++) {
-                NBTBase lt1 = list1.get(i);
+                Tag lt1 = list1.get(i);
 
                 for (int j = 0; j < list2.tagCount(); j++) {
                     if (CompareNBTTag(lt1, list2.get(j), partial)) {
@@ -180,7 +180,7 @@ public class ItemComparison {
         return true;
     }
 
-    private static boolean isEmptyNBT(NBTBase tag) {
+    private static boolean isEmptyNBT(Tag tag) {
         return tag == null || tag.isEmpty();
     }
 

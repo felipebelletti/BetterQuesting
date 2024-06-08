@@ -4,7 +4,7 @@ import betterquesting.api.placeholders.PlaceholderConverter;
 import betterquesting.api.utils.BigItemStack;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.NonNullList;
@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class FTBQUtils {
-    public static BigItemStack convertItem(NBTBase tag) {
+    public static BigItemStack convertItem(Tag tag) {
         if (tag instanceof NBTTagString) {
             return convertItemType1(((NBTTagString) tag).getString());
         } else if (tag instanceof CompoundTag) {

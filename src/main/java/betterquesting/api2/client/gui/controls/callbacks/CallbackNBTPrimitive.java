@@ -4,7 +4,7 @@ import betterquesting.api.misc.ICallback;
 import net.minecraft.nbt.*;
 
 public class CallbackNBTPrimitive<T extends Number> implements ICallback<T> {
-    private final NBTBase tag;
+    private final Tag tag;
     private final String sKey;
     private final int iKey;
     private final int tagID;

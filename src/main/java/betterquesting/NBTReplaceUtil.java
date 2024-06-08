@@ -1,13 +1,13 @@
 package betterquesting;
 
-import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
 
 public class NBTReplaceUtil {
     @SuppressWarnings("unchecked")
-    public static <T extends NBTBase> T replaceStrings(T baseTag, String key, String replace) {
+    public static <T extends Tag> T replaceStrings(T baseTag, String key, String replace) {
         if (baseTag == null) {
             return null;
         }

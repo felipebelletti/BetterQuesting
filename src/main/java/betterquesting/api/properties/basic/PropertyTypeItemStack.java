@@ -2,7 +2,7 @@ package betterquesting.api.properties.basic;
 
 import betterquesting.api.utils.BigItemStack;
 import betterquesting.api.utils.JsonHelper;
-import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
@@ -12,7 +12,7 @@ public class PropertyTypeItemStack extends PropertyTypeBase<BigItemStack> {
     }
 
     @Override
-    public BigItemStack readValue(NBTBase nbt) {
+    public BigItemStack readValue(Tag nbt) {
         if (nbt == null || nbt.getId() != 10) {
             return this.getDefault();
         }
@@ -21,7 +21,7 @@ public class PropertyTypeItemStack extends PropertyTypeBase<BigItemStack> {
     }
 
     @Override
-    public NBTBase writeValue(BigItemStack value) {
+    public Tag writeValue(BigItemStack value) {
         CompoundTag nbt = new CompoundTag();
 
         if (value == null || value.getBaseStack() == null) {

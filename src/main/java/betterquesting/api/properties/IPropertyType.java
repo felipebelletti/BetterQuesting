@@ -1,6 +1,6 @@
 package betterquesting.api.properties;
 
-import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.Tag;
 import net.minecraft.util.ResourceLocation;
 
 public interface IPropertyType<T> {
@@ -8,7 +8,7 @@ public interface IPropertyType<T> {
 
     T getDefault();
 
-    T readValue(NBTBase nbt);
+    T readValue(Tag nbt);
 
-    NBTBase writeValue(T value);
+    Tag writeValue(T value);
 }

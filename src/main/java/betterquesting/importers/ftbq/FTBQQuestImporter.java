@@ -21,7 +21,7 @@ import betterquesting.questing.tasks.TaskCheckbox;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
@@ -94,7 +94,7 @@ public class FTBQQuestImporter implements IImporter {
             ListTag tagList = tagIndex.getTagList("index", 8);
             indexIDs = new String[tagList.tagCount()];
             int i = 0;
-            for (NBTBase index : tagList) {
+            for (Tag index : tagList) {
                 indexIDs[i] = ((NBTTagString) index).getString();
                 i++;
             }

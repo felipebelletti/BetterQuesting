@@ -1,6 +1,6 @@
 package betterquesting.api.properties.basic;
 
-import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 
@@ -10,7 +10,7 @@ public class PropertyTypeString extends PropertyTypeBase<String> {
     }
 
     @Override
-    public String readValue(NBTBase nbt) {
+    public String readValue(Tag nbt) {
         if (nbt == null || nbt.getId() != 8) {
             return this.getDefault();
         }
@@ -19,7 +19,7 @@ public class PropertyTypeString extends PropertyTypeBase<String> {
     }
 
     @Override
-    public NBTBase writeValue(String value) {
+    public Tag writeValue(String value) {
         if (value == null) {
             return new NBTTagString(this.getDefault());
         }

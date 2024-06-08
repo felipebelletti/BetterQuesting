@@ -434,7 +434,7 @@ public class QuestInstance implements IQuest {
             ListTag rList = jObj.getTagList("preRequisites", 4);
             int[] req = new int[rList.tagCount()];
             for (int i = 0; i < rList.tagCount(); i++) {
-                NBTBase pTag = rList.get(i);
+                Tag pTag = rList.get(i);
                 req[i] = pTag instanceof NBTPrimitive ? ((NBTPrimitive) pTag).getInt() : -1;
             }
             setRequirements(req);

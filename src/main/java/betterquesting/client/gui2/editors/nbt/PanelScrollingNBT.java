@@ -38,7 +38,7 @@ import java.util.*;
 // TODO: Add ability for expansions to register modules for identifying and providing custom editors to various NBT data sets (inventory, tinker tool, magic, etc.)
 // TODO: This however should not be forced in the event of incorrect identification. Open as...
 public class PanelScrollingNBT extends CanvasScrolling implements IPEventListener {
-    private NBTBase nbt;
+    private Tag nbt;
 
     private final int btnEdit;
     private final int btnAdv;
@@ -49,7 +49,7 @@ public class PanelScrollingNBT extends CanvasScrolling implements IPEventListene
     // Considering taglists can't contain extra data there may need a way to pass a special manifest file (via NbtDocs?)
     // This tag type should be hidden in by the editor but auto-changed when manually switch to a new type
 
-    private final Stack<NBTBase> nbtStack = new Stack<>();
+    private final Stack<Tag> nbtStack = new Stack<>();
 
     public PanelScrollingNBT(IGuiRect rect, CompoundTag tag, int btnEdit, int btnAdv, int btnInsert, int btnDelete) {
         this(rect, btnEdit, btnAdv, btnInsert, btnDelete);
@@ -77,19 +77,19 @@ public class PanelScrollingNBT extends CanvasScrolling implements IPEventListene
     }
 
     // TODO: Implement this with a proper way of displaying and choosing between options (and setting priority for default)
-	/*private final List<Pair<Predicate<NBTBase>, Consumer<NBTBase>>> filterMap = new ArrayList<>();
+	/*private final List<Pair<Predicate<Tag>, Consumer<Tag>>> filterMap = new ArrayList<>();
     
-    public void registerHandler(Predicate<NBTBase> filter, Consumer<NBTBase> action)
+    public void registerHandler(Predicate<Tag> filter, Consumer<Tag> action)
     {
         filterMap.add(new Pair<>(filter, action));
     }
     
     @Nullable
-    public List<Consumer<NBTBase>> getHandler(@Nonnull NBTBase tag)
+    public List<Consumer<Tag>> getHandler(@Nonnull Tag tag)
     {
-        List<Consumer<NBTBase>> list = new ArrayList<>();
+        List<Consumer<Tag>> list = new ArrayList<>();
         
-        for(Pair<Predicate<NBTBase>, Consumer<NBTBase>> p : filterMap)
+        for(Pair<Predicate<Tag>, Consumer<Tag>> p : filterMap)
         {
             if(p.getKey().test(tag))
             {
@@ -143,7 +143,7 @@ public class PanelScrollingNBT extends CanvasScrolling implements IPEventListene
 
             while (keys.hasNext()) {
                 String k = keys.next();
-                NBTBase entry = tag.getTag(k);
+                Tag entry = tag.getTag(k);
 
                 PanelTextBox name = new PanelTextBox(new GuiRectangle(0, i * 16 + 4, lw - 8, 12, 0), k).setAlignment(2);
                 name.setColor(PresetColor.TEXT_MAIN.getColor());
@@ -252,7 +252,7 @@ public class PanelScrollingNBT extends CanvasScrolling implements IPEventListene
             int i = 0;
 
             for (; i < list.tagCount(); i++) {
-                NBTBase entry = list.get(i);
+                Tag entry = list.get(i);
 
                 PanelTextBox name = new PanelTextBox(new GuiRectangle(0, i * 16 + 4, lw - 8, 16, 0), "#" + i).setAlignment(2);
                 name.setColor(PresetColor.TEXT_MAIN.getColor());
@@ -371,7 +371,7 @@ public class PanelScrollingNBT extends CanvasScrolling implements IPEventListene
         }
 
         IPanelButton btn = event.getButton();
-        NBTBase entry;
+        Tag entry;
 
         if (!(btn.getButtonID() == btnEdit || btn.getButtonID() == btnAdv || btn.getButtonID() == btnInsert || btn.getButtonID() == btnDelete)) {
             return;

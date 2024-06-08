@@ -37,12 +37,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GuiNbtAdd extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {
-    private final NBTBase nbt;
+    private final Tag nbt;
     private final int index;
 
     private PanelTextField<String> flKey;
-    private final List<PanelButtonStorage<NBTBase>> options = new ArrayList<>();
-    private NBTBase selected = null;
+    private final List<PanelButtonStorage<Tag>> options = new ArrayList<>();
+    private Tag selected = null;
     private PanelButton btnConfirm;
     //private PanelTextBox txtKey;
 
@@ -128,7 +128,7 @@ public class GuiNbtAdd extends GuiScreenCanvas implements IPEventListener, IVola
         CanvasScrolling cvOptions = new CanvasScrolling(new GuiTransform(new Vector4f(0.5F, 0F, 0.5F, 1F), new GuiPadding(-100, 64, -92, 32), 0));
         cvBackground.addPanel(cvOptions);
 
-        for (PanelButtonStorage<NBTBase> btn : options) {
+        for (PanelButtonStorage<Tag> btn : options) {
             cvOptions.addPanel(btn);
         }
 
@@ -180,9 +180,9 @@ public class GuiNbtAdd extends GuiScreenCanvas implements IPEventListener, IVola
             }
             case 2: // Select this
             {
-                selected = ((PanelButtonStorage<NBTBase>) btn).getStoredValue();
+                selected = ((PanelButtonStorage<Tag>) btn).getStoredValue();
 
-                for (PanelButtonStorage<NBTBase> b : options) {
+                for (PanelButtonStorage<Tag> b : options) {
                     b.setActive(true);
                 }
 

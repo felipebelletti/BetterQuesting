@@ -22,13 +22,13 @@ import betterquesting.api2.client.gui.themes.presets.PresetLine;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.api2.utils.QuestTranslation;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import org.lwjgl.input.Keyboard;
 
 public class GuiNbtEditor extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {
-    private final NBTBase nbt;
+    private final Tag nbt;
     private final ICallback<CompoundTag> comCallback;
     private final ICallback<ListTag> lstCallback;
 

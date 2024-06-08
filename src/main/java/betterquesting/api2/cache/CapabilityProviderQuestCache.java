@@ -1,7 +1,7 @@
 package betterquesting.api2.cache;
 
 import betterquesting.core.ModReference;
-import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
@@ -43,12 +43,12 @@ public class CapabilityProviderQuestCache implements ICapabilityProvider, ICapab
         CapabilityManager.INSTANCE.register(QuestCache.class, new IStorage<QuestCache>() {
             @Nullable
             @Override
-            public NBTBase writeNBT(Capability<QuestCache> capability, QuestCache instance, EnumFacing side) {
+            public Tag writeNBT(Capability<QuestCache> capability, QuestCache instance, EnumFacing side) {
                 return instance.serializeNBT();
             }
 
             @Override
-            public void readNBT(Capability<QuestCache> capability, QuestCache instance, EnumFacing side, NBTBase nbt) {
+            public void readNBT(Capability<QuestCache> capability, QuestCache instance, EnumFacing side, Tag nbt) {
                 if (nbt instanceof CompoundTag) instance.deserializeNBT((CompoundTag) nbt);
             }
         }, QuestCache::new);
