@@ -12,7 +12,7 @@ import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Tuple;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
 
 import javax.annotation.Nonnull;
 import java.lang.reflect.Field;
@@ -88,7 +88,7 @@ public class BqsAdvListener<T extends AbstractCriterionTriggerInstance & Criteri
     private static final Field f_playerAdv;
 
     static {
-        f_playerAdv = ReflectionHelper.findField(PlayerAdvancements.class, "field_192762_j", "player");
+        f_playerAdv = ObfuscationReflectionHelper.findField(PlayerAdvancements.class, "field_192762_j", "player");
         f_playerAdv.setAccessible(true);
     }
 }
