@@ -1,8 +1,8 @@
 package betterquesting.api.properties.basic;
 
 import net.minecraft.nbt.Tag;
-import net.minecraft.nbt.NBTPrimitive;
-import net.minecraft.nbt.NBTTagByte;
+import net.minecraft.nbt.NumericTag;
+import net.minecraft.nbt.ByteTag;
 import net.minecraft.resources.ResourceLocation;
 
 public class PropertyTypeBoolean extends PropertyTypeBase<Boolean> {
@@ -17,7 +17,7 @@ public class PropertyTypeBoolean extends PropertyTypeBase<Boolean> {
         }
 
         try {
-            return ((NBTPrimitive) nbt).getByte() > 0;
+            return ((NumericTag) nbt).getAsByte() > 0;
         } catch (Exception e) {
             return this.getDefault();
         }
@@ -26,9 +26,9 @@ public class PropertyTypeBoolean extends PropertyTypeBase<Boolean> {
     @Override
     public Tag writeValue(Boolean value) {
         if (value == null) {
-            return new NBTTagByte(this.getDefault() ? (byte) 1 : (byte) 0);
+            return ByteTag.valueOf(this.getDefault() ? (byte) 1 : (byte) 0);
         }
 
-        return new NBTTagByte(value ? (byte) 1 : (byte) 0);
+        return ByteTag.valueOf(value ? (byte) 1 : (byte) 0);
     }
 }

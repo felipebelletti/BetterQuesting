@@ -20,7 +20,7 @@ public class NBTConverter {
      */
     private static void NBTtoJSON_Base(Tag value, boolean format, JsonWriter out) throws IOException {
         if (value == null || value.getId() == 0) out.beginObject().endObject();
-        else if (value instanceof NBTPrimitive) out.value(NBTConverter.getNumber(value));
+        else if (value instanceof NumericTag) out.value(NBTConverter.getNumber(value));
         else if (value instanceof NBTTagString) out.value(((NBTTagString) value).getString());
         else if (value instanceof NBTTagByteArray) {
             out.beginArray();
@@ -225,7 +225,7 @@ public class NBTConverter {
         try {
             if (tagID == 1 && (id <= 0 || jObj.getAsJsonPrimitive().isBoolean())) // Edge case for BQ2 legacy files
             {
-                return new NBTTagByte(jObj.getAsBoolean() ? (byte) 1 : (byte) 0);
+                return new ByteTag(jObj.getAsBoolean() ? (byte) 1 : (byte) 0);
             } else if (tagID >= 1 && tagID <= 6) {
                 return instanceNumber(jObj.getAsNumber(), tagID);
             } else if (tagID == 8) {
@@ -300,8 +300,8 @@ public class NBTConverter {
 
     @SuppressWarnings("WeakerAccess")
     public static Number getNumber(Tag tag) {
-        if (tag instanceof NBTTagByte) {
-            return ((NBTTagByte) tag).getByte();
+        if (tag instanceof ByteTag) {
+            return ((ByteTag) tag).getByte();
         } else if (tag instanceof NBTTagShort) {
             return ((NBTTagShort) tag).getShort();
         } else if (tag instanceof NBTTagInt) {
@@ -321,7 +321,7 @@ public class NBTConverter {
     public static Tag instanceNumber(Number num, byte type) {
         switch (type) {
             case 1:
-                return new NBTTagByte(num.byteValue());
+                return new ByteTag(num.byteValue());
             case 2:
                 return new NBTTagShort(num.shortValue());
             case 3:

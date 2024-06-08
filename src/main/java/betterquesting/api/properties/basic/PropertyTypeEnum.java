@@ -1,7 +1,7 @@
 package betterquesting.api.properties.basic;
 
 import net.minecraft.nbt.Tag;
-import net.minecraft.nbt.NBTTagString;
+import net.minecraft.nbt.StringTag;
 import net.minecraft.resources.ResourceLocation;
 
 public class PropertyTypeEnum<E extends Enum<E>> extends PropertyTypeBase<E> {
@@ -20,7 +20,7 @@ public class PropertyTypeEnum<E extends Enum<E>> extends PropertyTypeBase<E> {
         }
 
         try {
-            return Enum.valueOf(eClazz, ((NBTTagString) nbt).getString());
+            return Enum.valueOf(eClazz, ((StringTag) nbt).getAsString());
         } catch (Exception e) {
             return this.getDefault();
         }
@@ -29,9 +29,9 @@ public class PropertyTypeEnum<E extends Enum<E>> extends PropertyTypeBase<E> {
     @Override
     public Tag writeValue(E value) {
         if (value == null) {
-            return new NBTTagString(this.getDefault().toString());
+            return StringTag.valueOf(this.getDefault().toString());
         }
 
-        return new NBTTagString(value.toString());
+        return StringTag.valueOf(value.toString());
     }
 }

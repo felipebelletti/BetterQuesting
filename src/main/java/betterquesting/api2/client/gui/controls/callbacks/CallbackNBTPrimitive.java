@@ -58,7 +58,7 @@ public class CallbackNBTPrimitive<T extends Number> implements ICallback<T> {
     private void setListTag(ListTag list, T value) {
         switch (tagID) {
             case 1:
-                list.set(iKey, new NBTTagByte(value.byteValue()));
+                list.set(iKey, new ByteTag(value.byteValue()));
                 break;
             case 2:
                 list.set(iKey, new NBTTagShort(value.shortValue()));

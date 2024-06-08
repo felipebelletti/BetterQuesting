@@ -115,7 +115,7 @@ public class GuiNbtAdd extends GuiScreenCanvas implements IPEventListener, IVola
         options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, NBTTagString.class.getSimpleName(), new NBTTagString("")));
         options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, CompoundTag.class.getSimpleName(), new CompoundTag()));
         options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, ListTag.class.getSimpleName(), new ListTag()));
-        options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, NBTTagByte.class.getSimpleName(), new NBTTagByte((byte) 0)));
+        options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, ByteTag.class.getSimpleName(), new ByteTag((byte) 0)));
         options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, NBTTagShort.class.getSimpleName(), new NBTTagShort((short) 0)));
         options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, NBTTagInt.class.getSimpleName(), new NBTTagInt(0)));
         options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, NBTTagLong.class.getSimpleName(), new NBTTagLong(0L)));
