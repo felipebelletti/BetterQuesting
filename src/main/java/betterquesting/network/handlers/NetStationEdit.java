@@ -29,7 +29,7 @@ public class NetStationEdit {
 
     @SideOnly(Side.CLIENT)
     public static void setupStation(BlockPos pos, int questID, int taskID) {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setInteger("action", 1);
         payload.setInteger("questID", questID);
         payload.setInteger("task", taskID);
@@ -39,14 +39,14 @@ public class NetStationEdit {
 
     @SideOnly(Side.CLIENT)
     public static void resetStation(BlockPos pos) {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setInteger("action", 0);
         payload.setLong("tilePos", pos.toLong());
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
-        NBTTagCompound data = message.getFirst();
+    private static void onServer(Tuple<CompoundTag, ServerPlayer> message) {
+        CompoundTag data = message.getFirst();
         BlockPos pos = BlockPos.fromLong(data.getLong("tilePos"));
         TileEntity tile = message.getSecond().world.getTileEntity(pos);
 

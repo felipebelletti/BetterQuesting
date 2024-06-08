@@ -29,11 +29,11 @@ public final class LifeDatabase implements ILifeDatabase {
     }
 
     @Override
-    public synchronized NBTTagCompound writeToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+    public synchronized CompoundTag writeToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
         NBTTagList jul = new NBTTagList();
         for (Entry<UUID, Integer> entry : playerLives.entrySet()) {
             if (users != null && !users.contains(entry.getKey())) continue;
-            NBTTagCompound j = new NBTTagCompound();
+            CompoundTag j = new CompoundTag();
             j.setString("uuid", entry.getKey().toString());
             j.setInteger("lives", entry.getValue());
             jul.appendTag(j);
@@ -44,11 +44,11 @@ public final class LifeDatabase implements ILifeDatabase {
     }
 
     @Override
-    public synchronized void readFromNBT(NBTTagCompound nbt, boolean merge) {
+    public synchronized void readFromNBT(CompoundTag nbt, boolean merge) {
         if (!merge) playerLives.clear();
         NBTTagList tagList = nbt.getTagList("playerLives", 10);
         for (int i = 0; i < tagList.tagCount(); i++) {
-            NBTTagCompound j = tagList.getCompoundTagAt(i);
+            CompoundTag j = tagList.getCompoundTagAt(i);
 
             try {
                 UUID uuid = UUID.fromString(j.getString("uuid"));

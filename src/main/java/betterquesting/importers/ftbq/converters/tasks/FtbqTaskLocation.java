@@ -9,7 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.DimensionType;
 
 public class FtbqTaskLocation {
-    public ITask[] convertTask(NBTTagCompound tag) {
+    public ITask[] convertTask(CompoundTag tag) {
         TaskLocation task = new TaskLocation();
 
         int[] data = tag.getIntArray("location");

@@ -6,7 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 
-public class SupporterEntry implements INBTSaveLoad<NBTTagCompound> {
+public class SupporterEntry implements INBTSaveLoad<CompoundTag> {
     private final HashMap<String, HashMap<String, Integer>> services = new HashMap<>();
 
     @Nonnull
@@ -15,12 +15,12 @@ public class SupporterEntry implements INBTSaveLoad<NBTTagCompound> {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public CompoundTag writeToNBT(CompoundTag nbt) {
         return nbt;
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(CompoundTag nbt) {
 
     }
 }

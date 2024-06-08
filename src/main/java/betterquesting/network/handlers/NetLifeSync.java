@@ -26,8 +26,8 @@ public class NetLifeSync {
     }
 
     public static void sendSync(@Nullable ServerPlayer[] players, @Nullable UUID[] playerIDs) {
-        NBTTagCompound payload = new NBTTagCompound();
-        payload.setTag("data", LifeDatabase.INSTANCE.writeToNBT(new NBTTagCompound(), playerIDs == null ? null : Arrays.asList(playerIDs)));
+        CompoundTag payload = new CompoundTag();
+        payload.setTag("data", LifeDatabase.INSTANCE.writeToNBT(new CompoundTag(), playerIDs == null ? null : Arrays.asList(playerIDs)));
         payload.setBoolean("merge", playerIDs != null);
 
         if (players != null) {
@@ -38,7 +38,7 @@ public class NetLifeSync {
     }
 
     @SideOnly(Side.CLIENT)
-    private static void onClient(NBTTagCompound message) {
+    private static void onClient(CompoundTag message) {
         LifeDatabase.INSTANCE.readFromNBT(message.getCompoundTag("data"), message.getBoolean("merge"));
     }
 }

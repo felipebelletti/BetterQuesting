@@ -20,14 +20,14 @@ import java.util.function.BiFunction;
 public class ComponentRegistry {
     public static final ComponentRegistry INSTANCE = new ComponentRegistry();
 
-    private final HashMap<ResourceLocation, BiFunction<IGuiRect, NBTTagCompound, IGuiPanel>> REG_MAP = new HashMap<>();
-    private final HashMap<ResourceLocation, NBTTagCompound> TEMPLATE_TAGS = new HashMap<>();
+    private final HashMap<ResourceLocation, BiFunction<IGuiRect, CompoundTag, IGuiPanel>> REG_MAP = new HashMap<>();
+    private final HashMap<ResourceLocation, CompoundTag> TEMPLATE_TAGS = new HashMap<>();
 
     public ComponentRegistry() {
         init();
     }
 
-    public void register(@Nonnull ResourceLocation idname, @Nonnull BiFunction<IGuiRect, NBTTagCompound, IGuiPanel> factory, @Nonnull NBTTagCompound template) {
+    public void register(@Nonnull ResourceLocation idname, @Nonnull BiFunction<IGuiRect, CompoundTag, IGuiPanel> factory, @Nonnull CompoundTag template) {
         if (REG_MAP.containsKey(idname)) {
             throw new IllegalArgumentException("Tried to register duplicate GUI component ID");
         }
@@ -37,8 +37,8 @@ public class ComponentRegistry {
     }
 
     @Nonnull
-    public IGuiPanel createNew(@Nonnull ResourceLocation idName, @Nonnull IGuiRect rect, @Nullable NBTTagCompound tag) {
-        BiFunction<IGuiRect, NBTTagCompound, IGuiPanel> factory = REG_MAP.get(idName);
+    public IGuiPanel createNew(@Nonnull ResourceLocation idName, @Nonnull IGuiRect rect, @Nullable CompoundTag tag) {
+        BiFunction<IGuiRect, CompoundTag, IGuiPanel> factory = REG_MAP.get(idName);
         if (factory == null)
             return new CanvasTextured(rect, ThemeRegistry.INSTANCE.getTexture(null)); // TODO: Return placeholder panel
         IGuiPanel pan = factory.apply(rect, tag);
@@ -47,9 +47,9 @@ public class ComponentRegistry {
     }
 
     @Nonnull
-    public NBTTagCompound getTemplateTag(@Nonnull ResourceLocation idName) {
-        NBTTagCompound tag = TEMPLATE_TAGS.get(idName);
-        return tag == null ? new NBTTagCompound() : tag.copy();
+    public CompoundTag getTemplateTag(@Nonnull ResourceLocation idName) {
+        CompoundTag tag = TEMPLATE_TAGS.get(idName);
+        return tag == null ? new CompoundTag() : tag.copy();
     }
 
     public List<ResourceLocation> getRegisteredIDs() {
@@ -57,9 +57,9 @@ public class ComponentRegistry {
     }
 
     private void init() {
-        //register(new ResourceLocation(ModReference.MODID, "canvas_empty"), CanvasEmpty::new, new NBTTagCompound());
+        //register(new ResourceLocation(ModReference.MODID, "canvas_empty"), CanvasEmpty::new, new CompoundTag());
 
-        NBTTagCompound refTag = new NBTTagCompound();
+        CompoundTag refTag = new CompoundTag();
         //refTag.setString("texture", PresetTexture.PANEL_MAIN.getKey().toString());
         register(new ResourceLocation(ModReference.MODID, "canvas_textured"), (rect, tag) -> new CanvasTextured(rect, PresetTexture.PANEL_MAIN.getTexture()), refTag);
         register(new ResourceLocation(ModReference.MODID, "panel_button"), (rect, tag) -> {

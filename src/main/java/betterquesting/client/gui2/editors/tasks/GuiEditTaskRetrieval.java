@@ -35,13 +35,13 @@ public class GuiEditTaskRetrieval extends GuiScreenCanvas implements IVolatileSc
 
     private final DBEntry<IQuest> quest;
     private final TaskRetrieval task;
-    private NBTTagCompound current;
+    private CompoundTag current;
 
     public GuiEditTaskRetrieval(GuiScreen parent, DBEntry<IQuest> quest, TaskRetrieval task) {
         super(parent);
         this.quest = quest;
         this.task = task;
-        current = task.writeToNBT(new NBTTagCompound());
+        current = task.writeToNBT(new CompoundTag());
     }
 
     @Override
@@ -103,11 +103,11 @@ public class GuiEditTaskRetrieval extends GuiScreenCanvas implements IVolatileSc
     private static final ResourceLocation QUEST_EDIT = new ResourceLocation(ModReference.MODID, "quest_edit"); // TODO: Really need to make the native packet types accessible in the API
 
     private void sendChanges() {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         NBTTagList dataList = new NBTTagList();
-        NBTTagCompound entry = new NBTTagCompound();
+        CompoundTag entry = new CompoundTag();
         entry.setInteger("questID", quest.getID());
-        entry.setTag("config", quest.getValue().writeToNBT(new NBTTagCompound()));
+        entry.setTag("config", quest.getValue().writeToNBT(new CompoundTag()));
         dataList.appendTag(entry);
         payload.setTag("data", dataList);
         payload.setInteger("action", 0); // Action: Update data

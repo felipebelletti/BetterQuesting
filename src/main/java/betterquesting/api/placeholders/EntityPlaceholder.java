@@ -8,7 +8,7 @@ import net.minecraft.world.level.Level;
 
 public class EntityPlaceholder extends Entity {
     private final EntityItem eItem;
-    private NBTTagCompound original = new NBTTagCompound();
+    private CompoundTag original = new CompoundTag();
 
     public EntityPlaceholder(Level world) {
         super(world);
@@ -16,12 +16,12 @@ public class EntityPlaceholder extends Entity {
         eItem.setItem(new ItemStack(ItemPlaceholder.placeholder));
     }
 
-    public EntityPlaceholder SetOriginalTags(NBTTagCompound tags) {
+    public EntityPlaceholder SetOriginalTags(CompoundTag tags) {
         this.original = tags;
         return this;
     }
 
-    public NBTTagCompound GetOriginalTags() {
+    public CompoundTag GetOriginalTags() {
         return this.original;
     }
 
@@ -34,12 +34,12 @@ public class EntityPlaceholder extends Entity {
     }
 
     @Override
-    protected void readEntityFromNBT(NBTTagCompound tags) {
+    protected void readEntityFromNBT(CompoundTag tags) {
         original = tags.getCompoundTag("original");
     }
 
     @Override
-    protected void writeEntityToNBT(NBTTagCompound tags) {
+    protected void writeEntityToNBT(CompoundTag tags) {
         tags.setTag("original", this.original);
     }
 }

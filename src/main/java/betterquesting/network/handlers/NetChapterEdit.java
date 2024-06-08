@@ -36,12 +36,12 @@ public class NetChapterEdit {
     }
 
     @SideOnly(Side.CLIENT)
-    public static void sendEdit(NBTTagCompound payload) // TODO: Make these use proper methods for each action rather than directly assembling the payload
+    public static void sendEdit(CompoundTag payload) // TODO: Make these use proper methods for each action rather than directly assembling the payload
     {
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+    private static void onServer(Tuple<CompoundTag, ServerPlayer> message) {
         ServerPlayer sender = message.getSecond();
         MinecraftServer server = sender.getServer();
         if (server == null) return; // Here mostly just to keep intellisense happy
@@ -55,7 +55,7 @@ public class NetChapterEdit {
             return; // Player is not operator. Do nothing
         }
 
-        NBTTagCompound tag = message.getFirst();
+        CompoundTag tag = message.getFirst();
         int action = !message.getFirst().hasKey("action", 99) ? -1 : message.getFirst().getInteger("action");
 
         switch (action) {
@@ -84,7 +84,7 @@ public class NetChapterEdit {
     private static void editChapters(NBTTagList data) {
         int[] ids = new int[data.tagCount()];
         for (int i = 0; i < data.tagCount(); i++) {
-            NBTTagCompound entry = data.getCompoundTagAt(i);
+            CompoundTag entry = data.getCompoundTagAt(i);
             int chapterID = entry.getInteger("chapterID");
             ids[i] = chapterID;
 
@@ -103,7 +103,7 @@ public class NetChapterEdit {
 
         SaveLoadHandler.INSTANCE.markDirty();
 
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setIntArray("chapterIDs", chapterIDs);
         payload.setInteger("action", 1);
         PacketSender.INSTANCE.sendToAll(new QuestingPacket(ID_NAME, payload));
@@ -116,7 +116,7 @@ public class NetChapterEdit {
 
         SaveLoadHandler.INSTANCE.markDirty();
 
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setIntArray("chapterIDs", chapterIDs);
         payload.setInteger("action", 2);
         PacketSender.INSTANCE.sendToAll(new QuestingPacket(ID_NAME, payload));
@@ -126,7 +126,7 @@ public class NetChapterEdit {
     {
         int[] ids = new int[data.tagCount()];
         for (int i = 0; i < data.tagCount(); i++) {
-            NBTTagCompound entry = data.getCompoundTagAt(i);
+            CompoundTag entry = data.getCompoundTagAt(i);
             int chapterID = entry.hasKey("chapterID", 99) ? entry.getInteger("chapterID") : -1;
             if (chapterID < 0) chapterID = QuestLineDatabase.INSTANCE.nextID();
             ids[i] = chapterID;
@@ -141,7 +141,7 @@ public class NetChapterEdit {
     }
 
     @SideOnly(Side.CLIENT)
-    private static void onClient(NBTTagCompound message) {
+    private static void onClient(CompoundTag message) {
         int action = !message.hasKey("action", 99) ? -1 : message.getInteger("action");
 
         switch (action) // Change to a switch statement when more actions are required

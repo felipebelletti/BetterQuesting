@@ -7,7 +7,7 @@ import betterquesting.questing.tasks.TaskCheckbox;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
-public class FactoryTaskCheckbox implements IFactoryData<ITask, NBTTagCompound> {
+public class FactoryTaskCheckbox implements IFactoryData<ITask, CompoundTag> {
     public static final FactoryTaskCheckbox INSTANCE = new FactoryTaskCheckbox();
 
     @Override
@@ -21,7 +21,7 @@ public class FactoryTaskCheckbox implements IFactoryData<ITask, NBTTagCompound> 
     }
 
     @Override
-    public TaskCheckbox loadFromData(NBTTagCompound json) {
+    public TaskCheckbox loadFromData(CompoundTag json) {
         TaskCheckbox task = new TaskCheckbox();
         task.readFromNBT(json);
         return task;

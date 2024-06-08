@@ -91,7 +91,7 @@ public class TaskAdvancement implements ITask {
     }
 
     @Override
-    public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+    public CompoundTag writeProgressToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
         NBTTagList jArray = new NBTTagList();
 
         completeUsers.forEach((uuid) -> {
@@ -104,7 +104,7 @@ public class TaskAdvancement implements ITask {
     }
 
     @Override
-    public void readProgressFromNBT(NBTTagCompound nbt, boolean merge) {
+    public void readProgressFromNBT(CompoundTag nbt, boolean merge) {
         if (!merge) completeUsers.clear();
         NBTTagList cList = nbt.getTagList("completeUsers", 8);
         for (int i = 0; i < cList.tagCount(); i++) {
@@ -117,13 +117,13 @@ public class TaskAdvancement implements ITask {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public CompoundTag writeToNBT(CompoundTag nbt) {
         nbt.setString("advancement_id", advID == null ? "" : advID.toString());
         return nbt;
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(CompoundTag nbt) {
         String id = nbt.getString("advancement_id");
         advID = StringUtils.isNullOrEmpty(id) ? null : new ResourceLocation(id);
     }

@@ -37,7 +37,7 @@ public class TaskMeeting implements ITaskTickable {
     /**
      * NBT representation of the intended target. Used only for NBT comparison checks
      */
-    public NBTTagCompound targetTags = new NBTTagCompound();
+    public CompoundTag targetTags = new CompoundTag();
 
     @Override
     public ResourceLocation getFactoryID() {
@@ -98,7 +98,7 @@ public class TaskMeeting implements ITaskTickable {
             }
 
             if (!ignoreNBT) {
-                NBTTagCompound subjectTags = new NBTTagCompound();
+                CompoundTag subjectTags = new CompoundTag();
                 entity.writeToNBTOptional(subjectTags);
                 if (!ItemComparison.CompareNBTTag(targetTags, subjectTags, true)) continue;
             }
@@ -114,7 +114,7 @@ public class TaskMeeting implements ITaskTickable {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound json) {
+    public CompoundTag writeToNBT(CompoundTag json) {
         json.setString("target", idName);
         json.setInteger("range", range);
         json.setInteger("amount", amount);
@@ -126,7 +126,7 @@ public class TaskMeeting implements ITaskTickable {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound json) {
+    public void readFromNBT(CompoundTag json) {
         idName = json.hasKey("target", 8) ? json.getString("target") : "minecraft:villager";
         range = json.getInteger("range");
         amount = json.getInteger("amount");
@@ -136,7 +136,7 @@ public class TaskMeeting implements ITaskTickable {
     }
 
     @Override
-    public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+    public CompoundTag writeProgressToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
         NBTTagList jArray = new NBTTagList();
 
         completeUsers.forEach((uuid) -> {
@@ -149,7 +149,7 @@ public class TaskMeeting implements ITaskTickable {
     }
 
     @Override
-    public void readProgressFromNBT(NBTTagCompound nbt, boolean merge) {
+    public void readProgressFromNBT(CompoundTag nbt, boolean merge) {
         if (!merge) completeUsers.clear();
         NBTTagList cList = nbt.getTagList("completeUsers", 8);
         for (int i = 0; i < cList.tagCount(); i++) {

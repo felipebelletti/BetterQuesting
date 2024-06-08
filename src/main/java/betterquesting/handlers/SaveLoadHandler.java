@@ -188,7 +188,7 @@ public class SaveLoadHandler {
             boolean legacySettings = !defaultDatabaseSettingsFile.exists();
             File settingsFile = legacySettings ? defaultDatabaseFile : defaultDatabaseSettingsFile;
             JsonObject settingsJson = JsonHelper.ReadFromFile(settingsFile);
-            NBTTagCompound settingsTag = NBTConverter.JSONtoNBT_Object(settingsJson, new NBTTagCompound(), true);
+            CompoundTag settingsTag = NBTConverter.JSONtoNBT_Object(settingsJson, new CompoundTag(), true);
 
             QuestSettings tmpSettings = new QuestSettings();
             tmpSettings.readFromNBT(legacySettings ? settingsTag.getCompoundTag("questSettings") : settingsTag);
@@ -199,7 +199,7 @@ public class SaveLoadHandler {
             // Perhaps we should improve this.
             JsonObject databaseJson = JsonHelper.ReadFromFile(fileDatabase);
             String buildVer =
-                    NBTConverter.JSONtoNBT_Object(databaseJson, new NBTTagCompound(), true)
+                    NBTConverter.JSONtoNBT_Object(databaseJson, new CompoundTag(), true)
                             .getString("build");
             String currVer = Loader.instance().activeModContainer().getVersion();
 
@@ -247,7 +247,7 @@ public class SaveLoadHandler {
             JsonObject json = JsonHelper.ReadFromFile(fileProgress);
 
             if (legacyLoader == null) {
-                NBTTagCompound nbt = NBTConverter.JSONtoNBT_Object(json, new NBTTagCompound(), true);
+                CompoundTag nbt = NBTConverter.JSONtoNBT_Object(json, new CompoundTag(), true);
                 QuestDatabase.INSTANCE.readProgressFromNBT(nbt.getTagList("questProgress", 10), false);
             } else {
                 legacyLoader.readProgressFromJson(json);
@@ -256,7 +256,7 @@ public class SaveLoadHandler {
 
         for (File file : getPlayerProgressFiles()) {
             JsonObject json = JsonHelper.ReadFromFile(file);
-            NBTTagCompound nbt = NBTConverter.JSONtoNBT_Object(json, new NBTTagCompound(), true);
+            CompoundTag nbt = NBTConverter.JSONtoNBT_Object(json, new CompoundTag(), true);
             QuestDatabase.INSTANCE.readProgressFromNBT(nbt.getTagList("questProgress", 10), true);
         }
     }
@@ -264,7 +264,7 @@ public class SaveLoadHandler {
     private void loadParties() {
         JsonObject json = JsonHelper.ReadFromFile(fileParties);
 
-        NBTTagCompound nbt = NBTConverter.JSONtoNBT_Object(json, new NBTTagCompound(), true);
+        CompoundTag nbt = NBTConverter.JSONtoNBT_Object(json, new CompoundTag(), true);
         PartyManager.INSTANCE.readFromNBT(nbt.getTagList("parties", 10), false);
     }
 
@@ -272,7 +272,7 @@ public class SaveLoadHandler {
         NameCache.INSTANCE.reset();
         JsonObject json = JsonHelper.ReadFromFile(fileNames);
 
-        NBTTagCompound nbt = NBTConverter.JSONtoNBT_Object(json, new NBTTagCompound(), true);
+        CompoundTag nbt = NBTConverter.JSONtoNBT_Object(json, new CompoundTag(), true);
         NameCache.INSTANCE.readFromNBT(nbt.getTagList("nameCache", 10), false);
     }
 
@@ -280,7 +280,7 @@ public class SaveLoadHandler {
         LifeDatabase.INSTANCE.reset();
         JsonObject json = JsonHelper.ReadFromFile(fileLives);
 
-        NBTTagCompound nbt = NBTConverter.JSONtoNBT_Object(json, new NBTTagCompound(), true);
+        CompoundTag nbt = NBTConverter.JSONtoNBT_Object(json, new CompoundTag(), true);
         LifeDatabase.INSTANCE.readFromNBT(nbt.getCompoundTag("lifeDatabase"), false);
     }
 
@@ -308,9 +308,9 @@ public class SaveLoadHandler {
     }
 
     private Future<Void> saveConfig() {
-        NBTTagCompound json = new NBTTagCompound();
+        CompoundTag json = new CompoundTag();
 
-        json.setTag("questSettings", QuestSettings.INSTANCE.writeToNBT(new NBTTagCompound()));
+        json.setTag("questSettings", QuestSettings.INSTANCE.writeToNBT(new CompoundTag()));
         json.setTag("questDatabase", QuestDatabase.INSTANCE.writeToNBT(new NBTTagList(), null));
         json.setTag("questLines", QuestLineDatabase.INSTANCE.writeToNBT(new NBTTagList(), null));
 
@@ -327,7 +327,7 @@ public class SaveLoadHandler {
     }
 
     private Future<Void> saveParties() {
-        NBTTagCompound json = new NBTTagCompound();
+        CompoundTag json = new CompoundTag();
 
         json.setTag("parties", PartyManager.INSTANCE.writeToNBT(new NBTTagList(), null));
 
@@ -335,7 +335,7 @@ public class SaveLoadHandler {
     }
 
     private Future<Void> saveNames() {
-        NBTTagCompound json = new NBTTagCompound();
+        CompoundTag json = new CompoundTag();
 
         json.setTag("nameCache", NameCache.INSTANCE.writeToNBT(new NBTTagList(), null));
 
@@ -343,15 +343,15 @@ public class SaveLoadHandler {
     }
 
     private Future<Void> saveLives() {
-        NBTTagCompound json = new NBTTagCompound();
+        CompoundTag json = new CompoundTag();
 
-        json.setTag("lifeDatabase", LifeDatabase.INSTANCE.writeToNBT(new NBTTagCompound(), null));
+        json.setTag("lifeDatabase", LifeDatabase.INSTANCE.writeToNBT(new CompoundTag(), null));
 
         return JsonHelper.WriteToFile(fileLives, NBTConverter.NBTtoJSON_Compound(json, new JsonObject(), true));
     }
 
     public Future<Void> savePlayerProgress(UUID player) {
-        NBTTagCompound json = new NBTTagCompound();
+        CompoundTag json = new CompoundTag();
 
         json.setTag("questProgress", QuestDatabase.INSTANCE.writeProgressToNBT(new NBTTagList(), Collections.singletonList(player)));
 

@@ -23,9 +23,9 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.CompoundTag;
 
 public class GuiNbtType extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {
-    private final NBTTagCompound tagCompound;
+    private final CompoundTag tagCompound;
 
-    public GuiNbtType(GuiScreen parent, NBTTagCompound tagCompound) {
+    public GuiNbtType(GuiScreen parent, CompoundTag tagCompound) {
         super(parent);
         this.tagCompound = tagCompound;
     }

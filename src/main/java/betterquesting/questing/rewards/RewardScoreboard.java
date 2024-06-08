@@ -69,7 +69,7 @@ public class RewardScoreboard implements IReward {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound json) {
+    public void readFromNBT(CompoundTag json) {
         score = json.getString("score");
         type = json.getString("type");
         value = json.getInteger("value");
@@ -77,7 +77,7 @@ public class RewardScoreboard implements IReward {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound json) {
+    public CompoundTag writeToNBT(CompoundTag json) {
         json.setString("score", score);
         json.setString("type", "dummy");
         json.setInteger("value", value);

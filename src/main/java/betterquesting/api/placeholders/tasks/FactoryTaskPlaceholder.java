@@ -5,7 +5,7 @@ import betterquesting.core.ModReference;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
-public class FactoryTaskPlaceholder implements IFactoryData<TaskPlaceholder, NBTTagCompound> {
+public class FactoryTaskPlaceholder implements IFactoryData<TaskPlaceholder, CompoundTag> {
     public static final FactoryTaskPlaceholder INSTANCE = new FactoryTaskPlaceholder();
 
     private final ResourceLocation ID = new ResourceLocation(ModReference.MODID, "placeholder");
@@ -24,7 +24,7 @@ public class FactoryTaskPlaceholder implements IFactoryData<TaskPlaceholder, NBT
     }
 
     @Override
-    public TaskPlaceholder loadFromData(NBTTagCompound nbt) {
+    public TaskPlaceholder loadFromData(CompoundTag nbt) {
         TaskPlaceholder task = createNew();
         task.readFromNBT(nbt);
         return task;

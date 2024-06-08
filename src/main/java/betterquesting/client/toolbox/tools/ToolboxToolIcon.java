@@ -54,13 +54,13 @@ public class ToolboxToolIcon implements IToolboxTool {
             for (PanelButtonQuest b : list) {
                 b.getStoredValue().getValue().setProperty(NativeProps.ICON, value);
 
-                NBTTagCompound entry = new NBTTagCompound();
+                CompoundTag entry = new CompoundTag();
                 entry.setInteger("questID", b.getStoredValue().getID());
-                entry.setTag("config", b.getStoredValue().getValue().writeToNBT(new NBTTagCompound()));
+                entry.setTag("config", b.getStoredValue().getValue().writeToNBT(new CompoundTag()));
                 dataList.appendTag(entry);
             }
 
-            NBTTagCompound payload = new NBTTagCompound();
+            CompoundTag payload = new CompoundTag();
             payload.setTag("data", dataList);
             payload.setInteger("action", 0);
             NetQuestEdit.sendEdit(payload);

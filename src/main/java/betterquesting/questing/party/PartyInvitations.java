@@ -107,7 +107,7 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
     {
         if (subset != null) {
             subset.forEach((uuid) -> {
-                NBTTagCompound userTag = new NBTTagCompound();
+                CompoundTag userTag = new CompoundTag();
                 userTag.setString("uuid", uuid.toString());
 
                 Map<Integer, Long> userMap = invites.get(uuid);
@@ -115,7 +115,7 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
                 NBTTagList invList = new NBTTagList();
 
                 for (Entry<Integer, Long> invEntry : userMap.entrySet()) {
-                    NBTTagCompound invTag = new NBTTagCompound();
+                    CompoundTag invTag = new CompoundTag();
                     invTag.setInteger("partyID", invEntry.getKey());
                     invTag.setLong("expiry", invEntry.getValue());
                     invList.appendTag(invTag);
@@ -126,12 +126,12 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
             });
         } else {
             for (Entry<UUID, HashMap<Integer, Long>> userMap : invites.entrySet()) {
-                NBTTagCompound userTag = new NBTTagCompound();
+                CompoundTag userTag = new CompoundTag();
                 userTag.setString("uuid", userMap.getKey().toString());
 
                 NBTTagList invList = new NBTTagList();
                 for (Entry<Integer, Long> invEntry : userMap.getValue().entrySet()) {
-                    NBTTagCompound invTag = new NBTTagCompound();
+                    CompoundTag invTag = new CompoundTag();
                     invTag.setInteger("partyID", invEntry.getKey());
                     invTag.setLong("expiry", invEntry.getValue());
                     invList.appendTag(invTag);
@@ -147,7 +147,7 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
     public synchronized void readFromNBT(NBTTagList nbt, boolean merge) {
         if (!merge) invites.clear();
         for (int i = 0; i < nbt.tagCount(); i++) {
-            NBTTagCompound userEntry = nbt.getCompoundTagAt(i);
+            CompoundTag userEntry = nbt.getCompoundTagAt(i);
             UUID uuid;
             try {
                 uuid = UUID.fromString(userEntry.getString("uuid"));
@@ -159,7 +159,7 @@ public class PartyInvitations implements INBTPartial<NBTTagList, UUID> {
             HashMap<Integer, Long> map = invites.compute(uuid, (key, old) -> new HashMap<>());
             map.clear();
             for (int n = 0; n < invList.tagCount(); n++) {
-                NBTTagCompound invEntry = invList.getCompoundTagAt(n);
+                CompoundTag invEntry = invList.getCompoundTagAt(n);
                 int partyID = invEntry.hasKey("partyID", 99) ? invEntry.getInteger("partyID") : -1;
                 long timestamp = invEntry.hasKey("expiry", 99) ? invEntry.getLong("expiry") : -1;
                 if (partyID < 0) continue;

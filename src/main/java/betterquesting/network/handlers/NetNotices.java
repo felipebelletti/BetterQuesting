@@ -26,8 +26,8 @@ public class NetNotices {
     }
 
     public static void sendNotice(@Nullable ServerPlayer[] players, ItemStack icon, String mainText, String subText, String sound) {
-        NBTTagCompound payload = new NBTTagCompound();
-        payload.setTag("icon", (icon != null ? icon : ItemStack.EMPTY).writeToNBT(new NBTTagCompound()));
+        CompoundTag payload = new CompoundTag();
+        payload.setTag("icon", (icon != null ? icon : ItemStack.EMPTY).writeToNBT(new CompoundTag()));
         if (mainText != null) payload.setString("mainText", mainText);
         if (subText != null) payload.setString("subText", subText);
         if (sound != null) payload.setString("sound", sound);
@@ -40,7 +40,7 @@ public class NetNotices {
     }
 
     @SideOnly(Side.CLIENT)
-    private static void onClient(NBTTagCompound message) {
+    private static void onClient(CompoundTag message) {
         ItemStack stack = new ItemStack(message.getCompoundTag("icon"));
         String mainTxt = message.getString("mainText");
         String subTxt = message.getString("subText");

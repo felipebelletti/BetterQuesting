@@ -48,7 +48,7 @@ public class GuiItemSelection extends GuiScreenCanvas implements IPEventListener
     private PanelItemSlot itemPreview;
     private PanelButtonStorage<Integer> btnOre;
 
-    public GuiItemSelection(GuiScreen parent, NBTTagCompound tag, ICallback<BigItemStack> callback) {
+    public GuiItemSelection(GuiScreen parent, CompoundTag tag, ICallback<BigItemStack> callback) {
         this(parent, JsonHelper.JsonToItemStack(tag), callback);
     }
 

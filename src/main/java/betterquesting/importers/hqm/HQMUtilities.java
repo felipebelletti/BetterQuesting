@@ -30,7 +30,7 @@ public class HQMUtilities {
         Item item = Item.REGISTRY.getObject(new ResourceLocation(iID));
         int amount = JsonHelper.GetNumber(json, "amount", 1).intValue();
         int damage = JsonHelper.GetNumber(json, "damage", 0).intValue();
-        NBTTagCompound tags = null;
+        CompoundTag tags = null;
 
         if (json.has("nbt")) {
             try {
@@ -70,7 +70,7 @@ public class HQMUtilities {
         int damage = JsonHelper.GetNumber(json, "damage", 0).intValue();
         boolean oreDict = JsonHelper.GetString(rJson, "precision", "").equalsIgnoreCase("ORE_DICTIONARY");
 
-        NBTTagCompound tags = null;
+        CompoundTag tags = null;
 
         if (json.has("nbt")) {
             try {

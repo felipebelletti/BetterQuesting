@@ -58,7 +58,7 @@ public final class QuestDatabase extends RandomIndexDatabase<IQuest> implements 
     public synchronized NBTTagList writeToNBT(NBTTagList json, @Nullable List<Integer> subset) {
         for (DBEntry<IQuest> entry : this.getEntries()) {
             if (subset != null && !subset.contains(entry.getID())) continue;
-            NBTTagCompound jq = entry.getValue().writeToNBT(new NBTTagCompound());
+            CompoundTag jq = entry.getValue().writeToNBT(new CompoundTag());
             if (subset != null && jq.isEmpty()) continue;
             jq.setInteger("questID", entry.getID());
             json.appendTag(jq);
@@ -72,7 +72,7 @@ public final class QuestDatabase extends RandomIndexDatabase<IQuest> implements 
         if (!merge) this.reset();
 
         for (int i = 0; i < nbt.tagCount(); i++) {
-            NBTTagCompound qTag = nbt.getCompoundTagAt(i);
+            CompoundTag qTag = nbt.getCompoundTagAt(i);
 
             int qID = qTag.hasKey("questID", 99) ? qTag.getInteger("questID") : -1;
             if (qID < 0) continue;
@@ -86,7 +86,7 @@ public final class QuestDatabase extends RandomIndexDatabase<IQuest> implements 
     @Override
     public synchronized NBTTagList writeProgressToNBT(NBTTagList json, @Nullable List<UUID> users) {
         for (DBEntry<IQuest> entry : this.getEntries()) {
-            NBTTagCompound jq = entry.getValue().writeProgressToNBT(new NBTTagCompound(), users);
+            CompoundTag jq = entry.getValue().writeProgressToNBT(new CompoundTag(), users);
             jq.setInteger("questID", entry.getID());
             json.appendTag(jq);
         }
@@ -97,7 +97,7 @@ public final class QuestDatabase extends RandomIndexDatabase<IQuest> implements 
     @Override
     public synchronized void readProgressFromNBT(NBTTagList json, boolean merge) {
         for (int i = 0; i < json.tagCount(); i++) {
-            NBTTagCompound qTag = json.getCompoundTagAt(i);
+            CompoundTag qTag = json.getCompoundTagAt(i);
 
             int qID = qTag.hasKey("questID", 99) ? qTag.getInteger("questID") : -1;
             if (qID < 0) continue;

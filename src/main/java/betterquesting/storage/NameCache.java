@@ -16,12 +16,12 @@ public final class NameCache implements INameCache {
     public static final NameCache INSTANCE = new NameCache();
 
     // TODO: Label known names as offline/online and convert accordingly?
-    private final HashMap<UUID, NBTTagCompound> cache = new HashMap<>();
+    private final HashMap<UUID, CompoundTag> cache = new HashMap<>();
 
     @Override
     public synchronized boolean updateName(@Nonnull ServerPlayer player) {
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-        NBTTagCompound tag = cache.computeIfAbsent(player.getGameProfile().getId(), (key) -> new NBTTagCompound());
+        CompoundTag tag = cache.computeIfAbsent(player.getGameProfile().getId(), (key) -> new CompoundTag());
 
         String name = player.getGameProfile().getName();
         boolean isOP = server.getPlayerList().canSendCommands(player.getGameProfile());
@@ -37,13 +37,13 @@ public final class NameCache implements INameCache {
 
     @Override
     public synchronized String getName(@Nonnull UUID uuid) {
-        NBTTagCompound tag = cache.get(uuid);
+        CompoundTag tag = cache.get(uuid);
         return tag == null ? uuid.toString() : tag.getString("name");
     }
 
     @Override
     public synchronized UUID getUUID(@Nonnull String name) {
-        for (Entry<UUID, NBTTagCompound> entry : cache.entrySet()) {
+        for (Entry<UUID, CompoundTag> entry : cache.entrySet()) {
             if (entry.getValue().getString("name").equalsIgnoreCase(name)) {
                 return entry.getKey();
             }
@@ -54,7 +54,7 @@ public final class NameCache implements INameCache {
 
     @Override
     public synchronized boolean isOP(@Nonnull UUID uuid) {
-        NBTTagCompound tag = cache.get(uuid);
+        CompoundTag tag = cache.get(uuid);
         return tag != null && tag.getBoolean("isOP");
     }
 
@@ -65,9 +65,9 @@ public final class NameCache implements INameCache {
 
     @Override
     public synchronized NBTTagList writeToNBT(NBTTagList nbt, @Nullable List<UUID> users) {
-        for (Entry<UUID, NBTTagCompound> entry : cache.entrySet()) {
+        for (Entry<UUID, CompoundTag> entry : cache.entrySet()) {
             if (users != null && !users.contains(entry.getKey())) continue;
-            NBTTagCompound jn = new NBTTagCompound();
+            CompoundTag jn = new CompoundTag();
             jn.setString("uuid", entry.getKey().toString());
             jn.setString("name", entry.getValue().getString("name"));
             jn.setBoolean("isOP", entry.getValue().getBoolean("isOP"));
@@ -81,14 +81,14 @@ public final class NameCache implements INameCache {
     public synchronized void readFromNBT(NBTTagList nbt, boolean merge) {
         if (!merge) cache.clear();
         for (int i = 0; i < nbt.tagCount(); i++) {
-            NBTTagCompound jn = nbt.getCompoundTagAt(i);
+            CompoundTag jn = nbt.getCompoundTagAt(i);
 
             try {
                 UUID uuid = UUID.fromString(jn.getString("uuid"));
                 String name = jn.getString("name");
                 boolean isOP = jn.getBoolean("isOP");
 
-                NBTTagCompound j2 = new NBTTagCompound();
+                CompoundTag j2 = new CompoundTag();
                 j2.setString("name", name);
                 j2.setBoolean("isOP", isOP);
                 cache.put(uuid, j2);
@@ -111,7 +111,7 @@ public final class NameCache implements INameCache {
 
         nameCache = new ArrayList<>();
 
-        for (NBTTagCompound tag : cache.values()) {
+        for (CompoundTag tag : cache.values()) {
             if (tag != null && tag.hasKey("name", 8)) {
                 nameCache.add(tag.getString("name"));
             }

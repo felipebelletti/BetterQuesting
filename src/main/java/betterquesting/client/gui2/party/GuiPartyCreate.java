@@ -157,13 +157,13 @@ public class GuiPartyCreate extends GuiScreenCanvas implements IPEventListener, 
             mc.displayGuiScreen(this.parent);
         } else if (btn.getButtonID() == 1) // Create
         {
-            NBTTagCompound payload = new NBTTagCompound();
+            CompoundTag payload = new CompoundTag();
             payload.setInteger("action", 0);
             payload.setString("name", flName.getRawText());
             NetPartyAction.sendAction(payload);
         } else if (btn.getButtonID() == 2 && btn instanceof PanelButtonStorage) // Join
         {
-            NBTTagCompound payload = new NBTTagCompound();
+            CompoundTag payload = new CompoundTag();
             payload.setInteger("action", 4);
             payload.setInteger("partyID", ((PanelButtonStorage<Integer>) btn).getStoredValue());
             NetPartyAction.sendAction(payload);

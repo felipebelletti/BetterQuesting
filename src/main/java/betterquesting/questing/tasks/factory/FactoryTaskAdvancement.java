@@ -7,7 +7,7 @@ import betterquesting.questing.tasks.TaskAdvancement;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
-public final class FactoryTaskAdvancement implements IFactoryData<ITask, NBTTagCompound> {
+public final class FactoryTaskAdvancement implements IFactoryData<ITask, CompoundTag> {
     public static final FactoryTaskAdvancement INSTANCE = new FactoryTaskAdvancement();
 
     private final ResourceLocation REG_ID = new ResourceLocation(BetterQuesting.MODID_STD, "advancement");
@@ -23,7 +23,7 @@ public final class FactoryTaskAdvancement implements IFactoryData<ITask, NBTTagC
     }
 
     @Override
-    public TaskAdvancement loadFromData(NBTTagCompound nbt) {
+    public TaskAdvancement loadFromData(CompoundTag nbt) {
         TaskAdvancement task = new TaskAdvancement();
         task.readFromNBT(nbt);
         return task;

@@ -21,7 +21,7 @@ public class TaskStorage extends SimpleDatabase<ITask> implements IDatabaseNBT<I
         for (DBEntry<ITask> entry : getEntries()) {
             if (subset != null && !subset.contains(entry.getID())) continue;
             ResourceLocation taskID = entry.getValue().getFactoryID();
-            NBTTagCompound qJson = entry.getValue().writeToNBT(new NBTTagCompound());
+            CompoundTag qJson = entry.getValue().writeToNBT(new CompoundTag());
             qJson.setString("taskID", taskID.toString());
             qJson.setInteger("index", entry.getID());
             json.appendTag(qJson);
@@ -35,13 +35,13 @@ public class TaskStorage extends SimpleDatabase<ITask> implements IDatabaseNBT<I
         List<ITask> unassigned = new ArrayList<>();
 
         for (int i = 0; i < json.tagCount(); i++) {
-            NBTTagCompound jsonTask = json.getCompoundTagAt(i);
+            CompoundTag jsonTask = json.getCompoundTagAt(i);
             ResourceLocation loc = new ResourceLocation(jsonTask.getString("taskID"));
             int index = jsonTask.hasKey("index", 99) ? jsonTask.getInteger("index") : -1;
             ITask task = TaskRegistry.INSTANCE.createNew(loc);
 
             if (task instanceof TaskPlaceholder) {
-                NBTTagCompound jt2 = jsonTask.getCompoundTag("orig_data");
+                CompoundTag jt2 = jsonTask.getCompoundTag("orig_data");
                 ResourceLocation loc2 = new ResourceLocation(jt2.getString("taskID"));
                 ITask t2 = TaskRegistry.INSTANCE.createNew(loc2);
 
@@ -74,7 +74,7 @@ public class TaskStorage extends SimpleDatabase<ITask> implements IDatabaseNBT<I
         for (DBEntry<ITask> entry : getEntries()) {
             ResourceLocation taskID = entry.getValue().getFactoryID();
 
-            NBTTagCompound qJson = entry.getValue().writeProgressToNBT(new NBTTagCompound(), user);
+            CompoundTag qJson = entry.getValue().writeProgressToNBT(new CompoundTag(), user);
             qJson.setString("taskID", taskID.toString());
             qJson.setInteger("index", entry.getID());
             json.appendTag(qJson);
@@ -85,7 +85,7 @@ public class TaskStorage extends SimpleDatabase<ITask> implements IDatabaseNBT<I
     @Override
     public void readProgressFromNBT(NBTTagList json, boolean merge) {
         for (int i = 0; i < json.tagCount(); i++) {
-            NBTTagCompound jsonTask = json.getCompoundTagAt(i);
+            CompoundTag jsonTask = json.getCompoundTagAt(i);
             int index = jsonTask.hasKey("index", 99) ? jsonTask.getInteger("index") : -1;
             ResourceLocation loc = new ResourceLocation(jsonTask.getString("taskID"));
             ITask task = getValue(index);

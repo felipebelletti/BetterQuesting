@@ -307,7 +307,7 @@ public class TileSubmitStation extends TileEntity implements IFluidHandler, ISid
     @Nonnull
     @Override
     public SPacketUpdateTileEntity getUpdatePacket() {
-        return new SPacketUpdateTileEntity(pos, 0, this.writeToNBT(new NBTTagCompound()));
+        return new SPacketUpdateTileEntity(pos, 0, this.writeToNBT(new CompoundTag()));
     }
 
     /**
@@ -325,7 +325,7 @@ public class TileSubmitStation extends TileEntity implements IFluidHandler, ISid
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tags) {
+    public void readFromNBT(CompoundTag tags) {
         super.readFromNBT(tags);
 
         ItemStackHelper.loadAllItems(tags.getCompoundTag("inventory"), itemStack);
@@ -348,13 +348,13 @@ public class TileSubmitStation extends TileEntity implements IFluidHandler, ISid
 
     @Override
     @Nonnull
-    public NBTTagCompound writeToNBT(NBTTagCompound tags) {
+    public CompoundTag writeToNBT(CompoundTag tags) {
         super.writeToNBT(tags);
         tags.setString("owner", owner != null ? owner.toString() : "");
         tags.setInteger("questID", questID);
         tags.setInteger("task", taskID);
 
-        tags.setTag("inventory", ItemStackHelper.saveAllItems(new NBTTagCompound(), itemStack));
+        tags.setTag("inventory", ItemStackHelper.saveAllItems(new CompoundTag(), itemStack));
 
         return tags;
     }

@@ -16,14 +16,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public interface IQuest extends INBTSaveLoad<NBTTagCompound>, INBTProgress<NBTTagCompound>, IPropertyContainer {
+public interface IQuest extends INBTSaveLoad<CompoundTag>, INBTProgress<CompoundTag>, IPropertyContainer {
 
     EnumQuestState getState(Player player);
 
     @Nullable
-    NBTTagCompound getCompletionInfo(UUID uuid);
+    CompoundTag getCompletionInfo(UUID uuid);
 
-    void setCompletionInfo(UUID uuid, @Nullable NBTTagCompound nbt);
+    void setCompletionInfo(UUID uuid, @Nullable CompoundTag nbt);
 
     void update(Player player);
 

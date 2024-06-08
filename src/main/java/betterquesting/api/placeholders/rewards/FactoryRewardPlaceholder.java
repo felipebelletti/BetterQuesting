@@ -5,7 +5,7 @@ import betterquesting.core.ModReference;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
-public class FactoryRewardPlaceholder implements IFactoryData<RewardPlaceholder, NBTTagCompound> {
+public class FactoryRewardPlaceholder implements IFactoryData<RewardPlaceholder, CompoundTag> {
     public static final FactoryRewardPlaceholder INSTANCE = new FactoryRewardPlaceholder();
 
     private final ResourceLocation ID = new ResourceLocation(ModReference.MODID, "placeholder");
@@ -24,7 +24,7 @@ public class FactoryRewardPlaceholder implements IFactoryData<RewardPlaceholder,
     }
 
     @Override
-    public RewardPlaceholder loadFromData(NBTTagCompound nbt) {
+    public RewardPlaceholder loadFromData(CompoundTag nbt) {
         RewardPlaceholder reward = createNew();
         reward.readFromNBT(nbt);
         return reward;

@@ -21,7 +21,7 @@ public class SNBTReader {
     private static final Pattern LONG_ARRAY_MATCHER = Pattern.compile("\\[L;([\\s\\d,l]*)]", Pattern.CASE_INSENSITIVE);
 
     @Nullable
-    public static NBTTagCompound read(File file) {
+    public static CompoundTag read(File file) {
         if (!file.exists())
             return null;
 

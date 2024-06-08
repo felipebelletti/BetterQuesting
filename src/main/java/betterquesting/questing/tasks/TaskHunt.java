@@ -41,7 +41,7 @@ public class TaskHunt implements ITask {
     /**
      * NBT representation of the intended target. Used only for NBT comparison checks
      */
-    public NBTTagCompound targetTags = new NBTTagCompound();
+    public CompoundTag targetTags = new CompoundTag();
 
     @Override
     public ResourceLocation getFactoryID() {
@@ -90,7 +90,7 @@ public class TaskHunt implements ITask {
             return; // This isn't the exact target required
         }
 
-        NBTTagCompound subjectTags = new NBTTagCompound();
+        CompoundTag subjectTags = new CompoundTag();
         entity.writeToNBTOptional(subjectTags);
         if (!ignoreNBT && !ItemComparison.CompareNBTTag(targetTags, subjectTags, true)) return;
 
@@ -107,7 +107,7 @@ public class TaskHunt implements ITask {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public CompoundTag writeToNBT(CompoundTag nbt) {
         nbt.setString("target", idName);
         nbt.setInteger("required", required);
         nbt.setBoolean("subtypes", subtypes);
@@ -119,7 +119,7 @@ public class TaskHunt implements ITask {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(CompoundTag nbt) {
         idName = nbt.getString("target");
         required = nbt.getInteger("required");
         subtypes = nbt.getBoolean("subtypes");
@@ -129,7 +129,7 @@ public class TaskHunt implements ITask {
     }
 
     @Override
-    public void readProgressFromNBT(NBTTagCompound nbt, boolean merge) {
+    public void readProgressFromNBT(CompoundTag nbt, boolean merge) {
         if (!merge) {
             completeUsers.clear();
             userProgress.clear();
@@ -147,7 +147,7 @@ public class TaskHunt implements ITask {
         NBTTagList pList = nbt.getTagList("userProgress", 10);
         for (int n = 0; n < pList.tagCount(); n++) {
             try {
-                NBTTagCompound pTag = pList.getCompoundTagAt(n);
+                CompoundTag pTag = pList.getCompoundTagAt(n);
                 UUID uuid = UUID.fromString(pTag.getString("uuid"));
                 userProgress.put(uuid, pTag.getInteger("value"));
             } catch (Exception e) {
@@ -157,7 +157,7 @@ public class TaskHunt implements ITask {
     }
 
     @Override
-    public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+    public CompoundTag writeProgressToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
         NBTTagList jArray = new NBTTagList();
         NBTTagList progArray = new NBTTagList();
 
@@ -167,7 +167,7 @@ public class TaskHunt implements ITask {
 
                 Integer data = userProgress.get(uuid);
                 if (data != null) {
-                    NBTTagCompound pJson = new NBTTagCompound();
+                    CompoundTag pJson = new CompoundTag();
                     pJson.setString("uuid", uuid.toString());
                     pJson.setInteger("value", data);
                     progArray.appendTag(pJson);
@@ -177,7 +177,7 @@ public class TaskHunt implements ITask {
             completeUsers.forEach((uuid) -> jArray.appendTag(new NBTTagString(uuid.toString())));
 
             userProgress.forEach((uuid, data) -> {
-                NBTTagCompound pJson = new NBTTagCompound();
+                CompoundTag pJson = new CompoundTag();
                 pJson.setString("uuid", uuid.toString());
                 pJson.setInteger("value", data);
                 progArray.appendTag(pJson);

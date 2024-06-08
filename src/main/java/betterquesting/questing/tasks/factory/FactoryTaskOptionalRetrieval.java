@@ -7,7 +7,7 @@ import betterquesting.questing.tasks.TaskOptionalRetrieval;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
-public class FactoryTaskOptionalRetrieval implements IFactoryData<ITask, NBTTagCompound> {
+public class FactoryTaskOptionalRetrieval implements IFactoryData<ITask, CompoundTag> {
 
     public static final FactoryTaskOptionalRetrieval INSTANCE = new FactoryTaskOptionalRetrieval();
 
@@ -22,7 +22,7 @@ public class FactoryTaskOptionalRetrieval implements IFactoryData<ITask, NBTTagC
     }
 
     @Override
-    public TaskOptionalRetrieval loadFromData(NBTTagCompound json) {
+    public TaskOptionalRetrieval loadFromData(CompoundTag json) {
         TaskOptionalRetrieval task = new TaskOptionalRetrieval();
         task.readFromNBT(json);
         return task;

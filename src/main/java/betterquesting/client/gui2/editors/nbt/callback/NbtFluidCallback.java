@@ -7,9 +7,9 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
 public class NbtFluidCallback implements ICallback<FluidStack> {
-    private final NBTTagCompound json;
+    private final CompoundTag json;
 
-    public NbtFluidCallback(NBTTagCompound json) {
+    public NbtFluidCallback(CompoundTag json) {
         this.json = json;
     }
 

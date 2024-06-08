@@ -17,7 +17,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComponentPanel implements INBTSaveLoad<NBTTagCompound> {
+public class ComponentPanel implements INBTSaveLoad<CompoundTag> {
     // Purely for organisational purposes
     public String refName = "New Panel";
     public String panelType = new ResourceLocation(ModReference.MODID, "canvas_empty").toString();
@@ -26,8 +26,8 @@ public class ComponentPanel implements INBTSaveLoad<NBTTagCompound> {
     public int cvParentID = -1; // ID of the canvas we're contained within
     public int tfParentID = -1; // ID of the transform we're positioned relative to
 
-    private NBTTagCompound transTag = new NBTTagCompound();
-    private NBTTagCompound panelData = new NBTTagCompound();
+    private CompoundTag transTag = new CompoundTag();
+    private CompoundTag panelData = new CompoundTag();
 
     // When these are passed off to the GUI context, make sure it's stated whether it's in-editor or not
     // (only content and navigation need setting up otherwise the GUI might actually edit things before intended use)
@@ -57,15 +57,15 @@ public class ComponentPanel implements INBTSaveLoad<NBTTagCompound> {
         transTag.setInteger("depth", transform.getDepth());
     }
 
-    public NBTTagCompound getTransformTag() {
+    public CompoundTag getTransformTag() {
         return transTag;
     }
 
-    public NBTTagCompound getPanelData() {
+    public CompoundTag getPanelData() {
         return panelData;
     }
 
-    public void setPanelData(@Nonnull NBTTagCompound tag) {
+    public void setPanelData(@Nonnull CompoundTag tag) {
         this.panelData = tag;
     }
 
@@ -79,7 +79,7 @@ public class ComponentPanel implements INBTSaveLoad<NBTTagCompound> {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public CompoundTag writeToNBT(CompoundTag nbt) {
         nbt.setString("ref_name", refName);
         nbt.setString("panel_type", panelType);
 
@@ -97,7 +97,7 @@ public class ComponentPanel implements INBTSaveLoad<NBTTagCompound> {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(CompoundTag nbt) {
         refName = nbt.getString("ref_name");
         panelType = nbt.getString("panel_type");
 

@@ -99,7 +99,7 @@ public class JsonHelper {
         return null;
     }
 
-    public static void ClearCompoundTag(@Nonnull NBTTagCompound tag) {
+    public static void ClearCompoundTag(@Nonnull CompoundTag tag) {
         ArrayList<String> list = new ArrayList<>(tag.getKeySet());
         list.forEach(tag::removeTag);
     }
@@ -252,7 +252,7 @@ public class JsonHelper {
         return s;
     }
 
-    public static boolean isItem(NBTTagCompound json) {
+    public static boolean isItem(CompoundTag json) {
         if (json != null && json.hasKey("id") && json.hasKey("Count", 99) && json.hasKey("Damage", 99)) {
             if (json.hasKey("id", 8)) {
                 return Item.REGISTRY.containsKey(new ResourceLocation(json.getString("id")));
@@ -264,11 +264,11 @@ public class JsonHelper {
         return false;
     }
 
-    public static boolean isFluid(NBTTagCompound json) {
+    public static boolean isFluid(CompoundTag json) {
         return json != null && json.hasKey("FluidName", 8) && json.hasKey("Amount", 99) && FluidRegistry.getFluid(json.getString("FluidName")) != null;
     }
 
-    public static boolean isEntity(NBTTagCompound tags) {
+    public static boolean isEntity(CompoundTag tags) {
         return tags.hasKey("id") && EntityList.isRegistered(new ResourceLocation(tags.getString("id")));
     }
 
@@ -276,7 +276,7 @@ public class JsonHelper {
      * Converts a JsonObject to an ItemStack. May return a placeholder if the correct mods are not installed</br>
      * This should be the standard way to load items into quests in order to retain all potential data
      */
-    public static BigItemStack JsonToItemStack(NBTTagCompound nbt) {
+    public static BigItemStack JsonToItemStack(CompoundTag nbt) {
         Item preCheck = Item.getByNameOrId(nbt.hasKey("id", 99) ? "" + nbt.getShort("id") : nbt.getString("id"));
         if (preCheck != null && preCheck != ItemPlaceholder.placeholder) return new BigItemStack(nbt);
         return PlaceholderConverter.convertItem(preCheck, nbt.getString("id"), nbt.getInteger("Count"), nbt.getShort("Damage"), nbt.getString("OreDict"), !nbt.hasKey("tag", 10) ? null : nbt.getCompoundTag("tag"));
@@ -285,21 +285,21 @@ public class JsonHelper {
     /**
      * Use this for quests instead of converter NBT because this doesn't use ID numbers
      */
-    public static NBTTagCompound ItemStackToJson(BigItemStack stack, NBTTagCompound nbt) {
+    public static CompoundTag ItemStackToJson(BigItemStack stack, CompoundTag nbt) {
         if (stack != null) stack.writeToNBT(nbt);
         return nbt;
     }
 
-    public static FluidStack JsonToFluidStack(NBTTagCompound json) {
+    public static FluidStack JsonToFluidStack(CompoundTag json) {
         String name = json.hasKey("FluidName", 8) ? json.getString("FluidName") : "water";
         int amount = json.getInteger("Amount");
-        NBTTagCompound tags = !json.hasKey("Tag", 10) ? null : json.getCompoundTag("Tag");
+        CompoundTag tags = !json.hasKey("Tag", 10) ? null : json.getCompoundTag("Tag");
         Fluid fluid = FluidRegistry.getFluid(name);
 
         return PlaceholderConverter.convertFluid(fluid, name, amount, tags);
     }
 
-    public static NBTTagCompound FluidStackToJson(FluidStack stack, NBTTagCompound json) {
+    public static CompoundTag FluidStackToJson(FluidStack stack, CompoundTag json) {
         if (stack == null) return json;
         json.setString("FluidName", FluidRegistry.getFluidName(stack));
         json.setInteger("Amount", stack.amount);
@@ -307,7 +307,7 @@ public class JsonHelper {
         return json;
     }
 
-    public static Entity JsonToEntity(NBTTagCompound tags, Level world) {
+    public static Entity JsonToEntity(CompoundTag tags, Level world) {
         Entity entity = null;
 
         if (tags.hasKey("id") && EntityList.isRegistered(new ResourceLocation(tags.getString("id")))) {
@@ -317,12 +317,12 @@ public class JsonHelper {
         return PlaceholderConverter.convertEntity(entity, world, tags);
     }
 
-    public static NBTTagCompound EntityToJson(Entity entity, NBTTagCompound json) {
+    public static CompoundTag EntityToJson(Entity entity, CompoundTag json) {
         if (entity == null) {
             return json;
         }
 
-        NBTTagCompound tags = new NBTTagCompound();
+        CompoundTag tags = new CompoundTag();
         entity.writeToNBTOptional(tags);
         String id = EntityList.getEntityString(entity);
         tags.setString("id", id != null ? id : ""); // Some entities don't write this to file in certain cases

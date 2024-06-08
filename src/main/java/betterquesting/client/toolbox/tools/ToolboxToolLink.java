@@ -115,21 +115,21 @@ public class ToolboxToolLink implements IToolboxTool {
                     }
 
                     if (mod1) {
-                        NBTTagCompound entry = new NBTTagCompound();
+                        CompoundTag entry = new CompoundTag();
                         entry.setInteger("questID", b1.getStoredValue().getID());
-                        entry.setTag("config", b1.getStoredValue().getValue().writeToNBT(new NBTTagCompound()));
+                        entry.setTag("config", b1.getStoredValue().getValue().writeToNBT(new CompoundTag()));
                         dataList.appendTag(entry);
                     }
                 }
 
                 if (mod2) {
-                    NBTTagCompound entry = new NBTTagCompound();
+                    CompoundTag entry = new CompoundTag();
                     entry.setInteger("questID", b2.getStoredValue().getID());
-                    entry.setTag("config", q2.writeToNBT(new NBTTagCompound()));
+                    entry.setTag("config", q2.writeToNBT(new CompoundTag()));
                     dataList.appendTag(entry);
                 }
 
-                NBTTagCompound payload = new NBTTagCompound();
+                CompoundTag payload = new CompoundTag();
                 payload.setTag("data", dataList);
                 payload.setInteger("action", 0);
                 NetQuestEdit.sendEdit(payload);

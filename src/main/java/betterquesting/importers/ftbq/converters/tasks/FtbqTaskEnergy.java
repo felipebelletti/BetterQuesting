@@ -12,8 +12,8 @@ import net.minecraft.util.ResourceLocation;
 
 public class FtbqTaskEnergy {
     // With a little magic we're going to support this without having to reference RF Expansion nor even have it installed!
-    public ITask[] converTask(NBTTagCompound tag) {
-        NBTTagCompound rfTaskTag = new NBTTagCompound();
+    public ITask[] converTask(CompoundTag tag) {
+        CompoundTag rfTaskTag = new CompoundTag();
         rfTaskTag.setString("taskID", "bq_rf:rf_charge");
         rfTaskTag.setLong("rf", tag.getLong("value"));
 

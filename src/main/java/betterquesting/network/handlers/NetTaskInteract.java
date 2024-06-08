@@ -29,15 +29,15 @@ public class NetTaskInteract {
 
     @SideOnly(Side.CLIENT)
     public static void requestInteraction(boolean isHit, boolean isMainHand) {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setBoolean("isMainHand", isMainHand);
         payload.setBoolean("isHit", isHit);
         QuestingAPI.getAPI(ApiReference.PACKET_SENDER).sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+    private static void onServer(Tuple<CompoundTag, ServerPlayer> message) {
         ServerPlayer sender = message.getSecond();
-        NBTTagCompound tag = message.getFirst();
+        CompoundTag tag = message.getFirst();
 
         ParticipantInfo pInfo = new ParticipantInfo(sender);
         List<DBEntry<IQuest>> actQuest = QuestingAPI.getAPI(ApiReference.QUEST_DB).bulkLookup(pInfo.getSharedQuests());

@@ -40,13 +40,13 @@ public class NetImport {
     }
 
     public static void sendImport(@Nonnull IQuestDatabase questDB, @Nonnull IQuestLineDatabase chapterDB) {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setTag("quests", questDB.writeToNBT(new NBTTagList(), null));
         payload.setTag("chapters", chapterDB.writeToNBT(new NBTTagList(), null));
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+    private static void onServer(Tuple<CompoundTag, ServerPlayer> message) {
         ServerPlayer sender = message.getSecond();
         if (sender.getServer() == null)
             return;

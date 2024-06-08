@@ -79,7 +79,7 @@ public final class LegacyLoader_v0 implements ILegacyLoader {
     @Override
     public void readProgressFromJson(JsonElement json) {
         if (!json.isJsonObject()) return;
-        QuestDatabase.INSTANCE.readProgressFromNBT(NBTConverter.JSONtoNBT_Object(json.getAsJsonObject(), new NBTTagCompound(), true).getTagList("questProgress", 10), false);
+        QuestDatabase.INSTANCE.readProgressFromNBT(NBTConverter.JSONtoNBT_Object(json.getAsJsonObject(), new CompoundTag(), true).getTagList("questProgress", 10), false);
     }
 
     public void readLineDatabase(JsonArray jAry) {
@@ -110,7 +110,7 @@ public final class LegacyLoader_v0 implements ILegacyLoader {
         quest.setProperty(NativeProps.REPEAT_TIME, JsonHelper.GetNumber(json, "repeatTime", 2000).intValue());
         quest.setProperty(NativeProps.LOGIC_QUEST, EnumLogic.valueOf(JsonHelper.GetString(json, "logic", "AND")));
         quest.setProperty(NativeProps.LOGIC_TASK, EnumLogic.valueOf(JsonHelper.GetString(json, "taskLogic", "AND")));
-        quest.setProperty(NativeProps.ICON, JsonHelper.JsonToItemStack(NBTConverter.JSONtoNBT_Object(JsonHelper.GetObject(json, "icon"), new NBTTagCompound(), true)));
+        quest.setProperty(NativeProps.ICON, JsonHelper.JsonToItemStack(NBTConverter.JSONtoNBT_Object(JsonHelper.GetObject(json, "icon"), new CompoundTag(), true)));
 
         JsonArray reqAry = JsonHelper.GetArray(json, "preRequisites");
         int[] req = new int[reqAry.size()];
@@ -149,7 +149,7 @@ public final class LegacyLoader_v0 implements ILegacyLoader {
                 }
             }
 
-            NBTTagCompound nbtTask = NBTConverter.JSONtoNBT_Object(jsonTask, new NBTTagCompound(), true);
+            CompoundTag nbtTask = NBTConverter.JSONtoNBT_Object(jsonTask, new CompoundTag(), true);
 
             if (task != null) {
                 task.readFromNBT(nbtTask);
@@ -199,7 +199,7 @@ public final class LegacyLoader_v0 implements ILegacyLoader {
                 }
             }
 
-            NBTTagCompound nbtReward = NBTConverter.JSONtoNBT_Object(jsonReward, new NBTTagCompound(), true);
+            CompoundTag nbtReward = NBTConverter.JSONtoNBT_Object(jsonReward, new CompoundTag(), true);
 
             if (reward != null) {
                 reward.readFromNBT(nbtReward);

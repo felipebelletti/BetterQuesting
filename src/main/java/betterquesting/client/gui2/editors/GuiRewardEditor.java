@@ -88,21 +88,21 @@ public class GuiRewardEditor extends GuiScreenCanvas implements IPEventListener,
 
         cvBackground.addPanel(new PanelButton(new GuiTransform(GuiAlign.BOTTOM_CENTER, -100, -16, 200, 16, 0), 0, QuestTranslation.translate("gui.back")));
 
-        CanvasSearch<IFactoryData<IReward, NBTTagCompound>, IFactoryData<IReward, NBTTagCompound>> cvRegSearch = new CanvasSearch<IFactoryData<IReward, NBTTagCompound>, IFactoryData<IReward, NBTTagCompound>>((new GuiTransform(GuiAlign.HALF_RIGHT, new GuiPadding(8, 48, 24, 32), 0))) {
+        CanvasSearch<IFactoryData<IReward, CompoundTag>, IFactoryData<IReward, CompoundTag>> cvRegSearch = new CanvasSearch<IFactoryData<IReward, CompoundTag>, IFactoryData<IReward, CompoundTag>>((new GuiTransform(GuiAlign.HALF_RIGHT, new GuiPadding(8, 48, 24, 32), 0))) {
             @Override
-            protected Iterator<IFactoryData<IReward, NBTTagCompound>> getIterator() {
-                List<IFactoryData<IReward, NBTTagCompound>> list = RewardRegistry.INSTANCE.getAll();
+            protected Iterator<IFactoryData<IReward, CompoundTag>> getIterator() {
+                List<IFactoryData<IReward, CompoundTag>> list = RewardRegistry.INSTANCE.getAll();
                 list.sort(Comparator.comparing(o -> o.getRegistryName().toString().toLowerCase()));
                 return list.iterator();
             }
 
             @Override
-            protected void queryMatches(IFactoryData<IReward, NBTTagCompound> value, String query, ArrayDeque<IFactoryData<IReward, NBTTagCompound>> results) {
+            protected void queryMatches(IFactoryData<IReward, CompoundTag> value, String query, ArrayDeque<IFactoryData<IReward, CompoundTag>> results) {
                 if (value.getRegistryName().toString().toLowerCase().contains(query.toLowerCase())) results.add(value);
             }
 
             @Override
-            protected boolean addResult(IFactoryData<IReward, NBTTagCompound> entry, int index, int cachedWidth) {
+            protected boolean addResult(IFactoryData<IReward, CompoundTag> entry, int index, int cachedWidth) {
                 this.addPanel(new PanelButtonStorage<>(new GuiRectangle(0, index * 16, cachedWidth, 16, 0), 1, entry.getRegistryName().toString(), entry));
                 return true;
             }
@@ -153,7 +153,7 @@ public class GuiRewardEditor extends GuiScreenCanvas implements IPEventListener,
             mc.displayGuiScreen(this.parent);
         } else if (btn.getButtonID() == 1 && btn instanceof PanelButtonStorage) // Add
         {
-            IFactoryData<IReward, NBTTagCompound> fact = ((PanelButtonStorage<IFactoryData<IReward, NBTTagCompound>>) btn).getStoredValue();
+            IFactoryData<IReward, CompoundTag> fact = ((PanelButtonStorage<IFactoryData<IReward, CompoundTag>>) btn).getStoredValue();
             quest.getRewards().add(quest.getRewards().nextID(), fact.createNew());
 
             SendChanges();
@@ -172,7 +172,7 @@ public class GuiRewardEditor extends GuiScreenCanvas implements IPEventListener,
             if (editor != null) {
                 mc.displayGuiScreen(editor);
             } else {
-                mc.displayGuiScreen(new GuiNbtEditor(this, reward.writeToNBT(new NBTTagCompound()), value -> {
+                mc.displayGuiScreen(new GuiNbtEditor(this, reward.writeToNBT(new CompoundTag()), value -> {
                     reward.readFromNBT(value);
                     SendChanges();
                 }));
@@ -194,11 +194,11 @@ public class GuiRewardEditor extends GuiScreenCanvas implements IPEventListener,
     }
 
     private void SendChanges() {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         NBTTagList dataList = new NBTTagList();
-        NBTTagCompound entry = new NBTTagCompound();
+        CompoundTag entry = new CompoundTag();
         entry.setInteger("questID", qID);
-        entry.setTag("config", quest.writeToNBT(new NBTTagCompound()));
+        entry.setTag("config", quest.writeToNBT(new CompoundTag()));
         dataList.appendTag(entry);
         payload.setTag("data", dataList);
         payload.setInteger("action", 0);

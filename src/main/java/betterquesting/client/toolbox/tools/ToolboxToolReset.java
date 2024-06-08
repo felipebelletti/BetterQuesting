@@ -55,7 +55,7 @@ public class ToolboxToolReset implements IToolboxTool {
             questIDs[i] = btnList.get(i).getStoredValue().getID();
         }
 
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setIntArray("questIDs", questIDs);
         payload.setBoolean("state", false);
         payload.setInteger("action", 2);
@@ -99,7 +99,7 @@ public class ToolboxToolReset implements IToolboxTool {
             questIDs[i] = btnList.get(i).getStoredValue().getID();
         }
 
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setIntArray("questIDs", questIDs);
         payload.setBoolean("state", false);
         payload.setInteger("action", 2);

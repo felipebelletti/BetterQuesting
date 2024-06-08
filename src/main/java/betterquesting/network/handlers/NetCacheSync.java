@@ -29,13 +29,13 @@ public class NetCacheSync {
     public static void sendSync(@Nonnull ServerPlayer player) {
         QuestCache qc = player.getCapability(CapabilityProviderQuestCache.CAP_QUEST_CACHE, null);
         if (qc == null) return;
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setTag("data", qc.serializeNBT());
         PacketSender.INSTANCE.sendToPlayers(new QuestingPacket(ID_NAME, payload), player);
     }
 
     @SideOnly(Side.CLIENT)
-    private static void onClient(NBTTagCompound message) {
+    private static void onClient(CompoundTag message) {
         Player player = Minecraft.getMinecraft().player;
         QuestCache qc = player != null ? player.getCapability(CapabilityProviderQuestCache.CAP_QUEST_CACHE, null) : null;
         if (qc != null) qc.deserializeNBT(message.getCompoundTag("data"));

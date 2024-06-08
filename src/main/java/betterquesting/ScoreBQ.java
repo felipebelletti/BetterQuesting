@@ -31,7 +31,7 @@ public class ScoreBQ implements INBTPartial<NBTTagList, UUID> {
     public synchronized NBTTagList writeToNBT(NBTTagList nbt, @Nullable List<UUID> subset) {
         for (Entry<UUID, Integer> entry : playerScores.entrySet()) {
             if (subset != null && !subset.contains(entry.getKey())) continue;
-            NBTTagCompound jObj = new NBTTagCompound();
+            CompoundTag jObj = new CompoundTag();
             jObj.setString("uuid", entry.getKey().toString());
             jObj.setInteger("value", entry.getValue());
             nbt.appendTag(jObj);
@@ -46,7 +46,7 @@ public class ScoreBQ implements INBTPartial<NBTTagList, UUID> {
 
         for (int i = 0; i < nbt.tagCount(); i++) {
             try {
-                NBTTagCompound tag = nbt.getCompoundTagAt(i);
+                CompoundTag tag = nbt.getCompoundTagAt(i);
                 playerScores.put(UUID.fromString(tag.getString("uuid")), tag.getInteger("value"));
 
             } catch (Exception ignored) {

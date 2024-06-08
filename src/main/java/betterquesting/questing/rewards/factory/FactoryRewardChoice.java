@@ -7,7 +7,7 @@ import betterquesting.questing.rewards.RewardChoice;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
-public class FactoryRewardChoice implements IFactoryData<IReward, NBTTagCompound> {
+public class FactoryRewardChoice implements IFactoryData<IReward, CompoundTag> {
     public static final FactoryRewardChoice INSTANCE = new FactoryRewardChoice();
 
     @Override
@@ -21,7 +21,7 @@ public class FactoryRewardChoice implements IFactoryData<IReward, NBTTagCompound
     }
 
     @Override
-    public RewardChoice loadFromData(NBTTagCompound json) {
+    public RewardChoice loadFromData(CompoundTag json) {
         RewardChoice reward = new RewardChoice();
         reward.readFromNBT(json);
         return reward;

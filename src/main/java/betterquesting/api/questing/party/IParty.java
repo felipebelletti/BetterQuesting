@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
-public interface IParty extends INBTSaveLoad<NBTTagCompound> {
+public interface IParty extends INBTSaveLoad<CompoundTag> {
     IPropertyContainer getProperties();
 
     void kickUser(@Nonnull UUID uuid);
@@ -22,7 +22,7 @@ public interface IParty extends INBTSaveLoad<NBTTagCompound> {
 
     List<UUID> getMembers();
 
-    NBTTagCompound writeProperties(NBTTagCompound nbt);
+    CompoundTag writeProperties(CompoundTag nbt);
 
-    void readProperties(NBTTagCompound nbt);
+    void readProperties(CompoundTag nbt);
 }

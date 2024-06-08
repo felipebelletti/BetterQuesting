@@ -49,11 +49,11 @@ public class ToolboxToolRemove implements IToolboxTool {
             }
 
             // Sync Line
-            NBTTagCompound chPayload = new NBTTagCompound();
+            CompoundTag chPayload = new CompoundTag();
             NBTTagList cdList = new NBTTagList();
-            NBTTagCompound cTag = new NBTTagCompound();
+            CompoundTag cTag = new CompoundTag();
             cTag.setInteger("chapterID", QuestLineDatabase.INSTANCE.getID(line));
-            cTag.setTag("config", line.writeToNBT(new NBTTagCompound(), null));
+            cTag.setTag("config", line.writeToNBT(new CompoundTag(), null));
             cdList.appendTag(cTag);
             chPayload.setTag("data", cdList);
             chPayload.setInteger("action", 0);
@@ -94,11 +94,11 @@ public class ToolboxToolRemove implements IToolboxTool {
             for (PanelButtonQuest b : PanelToolController.selected) line.removeID(b.getStoredValue().getID());
 
             // Sync Line
-            NBTTagCompound chPayload = new NBTTagCompound();
+            CompoundTag chPayload = new CompoundTag();
             NBTTagList cdList = new NBTTagList();
-            NBTTagCompound cTag = new NBTTagCompound();
+            CompoundTag cTag = new CompoundTag();
             cTag.setInteger("chapterID", QuestLineDatabase.INSTANCE.getID(line));
-            cTag.setTag("config", line.writeToNBT(new NBTTagCompound(), null));
+            cTag.setTag("config", line.writeToNBT(new CompoundTag(), null));
             cdList.appendTag(cTag);
             chPayload.setTag("data", cdList);
             chPayload.setInteger("action", 0);

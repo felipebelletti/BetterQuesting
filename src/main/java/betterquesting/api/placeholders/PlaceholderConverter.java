@@ -14,7 +14,7 @@ import net.minecraftforge.fluids.FluidStack;
  * In charge of safely converting to or from placeholder objects
  */
 public class PlaceholderConverter {
-    public static Entity convertEntity(Entity orig, Level world, NBTTagCompound nbt) {
+    public static Entity convertEntity(Entity orig, Level world, CompoundTag nbt) {
         Entity entity = orig;
 
         if (orig == null) {
@@ -29,10 +29,10 @@ public class PlaceholderConverter {
         return entity;
     }
 
-    public static BigItemStack convertItem(Item item, String name, int count, int damage, String oreDict, NBTTagCompound nbt) {
+    public static BigItemStack convertItem(Item item, String name, int count, int damage, String oreDict, CompoundTag nbt) {
         if (item == null) {
             BigItemStack stack = new BigItemStack(ItemPlaceholder.placeholder, count, damage).setOreDict(oreDict);
-            stack.SetTagCompound(new NBTTagCompound());
+            stack.SetTagCompound(new CompoundTag());
             stack.GetTagCompound().setString("orig_id", name);
             stack.GetTagCompound().setInteger("orig_meta", damage);
             if (nbt != null) stack.GetTagCompound().setTag("orig_tag", nbt);
@@ -59,10 +59,10 @@ public class PlaceholderConverter {
         return stack;
     }
 
-    public static FluidStack convertFluid(Fluid fluid, String name, int amount, NBTTagCompound nbt) {
+    public static FluidStack convertFluid(Fluid fluid, String name, int amount, CompoundTag nbt) {
         if (fluid == null) {
             FluidStack stack = new FluidStack(FluidPlaceholder.fluidPlaceholder, amount);
-            NBTTagCompound orig = new NBTTagCompound();
+            CompoundTag orig = new CompoundTag();
             orig.setString("orig_id", name);
             if (nbt != null) orig.setTag("orig_tag", nbt);
             stack.tag = orig;

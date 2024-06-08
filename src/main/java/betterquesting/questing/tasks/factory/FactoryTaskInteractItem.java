@@ -7,7 +7,7 @@ import betterquesting.questing.tasks.TaskInteractItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
-public class FactoryTaskInteractItem implements IFactoryData<ITask, NBTTagCompound> {
+public class FactoryTaskInteractItem implements IFactoryData<ITask, CompoundTag> {
     public static final FactoryTaskInteractItem INSTANCE = new FactoryTaskInteractItem();
 
     private final ResourceLocation REG_ID = new ResourceLocation(BetterQuesting.MODID_STD, "interact_item");
@@ -23,7 +23,7 @@ public class FactoryTaskInteractItem implements IFactoryData<ITask, NBTTagCompou
     }
 
     @Override
-    public TaskInteractItem loadFromData(NBTTagCompound nbt) {
+    public TaskInteractItem loadFromData(CompoundTag nbt) {
         TaskInteractItem task = new TaskInteractItem();
         task.readFromNBT(nbt);
         return task;

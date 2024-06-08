@@ -322,8 +322,8 @@ public class EventHandler {
     public void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
 
         if(BQ_Settings.spawnWithQuestBook) {
-            NBTTagCompound playerData = event.player.getEntityData();
-            NBTTagCompound data = playerData.hasKey(Player.PERSISTED_NBT_TAG) ? playerData.getCompoundTag(Player.PERSISTED_NBT_TAG) : new NBTTagCompound();
+            CompoundTag playerData = event.player.getEntityData();
+            CompoundTag data = playerData.hasKey(Player.PERSISTED_NBT_TAG) ? playerData.getCompoundTag(Player.PERSISTED_NBT_TAG) : new CompoundTag();
 
             if (!data.getBoolean(SPAWN_WITH_QUEST_BOOK)) {
                 ItemStack questBook = new ItemStack(BetterQuesting.questBook);

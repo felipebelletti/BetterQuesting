@@ -7,7 +7,7 @@ import betterquesting.questing.tasks.TaskBlockBreak;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
-public class FactoryTaskBlockBreak implements IFactoryData<ITask, NBTTagCompound> {
+public class FactoryTaskBlockBreak implements IFactoryData<ITask, CompoundTag> {
     public static final FactoryTaskBlockBreak INSTANCE = new FactoryTaskBlockBreak();
 
     private final ResourceLocation REG_ID = new ResourceLocation(BetterQuesting.MODID_STD, "block_break");
@@ -23,7 +23,7 @@ public class FactoryTaskBlockBreak implements IFactoryData<ITask, NBTTagCompound
     }
 
     @Override
-    public TaskBlockBreak loadFromData(NBTTagCompound json) {
+    public TaskBlockBreak loadFromData(CompoundTag json) {
         TaskBlockBreak task = new TaskBlockBreak();
         task.readFromNBT(json);
         return task;

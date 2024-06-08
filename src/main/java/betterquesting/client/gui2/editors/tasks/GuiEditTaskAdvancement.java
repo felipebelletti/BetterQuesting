@@ -117,11 +117,11 @@ public class GuiEditTaskAdvancement extends GuiScreenCanvas implements IVolatile
 
     private void sendChanges() {
         task.advID = selected;
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         NBTTagList dataList = new NBTTagList();
-        NBTTagCompound entry = new NBTTagCompound();
+        CompoundTag entry = new CompoundTag();
         entry.setInteger("questID", quest.getID());
-        entry.setTag("config", quest.getValue().writeToNBT(new NBTTagCompound()));
+        entry.setTag("config", quest.getValue().writeToNBT(new CompoundTag()));
         dataList.appendTag(entry);
         payload.setTag("data", dataList);
         payload.setInteger("action", 0); // Action: Update data

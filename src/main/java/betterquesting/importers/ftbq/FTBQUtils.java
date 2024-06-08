@@ -15,8 +15,8 @@ public class FTBQUtils {
     public static BigItemStack convertItem(NBTBase tag) {
         if (tag instanceof NBTTagString) {
             return convertItemType1(((NBTTagString) tag).getString());
-        } else if (tag instanceof NBTTagCompound) {
-            return convertItemType2((NBTTagCompound) tag);
+        } else if (tag instanceof CompoundTag) {
+            return convertItemType2((CompoundTag) tag);
         }
 
         return new BigItemStack(ItemStack.EMPTY);
@@ -30,12 +30,12 @@ public class FTBQUtils {
         Item item = Item.REGISTRY.getObject(new ResourceLocation(split[0]));
         int count = split.length < 2 ? 1 : tryParseInt(split[1], 1);
         int meta = split.length < 3 ? 0 : tryParseInt(split[2], 0);
-        NBTTagCompound tags = null;
+        CompoundTag tags = null;
 
         return PlaceholderConverter.convertItem(item, split[0], count, meta, "", tags);
     }
 
-    private static BigItemStack convertItemType2(NBTTagCompound tag) {
+    private static BigItemStack convertItemType2(CompoundTag tag) {
         String[] split = tag.getString("id").split(" ");
         if (split.length <= 0)
             return new BigItemStack(ItemStack.EMPTY);
@@ -58,7 +58,7 @@ public class FTBQUtils {
             Item item = Item.REGISTRY.getObject(new ResourceLocation(split[0]));
             int count = split.length < 2 ? 1 : tryParseInt(split[1], 1);
             int meta = tag.hasKey("Damage") ? tag.getInteger("Damage") : split.length < 3 ? 0 : tryParseInt(split[2], 0);
-            NBTTagCompound tags = !tag.hasKey("tag", 10) ? null : tag.getCompoundTag("tag");
+            CompoundTag tags = !tag.hasKey("tag", 10) ? null : tag.getCompoundTag("tag");
             return PlaceholderConverter.convertItem(item, split[0], count, meta, "", tags);
         }
     }

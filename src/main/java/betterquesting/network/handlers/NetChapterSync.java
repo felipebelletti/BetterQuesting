@@ -42,10 +42,10 @@ public class NetChapterSync {
             final List<DBEntry<IQuestLine>> chapterSubset = chapterIDs == null ? QuestLineDatabase.INSTANCE.getEntries() : QuestLineDatabase.INSTANCE.bulkLookup(chapterIDs);
 
             for (DBEntry<IQuestLine> chapter : chapterSubset) {
-                NBTTagCompound entry = new NBTTagCompound();
+                CompoundTag entry = new CompoundTag();
                 entry.setInteger("chapterID", chapter.getID());
                 //entry.setInteger("order", QuestLineDatabase.INSTANCE.getOrderIndex(chapter.getID()));
-                entry.setTag("config", chapter.getValue().writeToNBT(new NBTTagCompound(), null));
+                entry.setTag("config", chapter.getValue().writeToNBT(new CompoundTag(), null));
                 data.appendTag(entry);
             }
 
@@ -55,7 +55,7 @@ public class NetChapterSync {
                 aryOrder[i] = allSort.get(i).getID();
             }
 
-            NBTTagCompound payload = new NBTTagCompound();
+            CompoundTag payload = new CompoundTag();
             payload.setBoolean("merge", chapterIDs != null);
             payload.setTag("data", data);
             payload.setIntArray("order", aryOrder);
@@ -70,24 +70,24 @@ public class NetChapterSync {
 
     @SideOnly(Side.CLIENT)
     public static void requestSync(@Nullable int[] chapterIDs) {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         if (chapterIDs != null) payload.setIntArray("requestIDs", chapterIDs);
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
-        NBTTagCompound payload = message.getFirst();
+    private static void onServer(Tuple<CompoundTag, ServerPlayer> message) {
+        CompoundTag payload = message.getFirst();
         int[] reqIDs = !payload.hasKey("requestIDs") ? null : payload.getIntArray("requestIDs");
         sendSync(message.getSecond(), reqIDs);
     }
 
     @SideOnly(Side.CLIENT)
-    private static void onClient(NBTTagCompound message) {
+    private static void onClient(CompoundTag message) {
         NBTTagList data = message.getTagList("data", 10);
         if (!message.getBoolean("merge")) QuestLineDatabase.INSTANCE.reset();
 
         for (int i = 0; i < data.tagCount(); i++) {
-            NBTTagCompound tag = data.getCompoundTagAt(i);
+            CompoundTag tag = data.getCompoundTagAt(i);
             if (!tag.hasKey("chapterID", 99)) continue;
             int chapterID = tag.getInteger("chapterID");
             //int order = tag.getInteger("order");

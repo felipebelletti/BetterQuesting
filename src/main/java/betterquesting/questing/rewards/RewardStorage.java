@@ -20,7 +20,7 @@ public class RewardStorage extends SimpleDatabase<IReward> implements IDatabaseN
         for (DBEntry<IReward> rew : getEntries()) {
             if (subset != null && !subset.contains(rew.getID())) continue;
             ResourceLocation rewardID = rew.getValue().getFactoryID();
-            NBTTagCompound rJson = rew.getValue().writeToNBT(new NBTTagCompound());
+            CompoundTag rJson = rew.getValue().writeToNBT(new CompoundTag());
             rJson.setString("rewardID", rewardID.toString());
             rJson.setInteger("index", rew.getID());
             json.appendTag(rJson);
@@ -35,13 +35,13 @@ public class RewardStorage extends SimpleDatabase<IReward> implements IDatabaseN
         List<IReward> unassigned = new ArrayList<>();
 
         for (int i = 0; i < json.tagCount(); i++) {
-            NBTTagCompound jsonReward = json.getCompoundTagAt(i);
+            CompoundTag jsonReward = json.getCompoundTagAt(i);
             ResourceLocation loc = new ResourceLocation(jsonReward.getString("rewardID"));
             int index = jsonReward.hasKey("index", 99) ? jsonReward.getInteger("index") : -1;
             IReward reward = RewardRegistry.INSTANCE.createNew(loc);
 
             if (reward instanceof RewardPlaceholder) {
-                NBTTagCompound jr2 = jsonReward.getCompoundTag("orig_data");
+                CompoundTag jr2 = jsonReward.getCompoundTag("orig_data");
                 ResourceLocation loc2 = new ResourceLocation(jr2.getString("rewardID"));
                 IReward r2 = RewardRegistry.INSTANCE.createNew(loc2);
 

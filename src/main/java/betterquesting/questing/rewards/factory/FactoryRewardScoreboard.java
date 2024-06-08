@@ -7,7 +7,7 @@ import betterquesting.questing.rewards.RewardScoreboard;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
-public class FactoryRewardScoreboard implements IFactoryData<IReward, NBTTagCompound> {
+public class FactoryRewardScoreboard implements IFactoryData<IReward, CompoundTag> {
     public static final FactoryRewardScoreboard INSTANCE = new FactoryRewardScoreboard();
 
     @Override
@@ -21,7 +21,7 @@ public class FactoryRewardScoreboard implements IFactoryData<IReward, NBTTagComp
     }
 
     @Override
-    public RewardScoreboard loadFromData(NBTTagCompound json) {
+    public RewardScoreboard loadFromData(CompoundTag json) {
         RewardScoreboard reward = new RewardScoreboard();
         reward.readFromNBT(json);
         return reward;

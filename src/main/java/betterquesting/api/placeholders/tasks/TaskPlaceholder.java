@@ -15,43 +15,43 @@ import java.util.List;
 import java.util.UUID;
 
 public class TaskPlaceholder implements ITask {
-    private NBTTagCompound nbtData = new NBTTagCompound();
+    private CompoundTag nbtData = new CompoundTag();
 
-    public void setTaskConfigData(NBTTagCompound nbt) {
+    public void setTaskConfigData(CompoundTag nbt) {
         nbtData.setTag("orig_data", nbt);
     }
 
-    public void setTaskProgressData(NBTTagCompound nbt) {
+    public void setTaskProgressData(CompoundTag nbt) {
         nbtData.setTag("orig_prog", nbt);
     }
 
-    public NBTTagCompound getTaskConfigData() {
+    public CompoundTag getTaskConfigData() {
         return nbtData.getCompoundTag("orig_data");
     }
 
-    public NBTTagCompound getTaskProgressData() {
+    public CompoundTag getTaskProgressData() {
         return nbtData.getCompoundTag("orig_prog");
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public CompoundTag writeToNBT(CompoundTag nbt) {
         nbt.setTag("orig_data", nbtData.getCompoundTag("orig_data"));
         return nbt;
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(CompoundTag nbt) {
         nbtData.setTag("orig_data", nbt.getCompoundTag("orig_data"));
     }
 
     @Override
-    public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+    public CompoundTag writeProgressToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
         nbt.setTag("orig_prog", nbtData.getCompoundTag("orig_prog"));
         return nbt;
     }
 
     @Override
-    public void readProgressFromNBT(NBTTagCompound nbt, boolean merge) {
+    public void readProgressFromNBT(CompoundTag nbt, boolean merge) {
         nbtData.setTag("orig_prog", nbt.getCompoundTag("orig_prog"));
     }
 

@@ -57,7 +57,7 @@ public class ToolboxToolDelete implements IToolboxTool {
             questIDs[i] = btnList.get(i).getStoredValue().getID();
         }
 
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setIntArray("questIDs", questIDs);
         payload.setInteger("action", 1);
         NetQuestEdit.sendEdit(payload);
@@ -86,7 +86,7 @@ public class ToolboxToolDelete implements IToolboxTool {
             questIDs[i] = btnList.get(i).getStoredValue().getID();
         }
 
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setIntArray("questIDs", questIDs);
         payload.setInteger("action", 1);
         NetQuestEdit.sendEdit(payload);

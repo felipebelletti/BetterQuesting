@@ -9,8 +9,8 @@ import net.minecraft.util.ResourceLocation;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PropertyContainer implements IPropertyContainer, INBTSaveLoad<NBTTagCompound> {
-    private final NBTTagCompound nbtInfo = new NBTTagCompound();
+public class PropertyContainer implements IPropertyContainer, INBTSaveLoad<CompoundTag> {
+    private final CompoundTag nbtInfo = new CompoundTag();
 
     @Override
     public synchronized <T> T getProperty(IPropertyType<T> prop) {
@@ -23,7 +23,7 @@ public class PropertyContainer implements IPropertyContainer, INBTSaveLoad<NBTTa
     public synchronized <T> T getProperty(IPropertyType<T> prop, T def) {
         if (prop == null) return def;
 
-        NBTTagCompound jProp = getDomain(prop.getKey());
+        CompoundTag jProp = getDomain(prop.getKey());
 
         if (!jProp.hasKey(prop.getKey().getPath())) return def;
 
@@ -39,7 +39,7 @@ public class PropertyContainer implements IPropertyContainer, INBTSaveLoad<NBTTa
     @Override
     public synchronized void removeProperty(IPropertyType<?> prop) {
         if (prop == null) return;
-        NBTTagCompound jProp = getDomain(prop.getKey());
+        CompoundTag jProp = getDomain(prop.getKey());
 
         if (!jProp.hasKey(prop.getKey().getPath())) return;
 
@@ -51,7 +51,7 @@ public class PropertyContainer implements IPropertyContainer, INBTSaveLoad<NBTTa
     @Override
     public synchronized <T> void setProperty(IPropertyType<T> prop, T value) {
         if (prop == null || value == null) return;
-        NBTTagCompound dom = getDomain(prop.getKey());
+        CompoundTag dom = getDomain(prop.getKey());
         dom.setTag(prop.getKey().getPath(), prop.writeValue(value));
         nbtInfo.setTag(prop.getKey().getNamespace(), dom);
     }
@@ -63,13 +63,13 @@ public class PropertyContainer implements IPropertyContainer, INBTSaveLoad<NBTTa
     }
 
     @Override
-    public synchronized NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public synchronized CompoundTag writeToNBT(CompoundTag nbt) {
         nbt.merge(nbtInfo);
         return nbt;
     }
 
     @Override
-    public synchronized void readFromNBT(NBTTagCompound nbt) {
+    public synchronized void readFromNBT(CompoundTag nbt) {
         for (String key : nbtInfo.getKeySet()) nbtInfo.removeTag(key);
         nbtInfo.merge(nbt);
 
@@ -81,7 +81,7 @@ public class PropertyContainer implements IPropertyContainer, INBTSaveLoad<NBTTa
         }*/
     }
 
-    private NBTTagCompound getDomain(ResourceLocation res) {
+    private CompoundTag getDomain(ResourceLocation res) {
         return nbtInfo.getCompoundTag(res.getNamespace());
     }
 }

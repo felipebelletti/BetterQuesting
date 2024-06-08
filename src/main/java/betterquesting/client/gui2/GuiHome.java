@@ -172,7 +172,7 @@ public class GuiHome extends GuiScreenCanvas {
             mc.displayGuiScreen(new GuiThemes(this));
         } else if (btn.getButtonID() == 4) // Editor
         {
-            mc.displayGuiScreen(new GuiNbtEditor(this, QuestSettings.INSTANCE.writeToNBT(new NBTTagCompound()), (value) ->
+            mc.displayGuiScreen(new GuiNbtEditor(this, QuestSettings.INSTANCE.writeToNBT(new CompoundTag()), (value) ->
             {
                 QuestSettings.INSTANCE.readFromNBT(value);
                 NetSettingSync.requestEdit();
@@ -187,7 +187,7 @@ public class GuiHome extends GuiScreenCanvas {
                     boolean hardMode = QuestSettings.INSTANCE.getProperty(NativeProps.HARDCORE);
 
                     NBTTagList jsonP = QuestDatabase.INSTANCE.writeProgressToNBT(new NBTTagList(), null);
-                    NBTTagCompound j1 = NBTConverter.JSONtoNBT_Object(JsonHelper.ReadFromFile(qFile), new NBTTagCompound(), true);
+                    CompoundTag j1 = NBTConverter.JSONtoNBT_Object(JsonHelper.ReadFromFile(qFile), new CompoundTag(), true);
                     QuestSettings.INSTANCE.readFromNBT(j1.getCompoundTag("questSettings"));
                     QuestDatabase.INSTANCE.readFromNBT(j1.getTagList("questDatabase", 10), false);
                     QuestLineDatabase.INSTANCE.readFromNBT(j1.getTagList("questLines", 10), false);

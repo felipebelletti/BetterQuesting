@@ -42,7 +42,7 @@ public class NativeFileImporter implements IImporter {
         for (File selected : files) {
             if (selected == null || !selected.exists()) continue;
 
-            NBTTagCompound nbt = NBTConverter.JSONtoNBT_Object(JsonHelper.ReadFromFile(selected), new NBTTagCompound(), true);
+            CompoundTag nbt = NBTConverter.JSONtoNBT_Object(JsonHelper.ReadFromFile(selected), new CompoundTag(), true);
             HashMap<Integer, Integer> remappedIDs = readQuests(nbt.getTagList("questDatabase", 10), questDB);
             readQuestLines(nbt.getTagList("questLines", 10), lineDB, remappedIDs);
         }
@@ -53,7 +53,7 @@ public class NativeFileImporter implements IImporter {
         List<IQuest> loadedQuests = new ArrayList<>();
 
         for (int i = 0; i < json.tagCount(); i++) {
-            NBTTagCompound qTag = json.getCompoundTagAt(i);
+            CompoundTag qTag = json.getCompoundTagAt(i);
             int oldID = qTag.hasKey("questID", 99) ? qTag.getInteger("questID") : -1;
             if (oldID < 0) continue;
 
@@ -80,12 +80,12 @@ public class NativeFileImporter implements IImporter {
 
     private void readQuestLines(NBTTagList json, IQuestLineDatabase lineDB, HashMap<Integer, Integer> remappeIDs) {
         for (int i = 0; i < json.tagCount(); i++) {
-            NBTTagCompound jql = json.getCompoundTagAt(i).copy();
+            CompoundTag jql = json.getCompoundTagAt(i).copy();
 
             if (jql.hasKey("quests", 9)) {
                 NBTTagList qList = jql.getTagList("quests", 10);
                 for (int n = 0; n < qList.tagCount(); n++) {
-                    NBTTagCompound qTag = qList.getCompoundTagAt(n);
+                    CompoundTag qTag = qList.getCompoundTagAt(n);
 
                     int oldID = qTag.hasKey("id", 99) ? qTag.getInteger("id") : -1;
                     if (oldID < 0) continue;

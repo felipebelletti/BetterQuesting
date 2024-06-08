@@ -53,8 +53,8 @@ public class ItemLootChest extends Item {
                 return new ActionResult<>(EnumActionResult.PASS, stack);
             }
 
-            NBTTagCompound tag = stack.getTagCompound();
-            if (tag == null) tag = new NBTTagCompound();
+            CompoundTag tag = stack.getTagCompound();
+            if (tag == null) tag = new CompoundTag();
 
             List<BigItemStack> lootItems = new ArrayList<>();
             String lootName = tag.getString("fixedLootName");
@@ -174,7 +174,7 @@ public class ItemLootChest extends Item {
         subItems = new ArrayList<>();
 
         // NORMAL RARITY
-        NBTTagCompound tag = new NBTTagCompound();
+        CompoundTag tag = new CompoundTag();
         tag.setBoolean("hideLootInfo", true);
         for (int i = 0; i < 5; i++) {
             ItemStack tmp = new ItemStack(this, 1, 25 * i);
@@ -191,7 +191,7 @@ public class ItemLootChest extends Item {
         subItems.add(new ItemStack(this, 1, 102));
 
         // VANILLA LOOT TABLE
-        tag = new NBTTagCompound();
+        tag = new CompoundTag();
         tag.setBoolean("hideLootInfo", true);
         tag.setString("loottable", "minecraft:chests/simple_dungeon");
         ItemStack lootStack = new ItemStack(this, 1, 103);
@@ -199,10 +199,10 @@ public class ItemLootChest extends Item {
         subItems.add(lootStack);
 
         // FIXED ITEM SET
-        tag = new NBTTagCompound();
+        tag = new CompoundTag();
         tag.setBoolean("hideLootInfo", true);
         NBTTagList tagList = new NBTTagList();
-        tagList.appendTag(new BigItemStack(Blocks.STONE).writeToNBT(new NBTTagCompound()));
+        tagList.appendTag(new BigItemStack(Blocks.STONE).writeToNBT(new CompoundTag()));
         ItemStack fixedLootStack = new ItemStack(this, 1, 104);
         tag.setTag("fixedLootList", tagList);
         tag.setString("fixedLootName", "Item Set");
@@ -226,7 +226,7 @@ public class ItemLootChest extends Item {
     public void addInformation(ItemStack stack, @Nullable Level worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
 
-        NBTTagCompound tag = stack.getTagCompound();
+        CompoundTag tag = stack.getTagCompound();
         boolean hideTooltip = tag == null || !tag.getBoolean("hideLootInfo");
         if (hideTooltip && !QuestingAPI.getAPI(ApiReference.SETTINGS).getProperty(NativeProps.EDIT_MODE)) return;
 

@@ -75,7 +75,7 @@ public class GuiEditTaskScoreboard extends GuiScreenCanvas {
         cvBackground.addPanel(new PanelButton(new GuiTransform(GuiAlign.MID_CENTER, -100, 16, 200, 16, 0), -1, QuestTranslation.translate("betterquesting.btn.advanced")) {
             @Override
             public void onButtonClick() {
-                mc.displayGuiScreen(QuestingAPI.getAPI(ApiReference.THEME_REG).getGui(PresetGUIs.EDIT_NBT, new GArgsNBT<>(screenRef, task.writeToNBT(new NBTTagCompound()), task::readFromNBT, null)));
+                mc.displayGuiScreen(QuestingAPI.getAPI(ApiReference.THEME_REG).getGui(PresetGUIs.EDIT_NBT, new GArgsNBT<>(screenRef, task.writeToNBT(new CompoundTag()), task::readFromNBT, null)));
             }
         });
 
@@ -91,11 +91,11 @@ public class GuiEditTaskScoreboard extends GuiScreenCanvas {
     private static final ResourceLocation QUEST_EDIT = new ResourceLocation(ModReference.MODID,"quest_edit"); // TODO: Really need to make the native packet types accessible in the API
 
     private void sendChanges() {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         NBTTagList dataList = new NBTTagList();
-        NBTTagCompound entry = new NBTTagCompound();
+        CompoundTag entry = new CompoundTag();
         entry.setInteger("questID", quest.getID());
-        entry.setTag("config", quest.getValue().writeToNBT(new NBTTagCompound()));
+        entry.setTag("config", quest.getValue().writeToNBT(new CompoundTag()));
         dataList.appendTag(entry);
         payload.setTag("data", dataList);
         payload.setInteger("action", 0); // Action: Update data

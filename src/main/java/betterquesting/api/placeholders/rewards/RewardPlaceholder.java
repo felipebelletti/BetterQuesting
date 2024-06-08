@@ -11,25 +11,25 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
 public class RewardPlaceholder implements IReward {
-    private NBTTagCompound nbtSaved = new NBTTagCompound();
+    private CompoundTag nbtSaved = new CompoundTag();
 
-    public void setRewardConfigData(NBTTagCompound nbt) {
+    public void setRewardConfigData(CompoundTag nbt) {
         nbtSaved = nbt;
     }
 
-    public NBTTagCompound getRewardConfigData() {
+    public CompoundTag getRewardConfigData() {
         return nbtSaved;
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public CompoundTag writeToNBT(CompoundTag nbt) {
         nbt.setTag("orig_data", nbtSaved);
 
         return nbt;
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(CompoundTag nbt) {
         nbtSaved = nbt.getCompoundTag("orig_data");
     }
 

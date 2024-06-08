@@ -192,7 +192,7 @@ public class PanelButtonQuest extends PanelButtonStorage<DBEntry<IQuest>> {
     private long getRepeatSeconds(IQuest quest, Player player) {
         if (quest.getProperty(NativeProps.REPEAT_TIME) < 0) return -1;
 
-        NBTTagCompound ue = quest.getCompletionInfo(QuestingAPI.getQuestingUUID(player));
+        CompoundTag ue = quest.getCompletionInfo(QuestingAPI.getQuestingUUID(player));
         if (ue == null) return 0;
 
         return ((quest.getProperty(NativeProps.REPEAT_TIME) * 50L) - (System.currentTimeMillis() - ue.getLong("timestamp"))) / 1000L;

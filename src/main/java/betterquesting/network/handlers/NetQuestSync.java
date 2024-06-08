@@ -73,17 +73,17 @@ public class NetQuestSync {
             final List<UUID> pidList = player == null ? null : Collections.singletonList(QuestingAPI.getQuestingUUID(player));
 
             for (DBEntry<IQuest> entry : questSubset) {
-                NBTTagCompound tag = new NBTTagCompound();
+                CompoundTag tag = new CompoundTag();
 
-                if (config) tag.setTag("config", entry.getValue().writeToNBT(new NBTTagCompound()));
+                if (config) tag.setTag("config", entry.getValue().writeToNBT(new CompoundTag()));
                 if (progress)
-                    tag.setTag("progress", entry.getValue().writeProgressToNBT(new NBTTagCompound(), pidList));
+                    tag.setTag("progress", entry.getValue().writeProgressToNBT(new CompoundTag(), pidList));
                 if (resetIDs != null) tag.setIntArray("resets", resetIDs);
                 tag.setInteger("questID", entry.getID());
                 dataList.appendTag(tag);
             }
 
-            NBTTagCompound payload = new NBTTagCompound();
+            CompoundTag payload = new CompoundTag();
             payload.setBoolean("merge", !config || questIDs != null);
             payload.setTag("data", dataList);
 
@@ -98,27 +98,27 @@ public class NetQuestSync {
     // Asks the server to send specific quest data over
     @SideOnly(Side.CLIENT)
     public static void requestSync(@Nullable int[] questIDs, boolean configs, boolean progress) {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         if (questIDs != null) payload.setIntArray("requestIDs", questIDs);
         payload.setBoolean("getConfig", configs);
         payload.setBoolean("getProgress", progress);
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
-        NBTTagCompound payload = message.getFirst();
+    private static void onServer(Tuple<CompoundTag, ServerPlayer> message) {
+        CompoundTag payload = message.getFirst();
         int[] reqIDs = !payload.hasKey("requestIDs", 11) ? null : payload.getIntArray("requestIDs");
         sendSync(message.getSecond(), reqIDs, payload.getBoolean("getConfig"), payload.getBoolean("getProgress"));
     }
 
     @SideOnly(Side.CLIENT)
-    private static void onClient(NBTTagCompound message) {
+    private static void onClient(CompoundTag message) {
         NBTTagList data = message.getTagList("data", 10);
         boolean merge = message.getBoolean("merge");
         if (!merge) QuestDatabase.INSTANCE.reset();
 
         for (int i = 0; i < data.tagCount(); i++) {
-            NBTTagCompound tag = data.getCompoundTagAt(i);
+            CompoundTag tag = data.getCompoundTagAt(i);
             if (!tag.hasKey("questID", 99)) continue;
             int questID = tag.getInteger("questID");
 

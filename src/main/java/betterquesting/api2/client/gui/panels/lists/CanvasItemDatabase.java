@@ -67,7 +67,7 @@ public class CanvasItemDatabase extends CanvasSearch<ItemStack, Item> {
                             }
                         }
                     } catch (Exception e) {
-                        BetterQuesting.logger.error("An error occured while searching itemstack " + subItem.toString() + " from item \"" + item.getRegistryName() + "\" (" + item.getClass().getName() + ").\nNBT: " + subItem.writeToNBT(new NBTTagCompound()), e);
+                        BetterQuesting.logger.error("An error occured while searching itemstack " + subItem.toString() + " from item \"" + item.getRegistryName() + "\" (" + item.getClass().getName() + ").\nNBT: " + subItem.writeToNBT(new CompoundTag()), e);
                     }
                 }
             }

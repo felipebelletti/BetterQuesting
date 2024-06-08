@@ -43,7 +43,7 @@ public class NetNameSync {
     @SideOnly(Side.CLIENT)
     public static void sendRequest(@Nullable UUID[] uuids, @Nullable String[] names) {
         // NOTE: You can make an empty request if you want EVERYTHING (but I would not recommend it on large servers)
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         if (uuids != null) {
             NBTTagList uList = new NBTTagList();
             for (UUID id : uuids) {
@@ -67,7 +67,7 @@ public class NetNameSync {
         IParty party = PartyManager.INSTANCE.getValue(partyID);
         if (party == null) return;
 
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setTag("data", NameCache.INSTANCE.writeToNBT(new NBTTagList(), party.getMembers()));
         payload.setBoolean("merge", true);
 
@@ -95,7 +95,7 @@ public class NetNameSync {
             }
         }
 
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setTag("data", NameCache.INSTANCE.writeToNBT(new NBTTagList(), idList));
         payload.setBoolean("merge", idList != null);
 
@@ -106,7 +106,7 @@ public class NetNameSync {
         }
     }
 
-    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+    private static void onServer(Tuple<CompoundTag, ServerPlayer> message) {
         UUID[] uuids = null;
         String[] names = null;
 
@@ -131,7 +131,7 @@ public class NetNameSync {
     }
 
     @SideOnly(Side.CLIENT)
-    private static void onClient(NBTTagCompound message) {
+    private static void onClient(CompoundTag message) {
         NameCache.INSTANCE.readFromNBT(message.getTagList("data", 10), message.getBoolean("merge"));
         MinecraftForge.EVENT_BUS.post(new DatabaseEvent.Update(DBType.NAMES));
     }

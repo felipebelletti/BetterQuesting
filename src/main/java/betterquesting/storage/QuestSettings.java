@@ -21,7 +21,7 @@ public class QuestSettings extends PropertyContainer implements IQuestSettings {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(CompoundTag nbt) {
         super.readFromNBT(nbt);
 
         this.setupProps();
@@ -29,7 +29,7 @@ public class QuestSettings extends PropertyContainer implements IQuestSettings {
 
     @Override
     public void reset() {
-        this.readFromNBT(new NBTTagCompound());
+        this.readFromNBT(new CompoundTag());
     }
 
     private void setupProps() {

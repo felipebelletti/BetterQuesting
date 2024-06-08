@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.TreeSet;
 import java.util.UUID;
 
-public class QuestCache implements INBTSerializable<NBTTagCompound> {
+public class QuestCache implements INBTSerializable<CompoundTag> {
     // Quests that are visible to the player
     private final TreeSet<Integer> visibleQuests = new TreeSet<>();
 
@@ -104,7 +104,7 @@ public class QuestCache implements INBTSerializable<NBTTagCompound> {
             if (entry.getValue().isUnlocked(uuid) || entry.getValue().isComplete(uuid) || entry.getValue().getProperty(NativeProps.LOCKED_PROGRESS)) // Unlocked or actively processing progression data
             {
                 int repeat = entry.getValue().getProperty(NativeProps.REPEAT_TIME);
-                NBTTagCompound ue = entry.getValue().getCompletionInfo(uuid);
+                CompoundTag ue = entry.getValue().getCompletionInfo(uuid);
 
                 if ((ue == null && entry.getValue().getTasks().size() <= 0) || entry.getValue().canSubmit(player)) // Can be active without completion in the case of locked progress. Also account for taskless quests
                 {
@@ -145,8 +145,8 @@ public class QuestCache implements INBTSerializable<NBTTagCompound> {
     }
 
     @Override
-    public synchronized NBTTagCompound serializeNBT() {
-        NBTTagCompound tags = new NBTTagCompound();
+    public synchronized CompoundTag serializeNBT() {
+        CompoundTag tags = new CompoundTag();
 
         tags.setIntArray("visibleQuests", getVisibleQuests());
         tags.setIntArray("activeQuests", getActiveQuests());
@@ -155,7 +155,7 @@ public class QuestCache implements INBTSerializable<NBTTagCompound> {
 
         NBTTagList tagSchedule = new NBTTagList();
         for (QResetTime entry : getScheduledResets()) {
-            NBTTagCompound tagEntry = new NBTTagCompound();
+            CompoundTag tagEntry = new CompoundTag();
             tagEntry.setInteger("quest", entry.questID);
             tagEntry.setLong("time", entry.time);
             tagSchedule.appendTag(tagEntry);
@@ -166,7 +166,7 @@ public class QuestCache implements INBTSerializable<NBTTagCompound> {
     }
 
     @Override
-    public synchronized void deserializeNBT(NBTTagCompound nbt) {
+    public synchronized void deserializeNBT(CompoundTag nbt) {
         visibleQuests.clear();
         activeQuests.clear();
         resetSchedule.clear();
@@ -180,7 +180,7 @@ public class QuestCache implements INBTSerializable<NBTTagCompound> {
 
         NBTTagList tagList = nbt.getTagList("resetSchedule", 10);
         for (int i = 0; i < tagList.tagCount(); i++) {
-            NBTTagCompound tagEntry = tagList.getCompoundTagAt(i);
+            CompoundTag tagEntry = tagList.getCompoundTagAt(i);
             if (tagEntry.hasKey("quest", 99)) {
                 resetSchedule.add(new QResetTime(tagEntry.getInteger("quest"), tagEntry.getLong("time")));
             }

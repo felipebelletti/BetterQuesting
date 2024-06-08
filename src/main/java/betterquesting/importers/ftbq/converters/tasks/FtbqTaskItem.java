@@ -11,7 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NBTTagList;
 
 public class FtbqTaskItem {
-    public ITask[] convertTask(NBTTagCompound nbt) {
+    public ITask[] convertTask(CompoundTag nbt) {
         TaskRetrieval task = new TaskRetrieval();
         task.consume = nbt.getBoolean("consume_items"); // If the default were changed to true and this was redacted then too bad. I'm not going looking for the root file just for this task
         long count = !nbt.hasKey("count") ? 1 : nbt.getLong("count"); // Why this isn't per item I have no idea. Ask the FTBQ dev. Also not a fan of supporting stack counts in excess of 2 BILLION items.
@@ -32,7 +32,7 @@ public class FtbqTaskItem {
             // Note: Non-NBT items in this list are stored in Compound > String because... I have no idea
             NBTTagList tagList = nbt.getTagList("items", 10);
             for (int i = 0; i < tagList.tagCount(); i++) {
-                NBTTagCompound tagItemBase = tagList.getCompoundTagAt(i);
+                CompoundTag tagItemBase = tagList.getCompoundTagAt(i);
                 BigItemStack item;
                 long rem = count;
 

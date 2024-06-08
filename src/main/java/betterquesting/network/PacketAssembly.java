@@ -29,7 +29,7 @@ public final class PacketAssembly {
 
     private static final int bufSize = 20480; // 20KB
 
-    public List<NBTTagCompound> splitPacket(NBTTagCompound tags) {
+    public List<CompoundTag> splitPacket(CompoundTag tags) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             CompressedStreamTools.writeCompressed(tags, baos);
@@ -37,12 +37,12 @@ public final class PacketAssembly {
             byte[] data = baos.toByteArray();
             baos.close();
             int req = MathHelper.ceil(data.length / (float) bufSize);
-            List<NBTTagCompound> pkts = new ArrayList<>(req);
+            List<CompoundTag> pkts = new ArrayList<>(req);
 
             for (int p = 0; p < req; p++) {
                 int idx = p * bufSize;
                 int s = Math.min(data.length - idx, bufSize);
-                NBTTagCompound container = new NBTTagCompound();
+                CompoundTag container = new CompoundTag();
                 byte[] part = new byte[s];
 
                 System.arraycopy(data, idx, part, 0, s);
@@ -63,9 +63,9 @@ public final class PacketAssembly {
     }
 
     /**
-     * Appends a packet onto the buffer and returns an assembled NBTTagCompound when complete
+     * Appends a packet onto the buffer and returns an assembled CompoundTag when complete
      */
-    public NBTTagCompound assemblePacket(UUID owner, NBTTagCompound tags) {
+    public CompoundTag assemblePacket(UUID owner, CompoundTag tags) {
         int size = tags.getInteger("size");
         int index = tags.getInteger("index");
         boolean end = tags.getBoolean("end");
@@ -93,7 +93,7 @@ public final class PacketAssembly {
 
             try {
                 DataInputStream dis = new DataInputStream(new BufferedInputStream(new GZIPInputStream(new ByteArrayInputStream(tmp))));
-                NBTTagCompound tag = CompressedStreamTools.read(dis, NBTSizeTracker.INFINITE);
+                CompoundTag tag = CompressedStreamTools.read(dis, NBTSizeTracker.INFINITE);
                 dis.close();
                 return tag;
             } catch (Exception e) {

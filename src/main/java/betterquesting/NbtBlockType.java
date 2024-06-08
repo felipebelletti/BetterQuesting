@@ -14,7 +14,7 @@ public class NbtBlockType // TODO: Make a version of this for the base mod and g
     public int m = -1;
     public int n = 1;
     public String oreDict = "";
-    public NBTTagCompound tags = new NBTTagCompound();
+    public CompoundTag tags = new CompoundTag();
 
     public NbtBlockType() {
     }
@@ -22,17 +22,17 @@ public class NbtBlockType // TODO: Make a version of this for the base mod and g
     public NbtBlockType(Block block) {
         this.b = block;
         this.oreDict = "";
-        this.tags = new NBTTagCompound();
+        this.tags = new CompoundTag();
     }
 
     public NbtBlockType(IBlockState state) {
         this.b = state.getBlock();
         this.m = b.getMetaFromState(state);
         this.oreDict = "";
-        this.tags = new NBTTagCompound();
+        this.tags = new CompoundTag();
     }
 
-    public NBTTagCompound writeToNBT(NBTTagCompound json) {
+    public CompoundTag writeToNBT(CompoundTag json) {
         json.setString("blockID", b.getRegistryName().toString());
         json.setInteger("meta", m);
         json.setTag("nbt", tags);
@@ -41,7 +41,7 @@ public class NbtBlockType // TODO: Make a version of this for the base mod and g
         return json;
     }
 
-    public void readFromNBT(NBTTagCompound json) {
+    public void readFromNBT(CompoundTag json) {
         b = Block.REGISTRY.getObject(new ResourceLocation(json.getString("blockID")));
         m = json.getInteger("meta");
         tags = json.getCompoundTag("nbt");

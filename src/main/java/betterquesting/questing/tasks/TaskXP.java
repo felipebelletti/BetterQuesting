@@ -101,7 +101,7 @@ public class TaskXP implements ITaskTickable {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound json) {
+    public CompoundTag writeToNBT(CompoundTag json) {
         json.setInteger("amount", amount);
         json.setBoolean("isLevels", levels);
         json.setBoolean("consume", consume);
@@ -109,14 +109,14 @@ public class TaskXP implements ITaskTickable {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound json) {
+    public void readFromNBT(CompoundTag json) {
         amount = json.hasKey("amount", 99) ? json.getInteger("amount") : 30;
         levels = json.getBoolean("isLevels");
         consume = json.getBoolean("consume");
     }
 
     @Override
-    public void readProgressFromNBT(NBTTagCompound nbt, boolean merge) {
+    public void readProgressFromNBT(CompoundTag nbt, boolean merge) {
         if (!merge) {
             completeUsers.clear();
             userProgress.clear();
@@ -134,7 +134,7 @@ public class TaskXP implements ITaskTickable {
         NBTTagList pList = nbt.getTagList("userProgress", 10);
         for (int n = 0; n < pList.tagCount(); n++) {
             try {
-                NBTTagCompound pTag = pList.getCompoundTagAt(n);
+                CompoundTag pTag = pList.getCompoundTagAt(n);
                 UUID uuid = UUID.fromString(pTag.getString("uuid"));
                 userProgress.put(uuid, pTag.getLong("value"));
             } catch (Exception e) {
@@ -144,7 +144,7 @@ public class TaskXP implements ITaskTickable {
     }
 
     @Override
-    public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+    public CompoundTag writeProgressToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
         NBTTagList jArray = new NBTTagList();
         NBTTagList progArray = new NBTTagList();
 
@@ -154,7 +154,7 @@ public class TaskXP implements ITaskTickable {
 
                 Long data = userProgress.get(uuid);
                 if (data != null) {
-                    NBTTagCompound pJson = new NBTTagCompound();
+                    CompoundTag pJson = new CompoundTag();
                     pJson.setString("uuid", uuid.toString());
                     pJson.setLong("value", data);
                     progArray.appendTag(pJson);
@@ -164,7 +164,7 @@ public class TaskXP implements ITaskTickable {
             completeUsers.forEach((uuid) -> jArray.appendTag(new NBTTagString(uuid.toString())));
 
             userProgress.forEach((uuid, data) -> {
-                NBTTagCompound pJson = new NBTTagCompound();
+                CompoundTag pJson = new CompoundTag();
                 pJson.setString("uuid", uuid.toString());
                 pJson.setLong("value", data);
                 progArray.appendTag(pJson);

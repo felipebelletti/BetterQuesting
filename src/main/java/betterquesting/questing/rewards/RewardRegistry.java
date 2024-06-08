@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class RewardRegistry implements IRegistry<IFactoryData<IReward, NBTTagCompound>, IReward> {
+public class RewardRegistry implements IRegistry<IFactoryData<IReward, CompoundTag>, IReward> {
     public static final RewardRegistry INSTANCE = new RewardRegistry();
 
-    private final HashMap<ResourceLocation, IFactoryData<IReward, NBTTagCompound>> rewardRegistry = new HashMap<>();
+    private final HashMap<ResourceLocation, IFactoryData<IReward, CompoundTag>> rewardRegistry = new HashMap<>();
 
     @Override
-    public void register(IFactoryData<IReward, NBTTagCompound> factory) {
+    public void register(IFactoryData<IReward, CompoundTag> factory) {
         if (factory == null) {
             throw new NullPointerException("Tried to register null reward");
         } else if (factory.getRegistryName() == null) {
@@ -34,19 +34,19 @@ public class RewardRegistry implements IRegistry<IFactoryData<IReward, NBTTagCom
     }
 
     @Override
-    public IFactoryData<IReward, NBTTagCompound> getFactory(ResourceLocation registryName) {
+    public IFactoryData<IReward, CompoundTag> getFactory(ResourceLocation registryName) {
         return rewardRegistry.get(registryName);
     }
 
     @Override
-    public List<IFactoryData<IReward, NBTTagCompound>> getAll() {
+    public List<IFactoryData<IReward, CompoundTag>> getAll() {
         return new ArrayList<>(rewardRegistry.values());
     }
 
     @Override
     public IReward createNew(ResourceLocation registryName) {
         try {
-            IFactoryData<? extends IReward, NBTTagCompound> factory;
+            IFactoryData<? extends IReward, CompoundTag> factory;
 
             if (FactoryRewardPlaceholder.INSTANCE.getRegistryName().equals(registryName)) {
                 factory = FactoryRewardPlaceholder.INSTANCE;

@@ -34,7 +34,7 @@ public class NetRewardChoice {
 
     @SideOnly(Side.CLIENT)
     public static void requestChoice(int questID, int rewardID, int index) {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setInteger("questID", questID);
         payload.setInteger("rewardID", rewardID);
         payload.setInteger("selection", index);
@@ -42,16 +42,16 @@ public class NetRewardChoice {
     }
 
     public static void sendChoice(@Nonnull ServerPlayer player, int questID, int rewardID, int index) {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setInteger("questID", questID);
         payload.setInteger("rewardID", rewardID);
         payload.setInteger("selection", index);
         QuestingAPI.getAPI(ApiReference.PACKET_SENDER).sendToPlayers(new QuestingPacket(ID_NAME, payload), player);
     }
 
-    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+    private static void onServer(Tuple<CompoundTag, ServerPlayer> message) {
         ServerPlayer sender = message.getSecond();
-        NBTTagCompound tag = message.getFirst();
+        CompoundTag tag = message.getFirst();
 
         int qID = tag.hasKey("questID") ? tag.getInteger("questID") : -1;
         int rID = tag.hasKey("rewardID") ? tag.getInteger("rewardID") : -1;
@@ -70,7 +70,7 @@ public class NetRewardChoice {
     }
 
     @SideOnly(Side.CLIENT)
-    private static void onClient(NBTTagCompound message) {
+    private static void onClient(CompoundTag message) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 
         int qID = message.hasKey("questID", 99) ? message.getInteger("questID") : -1;

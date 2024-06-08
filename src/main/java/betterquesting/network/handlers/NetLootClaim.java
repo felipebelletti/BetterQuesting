@@ -28,10 +28,10 @@ public class NetLootClaim {
     }
 
     public static void sendReward(@Nonnull ServerPlayer player, @Nonnull String title, BigItemStack... items) {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         NBTTagList list = new NBTTagList();
         for (BigItemStack stack : items) {
-            list.appendTag(stack.writeToNBT(new NBTTagCompound()));
+            list.appendTag(stack.writeToNBT(new CompoundTag()));
         }
         payload.setTag("rewards", list);
         payload.setString("title", title);
@@ -39,7 +39,7 @@ public class NetLootClaim {
     }
 
     @SideOnly(Side.CLIENT)
-    private static void onClient(NBTTagCompound data) {
+    private static void onClient(CompoundTag data) {
         String title = data.getString("title");
         List<BigItemStack> rewards = new ArrayList<>();
 

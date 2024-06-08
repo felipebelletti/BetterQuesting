@@ -50,7 +50,7 @@ public class ImportedQuestLines extends SimpleDatabase<IQuestLine> implements IQ
     public NBTTagList writeToNBT(NBTTagList json, List<Integer> subset) {
         for (DBEntry<IQuestLine> entry : getEntries()) {
             if (subset != null && !subset.contains(entry.getID())) continue;
-            NBTTagCompound jObj = entry.getValue().writeToNBT(new NBTTagCompound(), null);
+            CompoundTag jObj = entry.getValue().writeToNBT(new CompoundTag(), null);
             jObj.setInteger("lineID", entry.getID());
             jObj.setInteger("order", getOrderIndex(entry.getID()));
             json.appendTag(jObj);
@@ -67,7 +67,7 @@ public class ImportedQuestLines extends SimpleDatabase<IQuestLine> implements IQ
         HashMap<Integer, Integer> orderMap = new HashMap<>();
 
         for (int i = 0; i < json.tagCount(); i++) {
-            NBTTagCompound jql = json.getCompoundTagAt(i);
+            CompoundTag jql = json.getCompoundTagAt(i);
 
             int id = jql.hasKey("lineID", 99) ? jql.getInteger("lineID") : -1;
             int order = jql.hasKey("order", 99) ? jql.getInteger("order") : -1;

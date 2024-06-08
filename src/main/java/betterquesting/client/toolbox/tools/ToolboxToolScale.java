@@ -150,11 +150,11 @@ public class ToolboxToolScale implements IToolboxTool {
             }
 
             // Send quest line edits
-            NBTTagCompound chPayload = new NBTTagCompound();
+            CompoundTag chPayload = new CompoundTag();
             NBTTagList cdList = new NBTTagList();
-            NBTTagCompound tagEntry = new NBTTagCompound();
+            CompoundTag tagEntry = new CompoundTag();
             tagEntry.setInteger("chapterID", lID);
-            tagEntry.setTag("config", qLine.writeToNBT(new NBTTagCompound(), null));
+            tagEntry.setTag("config", qLine.writeToNBT(new CompoundTag(), null));
             cdList.appendTag(tagEntry);
             chPayload.setTag("data", cdList);
             chPayload.setInteger("action", 0);

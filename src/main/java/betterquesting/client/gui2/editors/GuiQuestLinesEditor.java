@@ -241,9 +241,9 @@ public class GuiQuestLinesEditor extends GuiScreenCanvas implements IPEventListe
             mc.displayGuiScreen(this.parent);
         } else if (btn.getButtonID() == 1) // New Quest Line
         {
-            NBTTagCompound payload = new NBTTagCompound();
+            CompoundTag payload = new CompoundTag();
             NBTTagList dataList = new NBTTagList();
-            NBTTagCompound entry = new NBTTagCompound();
+            CompoundTag entry = new CompoundTag();
             entry.setInteger("chapterID", -1);
             dataList.appendTag(entry);
             payload.setTag("data", dataList);
@@ -275,7 +275,7 @@ public class GuiQuestLinesEditor extends GuiScreenCanvas implements IPEventListe
         } else if (btn.getButtonID() == 6 && btn instanceof PanelButtonStorage) // Delete Quest
         {
             DBEntry<IQuestLine> entry = ((PanelButtonStorage<DBEntry<IQuestLine>>) btn).getStoredValue();
-            NBTTagCompound payload = new NBTTagCompound();
+            CompoundTag payload = new CompoundTag();
             payload.setIntArray("chapterIDs", new int[]{entry.getID()});
             payload.setInteger("action", 1);
             NetChapterEdit.sendEdit(payload);
@@ -316,11 +316,11 @@ public class GuiQuestLinesEditor extends GuiScreenCanvas implements IPEventListe
     }
 
     private void SendChanges(DBEntry<IQuestLine> chapter) {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         NBTTagList dataList = new NBTTagList();
-        NBTTagCompound entry = new NBTTagCompound();
+        CompoundTag entry = new CompoundTag();
         entry.setInteger("chapterID", chapter.getID());
-        entry.setTag("config", chapter.getValue().writeToNBT(new NBTTagCompound(), null));
+        entry.setTag("config", chapter.getValue().writeToNBT(new CompoundTag(), null));
         dataList.appendTag(entry);
         payload.setTag("data", dataList);
         payload.setInteger("action", 0);
@@ -341,7 +341,7 @@ public class GuiQuestLinesEditor extends GuiScreenCanvas implements IPEventListe
         chapterIDs[indexToShift] = chapterIDs[indexFrom];
         chapterIDs[indexFrom] = tmp;
 
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setIntArray("chapterIDs", chapterIDs);
         payload.setInteger("action", 2);
         NetChapterEdit.sendEdit(payload);

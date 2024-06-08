@@ -16,13 +16,13 @@ import java.util.List;
 /**
  * Registry for all known task types. Questing packs should register their custom types here for proper saving/loading
  */
-public class TaskRegistry implements IRegistry<IFactoryData<ITask, NBTTagCompound>, ITask> {
+public class TaskRegistry implements IRegistry<IFactoryData<ITask, CompoundTag>, ITask> {
     public static final TaskRegistry INSTANCE = new TaskRegistry();
 
-    private final HashMap<ResourceLocation, IFactoryData<ITask, NBTTagCompound>> taskRegistry = new HashMap<>();
+    private final HashMap<ResourceLocation, IFactoryData<ITask, CompoundTag>> taskRegistry = new HashMap<>();
 
     @Override
-    public void register(IFactoryData<ITask, NBTTagCompound> factory) {
+    public void register(IFactoryData<ITask, CompoundTag> factory) {
         if (factory == null) {
             throw new NullPointerException("Tried to register null task");
         } else if (factory.getRegistryName() == null) {
@@ -37,19 +37,19 @@ public class TaskRegistry implements IRegistry<IFactoryData<ITask, NBTTagCompoun
     }
 
     @Override
-    public IFactoryData<ITask, NBTTagCompound> getFactory(ResourceLocation registryName) {
+    public IFactoryData<ITask, CompoundTag> getFactory(ResourceLocation registryName) {
         return taskRegistry.get(registryName);
     }
 
     @Override
-    public List<IFactoryData<ITask, NBTTagCompound>> getAll() {
+    public List<IFactoryData<ITask, CompoundTag>> getAll() {
         return new ArrayList<>(taskRegistry.values());
     }
 
     @Override
     public ITask createNew(ResourceLocation registryName) {
         try {
-            IFactoryData<? extends ITask, NBTTagCompound> factory;
+            IFactoryData<? extends ITask, CompoundTag> factory;
 
             if (FactoryTaskPlaceholder.INSTANCE.getRegistryName().equals(registryName)) {
                 factory = FactoryTaskPlaceholder.INSTANCE;

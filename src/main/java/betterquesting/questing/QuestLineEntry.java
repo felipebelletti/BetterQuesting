@@ -9,7 +9,7 @@ public class QuestLineEntry implements IQuestLineEntry {
     private int posX = 0;
     private int posY = 0;
 
-    public QuestLineEntry(NBTTagCompound json) {
+    public QuestLineEntry(CompoundTag json) {
         this.readFromNBT(json);
     }
 
@@ -78,7 +78,7 @@ public class QuestLineEntry implements IQuestLineEntry {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound json) {
+    public CompoundTag writeToNBT(CompoundTag json) {
         json.setInteger("sizeX", sizeX);
         json.setInteger("sizeY", sizeY);
         json.setInteger("x", posX);
@@ -87,7 +87,7 @@ public class QuestLineEntry implements IQuestLineEntry {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound json) {
+    public void readFromNBT(CompoundTag json) {
         if (json.hasKey("size", 99)) {
             sizeX = json.getInteger("size");
             sizeY = sizeX;

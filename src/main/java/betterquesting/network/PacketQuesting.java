@@ -17,14 +17,14 @@ import org.apache.logging.log4j.Level;
 import java.util.function.Consumer;
 
 public class PacketQuesting implements IMessage {
-    protected NBTTagCompound tags = new NBTTagCompound();
+    protected CompoundTag tags = new CompoundTag();
 
     @SuppressWarnings("unused")
     public PacketQuesting() // For use only by forge
     {
     }
 
-    public PacketQuesting(NBTTagCompound tags) // Use PacketDataTypes to instantiate new packets
+    public PacketQuesting(CompoundTag tags) // Use PacketDataTypes to instantiate new packets
     {
         this.tags = tags;
     }
@@ -48,7 +48,7 @@ public class PacketQuesting implements IMessage {
             }
 
             final ServerPlayer sender = ctx.getServerHandler().player;
-            final NBTTagCompound message = PacketAssembly.INSTANCE.assemblePacket(sender == null ? null : QuestingAPI.getQuestingUUID(sender), packet.tags);
+            final CompoundTag message = PacketAssembly.INSTANCE.assemblePacket(sender == null ? null : QuestingAPI.getQuestingUUID(sender), packet.tags);
 
             if (message == null) {
                 return null;
@@ -57,7 +57,7 @@ public class PacketQuesting implements IMessage {
                 return null;
             }
 
-            final Consumer<Tuple<NBTTagCompound, ServerPlayer>> method = PacketTypeRegistry.INSTANCE.getServerHandler(new ResourceLocation(message.getString("ID")));
+            final Consumer<Tuple<CompoundTag, ServerPlayer>> method = PacketTypeRegistry.INSTANCE.getServerHandler(new ResourceLocation(message.getString("ID")));
 
             if (method == null) {
                 BetterQuesting.logger.log(Level.WARN, "Recieved a packet server side with an invalid ID: " + message.getString("ID"));
@@ -78,7 +78,7 @@ public class PacketQuesting implements IMessage {
                 return null;
             }
 
-            final NBTTagCompound message = PacketAssembly.INSTANCE.assemblePacket(null, packet.tags);
+            final CompoundTag message = PacketAssembly.INSTANCE.assemblePacket(null, packet.tags);
 
             if (message == null) {
                 return null;
@@ -87,7 +87,7 @@ public class PacketQuesting implements IMessage {
                 return null;
             }
 
-            final Consumer<NBTTagCompound> method = PacketTypeRegistry.INSTANCE.getClientHandler(new ResourceLocation(message.getString("ID")));
+            final Consumer<CompoundTag> method = PacketTypeRegistry.INSTANCE.getClientHandler(new ResourceLocation(message.getString("ID")));
 
             if (method == null) {
                 BetterQuesting.logger.log(Level.WARN, "Recieved a packet server side with an invalid ID: " + message.getString("ID"));

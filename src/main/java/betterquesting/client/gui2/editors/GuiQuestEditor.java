@@ -195,7 +195,7 @@ public class GuiQuestEditor extends GuiScreenCanvas implements IPEventListener, 
             }
             case 4: // Advanced
             {
-                mc.displayGuiScreen(new GuiNbtEditor(this, quest.writeToNBT(new NBTTagCompound()), value -> {
+                mc.displayGuiScreen(new GuiNbtEditor(this, quest.writeToNBT(new CompoundTag()), value -> {
                     quest.readFromNBT(value);
                     sendChanges(questID);
                 }));
@@ -237,11 +237,11 @@ public class GuiQuestEditor extends GuiScreenCanvas implements IPEventListener, 
 
     public static void sendChanges(int questID) {
         IQuest quest = QuestDatabase.INSTANCE.getValue(questID);
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         NBTTagList dataList = new NBTTagList();
-        NBTTagCompound entry = new NBTTagCompound();
+        CompoundTag entry = new CompoundTag();
         entry.setInteger("questID", questID);
-        entry.setTag("config", quest.writeToNBT(new NBTTagCompound()));
+        entry.setTag("config", quest.writeToNBT(new CompoundTag()));
         dataList.appendTag(entry);
         payload.setTag("data", dataList);
         payload.setInteger("action", 0);

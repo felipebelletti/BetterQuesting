@@ -5,9 +5,9 @@ import net.minecraft.util.ResourceLocation;
 
 public final class QuestingPacket {
     private final ResourceLocation handler;
-    private final NBTTagCompound payload;
+    private final CompoundTag payload;
 
-    public QuestingPacket(ResourceLocation handler, NBTTagCompound payload) {
+    public QuestingPacket(ResourceLocation handler, CompoundTag payload) {
         this.handler = handler;
         this.payload = payload;
     }
@@ -16,7 +16,7 @@ public final class QuestingPacket {
         return handler;
     }
 
-    public NBTTagCompound getPayload() {
+    public CompoundTag getPayload() {
         return payload;
     }
 }

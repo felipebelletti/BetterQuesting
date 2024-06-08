@@ -50,15 +50,15 @@ public class NBTConverter {
                     NBTtoJSON_Base(tag, false, out);
                 }
             }
-        } else if (value instanceof NBTTagCompound) {
-            NBTtoJSON_Compound((NBTTagCompound) value, out, format);
+        } else if (value instanceof CompoundTag) {
+            NBTtoJSON_Compound((CompoundTag) value, out, format);
         } else {
             // idk man what is this
             out.beginObject().endObject();
         }
     }
 
-    public static void NBTtoJSON_Compound(NBTTagCompound parent, JsonWriter out, boolean format) throws IOException {
+    public static void NBTtoJSON_Compound(CompoundTag parent, JsonWriter out, boolean format) throws IOException {
         out.beginObject();
 
         if (parent != null)
@@ -89,8 +89,8 @@ public class NBTConverter {
         }
         if (tag instanceof NBTTagString) {
             return new JsonPrimitive(((NBTTagString) tag).getString());
-        } else if (tag instanceof NBTTagCompound) {
-            return NBTtoJSON_Compound((NBTTagCompound) tag, new JsonObject(), format);
+        } else if (tag instanceof CompoundTag) {
+            return NBTtoJSON_Compound((CompoundTag) tag, new JsonObject(), format);
         } else if (tag instanceof NBTTagList) {
             if (format) {
                 JsonObject jAry = new JsonObject();
@@ -159,7 +159,7 @@ public class NBTConverter {
         return ary;
     }
 
-    public static JsonObject NBTtoJSON_Compound(NBTTagCompound parent, JsonObject jObj, boolean format) {
+    public static JsonObject NBTtoJSON_Compound(CompoundTag parent, JsonObject jObj, boolean format) {
         if (parent == null) {
             return jObj;
         }
@@ -179,9 +179,9 @@ public class NBTConverter {
     }
 
     /**
-     * Convert JsonObject to a NBTTagCompound
+     * Convert JsonObject to a CompoundTag
      */
-    public static NBTTagCompound JSONtoNBT_Object(JsonObject jObj, NBTTagCompound tags, boolean format) {
+    public static CompoundTag JSONtoNBT_Object(JsonObject jObj, CompoundTag tags, boolean format) {
         if (jObj == null) {
             return tags;
         }
@@ -231,7 +231,7 @@ public class NBTConverter {
             } else if (tagID == 8) {
                 return new NBTTagString(jObj.getAsString());
             } else if (tagID == 10) {
-                return JSONtoNBT_Object(jObj.getAsJsonObject(), new NBTTagCompound(), format);
+                return JSONtoNBT_Object(jObj.getAsJsonObject(), new CompoundTag(), format);
             } else if (tagID == 7) // Byte array
             {
                 JsonArray jAry = jObj.getAsJsonArray();

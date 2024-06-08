@@ -56,10 +56,10 @@ public class PanelTabMain extends CanvasEmpty {
             @Override
             public void onButtonClick() {
                 Minecraft mc = Minecraft.getMinecraft();
-                mc.displayGuiScreen(new GuiNbtEditor(mc.currentScreen, cvQuestLine.getQuestLine().writeToNBT(new NBTTagCompound(), null), value -> {
-                    NBTTagCompound payload = new NBTTagCompound();
+                mc.displayGuiScreen(new GuiNbtEditor(mc.currentScreen, cvQuestLine.getQuestLine().writeToNBT(new CompoundTag(), null), value -> {
+                    CompoundTag payload = new CompoundTag();
                     NBTTagList dataList = new NBTTagList();
-                    NBTTagCompound entry = new NBTTagCompound();
+                    CompoundTag entry = new CompoundTag();
                     entry.setInteger("chapterID", QuestLineDatabase.INSTANCE.getID(cvQuestLine.getQuestLine()));
                     entry.setTag("config", value);
                     dataList.appendTag(entry);

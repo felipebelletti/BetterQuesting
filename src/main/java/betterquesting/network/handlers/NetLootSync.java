@@ -29,15 +29,15 @@ public class NetLootSync {
     }
 
     @SideOnly(Side.CLIENT)
-    public static void requestEdit(NBTTagCompound data) {
-        NBTTagCompound payload = new NBTTagCompound();
+    public static void requestEdit(CompoundTag data) {
+        CompoundTag payload = new CompoundTag();
         payload.setTag("data", data);
         QuestingAPI.getAPI(ApiReference.PACKET_SENDER).sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
     public static void sendSync(@Nullable ServerPlayer player) {
-        NBTTagCompound payload = new NBTTagCompound();
-        payload.setTag("data", LootRegistry.INSTANCE.writeToNBT(new NBTTagCompound(), null));
+        CompoundTag payload = new CompoundTag();
+        payload.setTag("data", LootRegistry.INSTANCE.writeToNBT(new CompoundTag(), null));
 
         if (player == null) {
             QuestingAPI.getAPI(ApiReference.PACKET_SENDER).sendToAll(new QuestingPacket(ID_NAME, payload));
@@ -46,9 +46,9 @@ public class NetLootSync {
         }
     }
 
-    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+    private static void onServer(Tuple<CompoundTag, ServerPlayer> message) {
         ServerPlayer sender = message.getSecond();
-        NBTTagCompound data = message.getFirst();
+        CompoundTag data = message.getFirst();
 
         if (sender.getServer() == null) return;
         if (!sender.getServer().getPlayerList().canSendCommands(sender.getGameProfile())) {
@@ -64,7 +64,7 @@ public class NetLootSync {
     }
 
     @SideOnly(Side.CLIENT)
-    private static void onClient(NBTTagCompound message) {
+    private static void onClient(CompoundTag message) {
         LootRegistry.INSTANCE.readFromNBT(message.getCompoundTag("data"), false);
         LootRegistry.INSTANCE.updateUI = true;
     }

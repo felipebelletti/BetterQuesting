@@ -7,7 +7,7 @@ import betterquesting.questing.tasks.TaskTrigger;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
-public class FactoryTaskTrigger implements IFactoryData<ITask, NBTTagCompound> {
+public class FactoryTaskTrigger implements IFactoryData<ITask, CompoundTag> {
     public static final FactoryTaskTrigger INSTANCE = new FactoryTaskTrigger();
 
     private final ResourceLocation REG_ID = new ResourceLocation(BetterQuesting.MODID_STD, "trigger");
@@ -23,7 +23,7 @@ public class FactoryTaskTrigger implements IFactoryData<ITask, NBTTagCompound> {
     }
 
     @Override
-    public TaskTrigger loadFromData(NBTTagCompound nbt) {
+    public TaskTrigger loadFromData(CompoundTag nbt) {
         TaskTrigger task = new TaskTrigger();
         task.readFromNBT(nbt);
         return task;

@@ -8,9 +8,9 @@ import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.nbt.CompoundTag;
 
 public class NbtEntityCallback implements ICallback<Entity> {
-    private final NBTTagCompound json;
+    private final CompoundTag json;
 
-    public NbtEntityCallback(NBTTagCompound json) {
+    public NbtEntityCallback(CompoundTag json) {
         this.json = json;
     }
 

@@ -135,7 +135,7 @@ public class ToolboxToolCopy implements IToolboxTool {
             if (qLine.getValue(qID) == null)
                 qLine.add(qID, new QuestLineEntry(grab.btn.rect.x, grab.btn.rect.y, grab.btn.rect.w, grab.btn.rect.h));
 
-            NBTTagCompound questTags = quest.writeToNBT(new NBTTagCompound());
+            CompoundTag questTags = quest.writeToNBT(new CompoundTag());
 
             int[] oldIDs = Arrays.copyOf(quest.getRequirements(), quest.getRequirements().length);
 
@@ -148,7 +148,7 @@ public class ToolboxToolCopy implements IToolboxTool {
             // We can't tamper with the original so we change it in NBT post-write
             questTags.setIntArray("preRequisites", oldIDs);
 
-            NBTTagCompound tagEntry = new NBTTagCompound();
+            CompoundTag tagEntry = new CompoundTag();
             tagEntry.setInteger("questID", qID);
             tagEntry.setTag("config", questTags);
             qdList.appendTag(tagEntry);
@@ -157,17 +157,17 @@ public class ToolboxToolCopy implements IToolboxTool {
         grabList.clear();
 
         // Send new quests
-        NBTTagCompound quPayload = new NBTTagCompound();
+        CompoundTag quPayload = new CompoundTag();
         quPayload.setTag("data", qdList);
         quPayload.setInteger("action", 3);
         NetQuestEdit.sendEdit(quPayload);
 
         // Send quest line edits
-        NBTTagCompound chPayload = new NBTTagCompound();
+        CompoundTag chPayload = new CompoundTag();
         NBTTagList cdList = new NBTTagList();
-        NBTTagCompound tagEntry = new NBTTagCompound();
+        CompoundTag tagEntry = new CompoundTag();
         tagEntry.setInteger("chapterID", lID);
-        tagEntry.setTag("config", qLine.writeToNBT(new NBTTagCompound(), null));
+        tagEntry.setTag("config", qLine.writeToNBT(new CompoundTag(), null));
         cdList.appendTag(tagEntry);
         chPayload.setTag("data", cdList);
         chPayload.setInteger("action", 0);

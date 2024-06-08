@@ -17,8 +17,8 @@ import java.util.function.Consumer;
 public class PacketTypeRegistry implements IPacketRegistry {
     public static final PacketTypeRegistry INSTANCE = new PacketTypeRegistry();
 
-    private final HashMap<ResourceLocation, Consumer<Tuple<NBTTagCompound, ServerPlayer>>> serverHandlers = new HashMap<>();
-    private final HashMap<ResourceLocation, Consumer<NBTTagCompound>> clientHandlers = new HashMap<>();
+    private final HashMap<ResourceLocation, Consumer<Tuple<CompoundTag, ServerPlayer>>> serverHandlers = new HashMap<>();
+    private final HashMap<ResourceLocation, Consumer<CompoundTag>> clientHandlers = new HashMap<>();
 
     public void init() {
         NetQuestSync.registerHandler();
@@ -44,7 +44,7 @@ public class PacketTypeRegistry implements IPacketRegistry {
     }
 
     @Override
-    public void registerServerHandler(@Nonnull ResourceLocation idName, @Nonnull Consumer<Tuple<NBTTagCompound, ServerPlayer>> method) {
+    public void registerServerHandler(@Nonnull ResourceLocation idName, @Nonnull Consumer<Tuple<CompoundTag, ServerPlayer>> method) {
         if (serverHandlers.containsKey(idName)) {
             throw new IllegalArgumentException("Cannot register dupliate packet handler: " + idName);
         }
@@ -54,7 +54,7 @@ public class PacketTypeRegistry implements IPacketRegistry {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerClientHandler(@Nonnull ResourceLocation idName, @Nonnull Consumer<NBTTagCompound> method) {
+    public void registerClientHandler(@Nonnull ResourceLocation idName, @Nonnull Consumer<CompoundTag> method) {
         if (clientHandlers.containsKey(idName)) {
             throw new IllegalArgumentException("Cannot register dupliate packet handler: " + idName);
         }
@@ -63,13 +63,13 @@ public class PacketTypeRegistry implements IPacketRegistry {
     }
 
     @Nullable
-    public Consumer<Tuple<NBTTagCompound, ServerPlayer>> getServerHandler(@Nonnull ResourceLocation idName) {
+    public Consumer<Tuple<CompoundTag, ServerPlayer>> getServerHandler(@Nonnull ResourceLocation idName) {
         return serverHandlers.get(idName);
     }
 
     @Nullable
     @SideOnly(Side.CLIENT)
-    public Consumer<NBTTagCompound> getClientHandler(@Nonnull ResourceLocation idName) {
+    public Consumer<CompoundTag> getClientHandler(@Nonnull ResourceLocation idName) {
         return clientHandlers.get(idName);
     }
 }

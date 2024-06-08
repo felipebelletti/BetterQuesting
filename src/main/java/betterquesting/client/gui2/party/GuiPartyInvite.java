@@ -130,7 +130,7 @@ public class GuiPartyInvite extends GuiScreenCanvas implements IPEventListener {
             mc.displayGuiScreen(this.parent);
         } else if (btn.getButtonID() == 1 && flName.getRawText().length() > 0) // Manual Invite
         {
-            NBTTagCompound payload = new NBTTagCompound();
+            CompoundTag payload = new CompoundTag();
             payload.setInteger("action", 3);
             payload.setInteger("partyID", partyID);
             payload.setString("username", flName.getRawText());
@@ -138,7 +138,7 @@ public class GuiPartyInvite extends GuiScreenCanvas implements IPEventListener {
             NetPartyAction.sendAction(payload);
         } else if (btn.getButtonID() == 2 && btn instanceof PanelButtonStorage) // Invite
         {
-            NBTTagCompound payload = new NBTTagCompound();
+            CompoundTag payload = new CompoundTag();
             payload.setInteger("action", 3);
             payload.setInteger("partyID", partyID);
             payload.setString("username", ((PanelButtonStorage<String>) btn).getStoredValue());

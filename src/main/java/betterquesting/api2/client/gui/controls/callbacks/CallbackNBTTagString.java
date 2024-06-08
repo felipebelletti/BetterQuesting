@@ -11,7 +11,7 @@ public class CallbackNBTTagString implements ICallback<String> {
     private final String sKey;
     private final int iKey;
 
-    public CallbackNBTTagString(NBTTagCompound tag, String key) {
+    public CallbackNBTTagString(CompoundTag tag, String key) {
         this.tag = tag;
         this.sKey = key;
         this.iKey = -1;
@@ -26,7 +26,7 @@ public class CallbackNBTTagString implements ICallback<String> {
     @Override
     public void setValue(String value) {
         if (tag.getId() == 10) {
-            ((NBTTagCompound) tag).setString(sKey, value);
+            ((CompoundTag) tag).setString(sKey, value);
         } else {
             ((NBTTagList) tag).set(iKey, new NBTTagString(value));
         }

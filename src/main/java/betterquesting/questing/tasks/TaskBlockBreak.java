@@ -80,7 +80,7 @@ public class TaskBlockBreak implements ITask {
 
     public void onBlockBreak(ParticipantInfo pInfo, DBEntry<IQuest> quest, IBlockState state, BlockPos pos) {
         TileEntity tile = state.getBlock().hasTileEntity(state) ? pInfo.PLAYER.world.getTileEntity(pos) : null;
-        NBTTagCompound tags = tile == null ? null : tile.writeToNBT(new NBTTagCompound());
+        CompoundTag tags = tile == null ? null : tile.writeToNBT(new CompoundTag());
 
         final List<Tuple<UUID, int[]>> progress = getBulkProgress(pInfo.ALL_UUIDS);
         boolean changed = false;
@@ -109,10 +109,10 @@ public class TaskBlockBreak implements ITask {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public CompoundTag writeToNBT(CompoundTag nbt) {
         NBTTagList bAry = new NBTTagList();
         for (NbtBlockType block : blockTypes) {
-            bAry.appendTag(block.writeToNBT(new NBTTagCompound()));
+            bAry.appendTag(block.writeToNBT(new CompoundTag()));
         }
         nbt.setTag("blocks", bAry);
 
@@ -120,7 +120,7 @@ public class TaskBlockBreak implements ITask {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(CompoundTag nbt) {
         blockTypes.clear();
         NBTTagList bList = nbt.getTagList("blocks", 10);
         for (int i = 0; i < bList.tagCount(); i++) {
@@ -133,7 +133,7 @@ public class TaskBlockBreak implements ITask {
             Block targetBlock = Block.REGISTRY.getObject(new ResourceLocation(nbt.getString("blockID")));
             targetBlock = targetBlock != Blocks.AIR ? targetBlock : Blocks.LOG;
             int targetMeta = nbt.getInteger("blockMeta");
-            NBTTagCompound targetNbt = nbt.getCompoundTag("blockNBT");
+            CompoundTag targetNbt = nbt.getCompoundTag("blockNBT");
             int targetNum = nbt.getInteger("amount");
 
             NbtBlockType leg = new NbtBlockType();
@@ -147,7 +147,7 @@ public class TaskBlockBreak implements ITask {
     }
 
     @Override
-    public void readProgressFromNBT(NBTTagCompound nbt, boolean merge) {
+    public void readProgressFromNBT(CompoundTag nbt, boolean merge) {
         if (!merge) {
             completeUsers.clear();
             userProgress.clear();
@@ -165,7 +165,7 @@ public class TaskBlockBreak implements ITask {
         NBTTagList pList = nbt.getTagList("userProgress", 10);
         for (int n = 0; n < pList.tagCount(); n++) {
             try {
-                NBTTagCompound pTag = pList.getCompoundTagAt(n);
+                CompoundTag pTag = pList.getCompoundTagAt(n);
                 UUID uuid = UUID.fromString(pTag.getString("uuid"));
 
                 int[] data = new int[blockTypes.size()];
@@ -183,7 +183,7 @@ public class TaskBlockBreak implements ITask {
     }
 
     @Override
-    public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+    public CompoundTag writeProgressToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
         NBTTagList jArray = new NBTTagList();
         NBTTagList progArray = new NBTTagList();
 
@@ -193,7 +193,7 @@ public class TaskBlockBreak implements ITask {
 
                 int[] data = userProgress.get(uuid);
                 if (data != null) {
-                    NBTTagCompound pJson = new NBTTagCompound();
+                    CompoundTag pJson = new CompoundTag();
                     pJson.setString("uuid", uuid.toString());
                     NBTTagList pArray = new NBTTagList(); // TODO: Why the heck isn't this just an int array?!
                     for (int i : data) pArray.appendTag(new NBTTagInt(i));
@@ -205,7 +205,7 @@ public class TaskBlockBreak implements ITask {
             completeUsers.forEach((uuid) -> jArray.appendTag(new NBTTagString(uuid.toString())));
 
             userProgress.forEach((uuid, data) -> {
-                NBTTagCompound pJson = new NBTTagCompound();
+                CompoundTag pJson = new CompoundTag();
                 pJson.setString("uuid", uuid.toString());
                 NBTTagList pArray = new NBTTagList(); // TODO: Why the heck isn't this just an int array?!
                 for (int i : data) pArray.appendTag(new NBTTagInt(i));

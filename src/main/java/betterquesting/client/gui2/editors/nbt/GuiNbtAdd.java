@@ -46,7 +46,7 @@ public class GuiNbtAdd extends GuiScreenCanvas implements IPEventListener, IVola
     private PanelButton btnConfirm;
     //private PanelTextBox txtKey;
 
-    public GuiNbtAdd(GuiScreen parent, NBTTagCompound compoundTag) {
+    public GuiNbtAdd(GuiScreen parent, CompoundTag compoundTag) {
         super(parent);
         this.nbt = compoundTag;
         this.index = -1;
@@ -78,7 +78,7 @@ public class GuiNbtAdd extends GuiScreenCanvas implements IPEventListener, IVola
         panTxt.setColor(PresetColor.TEXT_HEADER.getColor());
         cvBackground.addPanel(panTxt);
 
-        if (nbt.getId() == 10) // NBTTagCompound
+        if (nbt.getId() == 10) // CompoundTag
         {
             btnConfirm.setActive(false);
 
@@ -92,7 +92,7 @@ public class GuiNbtAdd extends GuiScreenCanvas implements IPEventListener, IVola
             flKey.setCallback(value -> {
                 if (value.isEmpty()) {
                     txKeyTitle.setText(TextFormatting.RED + QuestTranslation.translate("betterquesting.gui.no_key"));
-                } else if (((NBTTagCompound) nbt).hasKey(value)) {
+                } else if (((CompoundTag) nbt).hasKey(value)) {
                     txKeyTitle.setText(TextFormatting.RED + QuestTranslation.translate("betterquesting.gui.duplicate_key"));
                 } else {
                     txKeyTitle.setText(QuestTranslation.translate("betterquesting.gui.key"));
@@ -107,13 +107,13 @@ public class GuiNbtAdd extends GuiScreenCanvas implements IPEventListener, IVola
         int n = 0;
 
         // Standard Objects
-        options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n * 16, 100, 16, 0), 2, QuestTranslation.translate("betterquesting.btn.item"), JsonHelper.ItemStackToJson(new BigItemStack(Blocks.STONE), new NBTTagCompound())));
-        options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 100, n++ * 16, 92, 16, 0), 2, QuestTranslation.translate("betterquesting.btn.fluid"), JsonHelper.FluidStackToJson(new FluidStack(FluidRegistry.WATER, 1000), new NBTTagCompound())));
-        options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, QuestTranslation.translate("betterquesting.btn.entity"), JsonHelper.EntityToJson(new EntityPig(mc.world), new NBTTagCompound())));
+        options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n * 16, 100, 16, 0), 2, QuestTranslation.translate("betterquesting.btn.item"), JsonHelper.ItemStackToJson(new BigItemStack(Blocks.STONE), new CompoundTag())));
+        options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 100, n++ * 16, 92, 16, 0), 2, QuestTranslation.translate("betterquesting.btn.fluid"), JsonHelper.FluidStackToJson(new FluidStack(FluidRegistry.WATER, 1000), new CompoundTag())));
+        options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, QuestTranslation.translate("betterquesting.btn.entity"), JsonHelper.EntityToJson(new EntityPig(mc.world), new CompoundTag())));
 
         // NBT types
         options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, NBTTagString.class.getSimpleName(), new NBTTagString("")));
-        options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, NBTTagCompound.class.getSimpleName(), new NBTTagCompound()));
+        options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, CompoundTag.class.getSimpleName(), new CompoundTag()));
         options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, NBTTagList.class.getSimpleName(), new NBTTagList()));
         options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, NBTTagByte.class.getSimpleName(), new NBTTagByte((byte) 0)));
         options.add(new PanelButtonStorage<>(new GuiTransform(GuiAlign.MID_CENTER, 0, n++ * 16, 192, 16, 0), 2, NBTTagShort.class.getSimpleName(), new NBTTagShort((short) 0)));
@@ -159,7 +159,7 @@ public class GuiNbtAdd extends GuiScreenCanvas implements IPEventListener, IVola
                 if (selected == null) {
                     return;
                 } else if (nbt.getId() == 10) {
-                    ((NBTTagCompound) nbt).setTag(flKey.getValue(), selected);
+                    ((CompoundTag) nbt).setTag(flKey.getValue(), selected);
                 } else if (nbt.getId() == 9) {
                     NBTTagList l = (NBTTagList) nbt;
 
@@ -197,7 +197,7 @@ public class GuiNbtAdd extends GuiScreenCanvas implements IPEventListener, IVola
     private void updateConfirm() {
         if (flKey == null) {
             btnConfirm.setActive(selected != null);
-        } else if (flKey.getValue().isEmpty() || ((NBTTagCompound) nbt).hasKey(flKey.getValue())) {
+        } else if (flKey.getValue().isEmpty() || ((CompoundTag) nbt).hasKey(flKey.getValue())) {
             btnConfirm.setActive(false);
         } else {
             btnConfirm.setActive(selected != null);

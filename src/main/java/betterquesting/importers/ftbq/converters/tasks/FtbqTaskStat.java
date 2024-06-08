@@ -9,7 +9,7 @@ import net.minecraft.init.Items;
 import net.minecraft.nbt.CompoundTag;
 
 public class FtbqTaskStat {
-    public ITask[] convertTask(NBTTagCompound tag) {
+    public ITask[] convertTask(CompoundTag tag) {
         TaskScoreboard task = new TaskScoreboard();
 
         task.scoreName = tag.getString("stat");

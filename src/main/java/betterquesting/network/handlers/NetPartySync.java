@@ -61,13 +61,13 @@ public class NetPartySync {
         NBTTagList dataList = new NBTTagList();
         final List<DBEntry<IParty>> partySubset = partyIDs == null ? PartyManager.INSTANCE.getEntries() : PartyManager.INSTANCE.bulkLookup(partyIDs);
         for (DBEntry<IParty> party : partySubset) {
-            NBTTagCompound entry = new NBTTagCompound();
+            CompoundTag entry = new CompoundTag();
             entry.setInteger("partyID", party.getID());
-            entry.setTag("config", party.getValue().writeToNBT(new NBTTagCompound()));
+            entry.setTag("config", party.getValue().writeToNBT(new CompoundTag()));
             dataList.appendTag(entry);
         }
 
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setTag("data", dataList);
         payload.setBoolean("merge", partyIDs != null);
 
@@ -80,24 +80,24 @@ public class NetPartySync {
 
     @SideOnly(Side.CLIENT)
     public static void requestSync(@Nullable int[] partyIDs) {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         if (partyIDs != null) payload.setIntArray("partyIDs", partyIDs);
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
-        NBTTagCompound payload = message.getFirst();
+    private static void onServer(Tuple<CompoundTag, ServerPlayer> message) {
+        CompoundTag payload = message.getFirst();
         int[] reqIDs = !payload.hasKey("partyIDs") ? null : payload.getIntArray("partyIDs");
         sendSync(new ServerPlayer[]{message.getSecond()}, reqIDs);
     }
 
     @SideOnly(Side.CLIENT)
-    private static void onClient(NBTTagCompound message) {
+    private static void onClient(CompoundTag message) {
         NBTTagList data = message.getTagList("data", 10);
         if (!message.getBoolean("merge")) PartyManager.INSTANCE.reset();
 
         for (int i = 0; i < data.tagCount(); i++) {
-            NBTTagCompound tag = data.getCompoundTagAt(i);
+            CompoundTag tag = data.getCompoundTagAt(i);
             if (!tag.hasKey("partyID", 99)) continue;
             int partyID = tag.getInteger("partyID");
 

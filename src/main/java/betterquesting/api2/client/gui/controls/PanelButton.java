@@ -23,7 +23,7 @@ import org.lwjgl.input.Mouse;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class PanelButton implements IPanelButton, IGuiPanel, INBTSaveLoad<NBTTagCompound> {
+public class PanelButton implements IPanelButton, IGuiPanel, INBTSaveLoad<CompoundTag> {
     private final IGuiRect transform;
     private boolean enabled = true;
     private boolean hovered = false;
@@ -260,13 +260,13 @@ public class PanelButton implements IPanelButton, IGuiPanel, INBTSaveLoad<NBTTag
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public CompoundTag writeToNBT(CompoundTag nbt) {
         // TODO: Fix me
         return nbt;
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(CompoundTag nbt) {
 
     }
 }

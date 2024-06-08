@@ -40,13 +40,13 @@ public class RewardXP implements IReward {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(CompoundTag nbt) {
         amount = nbt.getInteger("amount");
         levels = nbt.getBoolean("isLevels");
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public CompoundTag writeToNBT(CompoundTag nbt) {
         nbt.setInteger("amount", amount);
         nbt.setBoolean("isLevels", levels);
         return nbt;

@@ -11,7 +11,7 @@ import net.minecraftforge.common.capabilities.Capability.IStorage;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class CapabilityProviderQuestCache implements ICapabilityProvider, ICapabilitySerializable<NBTTagCompound> {
+public class CapabilityProviderQuestCache implements ICapabilityProvider, ICapabilitySerializable<CompoundTag> {
     @CapabilityInject(QuestCache.class)
     public static Capability<QuestCache> CAP_QUEST_CACHE;
     public static final ResourceLocation LOC_QUEST_CACHE = new ResourceLocation(ModReference.MODID, "quest_cache");
@@ -19,12 +19,12 @@ public class CapabilityProviderQuestCache implements ICapabilityProvider, ICapab
     private final QuestCache cache = new QuestCache();
 
     @Override
-    public NBTTagCompound serializeNBT() {
+    public CompoundTag serializeNBT() {
         return cache.serializeNBT();
     }
 
     @Override
-    public void deserializeNBT(NBTTagCompound nbt) {
+    public void deserializeNBT(CompoundTag nbt) {
         cache.deserializeNBT(nbt);
     }
 
@@ -49,7 +49,7 @@ public class CapabilityProviderQuestCache implements ICapabilityProvider, ICapab
 
             @Override
             public void readNBT(Capability<QuestCache> capability, QuestCache instance, EnumFacing side, NBTBase nbt) {
-                if (nbt instanceof NBTTagCompound) instance.deserializeNBT((NBTTagCompound) nbt);
+                if (nbt instanceof CompoundTag) instance.deserializeNBT((CompoundTag) nbt);
             }
         }, QuestCache::new);
     }

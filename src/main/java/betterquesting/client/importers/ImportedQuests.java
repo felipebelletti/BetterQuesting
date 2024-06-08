@@ -40,7 +40,7 @@ public class ImportedQuests extends SimpleDatabase<IQuest> implements IQuestData
     public NBTTagList writeToNBT(NBTTagList nbt, List<Integer> subset) {
         for (DBEntry<IQuest> entry : this.getEntries()) {
             if (subset != null && !subset.contains(entry.getID())) continue;
-            NBTTagCompound jq = new NBTTagCompound();
+            CompoundTag jq = new CompoundTag();
             entry.getValue().writeToNBT(jq);
             jq.setInteger("questID", entry.getID());
             nbt.appendTag(jq);
@@ -54,7 +54,7 @@ public class ImportedQuests extends SimpleDatabase<IQuest> implements IQuestData
         if (!merge) this.reset();
 
         for (int i = 0; i < nbt.tagCount(); i++) {
-            NBTTagCompound qTag = nbt.getCompoundTagAt(i);
+            CompoundTag qTag = nbt.getCompoundTagAt(i);
 
             int qID = qTag.hasKey("questID", 99) ? qTag.getInteger("questID") : -1;
             if (qID < 0) continue;

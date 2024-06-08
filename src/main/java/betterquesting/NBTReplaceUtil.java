@@ -12,8 +12,8 @@ public class NBTReplaceUtil {
             return null;
         }
 
-        if (baseTag instanceof NBTTagCompound) {
-            NBTTagCompound compound = (NBTTagCompound) baseTag;
+        if (baseTag instanceof CompoundTag) {
+            CompoundTag compound = (CompoundTag) baseTag;
 
             for (String k : compound.getKeySet()) {
                 compound.setTag(k, replaceStrings(compound.getTag(k), key, replace));

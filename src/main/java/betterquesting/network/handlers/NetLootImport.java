@@ -25,15 +25,15 @@ public class NetLootImport {
     // TODO: Rework this for partial importing/editing
 
     @SideOnly(Side.CLIENT)
-    public static void importLoot(NBTTagCompound data) {
-        NBTTagCompound payload = new NBTTagCompound();
+    public static void importLoot(CompoundTag data) {
+        CompoundTag payload = new CompoundTag();
         payload.setTag("data", data);
         QuestingAPI.getAPI(ApiReference.PACKET_SENDER).sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+    private static void onServer(Tuple<CompoundTag, ServerPlayer> message) {
         ServerPlayer sender = message.getSecond();
-        NBTTagCompound tag = message.getFirst();
+        CompoundTag tag = message.getFirst();
 
         if (sender.getServer() == null) return;
 

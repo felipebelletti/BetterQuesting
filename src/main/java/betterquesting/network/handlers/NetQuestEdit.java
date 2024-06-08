@@ -44,12 +44,12 @@ public class NetQuestEdit {
     }
 
     @SideOnly(Side.CLIENT)
-    public static void sendEdit(NBTTagCompound payload) // TODO: Make these use proper methods for each action rather than directly assembling the payload
+    public static void sendEdit(CompoundTag payload) // TODO: Make these use proper methods for each action rather than directly assembling the payload
     {
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+    private static void onServer(Tuple<CompoundTag, ServerPlayer> message) {
         ServerPlayer sender = message.getSecond();
         MinecraftServer server = sender.getServer();
         if (server == null) return; // Here mostly just to keep intellisense happy
@@ -63,7 +63,7 @@ public class NetQuestEdit {
             return; // Player is not operator. Do nothing
         }
 
-        NBTTagCompound tag = message.getFirst();
+        CompoundTag tag = message.getFirst();
         UUID senderID = QuestingAPI.getQuestingUUID(sender);
         int action = !message.getFirst().hasKey("action", 99) ? -1 : message.getFirst().getInteger("action");
 
@@ -95,7 +95,7 @@ public class NetQuestEdit {
     public static void editQuests(NBTTagList data) {
         int[] ids = new int[data.tagCount()];
         for (int i = 0; i < data.tagCount(); i++) {
-            NBTTagCompound entry = data.getCompoundTagAt(i);
+            CompoundTag entry = data.getCompoundTagAt(i);
             int questID = entry.getInteger("questID");
             ids[i] = questID;
 
@@ -116,7 +116,7 @@ public class NetQuestEdit {
 
         SaveLoadHandler.INSTANCE.markDirty();
 
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setIntArray("questIDs", questIDs);
         payload.setInteger("action", 1);
         PacketSender.INSTANCE.sendToAll(new QuestingPacket(ID_NAME, payload));
@@ -167,7 +167,7 @@ public class NetQuestEdit {
     public static void createQuests(NBTTagList data) {
         int[] ids = new int[data.tagCount()];
         for (int i = 0; i < data.tagCount(); i++) {
-            NBTTagCompound entry = data.getCompoundTagAt(i);
+            CompoundTag entry = data.getCompoundTagAt(i);
             int questID = entry.hasKey("questID", 99) ? entry.getInteger("questID") : -1;
             if (questID < 0) questID = QuestDatabase.INSTANCE.nextID();
             ids[i] = questID;
@@ -182,7 +182,7 @@ public class NetQuestEdit {
     }
 
     @SideOnly(Side.CLIENT)
-    private static void onClient(NBTTagCompound message) // Imparts edit specific changes
+    private static void onClient(CompoundTag message) // Imparts edit specific changes
     {
         int action = !message.hasKey("action", 99) ? -1 : message.getInteger("action");
 

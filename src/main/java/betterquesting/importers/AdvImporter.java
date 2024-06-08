@@ -184,7 +184,7 @@ public class AdvImporter implements IImporter {
                 JsonArray ary = JsonHelper.GetArray(rewObj, "loot");
                 for (int i = 0; i < ary.size(); i++) {
                     BigItemStack item = new BigItemStack(BetterQuesting.lootChest, 1, 103);
-                    NBTTagCompound tag = new NBTTagCompound();
+                    CompoundTag tag = new CompoundTag();
                     tag.setString("loottable", ary.get(i).getAsString());
                     item.SetTagCompound(tag);
                     reward.items.add(item);

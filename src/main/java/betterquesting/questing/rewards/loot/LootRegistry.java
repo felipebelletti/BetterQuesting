@@ -12,7 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
-public class LootRegistry extends SimpleDatabase<LootGroup> implements INBTPartial<NBTTagCompound, Integer> {
+public class LootRegistry extends SimpleDatabase<LootGroup> implements INBTPartial<CompoundTag, Integer> {
     // TODO: Add localised group names
     // TODO: Use a better UI updating method
     // TODO: Add claim limits and store by UUID
@@ -63,11 +63,11 @@ public class LootRegistry extends SimpleDatabase<LootGroup> implements INBTParti
     }
 
     @Override
-    public synchronized NBTTagCompound writeToNBT(NBTTagCompound tag, @Nullable List<Integer> subset) {
+    public synchronized CompoundTag writeToNBT(CompoundTag tag, @Nullable List<Integer> subset) {
         NBTTagList jRew = new NBTTagList();
         for (DBEntry<LootGroup> entry : getEntries()) {
             if (subset != null && !subset.contains(entry.getID())) continue;
-            NBTTagCompound jGrp = entry.getValue().writeToNBT(new NBTTagCompound());
+            CompoundTag jGrp = entry.getValue().writeToNBT(new CompoundTag());
             jGrp.setInteger("ID", entry.getID());
             jRew.appendTag(jGrp);
         }
@@ -77,14 +77,14 @@ public class LootRegistry extends SimpleDatabase<LootGroup> implements INBTParti
     }
 
     @Override
-    public synchronized void readFromNBT(NBTTagCompound tag, boolean merge) {
+    public synchronized void readFromNBT(CompoundTag tag, boolean merge) {
         if (!merge) this.reset();
 
         List<LootGroup> legacyGroups = new ArrayList<>();
 
         NBTTagList list = tag.getTagList("groups", 10);
         for (int i = 0; i < list.tagCount(); i++) {
-            NBTTagCompound entry = list.getCompoundTagAt(i);
+            CompoundTag entry = list.getCompoundTagAt(i);
             int id = entry.hasKey("ID", 99) ? entry.getInteger("ID") : -1;
 
             LootGroup group = getValue(id);

@@ -8,7 +8,7 @@ import net.minecraft.init.Items;
 import net.minecraft.nbt.CompoundTag;
 
 public class FtbqTaskAdvancement {
-    public ITask[] converTask(NBTTagCompound tag) {
+    public ITask[] converTask(CompoundTag tag) {
         TaskTrigger task = new TaskTrigger();
 
         task.setTriggerID(tag.getString("advancement"));

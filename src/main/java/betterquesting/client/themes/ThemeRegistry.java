@@ -71,9 +71,9 @@ public class ThemeRegistry implements IThemeRegistry {
 
         setDefaultGui(PresetGUIs.EDIT_NBT, arg ->
         {
-            if (arg.value instanceof NBTTagCompound) {
+            if (arg.value instanceof CompoundTag) {
                 //noinspection unchecked
-                return new GuiNbtEditor(arg.parent, (NBTTagCompound) arg.value, arg.callback);
+                return new GuiNbtEditor(arg.parent, (CompoundTag) arg.value, arg.callback);
             } else if (arg.value instanceof NBTTagList) {
                 //noinspection unchecked
                 return new GuiNbtEditor(arg.parent, (NBTTagList) arg.value, arg.callback);

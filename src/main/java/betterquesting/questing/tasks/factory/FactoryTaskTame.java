@@ -7,7 +7,7 @@ import betterquesting.questing.tasks.TaskTame;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
-public final class FactoryTaskTame implements IFactoryData<ITask, NBTTagCompound> {
+public final class FactoryTaskTame implements IFactoryData<ITask, CompoundTag> {
     public static final FactoryTaskTame INSTANCE = new FactoryTaskTame();
 
     private final ResourceLocation REG_ID = new ResourceLocation(BetterQuesting.MODID_STD, "tame");
@@ -23,7 +23,7 @@ public final class FactoryTaskTame implements IFactoryData<ITask, NBTTagCompound
     }
 
     @Override
-    public TaskTame loadFromData(NBTTagCompound nbt) {
+    public TaskTame loadFromData(CompoundTag nbt) {
         TaskTame task = new TaskTame();
         task.readFromNBT(nbt);
         return task;

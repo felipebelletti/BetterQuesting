@@ -65,7 +65,7 @@ public class TaskInteractItem implements ITask {
         if (targetBlock.b != Blocks.AIR) {
             if (state.getBlock() == Blocks.AIR) return;
             TileEntity tile = state.getBlock().hasTileEntity(state) ? pInfo.PLAYER.world.getTileEntity(pos) : null;
-            NBTTagCompound tags = tile == null ? null : tile.writeToNBT(new NBTTagCompound());
+            CompoundTag tags = tile == null ? null : tile.writeToNBT(new CompoundTag());
 
             int tmpMeta = (targetBlock.m < 0 || targetBlock.m == OreDictionary.WILDCARD_VALUE) ? OreDictionary.WILDCARD_VALUE : state.getBlock().getMetaFromState(state);
             boolean oreMatch = targetBlock.oreDict.length() > 0 && OreDictionary.getOres(targetBlock.oreDict).contains(new ItemStack(state.getBlock(), 1, tmpMeta));
@@ -141,7 +141,7 @@ public class TaskInteractItem implements ITask {
     }
 
     @Override
-    public void readProgressFromNBT(NBTTagCompound nbt, boolean merge) {
+    public void readProgressFromNBT(CompoundTag nbt, boolean merge) {
         if (!merge) {
             completeUsers.clear();
             userProgress.clear();
@@ -159,7 +159,7 @@ public class TaskInteractItem implements ITask {
         NBTTagList pList = nbt.getTagList("userProgress", 10);
         for (int n = 0; n < pList.tagCount(); n++) {
             try {
-                NBTTagCompound pTag = pList.getCompoundTagAt(n);
+                CompoundTag pTag = pList.getCompoundTagAt(n);
                 UUID uuid = UUID.fromString(pTag.getString("uuid"));
                 userProgress.put(uuid, pTag.getInteger("value"));
             } catch (Exception e) {
@@ -169,7 +169,7 @@ public class TaskInteractItem implements ITask {
     }
 
     @Override
-    public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+    public CompoundTag writeProgressToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
         NBTTagList jArray = new NBTTagList();
         NBTTagList progArray = new NBTTagList();
 
@@ -179,7 +179,7 @@ public class TaskInteractItem implements ITask {
 
                 Integer data = userProgress.get(uuid);
                 if (data != null) {
-                    NBTTagCompound pJson = new NBTTagCompound();
+                    CompoundTag pJson = new CompoundTag();
                     pJson.setString("uuid", uuid.toString());
                     pJson.setInteger("value", data);
                     progArray.appendTag(pJson);
@@ -189,7 +189,7 @@ public class TaskInteractItem implements ITask {
             completeUsers.forEach((uuid) -> jArray.appendTag(new NBTTagString(uuid.toString())));
 
             userProgress.forEach((uuid, data) -> {
-                NBTTagCompound pJson = new NBTTagCompound();
+                CompoundTag pJson = new CompoundTag();
                 pJson.setString("uuid", uuid.toString());
                 pJson.setInteger("value", data);
                 progArray.appendTag(pJson);
@@ -203,9 +203,9 @@ public class TaskInteractItem implements ITask {
     }
 
     @Override
-    public synchronized NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-        nbt.setTag("item", targetItem.writeToNBT(new NBTTagCompound()));
-        nbt.setTag("block", targetBlock.writeToNBT(new NBTTagCompound()));
+    public synchronized CompoundTag writeToNBT(CompoundTag nbt) {
+        nbt.setTag("item", targetItem.writeToNBT(new CompoundTag()));
+        nbt.setTag("block", targetBlock.writeToNBT(new CompoundTag()));
         nbt.setBoolean("ignoreNbt", ignoreNBT);
         nbt.setBoolean("partialMatch", partialMatch);
         nbt.setBoolean("allowMainHand", useMainHand);
@@ -217,7 +217,7 @@ public class TaskInteractItem implements ITask {
     }
 
     @Override
-    public synchronized void readFromNBT(NBTTagCompound nbt) {
+    public synchronized void readFromNBT(CompoundTag nbt) {
         targetItem = new BigItemStack(nbt.getCompoundTag("item"));
         targetBlock.readFromNBT(nbt.getCompoundTag("block"));
         ignoreNBT = nbt.getBoolean("ignoreNbt");

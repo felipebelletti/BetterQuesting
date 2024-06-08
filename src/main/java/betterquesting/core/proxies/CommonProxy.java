@@ -37,7 +37,7 @@ public class CommonProxy {
     }
 
     public void registerExpansion() {
-        IRegistry<IFactoryData<ITask, NBTTagCompound>, ITask> taskReg = QuestingAPI.getAPI(ApiReference.TASK_REG);
+        IRegistry<IFactoryData<ITask, CompoundTag>, ITask> taskReg = QuestingAPI.getAPI(ApiReference.TASK_REG);
         taskReg.register(FactoryTaskBlockBreak.INSTANCE);
         taskReg.register(FactoryTaskCheckbox.INSTANCE);
         taskReg.register(FactoryTaskCrafting.INSTANCE);
@@ -55,7 +55,7 @@ public class CommonProxy {
         taskReg.register(FactoryTaskTrigger.INSTANCE);
         taskReg.register(FactoryTaskOptionalRetrieval.INSTANCE);
 
-        IRegistry<IFactoryData<IReward, NBTTagCompound>, IReward> rewardReg = QuestingAPI.getAPI(ApiReference.REWARD_REG);
+        IRegistry<IFactoryData<IReward, CompoundTag>, IReward> rewardReg = QuestingAPI.getAPI(ApiReference.REWARD_REG);
         rewardReg.register(FactoryRewardChoice.INSTANCE);
         rewardReg.register(FactoryRewardCommand.INSTANCE);
         rewardReg.register(FactoryRewardItem.INSTANCE);

@@ -60,7 +60,7 @@ public class RewardItem implements IReward {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(CompoundTag nbt) {
         items.clear();
         NBTTagList rList = nbt.getTagList("rewards", 10);
         for (int i = 0; i < rList.tagCount(); i++) {
@@ -74,10 +74,10 @@ public class RewardItem implements IReward {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public CompoundTag writeToNBT(CompoundTag nbt) {
         NBTTagList rJson = new NBTTagList();
         for (BigItemStack stack : items) {
-            rJson.appendTag(JsonHelper.ItemStackToJson(stack, new NBTTagCompound()));
+            rJson.appendTag(JsonHelper.ItemStackToJson(stack, new CompoundTag()));
         }
         nbt.setTag("rewards", rJson);
         return nbt;

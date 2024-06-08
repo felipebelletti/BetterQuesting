@@ -159,7 +159,7 @@ public class TaskTrigger implements ITask {
     }
 
     @Override
-    public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+    public CompoundTag writeProgressToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
         NBTTagList jArray = new NBTTagList();
 
         completeUsers.forEach((uuid) -> {
@@ -172,7 +172,7 @@ public class TaskTrigger implements ITask {
     }
 
     @Override
-    public void readProgressFromNBT(NBTTagCompound nbt, boolean merge) {
+    public void readProgressFromNBT(CompoundTag nbt, boolean merge) {
         if (!merge) completeUsers.clear();
         NBTTagList cList = nbt.getTagList("completeUsers", 8);
         for (int i = 0; i < cList.tagCount(); i++) {
@@ -185,7 +185,7 @@ public class TaskTrigger implements ITask {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public CompoundTag writeToNBT(CompoundTag nbt) {
         nbt.setString("description", desc);
         nbt.setString("trigger", triggerID);
         nbt.setString("conditions", critJson);
@@ -193,7 +193,7 @@ public class TaskTrigger implements ITask {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(CompoundTag nbt) {
         this.desc = nbt.getString("description");
         this.setTriggerID(nbt.getString("trigger"));
         this.setCriteriaJson(nbt.getString("conditions"));

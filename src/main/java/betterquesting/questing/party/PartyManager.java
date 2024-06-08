@@ -64,7 +64,7 @@ public class PartyManager extends SimpleDatabase<IParty> implements IPartyDataba
     public synchronized NBTTagList writeToNBT(NBTTagList json, List<Integer> subset) {
         for (DBEntry<IParty> entry : getEntries()) {
             if (subset != null && !subset.contains(entry.getID())) continue;
-            NBTTagCompound jp = entry.getValue().writeToNBT(new NBTTagCompound());
+            CompoundTag jp = entry.getValue().writeToNBT(new CompoundTag());
             jp.setInteger("partyID", entry.getID());
             json.appendTag(jp);
         }
@@ -77,7 +77,7 @@ public class PartyManager extends SimpleDatabase<IParty> implements IPartyDataba
         if (!merge) reset();
 
         for (int i = 0; i < json.tagCount(); i++) {
-            NBTTagCompound jp = json.getCompoundTagAt(i);
+            CompoundTag jp = json.getCompoundTagAt(i);
 
             int partyID = jp.hasKey("partyID", 99) ? jp.getInteger("partyID") : -1;
             if (partyID < 0) continue;

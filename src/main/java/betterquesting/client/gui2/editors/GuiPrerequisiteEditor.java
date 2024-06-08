@@ -215,14 +215,14 @@ public class GuiPrerequisiteEditor extends GuiScreenCanvas implements IPEventLis
             SendChanges();
         } else if (btn.getButtonID() == 4 && btn instanceof PanelButtonStorage) { // Delete
             DBEntry<IQuest> entry = ((PanelButtonStorage<DBEntry<IQuest>>) btn).getStoredValue();
-            NBTTagCompound payload = new NBTTagCompound();
+            CompoundTag payload = new CompoundTag();
             payload.setIntArray("questIDs", new int[]{entry.getID()});
             payload.setInteger("action", 1);
             NetQuestEdit.sendEdit(payload);
         } else if (btn.getButtonID() == 5) { // New
-            NBTTagCompound payload = new NBTTagCompound();
+            CompoundTag payload = new CompoundTag();
             NBTTagList dataList = new NBTTagList();
-            NBTTagCompound entry = new NBTTagCompound();
+            CompoundTag entry = new CompoundTag();
             entry.setInteger("questID", -1);
             dataList.appendTag(entry);
             payload.setTag("data", dataList);
@@ -304,11 +304,11 @@ public class GuiPrerequisiteEditor extends GuiScreenCanvas implements IPEventLis
     }
 
     private void SendChanges() {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         NBTTagList dataList = new NBTTagList();
-        NBTTagCompound entry = new NBTTagCompound();
+        CompoundTag entry = new CompoundTag();
         entry.setInteger("questID", questID);
-        entry.setTag("config", quest.writeToNBT(new NBTTagCompound()));
+        entry.setTag("config", quest.writeToNBT(new CompoundTag()));
         dataList.appendTag(entry);
         payload.setTag("data", dataList);
         payload.setInteger("action", 0);

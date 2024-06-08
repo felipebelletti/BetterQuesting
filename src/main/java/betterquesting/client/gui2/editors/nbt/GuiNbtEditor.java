@@ -29,10 +29,10 @@ import org.lwjgl.input.Keyboard;
 
 public class GuiNbtEditor extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {
     private final NBTBase nbt;
-    private final ICallback<NBTTagCompound> comCallback;
+    private final ICallback<CompoundTag> comCallback;
     private final ICallback<NBTTagList> lstCallback;
 
-    public GuiNbtEditor(GuiScreen parent, NBTTagCompound tag, ICallback<NBTTagCompound> callback) {
+    public GuiNbtEditor(GuiScreen parent, CompoundTag tag, ICallback<CompoundTag> callback) {
         super(parent);
 
         this.nbt = tag;
@@ -66,7 +66,7 @@ public class GuiNbtEditor extends GuiScreenCanvas implements IPEventListener, IV
 
         PanelScrollingNBT pnEdit;
         if (nbt.getId() == 10) {
-            pnEdit = new PanelScrollingNBT(new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(16, 32, 24, 32), 0), (NBTTagCompound) nbt, 1, 2, 3, 4);
+            pnEdit = new PanelScrollingNBT(new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(16, 32, 24, 32), 0), (CompoundTag) nbt, 1, 2, 3, 4);
         } else {
             pnEdit = new PanelScrollingNBT(new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(16, 32, 24, 32), 0), (NBTTagList) nbt, 1, 2, 3, 4);
         }
@@ -108,7 +108,7 @@ public class GuiNbtEditor extends GuiScreenCanvas implements IPEventListener, IV
             mc.displayGuiScreen(this.parent);
 
             if (nbt.getId() == 10 && comCallback != null) {
-                comCallback.setValue((NBTTagCompound) nbt);
+                comCallback.setValue((CompoundTag) nbt);
             } else if (nbt.getId() == 9 && lstCallback != null) {
                 lstCallback.setValue((NBTTagList) nbt);
             }

@@ -39,7 +39,7 @@ public class NetBulkSync // Clears local data and negotiates a full resync with 
     }
 
     public static void sendReset(@Nullable ServerPlayer player, boolean reset, boolean respond) {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setBoolean("reset", reset);
         payload.setBoolean("respond", respond);
 
@@ -79,12 +79,12 @@ public class NetBulkSync // Clears local data and negotiates a full resync with 
         NetCacheSync.sendSync(player);
     }
 
-    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+    private static void onServer(Tuple<CompoundTag, ServerPlayer> message) {
         sendSync(message.getSecond()); // Can include more sync options at a later date
     }
 
     @SideOnly(Side.CLIENT)
-    private static void onClient(NBTTagCompound message) {
+    private static void onClient(CompoundTag message) {
         if (message.getBoolean("reset") && !Minecraft.getMinecraft().isIntegratedServerRunning()) // DON'T do this on LAN hosts
         {
             SaveLoadHandler.INSTANCE.unloadDatabases();
@@ -92,7 +92,7 @@ public class NetBulkSync // Clears local data and negotiates a full resync with 
 
         if (message.getBoolean("respond")) // Client doesn't really have to honour this but it would mess with things otherwise
         {
-            PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, new NBTTagCompound()));
+            PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, new CompoundTag()));
         }
     }
 }

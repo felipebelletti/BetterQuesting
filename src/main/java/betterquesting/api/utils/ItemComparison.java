@@ -50,8 +50,8 @@ public class ItemComparison {
         } else if (!(tag1 instanceof NBTPrimitive && tag2 instanceof NBTPrimitive) && tag1.getId() != tag2.getId())
             return false; // Incompatible tag types (and not a numbers we can cast)
 
-        if (tag1 instanceof NBTTagCompound && tag2 instanceof NBTTagCompound) {
-            return CompareNBTTagCompound((NBTTagCompound) tag1, (NBTTagCompound) tag2, partial);
+        if (tag1 instanceof CompoundTag && tag2 instanceof CompoundTag) {
+            return CompareNBTTagCompound((CompoundTag) tag1, (CompoundTag) tag2, partial);
         } else if (tag1 instanceof NBTTagList && tag2 instanceof NBTTagList) {
             NBTTagList list1 = (NBTTagList) tag1;
             NBTTagList list2 = (NBTTagList) tag2;
@@ -160,7 +160,7 @@ public class ItemComparison {
         return true;
     }
 
-    private static boolean CompareNBTTagCompound(NBTTagCompound reqTags, NBTTagCompound sample, boolean partial) {
+    private static boolean CompareNBTTagCompound(CompoundTag reqTags, CompoundTag sample, boolean partial) {
         if (isEmptyNBT(reqTags) != isEmptyNBT(sample)) // One is null, the other is not
         {
             return false;
@@ -190,7 +190,7 @@ public class ItemComparison {
     }
 
     @Deprecated
-    public static boolean OreDictionaryMatch(String name, NBTTagCompound tags, ItemStack stack, boolean nbtCheck, boolean partialNBT) {
+    public static boolean OreDictionaryMatch(String name, CompoundTag tags, ItemStack stack, boolean nbtCheck, boolean partialNBT) {
         if (!nbtCheck) return stack != null && !StringUtils.isNullOrEmpty(name) && new OreIngredient(name).apply(stack);
         return OreDictionaryMatch(new OreIngredient(name), tags, stack, nbtCheck, partialNBT);
     }
@@ -198,7 +198,7 @@ public class ItemComparison {
     /**
      * Check if the item stack is part of the ore dictionary listing with the given ore ingredient while also comparing NBT tags
      */
-    public static boolean OreDictionaryMatch(OreIngredient ore, NBTTagCompound tags, ItemStack stack, boolean nbtCheck, boolean partialNBT) {
+    public static boolean OreDictionaryMatch(OreIngredient ore, CompoundTag tags, ItemStack stack, boolean nbtCheck, boolean partialNBT) {
         if (stack == null || ore == null) return false;
         return ore.apply(stack) && (!nbtCheck || CompareNBTTagCompound(stack.getTagCompound(), tags, partialNBT));
     }

@@ -49,10 +49,10 @@ public class ItemPlaceholder extends Item {
 
         Player player = (Player) entity;
 
-        NBTTagCompound tags = stack.getTagCompound();
+        CompoundTag tags = stack.getTagCompound();
         Item i = Item.REGISTRY.getObject(new ResourceLocation(tags.getString("orig_id")));
         int m = stack.getItemDamage() > 0 ? stack.getItemDamage() : tags.getInteger("orig_meta");
-        NBTTagCompound t = tags.hasKey("orig_tag") ? tags.getCompoundTag("orig_tag") : null;
+        CompoundTag t = tags.hasKey("orig_tag") ? tags.getCompoundTag("orig_tag") : null;
 
         if (i != null) {
             ItemStack converted = new ItemStack(i, stack.getCount(), m);

@@ -9,7 +9,7 @@ import javax.annotation.Nullable;
 import java.util.TreeMap;
 import java.util.UUID;
 
-public class SupporterDB implements INBTSaveLoad<NBTTagCompound> {
+public class SupporterDB implements INBTSaveLoad<CompoundTag> {
     public static final SupporterDB INSTANCE = new SupporterDB();
 
     private final TreeMap<UUID, SupporterEntry> mapDB = new TreeMap<>();
@@ -45,13 +45,13 @@ public class SupporterDB implements INBTSaveLoad<NBTTagCompound> {
 
     @Nonnull
     @Override
-    public synchronized NBTTagCompound writeToNBT(@Nonnull NBTTagCompound nbt) {
-        mapDB.forEach((key, value) -> nbt.setTag(key.toString(), value.writeToNBT(new NBTTagCompound())));
+    public synchronized CompoundTag writeToNBT(@Nonnull CompoundTag nbt) {
+        mapDB.forEach((key, value) -> nbt.setTag(key.toString(), value.writeToNBT(new CompoundTag())));
         return nbt;
     }
 
     @Override
-    public synchronized void readFromNBT(@Nonnull NBTTagCompound nbt) {
+    public synchronized void readFromNBT(@Nonnull CompoundTag nbt) {
         mapDB.clear();
         nbt.getKeySet().forEach((key) -> {
             try {

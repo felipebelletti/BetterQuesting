@@ -23,7 +23,7 @@ public class NetScoreSync {
     }
 
     public static void sendScore(@Nullable ServerPlayer player) {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setTag("data", ScoreboardBQ.INSTANCE.writeToNBT(new NBTTagList(), player == null ? null : Collections.singletonList(QuestingAPI.getQuestingUUID(player))));
         payload.setBoolean("merge", player != null);
 
@@ -34,7 +34,7 @@ public class NetScoreSync {
         }
     }
 
-    private static void onClient(NBTTagCompound message) {
+    private static void onClient(CompoundTag message) {
         ScoreboardBQ.INSTANCE.readFromNBT(message.getTagList("data", 10), message.getBoolean("merge"));
     }
 }

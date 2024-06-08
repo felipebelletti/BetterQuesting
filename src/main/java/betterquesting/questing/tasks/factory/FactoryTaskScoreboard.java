@@ -7,7 +7,7 @@ import betterquesting.questing.tasks.TaskScoreboard;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
-public class FactoryTaskScoreboard implements IFactoryData<ITask, NBTTagCompound> {
+public class FactoryTaskScoreboard implements IFactoryData<ITask, CompoundTag> {
     public static final FactoryTaskScoreboard INSTANCE = new FactoryTaskScoreboard();
 
     @Override
@@ -21,7 +21,7 @@ public class FactoryTaskScoreboard implements IFactoryData<ITask, NBTTagCompound
     }
 
     @Override
-    public TaskScoreboard loadFromData(NBTTagCompound json) {
+    public TaskScoreboard loadFromData(CompoundTag json) {
         TaskScoreboard task = new TaskScoreboard();
         task.readFromNBT(json);
         return task;

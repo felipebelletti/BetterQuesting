@@ -33,14 +33,14 @@ public class NetSettingSync {
 
     @SideOnly(Side.CLIENT)
     public static void requestEdit() {
-        NBTTagCompound payload = new NBTTagCompound();
-        payload.setTag("data", QuestSettings.INSTANCE.writeToNBT(new NBTTagCompound()));
+        CompoundTag payload = new CompoundTag();
+        payload.setTag("data", QuestSettings.INSTANCE.writeToNBT(new CompoundTag()));
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
     public static void sendSync(@Nullable ServerPlayer player) {
-        NBTTagCompound payload = new NBTTagCompound();
-        payload.setTag("data", QuestSettings.INSTANCE.writeToNBT(new NBTTagCompound()));
+        CompoundTag payload = new CompoundTag();
+        payload.setTag("data", QuestSettings.INSTANCE.writeToNBT(new CompoundTag()));
         if (player != null) {
             PacketSender.INSTANCE.sendToPlayers(new QuestingPacket(ID_NAME, payload), player);
         } else {
@@ -49,11 +49,11 @@ public class NetSettingSync {
     }
 
     @SideOnly(Side.CLIENT)
-    private static void onClient(NBTTagCompound message) {
+    private static void onClient(CompoundTag message) {
         QuestSettings.INSTANCE.readFromNBT(message.getCompoundTag("data"));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+    private static void onServer(Tuple<CompoundTag, ServerPlayer> message) {
         MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
         if (!server.getPlayerList().canSendCommands(message.getSecond().getGameProfile())) {
             BetterQuesting.logger.log(Level.WARN, "Player " + message.getSecond().getName() + " (UUID:" + QuestingAPI.getQuestingUUID(message.getSecond()) + ") tried to edit settings without OP permissions!");

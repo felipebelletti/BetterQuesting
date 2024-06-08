@@ -78,7 +78,7 @@ public class GuiEditTaskTame extends GuiScreenCanvas implements IVolatileScreen 
                     Entity tmp = value != null ? value : new EntityZombie(mc.world);
                     ResourceLocation res = EntityList.getKey(tmp.getClass());
                     task.idName = res != null ? res.toString() : "minecraft:zombie";
-                    task.targetTags = new NBTTagCompound();
+                    task.targetTags = new CompoundTag();
                     tmp.writeToNBTOptional(task.targetTags);
 
                     sendChanges();
@@ -89,7 +89,7 @@ public class GuiEditTaskTame extends GuiScreenCanvas implements IVolatileScreen 
         cvBackground.addPanel(new PanelButton(new GuiTransform(GuiAlign.MID_CENTER, -100, 32, 200, 16, 0), -1, QuestTranslation.translate("betterquesting.btn.advanced")) {
             @Override
             public void onButtonClick() {
-                mc.displayGuiScreen(QuestingAPI.getAPI(ApiReference.THEME_REG).getGui(PresetGUIs.EDIT_NBT, new GArgsNBT<>(screenRef, task.writeToNBT(new NBTTagCompound()), task::readFromNBT, null)));
+                mc.displayGuiScreen(QuestingAPI.getAPI(ApiReference.THEME_REG).getGui(PresetGUIs.EDIT_NBT, new GArgsNBT<>(screenRef, task.writeToNBT(new CompoundTag()), task::readFromNBT, null)));
             }
         });
 
@@ -105,11 +105,11 @@ public class GuiEditTaskTame extends GuiScreenCanvas implements IVolatileScreen 
     private static final ResourceLocation QUEST_EDIT = new ResourceLocation(ModReference.MODID, "quest_edit"); // TODO: Really need to make the native packet types accessible in the API
 
     private void sendChanges() {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         NBTTagList dataList = new NBTTagList();
-        NBTTagCompound entry = new NBTTagCompound();
+        CompoundTag entry = new CompoundTag();
         entry.setInteger("questID", quest.getID());
-        entry.setTag("config", quest.getValue().writeToNBT(new NBTTagCompound()));
+        entry.setTag("config", quest.getValue().writeToNBT(new CompoundTag()));
         dataList.appendTag(entry);
         payload.setTag("data", dataList);
         payload.setInteger("action", 0); // Action: Update data

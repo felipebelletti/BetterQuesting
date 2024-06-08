@@ -30,7 +30,7 @@ public class ScoreboardBQ implements INBTPartial<NBTTagList, UUID> {
     public synchronized void readFromNBT(NBTTagList nbt, boolean merge) {
         if (!merge) objectives.clear();
         for (int i = 0; i < nbt.tagCount(); i++) {
-            NBTTagCompound jObj = nbt.getCompoundTagAt(i);
+            CompoundTag jObj = nbt.getCompoundTagAt(i);
             ScoreBQ score = objectives.computeIfAbsent(jObj.getString("name"), (key) -> new ScoreBQ());
             score.readFromNBT(jObj.getTagList("scores", 10), merge);
         }
@@ -39,7 +39,7 @@ public class ScoreboardBQ implements INBTPartial<NBTTagList, UUID> {
     @Override
     public synchronized NBTTagList writeToNBT(NBTTagList nbt, @Nullable List<UUID> users) {
         for (Entry<String, ScoreBQ> entry : objectives.entrySet()) {
-            NBTTagCompound jObj = new NBTTagCompound();
+            CompoundTag jObj = new CompoundTag();
             jObj.setString("name", entry.getKey());
             jObj.setTag("scores", entry.getValue().writeToNBT(new NBTTagList(), users));
             nbt.appendTag(jObj);

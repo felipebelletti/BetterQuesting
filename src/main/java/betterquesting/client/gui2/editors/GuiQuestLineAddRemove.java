@@ -222,15 +222,15 @@ public class GuiQuestLineAddRemove extends GuiScreenCanvas implements IPEventLis
         } else if (btn.getButtonID() == 4) // Delete
         {
             DBEntry<IQuest> entry = ((PanelButtonStorage<DBEntry<IQuest>>) btn).getStoredValue();
-            NBTTagCompound payload = new NBTTagCompound();
+            CompoundTag payload = new CompoundTag();
             payload.setIntArray("questIDs", new int[]{entry.getID()});
             payload.setInteger("action", 1);
             NetQuestEdit.sendEdit(payload);
         } else if (btn.getButtonID() == 5) // New
         {
-            NBTTagCompound payload = new NBTTagCompound();
+            CompoundTag payload = new CompoundTag();
             NBTTagList dataList = new NBTTagList();
-            NBTTagCompound entry = new NBTTagCompound();
+            CompoundTag entry = new CompoundTag();
             entry.setInteger("questID", -1);
             dataList.appendTag(entry);
             payload.setTag("data", dataList);
@@ -238,7 +238,7 @@ public class GuiQuestLineAddRemove extends GuiScreenCanvas implements IPEventLis
             NetQuestEdit.sendEdit(payload);
         } else if (btn.getButtonID() == 6) // Error resolve
         {
-            NBTTagCompound payload = new NBTTagCompound();
+            CompoundTag payload = new CompoundTag();
             payload.setIntArray("questIDs", new int[]{((PanelButtonStorage<Integer>) btn).getStoredValue()});
             payload.setInteger("action", 1);
             NetQuestEdit.sendEdit(payload);
@@ -279,11 +279,11 @@ public class GuiQuestLineAddRemove extends GuiScreenCanvas implements IPEventLis
     private void SendChanges() {
         if (questLine == null) return;
 
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         NBTTagList dataList = new NBTTagList();
-        NBTTagCompound entry = new NBTTagCompound();
+        CompoundTag entry = new CompoundTag();
         entry.setInteger("chapterID", lineID);
-        entry.setTag("config", questLine.writeToNBT(new NBTTagCompound(), null));
+        entry.setTag("config", questLine.writeToNBT(new CompoundTag(), null));
         dataList.appendTag(entry);
         payload.setTag("data", dataList);
         payload.setInteger("action", 0);

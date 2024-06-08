@@ -82,21 +82,21 @@ public class BigItemStack {
     }
 
     /**
-     * Shortcut method to the NBTTagCompound in the base ItemStack
+     * Shortcut method to the CompoundTag in the base ItemStack
      */
-    public NBTTagCompound GetTagCompound() {
+    public CompoundTag GetTagCompound() {
         return baseStack.getTagCompound();
     }
 
     /**
-     * Shortcut method to the NBTTagCompound in the base ItemStack
+     * Shortcut method to the CompoundTag in the base ItemStack
      */
-    public void SetTagCompound(NBTTagCompound tags) {
+    public void SetTagCompound(CompoundTag tags) {
         baseStack.setTagCompound(tags);
     }
 
     /**
-     * Shortcut method to the NBTTagCompound in the base ItemStack
+     * Shortcut method to the CompoundTag in the base ItemStack
      */
     public boolean HasTagCompound() {
         return baseStack.hasTagCompound();
@@ -137,9 +137,9 @@ public class BigItemStack {
         }
     }
 
-    public BigItemStack(@Nonnull NBTTagCompound tags) // Can load normal ItemStack NBTs. Does NOT deal with placeholders
+    public BigItemStack(@Nonnull CompoundTag tags) // Can load normal ItemStack NBTs. Does NOT deal with placeholders
     {
-        NBTTagCompound itemNBT = tags.copy();
+        CompoundTag itemNBT = tags.copy();
         itemNBT.setInteger("Count", 1);
         if (tags.hasKey("id", 99)) {
             itemNBT.setString("id", "" + tags.getShort("id"));
@@ -150,7 +150,7 @@ public class BigItemStack {
         if (tags.getShort("Damage") < 0) this.baseStack.setItemDamage(OreDictionary.WILDCARD_VALUE);
     }
 
-    public NBTTagCompound writeToNBT(NBTTagCompound tags) {
+    public CompoundTag writeToNBT(CompoundTag tags) {
         baseStack.writeToNBT(tags);
         tags.setInteger("Count", stackSize);
         tags.setString("OreDict", oreDict);

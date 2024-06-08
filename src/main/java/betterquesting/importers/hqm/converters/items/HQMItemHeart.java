@@ -14,7 +14,7 @@ public class HQMItemHeart implements HQMItem {
     }
 
     @Override
-    public BigItemStack convertItem(int damage, int amount, NBTTagCompound tags) {
+    public BigItemStack convertItem(int damage, int amount, CompoundTag tags) {
         int amt = amount;
         int dmg = 0;
 

@@ -88,9 +88,9 @@ public class ToolboxToolNew implements IToolboxTool {
         }
 
         // Sync Quest
-        NBTTagCompound quPayload = new NBTTagCompound();
+        CompoundTag quPayload = new CompoundTag();
         NBTTagList qdList = new NBTTagList();
-        NBTTagCompound qTag = new NBTTagCompound();
+        CompoundTag qTag = new CompoundTag();
         qTag.setInteger("questID", qID);
         qdList.appendTag(qTag);
         quPayload.setTag("data", qdList);
@@ -98,11 +98,11 @@ public class ToolboxToolNew implements IToolboxTool {
         NetQuestEdit.sendEdit(quPayload);
 
         // Sync Line
-        NBTTagCompound chPayload = new NBTTagCompound();
+        CompoundTag chPayload = new CompoundTag();
         NBTTagList cdList = new NBTTagList();
-        NBTTagCompound cTag = new NBTTagCompound();
+        CompoundTag cTag = new CompoundTag();
         cTag.setInteger("chapterID", lID);
-        cTag.setTag("config", qLine.writeToNBT(new NBTTagCompound(), null));
+        cTag.setTag("config", qLine.writeToNBT(new CompoundTag(), null));
         cdList.appendTag(cTag);
         chPayload.setTag("data", cdList);
         chPayload.setInteger("action", 0);

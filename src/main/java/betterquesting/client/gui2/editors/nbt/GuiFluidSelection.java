@@ -47,7 +47,7 @@ public class GuiFluidSelection extends GuiScreenCanvas implements IPEventListene
     private PanelTextField<Integer> fieldSize;
     private PanelFluidSlot itemPreview;
 
-    public GuiFluidSelection(GuiScreen parent, NBTTagCompound tag, ICallback<FluidStack> callback) {
+    public GuiFluidSelection(GuiScreen parent, CompoundTag tag, ICallback<FluidStack> callback) {
         this(parent, JsonHelper.JsonToFluidStack(tag), callback);
     }
 

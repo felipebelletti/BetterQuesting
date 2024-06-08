@@ -123,7 +123,7 @@ public class TaskLocation implements ITaskTickable {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public CompoundTag writeToNBT(CompoundTag nbt) {
         nbt.setString("name", name);
         nbt.setInteger("posX", x);
         nbt.setInteger("posY", y);
@@ -141,7 +141,7 @@ public class TaskLocation implements ITaskTickable {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(CompoundTag nbt) {
         name = nbt.getString("name");
         x = nbt.getInteger("posX");
         y = nbt.getInteger("posY");
@@ -157,7 +157,7 @@ public class TaskLocation implements ITaskTickable {
     }
 
     @Override
-    public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+    public CompoundTag writeProgressToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
         NBTTagList jArray = new NBTTagList();
 
         completeUsers.forEach((uuid) -> {
@@ -170,7 +170,7 @@ public class TaskLocation implements ITaskTickable {
     }
 
     @Override
-    public void readProgressFromNBT(NBTTagCompound nbt, boolean merge) {
+    public void readProgressFromNBT(CompoundTag nbt, boolean merge) {
         if (!merge) completeUsers.clear();
         NBTTagList cList = nbt.getTagList("completeUsers", 8);
         for (int i = 0; i < cList.tagCount(); i++) {

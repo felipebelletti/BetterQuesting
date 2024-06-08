@@ -8,11 +8,11 @@ import net.minecraft.init.Items;
 import net.minecraft.nbt.CompoundTag;
 
 public class FtbqTaskKill {
-    public ITask[] convertTask(NBTTagCompound tag) {
+    public ITask[] convertTask(CompoundTag tag) {
         TaskHunt task = new TaskHunt();
 
         task.idName = tag.getString("entity");
-        task.targetTags = new NBTTagCompound();
+        task.targetTags = new CompoundTag();
         task.required = tag.getInteger("value");
         task.ignoreNBT = true;
         task.subtypes = true;

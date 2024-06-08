@@ -29,7 +29,7 @@ public class NetQuestAction {
     @SideOnly(Side.CLIENT)
     public static void requestClaim(@Nonnull int[] questIDs) {
         if (questIDs.length <= 0) return;
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setInteger("action", 0);
         payload.setIntArray("questIDs", questIDs);
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
@@ -38,13 +38,13 @@ public class NetQuestAction {
     @SideOnly(Side.CLIENT)
     public static void requestDetect(@Nonnull int[] questIDs) {
         if (questIDs.length <= 0) return;
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setInteger("action", 1);
         payload.setIntArray("questIDs", questIDs);
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+    private static void onServer(Tuple<CompoundTag, ServerPlayer> message) {
         int action = !message.getFirst().hasKey("action", 99) ? -1 : message.getFirst().getInteger("action");
 
         switch (action) {

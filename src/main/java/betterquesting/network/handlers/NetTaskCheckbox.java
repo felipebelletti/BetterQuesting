@@ -24,14 +24,14 @@ public class NetTaskCheckbox {
 
     @SideOnly(Side.CLIENT)
     public static void requestClick(int questID, int taskID) {
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setInteger("questID", questID);
         payload.setInteger("taskID", taskID);
         QuestingAPI.getAPI(ApiReference.PACKET_SENDER).sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
-        NBTTagCompound data = message.getFirst();
+    private static void onServer(Tuple<CompoundTag, ServerPlayer> message) {
+        CompoundTag data = message.getFirst();
         ServerPlayer sender = message.getSecond();
 
         int qId = !data.hasKey("questID", 99) ? -1 : data.getInteger("questID");

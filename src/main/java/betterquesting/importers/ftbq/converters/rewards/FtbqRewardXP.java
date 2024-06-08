@@ -11,7 +11,7 @@ public class FtbqRewardXP {
         this.isLevels = isLevels;
     }
 
-    public IReward[] convertTask(NBTTagCompound tag) {
+    public IReward[] convertTask(CompoundTag tag) {
         RewardXP reward = new RewardXP();
         reward.levels = this.isLevels;
         reward.amount = isLevels ? tag.getInteger("xp_levels") : tag.getInteger("xp");

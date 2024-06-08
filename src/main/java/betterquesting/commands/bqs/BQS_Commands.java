@@ -40,16 +40,16 @@ public class BQS_Commands extends CommandBase {
 
         if (args[0].equalsIgnoreCase("default")) {
             if (args[1].equalsIgnoreCase("save")) {
-                NBTTagCompound jsonQ = new NBTTagCompound();
+                CompoundTag jsonQ = new CompoundTag();
                 LootRegistry.INSTANCE.writeToNBT(jsonQ, null);
                 JsonHelper.WriteToFile(new File(server.getFile("config/betterquesting/"), "DefaultLoot.json"), NBTConverter.NBTtoJSON_Compound(jsonQ, new JsonObject(), true));
                 sender.sendMessage(new TextComponentString("Loot database set as global default"));
             } else if (args[1].equalsIgnoreCase("load")) {
                 File f1 = new File("config/betterquesting/DefaultLoot.json");
-                NBTTagCompound j1;
+                CompoundTag j1;
 
                 if (f1.exists()) {
-                    j1 = NBTConverter.JSONtoNBT_Object(JsonHelper.ReadFromFile(f1), new NBTTagCompound(), true);
+                    j1 = NBTConverter.JSONtoNBT_Object(JsonHelper.ReadFromFile(f1), new CompoundTag(), true);
                     LootRegistry.INSTANCE.readFromNBT(j1, false);
                     NetLootSync.sendSync(null);
                     sender.sendMessage(new TextComponentString("Reloaded default loot database"));

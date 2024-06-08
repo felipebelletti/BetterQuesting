@@ -7,7 +7,7 @@ import betterquesting.questing.tasks.TaskHunt;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
-public class FactoryTaskHunt implements IFactoryData<ITask, NBTTagCompound> {
+public class FactoryTaskHunt implements IFactoryData<ITask, CompoundTag> {
     public static final FactoryTaskHunt INSTANCE = new FactoryTaskHunt();
 
     @Override
@@ -21,7 +21,7 @@ public class FactoryTaskHunt implements IFactoryData<ITask, NBTTagCompound> {
     }
 
     @Override
-    public TaskHunt loadFromData(NBTTagCompound json) {
+    public TaskHunt loadFromData(CompoundTag json) {
         TaskHunt task = new TaskHunt();
         task.readFromNBT(json);
         return task;

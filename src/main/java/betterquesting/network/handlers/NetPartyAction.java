@@ -41,11 +41,11 @@ public class NetPartyAction {
     }
 
     @SideOnly(Side.CLIENT)
-    public static void sendAction(NBTTagCompound payload) {
+    public static void sendAction(CompoundTag payload) {
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    private static void onServer(Tuple<NBTTagCompound, ServerPlayer> message) {
+    private static void onServer(Tuple<CompoundTag, ServerPlayer> message) {
         ServerPlayer sender = message.getSecond();
 
         int action = !message.getFirst().hasKey("action", 99) ? -1 : message.getFirst().getInteger("action");
@@ -102,13 +102,13 @@ public class NetPartyAction {
         PartyManager.INSTANCE.removeID(partyID);
         PartyInvitations.INSTANCE.purgeInvites(partyID);
 
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setInteger("action", 1);
         payload.setInteger("partyID", partyID);
         PacketSender.INSTANCE.sendToAll(new QuestingPacket(ID_NAME, payload)); // Invites need to be purged from everyone
     }
 
-    private static void editParty(int partyID, IParty party, NBTTagCompound settings) {
+    private static void editParty(int partyID, IParty party, CompoundTag settings) {
         party.readProperties(settings);
         NetPartySync.quickSync(partyID);
     }
@@ -168,7 +168,7 @@ public class NetPartyAction {
             if (party.getMembers().size() > 0) {
                 NetPartySync.quickSync(partyID);
                 if (player != null) {
-                    NBTTagCompound payload = new NBTTagCompound();
+                    CompoundTag payload = new CompoundTag();
                     payload.setInteger("action", 5);
                     payload.setInteger("partyID", partyID);
                     PacketSender.INSTANCE.sendToPlayers(new QuestingPacket(ID_NAME, payload), player);
@@ -178,7 +178,7 @@ public class NetPartyAction {
                 PartyManager.INSTANCE.removeID(partyID);
                 PartyInvitations.INSTANCE.purgeInvites(partyID);
 
-                NBTTagCompound payload = new NBTTagCompound();
+                CompoundTag payload = new CompoundTag();
                 payload.setInteger("action", 1);
                 payload.setInteger("partyID", partyID);
                 PacketSender.INSTANCE.sendToAll(new QuestingPacket(ID_NAME, payload)); // Invites need to be purged from everyone
@@ -209,7 +209,7 @@ public class NetPartyAction {
     }
 
     @SideOnly(Side.CLIENT)
-    private static void onClient(NBTTagCompound message) {
+    private static void onClient(CompoundTag message) {
         int action = !message.hasKey("action", 99) ? -1 : message.getInteger("action");
         int partyID = !message.hasKey("partyID", 99) ? -1 : message.getInteger("partyID");
 

@@ -137,28 +137,28 @@ public class PartyInstance implements IParty {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound json) {
+    public CompoundTag writeToNBT(CompoundTag json) {
         NBTTagList memJson = new NBTTagList();
         for (Entry<UUID, EnumPartyStatus> mem : members.entrySet()) {
-            NBTTagCompound jm = new NBTTagCompound();
+            CompoundTag jm = new CompoundTag();
             jm.setString("uuid", mem.getKey().toString());
             jm.setString("status", mem.getValue().toString());
             memJson.appendTag(jm);
         }
         json.setTag("members", memJson);
 
-        json.setTag("properties", pInfo.writeToNBT(new NBTTagCompound()));
+        json.setTag("properties", pInfo.writeToNBT(new CompoundTag()));
 
         return json;
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound jObj) {
+    public void readFromNBT(CompoundTag jObj) {
         if (jObj.hasKey("properties", 10)) {
             pInfo.readFromNBT(jObj.getCompoundTag("properties"));
         } else // Legacy stuff
         {
-            pInfo.readFromNBT(new NBTTagCompound());
+            pInfo.readFromNBT(new CompoundTag());
             pInfo.setProperty(NativeProps.NAME, jObj.getString("name"));
         }
 
@@ -166,7 +166,7 @@ public class PartyInstance implements IParty {
         NBTTagList memList = jObj.getTagList("members", 10);
         for (int i = 0; i < memList.tagCount(); i++) {
             try {
-                NBTTagCompound jMem = memList.getCompoundTagAt(i);
+                CompoundTag jMem = memList.getCompoundTagAt(i);
                 if (!jMem.hasKey("uuid", 8) || !jMem.hasKey("status")) continue;
                 UUID uuid = UUID.fromString(jMem.getString("uuid"));
                 EnumPartyStatus priv = EnumPartyStatus.valueOf(jMem.getString("status"));
@@ -180,12 +180,12 @@ public class PartyInstance implements IParty {
     }
 
     @Override
-    public NBTTagCompound writeProperties(NBTTagCompound nbt) {
+    public CompoundTag writeProperties(CompoundTag nbt) {
         return pInfo.writeToNBT(nbt);
     }
 
     @Override
-    public void readProperties(NBTTagCompound nbt) {
+    public void readProperties(CompoundTag nbt) {
         pInfo.readFromNBT(nbt);
     }
 }

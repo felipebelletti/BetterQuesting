@@ -111,12 +111,12 @@ public class HQMBagImporter implements IImporter {
             }
         }
 
-        NBTTagCompound tags = new NBTTagCompound();
-        NBTTagCompound base = new NBTTagCompound();
+        CompoundTag tags = new CompoundTag();
+        CompoundTag base = new CompoundTag();
         NBTTagList jAry = new NBTTagList();
 
         for (LootGroup group : hqmLoot) {
-            NBTTagCompound jGrp = new NBTTagCompound();
+            CompoundTag jGrp = new CompoundTag();
             group.writeToNBT(jGrp);
             jAry.appendTag(jGrp);
         }

@@ -116,7 +116,7 @@ public class TaskCrafting implements ITask {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public CompoundTag writeToNBT(CompoundTag nbt) {
         nbt.setBoolean("partialMatch", partialMatch);
         nbt.setBoolean("ignoreNBT", ignoreNBT);
         nbt.setBoolean("allowCraft", allowCraft);
@@ -125,7 +125,7 @@ public class TaskCrafting implements ITask {
 
         NBTTagList itemArray = new NBTTagList();
         for (BigItemStack stack : this.requiredItems) {
-            itemArray.appendTag(JsonHelper.ItemStackToJson(stack, new NBTTagCompound()));
+            itemArray.appendTag(JsonHelper.ItemStackToJson(stack, new CompoundTag()));
         }
         nbt.setTag("requiredItems", itemArray);
 
@@ -133,7 +133,7 @@ public class TaskCrafting implements ITask {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(CompoundTag nbt) {
         partialMatch = nbt.getBoolean("partialMatch");
         ignoreNBT = nbt.getBoolean("ignoreNBT");
         if (nbt.hasKey("allowCraft")) allowCraft = nbt.getBoolean("allowCraft");
@@ -148,7 +148,7 @@ public class TaskCrafting implements ITask {
     }
 
     @Override
-    public void readProgressFromNBT(NBTTagCompound nbt, boolean merge) {
+    public void readProgressFromNBT(CompoundTag nbt, boolean merge) {
         if (!merge) {
             completeUsers.clear();
             userProgress.clear();
@@ -166,7 +166,7 @@ public class TaskCrafting implements ITask {
         NBTTagList pList = nbt.getTagList("userProgress", 10);
         for (int n = 0; n < pList.tagCount(); n++) {
             try {
-                NBTTagCompound pTag = pList.getCompoundTagAt(n);
+                CompoundTag pTag = pList.getCompoundTagAt(n);
                 UUID uuid = UUID.fromString(pTag.getString("uuid"));
 
                 int[] data = new int[requiredItems.size()];
@@ -184,7 +184,7 @@ public class TaskCrafting implements ITask {
     }
 
     @Override
-    public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+    public CompoundTag writeProgressToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
         NBTTagList jArray = new NBTTagList();
         NBTTagList progArray = new NBTTagList();
 
@@ -194,7 +194,7 @@ public class TaskCrafting implements ITask {
 
                 int[] data = userProgress.get(uuid);
                 if (data != null) {
-                    NBTTagCompound pJson = new NBTTagCompound();
+                    CompoundTag pJson = new CompoundTag();
                     pJson.setString("uuid", uuid.toString());
                     NBTTagList pArray = new NBTTagList(); // TODO: Why the heck isn't this just an int array?!
                     for (int i : data) pArray.appendTag(new NBTTagInt(i));
@@ -206,7 +206,7 @@ public class TaskCrafting implements ITask {
             completeUsers.forEach((uuid) -> jArray.appendTag(new NBTTagString(uuid.toString())));
 
             userProgress.forEach((uuid, data) -> {
-                NBTTagCompound pJson = new NBTTagCompound();
+                CompoundTag pJson = new CompoundTag();
                 pJson.setString("uuid", uuid.toString());
                 NBTTagList pArray = new NBTTagList(); // TODO: Why the heck isn't this just an int array?!
                 for (int i : data) pArray.appendTag(new NBTTagInt(i));

@@ -104,7 +104,7 @@ public class TaskScoreboard implements ITaskTickable {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public CompoundTag writeToNBT(CompoundTag nbt) {
         nbt.setString("scoreName", scoreName);
         nbt.setString("scoreDisp", scoreDisp);
         nbt.setString("type", type);
@@ -117,7 +117,7 @@ public class TaskScoreboard implements ITaskTickable {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(CompoundTag nbt) {
         scoreName = nbt.getString("scoreName");
         scoreName = scoreName.replaceAll(" ", "_");
         scoreDisp = nbt.getString("scoreDisp");
@@ -133,7 +133,7 @@ public class TaskScoreboard implements ITaskTickable {
     }
 
     @Override
-    public NBTTagCompound writeProgressToNBT(NBTTagCompound nbt, @Nullable List<UUID> users) {
+    public CompoundTag writeProgressToNBT(CompoundTag nbt, @Nullable List<UUID> users) {
         NBTTagList jArray = new NBTTagList();
 
         completeUsers.forEach((uuid) -> {
@@ -146,7 +146,7 @@ public class TaskScoreboard implements ITaskTickable {
     }
 
     @Override
-    public void readProgressFromNBT(NBTTagCompound nbt, boolean merge) {
+    public void readProgressFromNBT(CompoundTag nbt, boolean merge) {
         if (!merge) completeUsers.clear();
         NBTTagList cList = nbt.getTagList("completeUsers", 8);
         for (int i = 0; i < cList.tagCount(); i++) {

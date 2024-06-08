@@ -17,12 +17,12 @@ public class PropertyTypeItemStack extends PropertyTypeBase<BigItemStack> {
             return this.getDefault();
         }
 
-        return JsonHelper.JsonToItemStack((NBTTagCompound) nbt);
+        return JsonHelper.JsonToItemStack((CompoundTag) nbt);
     }
 
     @Override
     public NBTBase writeValue(BigItemStack value) {
-        NBTTagCompound nbt = new NBTTagCompound();
+        CompoundTag nbt = new CompoundTag();
 
         if (value == null || value.getBaseStack() == null) {
             getDefault().writeToNBT(nbt);

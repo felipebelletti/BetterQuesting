@@ -67,13 +67,13 @@ public class ToolboxToolFrame implements IToolboxTool {
         for (PanelButtonQuest btn : btnList) {
             btn.getStoredValue().getValue().setProperty(NativeProps.MAIN, state);
 
-            NBTTagCompound entry = new NBTTagCompound();
+            CompoundTag entry = new CompoundTag();
             entry.setInteger("questID", btn.getStoredValue().getID());
-            entry.setTag("config", btn.getStoredValue().getValue().writeToNBT(new NBTTagCompound()));
+            entry.setTag("config", btn.getStoredValue().getValue().writeToNBT(new CompoundTag()));
             dataList.appendTag(entry);
         }
 
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setTag("data", dataList);
         payload.setInteger("action", 0);
         NetQuestEdit.sendEdit(payload);

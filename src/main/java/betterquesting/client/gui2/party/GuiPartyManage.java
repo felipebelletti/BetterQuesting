@@ -225,7 +225,7 @@ public class GuiPartyManage extends GuiScreenCanvas implements IPEventListener, 
         } else if (btn.getButtonID() == 3 && btn instanceof PanelButtonStorage) // Kick/Leave
         {
             String id = ((PanelButtonStorage<String>) btn).getStoredValue();
-            NBTTagCompound payload = new NBTTagCompound();
+            CompoundTag payload = new CompoundTag();
             payload.setInteger("action", 5);
             payload.setInteger("partyID", partyID);
             payload.setString("username", id);
@@ -233,10 +233,10 @@ public class GuiPartyManage extends GuiScreenCanvas implements IPEventListener, 
         } else if (btn.getButtonID() == 4) // Change name
         {
             party.getProperties().setProperty(NativeProps.NAME, flName.getRawText());
-            NBTTagCompound payload = new NBTTagCompound();
+            CompoundTag payload = new CompoundTag();
             payload.setInteger("action", 2);
             payload.setInteger("partyID", partyID);
-            payload.setTag("data", party.writeProperties(new NBTTagCompound()));
+            payload.setTag("data", party.writeProperties(new CompoundTag()));
             NetPartyAction.sendAction(payload);
         }
     }

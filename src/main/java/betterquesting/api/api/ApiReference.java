@@ -26,8 +26,8 @@ public class ApiReference // Note to self: Don't make these client side only. It
     public static final ApiKey<IPartyDatabase> PARTY_DB = new ApiKey<>();
     public static final ApiKey<ILifeDatabase> LIFE_DB = new ApiKey<>();
 
-    public static final ApiKey<IRegistry<IFactoryData<ITask, NBTTagCompound>, ITask>> TASK_REG = new ApiKey<>();
-    public static final ApiKey<IRegistry<IFactoryData<IReward, NBTTagCompound>, IReward>> REWARD_REG = new ApiKey<>();
+    public static final ApiKey<IRegistry<IFactoryData<ITask, CompoundTag>, ITask>> TASK_REG = new ApiKey<>();
+    public static final ApiKey<IRegistry<IFactoryData<IReward, CompoundTag>, IReward>> REWARD_REG = new ApiKey<>();
 
     public static final ApiKey<IPacketSender> PACKET_SENDER = new ApiKey<>();
     public static final ApiKey<IPacketRegistry> PACKET_REG = new ApiKey<>();

@@ -79,7 +79,7 @@ public class RewardCommand implements IReward {
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound nbt) {
+    public void readFromNBT(CompoundTag nbt) {
         command = nbt.getString("command");
         title = nbt.hasKey("title", 8) ? nbt.getString("title") : "bq_standard.reward.command";
         desc = nbt.hasKey("description", 8) ? nbt.getString("description") : "Run a command script";
@@ -89,7 +89,7 @@ public class RewardCommand implements IReward {
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+    public CompoundTag writeToNBT(CompoundTag nbt) {
         nbt.setString("command", command);
         nbt.setString("title", title);
         nbt.setString("description", desc);

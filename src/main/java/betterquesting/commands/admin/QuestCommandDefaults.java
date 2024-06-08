@@ -168,7 +168,7 @@ public class QuestCommandDefaults extends QuestCommandBase {
         boolean editMode = QuestSettings.INSTANCE.getProperty(NativeProps.EDIT_MODE);
         // Don't write edit mode to json
         QuestSettings.INSTANCE.setProperty(NativeProps.EDIT_MODE, false);
-        NBTTagCompound settingsTag = QuestSettings.INSTANCE.writeToNBT(new NBTTagCompound());
+        CompoundTag settingsTag = QuestSettings.INSTANCE.writeToNBT(new CompoundTag());
         settingsTag.setString("format", BetterQuesting.FORMAT);
         JsonHelper.WriteToFile(settingsFile, NBTConverter.NBTtoJSON_Compound(settingsTag, new JsonObject(), true));
         // Turn on edit mode if it was on before
@@ -191,7 +191,7 @@ public class QuestCommandDefaults extends QuestCommandBase {
             String questLineNameTranslated = QuestTranslation.translate(questLineName);
 
             File questLineFile = new File(questLineDir, buildFileName.apply(questLineNameTranslated, questLineId) + ".json");
-            NBTTagCompound questLineTag = questLine.writeToNBT(new NBTTagCompound(), null);
+            CompoundTag questLineTag = questLine.writeToNBT(new CompoundTag(), null);
             JsonHelper.WriteToFile(questLineFile, NBTConverter.NBTtoJSON_Compound(questLineTag, new JsonObject(), true));
         }
         ;
@@ -230,7 +230,7 @@ public class QuestCommandDefaults extends QuestCommandBase {
                 return;
             }
 
-            NBTTagCompound questTag = quest.writeToNBT(new NBTTagCompound());
+            CompoundTag questTag = quest.writeToNBT(new CompoundTag());
             JsonHelper.WriteToFile(questFile, NBTConverter.NBTtoJSON_Compound(questTag, new JsonObject(), true));
         }
 
@@ -244,10 +244,10 @@ public class QuestCommandDefaults extends QuestCommandBase {
     public static void saveLegacy(@Nullable CommandSource sender, String databaseName, File legacyFile) {
         boolean editMode = QuestSettings.INSTANCE.getProperty(NativeProps.EDIT_MODE);
 
-        NBTTagCompound base = new NBTTagCompound();
+        CompoundTag base = new CompoundTag();
 
         QuestSettings.INSTANCE.setProperty(NativeProps.EDIT_MODE, false);
-        base.setTag("questSettings", QuestSettings.INSTANCE.writeToNBT(new NBTTagCompound()));
+        base.setTag("questSettings", QuestSettings.INSTANCE.writeToNBT(new CompoundTag()));
         QuestSettings.INSTANCE.setProperty(NativeProps.EDIT_MODE, editMode);
         base.setTag("questDatabase", QuestDatabase.INSTANCE.writeToNBT(new NBTTagList(), null));
         base.setTag("questLines", QuestLineDatabase.INSTANCE.writeToNBT(new NBTTagList(), null));
@@ -268,8 +268,8 @@ public class QuestCommandDefaults extends QuestCommandBase {
             return;
         }
 
-        Function<File, NBTTagCompound> readNbt =
-                file -> NBTConverter.JSONtoNBT_Object(JsonHelper.ReadFromFile(file), new NBTTagCompound(), true);
+        Function<File, CompoundTag> readNbt =
+                file -> NBTConverter.JSONtoNBT_Object(JsonHelper.ReadFromFile(file), new CompoundTag(), true);
 
         boolean editMode = QuestSettings.INSTANCE.getProperty(NativeProps.EDIT_MODE);
         boolean hardMode = QuestSettings.INSTANCE.getProperty(NativeProps.HARDCORE);
@@ -317,7 +317,7 @@ public class QuestCommandDefaults extends QuestCommandBase {
             paths.filter(Files::isRegularFile).forEach(
                     path -> {
                         File questFile = path.toFile();
-                        NBTTagCompound questTag = readNbt.apply(questFile);
+                        CompoundTag questTag = readNbt.apply(questFile);
                         int questId = Integer.parseInt(questFile.getName().replaceAll("[^0-9]+", ""));
 
                         if (questId < 0) {
@@ -362,7 +362,7 @@ public class QuestCommandDefaults extends QuestCommandBase {
             NBTTagList jsonP = QuestDatabase.INSTANCE.writeProgressToNBT(new NBTTagList(), null);
 
             JsonObject j1 = JsonHelper.ReadFromFile(legacyFile);
-            NBTTagCompound nbt1 = NBTConverter.JSONtoNBT_Object(j1, new NBTTagCompound(), true);
+            CompoundTag nbt1 = NBTConverter.JSONtoNBT_Object(j1, new CompoundTag(), true);
 
             ILegacyLoader loader = LegacyLoaderRegistry.getLoader(nbt1.hasKey("format", 8) ? nbt1.getString("format") : "0.0.0");
 

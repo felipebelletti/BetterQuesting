@@ -43,8 +43,8 @@ public class FTBQQuestImporter implements IImporter {
     public static final FTBQQuestImporter INSTANCE = new FTBQQuestImporter();
     private static final FileFilter FILTER = new FTBQFileFIlter();
 
-    private static final HashMap<String, Function<NBTTagCompound, ITask[]>> taskConverters = new HashMap<>();
-    private static final HashMap<String, Function<NBTTagCompound, IReward[]>> rewardConverters = new HashMap<>();
+    private static final HashMap<String, Function<CompoundTag, ITask[]>> taskConverters = new HashMap<>();
+    private static final HashMap<String, Function<CompoundTag, IReward[]>> rewardConverters = new HashMap<>();
 
     @Override
     public String getUnlocalisedName() {
@@ -66,7 +66,7 @@ public class FTBQQuestImporter implements IImporter {
         for (File f : files) {
             if (f == null || f.getParent() == null)
                 continue;
-            NBTTagCompound indexNBT = readFile(f);
+            CompoundTag indexNBT = readFile(f);
             startImport(questDB, lineDB, indexNBT, f.getParentFile(), f.getName().toLowerCase().endsWith(".snbt"));
         }
     }
@@ -75,7 +75,7 @@ public class FTBQQuestImporter implements IImporter {
     private final HashMap<String, FTBEntry> ID_MAP = new HashMap<>();
 
     @Nullable
-    private static NBTTagCompound readFile(File file) {
+    private static CompoundTag readFile(File file) {
         if (file.getName().toLowerCase().endsWith(".snbt")) {
             return SNBTReader.read(file);
         } else {
@@ -87,7 +87,7 @@ public class FTBQQuestImporter implements IImporter {
             }
         }
     }
-    private void startImport(IQuestDatabase questDB, IQuestLineDatabase lineDB, NBTTagCompound tagIndex, File folder, boolean isSnbt) {
+    private void startImport(IQuestDatabase questDB, IQuestLineDatabase lineDB, CompoundTag tagIndex, File folder, boolean isSnbt) {
         String[] indexIDs; // Read out the chapter index names
         if (isSnbt) {
             //String
@@ -134,7 +134,7 @@ public class FTBQQuestImporter implements IImporter {
                 if (!questFile.getName().toLowerCase().endsWith(".nbt") && !questFile.getName().toLowerCase().endsWith(".snbt"))
                     continue; // No idea why this file is in here
 
-                NBTTagCompound qTag = readFile(questFile);
+                CompoundTag qTag = readFile(questFile);
                 if (qTag == null)
                     continue;
 
@@ -182,7 +182,7 @@ public class FTBQQuestImporter implements IImporter {
                     quest.setProperty(NativeProps.NAME, hexID);
                     NBTTagList taskList = qTag.getTagList("tasks", 10);
                     if (taskList.tagCount() >= 1) {
-                        NBTTagCompound compoundTag = taskList.getCompoundTagAt(0);
+                        CompoundTag compoundTag = taskList.getCompoundTagAt(0);
                         if (compoundTag.hasKey("title"))
                             quest.setProperty(NativeProps.NAME, compoundTag.getString("title"));
                     }
@@ -207,7 +207,7 @@ public class FTBQQuestImporter implements IImporter {
                     requestQuestIcon(quest);
                     NBTTagList taskList = qTag.getTagList("tasks", 10);
                     if (taskList.tagCount() >= 1) {
-                        NBTTagCompound compoundTag = taskList.getCompoundTagAt(0);
+                        CompoundTag compoundTag = taskList.getCompoundTagAt(0);
                         if (compoundTag.hasKey("icon")) {
                             BigItemStack iconStack = FTBQUtils.convertItem(compoundTag.getTag("icon"));
                             if (!iconStack.getBaseStack().isEmpty()) {
@@ -288,7 +288,7 @@ public class FTBQQuestImporter implements IImporter {
 
                 NBTTagList taskList = qTag.getTagList("tasks", 10);
                 for (int i = 0; i < taskList.tagCount(); i++) {
-                    NBTTagCompound taskTag = taskList.getCompoundTagAt(i);
+                    CompoundTag taskTag = taskList.getCompoundTagAt(i);
                     String tType = taskTag.getString("type");
                     if (!taskConverters.containsKey(tType)) {
                         BetterQuesting.logger.warn("Unsupported FTBQ task \"" + tType + "\"! Skipping...");
@@ -312,7 +312,7 @@ public class FTBQQuestImporter implements IImporter {
 
                 NBTTagList rewardList = qTag.getTagList("rewards", 10);
                 for (int i = 0; i < rewardList.tagCount(); i++) {
-                    NBTTagCompound rewTag = rewardList.getCompoundTagAt(i);
+                    CompoundTag rewTag = rewardList.getCompoundTagAt(i);
                     String rType = rewTag.getString("type");
                     if (!rewardConverters.containsKey(rType)) {
                         BetterQuesting.logger.warn("Unsupported FTBQ reward \"" + rType + "\"! Skipping...");

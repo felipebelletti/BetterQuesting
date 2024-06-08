@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
 
-public interface IReward extends INBTSaveLoad<NBTTagCompound> {
+public interface IReward extends INBTSaveLoad<CompoundTag> {
     String getUnlocalisedName();
 
     ResourceLocation getFactoryID();

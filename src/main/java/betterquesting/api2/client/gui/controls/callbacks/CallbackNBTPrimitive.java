@@ -9,7 +9,7 @@ public class CallbackNBTPrimitive<T extends Number> implements ICallback<T> {
     private final int iKey;
     private final int tagID;
 
-    public CallbackNBTPrimitive(NBTTagCompound tag, String key, Class<T> c) {
+    public CallbackNBTPrimitive(CompoundTag tag, String key, Class<T> c) {
         this.tag = tag;
         this.sKey = key;
         this.iKey = -1;
@@ -26,13 +26,13 @@ public class CallbackNBTPrimitive<T extends Number> implements ICallback<T> {
     @Override
     public void setValue(T value) {
         if (tag.getId() == 10) {
-            setCompoundTag((NBTTagCompound) tag, value);
+            setCompoundTag((CompoundTag) tag, value);
         } else {
             setListTag((NBTTagList) tag, value);
         }
     }
 
-    private void setCompoundTag(NBTTagCompound compound, T value) {
+    private void setCompoundTag(CompoundTag compound, T value) {
         switch (tagID) {
             case 1:
                 compound.setByte(sKey, value.byteValue());

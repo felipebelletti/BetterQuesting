@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class LootGroup extends SimpleDatabase<LootGroup.LootEntry> implements INBTSaveLoad<NBTTagCompound> {
+public class LootGroup extends SimpleDatabase<LootGroup.LootEntry> implements INBTSaveLoad<CompoundTag> {
     public String name = "Loot Group";
     public int weight = 1;
 
@@ -43,7 +43,7 @@ public class LootGroup extends SimpleDatabase<LootGroup.LootEntry> implements IN
     }
 
     @Override
-    public void readFromNBT(NBTTagCompound tag) {
+    public void readFromNBT(CompoundTag tag) {
         this.reset();
 
         name = tag.getString("name");
@@ -54,7 +54,7 @@ public class LootGroup extends SimpleDatabase<LootGroup.LootEntry> implements IN
 
         NBTTagList jRew = tag.getTagList("rewards", 10);
         for (int i = 0; i < jRew.tagCount(); i++) {
-            NBTTagCompound entry = jRew.getCompoundTagAt(i);
+            CompoundTag entry = jRew.getCompoundTagAt(i);
             int id = entry.hasKey("ID", 99) ? entry.getInteger("ID") : -1;
 
             LootEntry loot = new LootEntry();
@@ -73,7 +73,7 @@ public class LootGroup extends SimpleDatabase<LootGroup.LootEntry> implements IN
     }
 
     @Override
-    public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+    public CompoundTag writeToNBT(CompoundTag tag) {
         tag.setString("name", name);
         tag.setInteger("weight", weight);
 
@@ -81,7 +81,7 @@ public class LootGroup extends SimpleDatabase<LootGroup.LootEntry> implements IN
         for (DBEntry<LootEntry> entry : getEntries()) {
             if (entry == null) continue;
 
-            NBTTagCompound jLoot = entry.getValue().writeToNBT(new NBTTagCompound());
+            CompoundTag jLoot = entry.getValue().writeToNBT(new CompoundTag());
             jLoot.setInteger("ID", entry.getID());
             jRew.appendTag(jLoot);
         }
@@ -90,12 +90,12 @@ public class LootGroup extends SimpleDatabase<LootGroup.LootEntry> implements IN
         return tag;
     }
 
-    public static class LootEntry implements INBTSaveLoad<NBTTagCompound> {
+    public static class LootEntry implements INBTSaveLoad<CompoundTag> {
         public int weight = 1;
         public final List<BigItemStack> items = new ArrayList<>();
 
         @Override
-        public void readFromNBT(NBTTagCompound json) {
+        public void readFromNBT(CompoundTag json) {
             weight = json.getInteger("weight");
             weight = Math.max(1, weight);
 
@@ -107,12 +107,12 @@ public class LootGroup extends SimpleDatabase<LootGroup.LootEntry> implements IN
         }
 
         @Override
-        public NBTTagCompound writeToNBT(NBTTagCompound tag) {
+        public CompoundTag writeToNBT(CompoundTag tag) {
             tag.setInteger("weight", weight);
 
             NBTTagList jItm = new NBTTagList();
             for (BigItemStack stack : items) {
-                jItm.appendTag(JsonHelper.ItemStackToJson(stack, new NBTTagCompound()));
+                jItm.appendTag(JsonHelper.ItemStackToJson(stack, new CompoundTag()));
             }
             tag.setTag("items", jItm);
 

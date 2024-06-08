@@ -57,7 +57,7 @@ public class ToolboxToolComplete implements IToolboxTool {
             questIDs[i] = btnList.get(i).getStoredValue().getID();
         }
 
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setIntArray("questIDs", questIDs);
         payload.setBoolean("state", true);
         payload.setInteger("action", 2);
@@ -87,7 +87,7 @@ public class ToolboxToolComplete implements IToolboxTool {
             questIDs[i] = btnList.get(i).getStoredValue().getID();
         }
 
-        NBTTagCompound payload = new NBTTagCompound();
+        CompoundTag payload = new CompoundTag();
         payload.setIntArray("questIDs", questIDs);
         payload.setBoolean("state", true);
         payload.setInteger("action", 2);
