@@ -27,8 +27,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.server.ServerLifecycleHooks;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nonnull;
@@ -399,7 +399,7 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public Screen getTaskEditor(Screen parent, DBEntry<IQuest> quest) {
         return new GuiEditTaskRetrieval(parent, quest, this);
     }

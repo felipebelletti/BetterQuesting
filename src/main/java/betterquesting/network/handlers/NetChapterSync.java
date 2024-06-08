@@ -17,8 +17,8 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -68,7 +68,7 @@ public class NetChapterSync {
         });
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void requestSync(@Nullable int[] chapterIDs) {
         CompoundTag payload = new CompoundTag();
         if (chapterIDs != null) payload.setIntArray("requestIDs", chapterIDs);
@@ -81,7 +81,7 @@ public class NetChapterSync {
         sendSync(message.getSecond(), reqIDs);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private static void onClient(CompoundTag message) {
         ListTag data = message.getTagList("data", 10);
         if (!message.getBoolean("merge")) QuestLineDatabase.INSTANCE.reset();

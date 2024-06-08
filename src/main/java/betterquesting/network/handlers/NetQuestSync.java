@@ -21,8 +21,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.server.ServerLifecycleHooks;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -96,7 +96,7 @@ public class NetQuestSync {
     }
 
     // Asks the server to send specific quest data over
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void requestSync(@Nullable int[] questIDs, boolean configs, boolean progress) {
         CompoundTag payload = new CompoundTag();
         if (questIDs != null) payload.setIntArray("requestIDs", questIDs);
@@ -111,7 +111,7 @@ public class NetQuestSync {
         sendSync(message.getSecond(), reqIDs, payload.getBoolean("getConfig"), payload.getBoolean("getProgress"));
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private static void onClient(CompoundTag message) {
         ListTag data = message.getTagList("data", 10);
         boolean merge = message.getBoolean("merge");

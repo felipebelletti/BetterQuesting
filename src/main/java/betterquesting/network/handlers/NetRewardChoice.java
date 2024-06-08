@@ -16,8 +16,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 
 import javax.annotation.Nonnull;
 
@@ -32,7 +32,7 @@ public class NetRewardChoice {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void requestChoice(int questID, int rewardID, int index) {
         CompoundTag payload = new CompoundTag();
         payload.setInteger("questID", questID);
@@ -69,7 +69,7 @@ public class NetRewardChoice {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private static void onClient(CompoundTag message) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
 

@@ -25,8 +25,8 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.server.ServerLifecycleHooks;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 import org.apache.logging.log4j.Level;
 
 import java.util.List;
@@ -43,7 +43,7 @@ public class NetQuestEdit {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void sendEdit(CompoundTag payload) // TODO: Make these use proper methods for each action rather than directly assembling the payload
     {
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
@@ -181,7 +181,7 @@ public class NetQuestEdit {
         NetQuestSync.sendSync(null, ids, true, false);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private static void onClient(CompoundTag message) // Imparts edit specific changes
     {
         int action = !message.hasKey("action", 99) ? -1 : message.getInteger("action");

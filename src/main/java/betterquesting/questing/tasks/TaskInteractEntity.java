@@ -22,8 +22,8 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.EnumHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nonnull;
@@ -132,14 +132,14 @@ public class TaskInteractEntity implements ITask {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public IGuiPanel getTaskGui(IGuiRect rect, DBEntry<IQuest> quest) {
         return new PanelTaskInteractEntity(rect, this);
     }
 
     @Override
     @Nullable
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public Screen getTaskEditor(Screen parent, DBEntry<IQuest> quest) {
         return null;
     }

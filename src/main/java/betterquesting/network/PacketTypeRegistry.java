@@ -6,8 +6,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -53,7 +53,7 @@ public class PacketTypeRegistry implements IPacketRegistry {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void registerClientHandler(@Nonnull ResourceLocation idName, @Nonnull Consumer<CompoundTag> method) {
         if (clientHandlers.containsKey(idName)) {
             throw new IllegalArgumentException("Cannot register dupliate packet handler: " + idName);
@@ -68,7 +68,7 @@ public class PacketTypeRegistry implements IPacketRegistry {
     }
 
     @Nullable
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public Consumer<CompoundTag> getClientHandler(@Nonnull ResourceLocation idName) {
         return clientHandlers.get(idName);
     }

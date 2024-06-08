@@ -12,8 +12,8 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 
 public class RewardXP implements IReward {
     public int amount = 1;
@@ -53,13 +53,13 @@ public class RewardXP implements IReward {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public IGuiPanel getRewardGui(IGuiRect rect, DBEntry<IQuest> quest) {
         return new PanelRewardXP(rect, this);
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public Screen getRewardEditor(Screen screen, DBEntry<IQuest> quest) {
         return null;
     }

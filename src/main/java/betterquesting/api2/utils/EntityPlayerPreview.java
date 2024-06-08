@@ -8,8 +8,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 
 public class EntityPlayerPreview extends EntityOtherPlayerMP {
     private final ResourceLocation resource;
@@ -48,7 +48,7 @@ public class EntityPlayerPreview extends EntityOtherPlayerMP {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public boolean isWearing(EnumPlayerModelParts part) {
         return true;
     }

@@ -11,8 +11,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
@@ -28,7 +28,7 @@ public class NetLootSync {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void requestEdit(CompoundTag data) {
         CompoundTag payload = new CompoundTag();
         payload.setTag("data", data);
@@ -63,7 +63,7 @@ public class NetLootSync {
         sendSync(null);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private static void onClient(CompoundTag message) {
         LootRegistry.INSTANCE.readFromNBT(message.getCompoundTag("data"), false);
         LootRegistry.INSTANCE.updateUI = true;

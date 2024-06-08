@@ -10,8 +10,8 @@ import betterquesting.api2.utils.ParticipantInfo;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -31,11 +31,11 @@ public interface ITask extends INBTSaveLoad<CompoundTag>, INBTProgress<CompoundT
     void resetUser(@Nullable UUID uuid);
 
     @Nullable
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     IGuiPanel getTaskGui(IGuiRect rect, DBEntry<IQuest> quest);
 
     @Nullable
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     Screen getTaskEditor(Screen parent, DBEntry<IQuest> quest);
 
     /**

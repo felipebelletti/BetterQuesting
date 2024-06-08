@@ -12,8 +12,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nonnull;
@@ -26,7 +26,7 @@ public class NetQuestAction {
         PacketTypeRegistry.INSTANCE.registerServerHandler(ID_NAME, NetQuestAction::onServer);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void requestClaim(@Nonnull int[] questIDs) {
         if (questIDs.length <= 0) return;
         CompoundTag payload = new CompoundTag();
@@ -35,7 +35,7 @@ public class NetQuestAction {
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void requestDetect(@Nonnull int[] questIDs) {
         if (questIDs.length <= 0) return;
         CompoundTag payload = new CompoundTag();

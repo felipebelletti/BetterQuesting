@@ -47,15 +47,15 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.server.ServerLifecycleHooks;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 import org.lwjgl.util.vector.Vector4f;
 
 import java.io.File;
 import java.util.Collections;
 import java.util.function.Consumer;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class GuiHome extends GuiScreenCanvas {
     public static Screen bookmark;
 

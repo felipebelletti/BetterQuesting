@@ -14,8 +14,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.server.ServerLifecycleHooks;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
@@ -31,7 +31,7 @@ public class NetSettingSync {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void requestEdit() {
         CompoundTag payload = new CompoundTag();
         payload.setTag("data", QuestSettings.INSTANCE.writeToNBT(new CompoundTag()));
@@ -48,7 +48,7 @@ public class NetSettingSync {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private static void onClient(CompoundTag message) {
         QuestSettings.INSTANCE.readFromNBT(message.getCompoundTag("data"));
     }

@@ -22,8 +22,8 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.storage.loot.LootContext;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -161,7 +161,7 @@ public class ItemLootChest extends Item {
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @SuppressWarnings("rawtypes")
     public void getSubItems(@Nonnull CreativeModeTabs tab, @Nonnull NonNullList<ItemStack> list) {
         if (tab != CreativeModeTabs.SEARCH && tab != this.getCreativeTab()) return;
@@ -213,7 +213,7 @@ public class ItemLootChest extends Item {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public boolean hasEffect(ItemStack stack) {
         return stack.getItemDamage() == 102;
     }
@@ -222,7 +222,7 @@ public class ItemLootChest extends Item {
      * allows items to add custom lines of information to the mouseover description
      */
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void addInformation(ItemStack stack, @Nullable Level worldIn, List<String> tooltip, ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
 

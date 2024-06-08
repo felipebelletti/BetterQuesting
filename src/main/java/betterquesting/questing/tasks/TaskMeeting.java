@@ -17,8 +17,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nonnull;
@@ -165,7 +165,7 @@ public class TaskMeeting implements ITaskTickable {
      * Returns a new editor screen for this Reward type to edit the given data
      */
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public Screen getTaskEditor(Screen parent, DBEntry<IQuest> quest) {
         return new GuiEditTaskMeeting(parent, quest, this);
     }

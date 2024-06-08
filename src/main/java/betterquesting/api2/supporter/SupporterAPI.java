@@ -10,8 +10,8 @@ import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -177,7 +177,7 @@ public class SupporterAPI {
         return k;
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private static byte[] readFileKey(@Nonnull DataInputStream dis, int format) {
         switch (format) {
             case -1:
@@ -202,7 +202,7 @@ public class SupporterAPI {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private static byte[] readFormat_1(@Nonnull DataInputStream dis) {
         try {
             String[] tokens = new String[dis.readInt()];

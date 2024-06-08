@@ -15,8 +15,8 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 
 import javax.annotation.Nonnull;
 import java.util.UUID;
@@ -86,7 +86,7 @@ public class ItemExtraLife extends Item {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public boolean hasEffect(ItemStack stack) {
         return stack.getItemDamage() == 0;
     }
@@ -95,7 +95,7 @@ public class ItemExtraLife extends Item {
      * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
      */
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void getSubItems(@Nonnull CreativeModeTabs tab, @Nonnull NonNullList<ItemStack> list) {
         if (this.isInCreativeTab(tab)) {
             list.add(new ItemStack(this, 1, 0));

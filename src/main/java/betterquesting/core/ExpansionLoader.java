@@ -16,8 +16,8 @@ import betterquesting.questing.tasks.TaskRegistry;
 import betterquesting.storage.LifeDatabase;
 import betterquesting.storage.NameCache;
 import betterquesting.storage.QuestSettings;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 
 public class ExpansionLoader {
     public static final ExpansionLoader INSTANCE = new ExpansionLoader();
@@ -40,7 +40,7 @@ public class ExpansionLoader {
         QuestingAPI.registerAPI(ApiReference.CREATIVE_TAB, BetterQuesting.tabQuesting);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void initClientAPIs() {
         QuestingAPI.registerAPI(ApiReference.THEME_REG, ThemeRegistry.INSTANCE);
         QuestingAPI.registerAPI(ApiReference.RESOURCE_REG, ResourceRegistry.INSTANCE);

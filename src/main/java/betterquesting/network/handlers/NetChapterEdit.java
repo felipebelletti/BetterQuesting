@@ -20,8 +20,8 @@ import net.minecraft.util.Tuple;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 import org.apache.logging.log4j.Level;
 
 public class NetChapterEdit {
@@ -35,7 +35,7 @@ public class NetChapterEdit {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void sendEdit(CompoundTag payload) // TODO: Make these use proper methods for each action rather than directly assembling the payload
     {
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
@@ -140,7 +140,7 @@ public class NetChapterEdit {
         NetChapterSync.sendSync(null, ids);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private static void onClient(CompoundTag message) {
         int action = !message.hasKey("action", 99) ? -1 : message.getInteger("action");
 

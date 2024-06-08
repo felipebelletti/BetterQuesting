@@ -12,8 +12,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 
 public class NetTaskCheckbox {
     private static final ResourceLocation ID_NAME = new ResourceLocation("bq_standard:task_checkbox");
@@ -22,7 +22,7 @@ public class NetTaskCheckbox {
         QuestingAPI.getAPI(ApiReference.PACKET_REG).registerServerHandler(ID_NAME, NetTaskCheckbox::onServer);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void requestClick(int questID, int taskID) {
         CompoundTag payload = new CompoundTag();
         payload.setInteger("questID", questID);

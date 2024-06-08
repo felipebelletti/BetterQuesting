@@ -15,8 +15,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.core.BlockPos;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 
 import java.util.UUID;
 
@@ -27,7 +27,7 @@ public class NetStationEdit {
         PacketTypeRegistry.INSTANCE.registerServerHandler(ID_NAME, NetStationEdit::onServer);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void setupStation(BlockPos pos, int questID, int taskID) {
         CompoundTag payload = new CompoundTag();
         payload.setInteger("action", 1);
@@ -37,7 +37,7 @@ public class NetStationEdit {
         PacketSender.INSTANCE.sendToServer(new QuestingPacket(ID_NAME, payload));
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void resetStation(BlockPos pos) {
         CompoundTag payload = new CompoundTag();
         payload.setInteger("action", 0);

@@ -35,8 +35,8 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 
 import java.util.ArrayList;
 
@@ -98,12 +98,12 @@ public class ClientProxy extends CommonProxy {
         ThemeRegistry.INSTANCE.loadResourceThemes();
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void registerBlockModel(Block block) {
         registerBlockModel(block, 0, block.getRegistryName().toString());
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void registerBlockModel(Block block, int meta, String name) {
         Item item = Item.getItemFromBlock(block);
         ModelResourceLocation model = new ModelResourceLocation(name, "inventory");
@@ -115,7 +115,7 @@ public class ClientProxy extends CommonProxy {
         ModelLoader.setCustomModelResourceLocation(item, meta, model);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private void registerItemModelSubtypes(Item item, int metaStart, int metaEnd, String name) {
         if (metaStart > metaEnd) {
             int tmp = metaStart;
@@ -128,12 +128,12 @@ public class ClientProxy extends CommonProxy {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void registerItemModel(Item item) {
         registerItemModel(item, 0, item.getRegistryName().toString());
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void registerItemModel(Item item, int meta, String name) {
         ModelResourceLocation model = new ModelResourceLocation(name, "inventory");
 

@@ -79,8 +79,8 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.ArrayDeque;
@@ -98,7 +98,7 @@ public class EventHandler {
     private static final String SPAWN_WITH_QUEST_BOOK = ModReference.MODID + ".questbook";
 
     @SubscribeEvent
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void onKey(InputEvent.KeyInputEvent event) {
         Minecraft mc = Minecraft.getMinecraft();
 
@@ -115,7 +115,7 @@ public class EventHandler {
     }
 
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     @SubscribeEvent
     public void onClientChatReceived(ClientChatReceivedEvent event) {
         if (event.getMessage() != null) {
@@ -389,7 +389,7 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void onTextureStitch(TextureStitchEvent.Pre event) {
         if (event.getMap() == Minecraft.getMinecraft().getTextureMapBlocks()) {
             event.getMap().registerSprite(FluidPlaceholder.fluidPlaceholder.getStill());
@@ -397,7 +397,7 @@ public class EventHandler {
     }
 
     @SubscribeEvent
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public void onDataUpdated(DatabaseEvent.Update event) {
         // TODO: Change this to a proper panel event. Also explain WHAT updated
         final Screen screen = Minecraft.getMinecraft().currentScreen;

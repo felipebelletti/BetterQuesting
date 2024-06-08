@@ -20,8 +20,8 @@ import net.minecraft.util.StringUtils;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.server.ServerLifecycleHooks;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class NetNameSync {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void sendRequest(@Nullable UUID[] uuids, @Nullable String[] names) {
         // NOTE: You can make an empty request if you want EVERYTHING (but I would not recommend it on large servers)
         CompoundTag payload = new CompoundTag();
@@ -130,7 +130,7 @@ public class NetNameSync {
         sendNames(new ServerPlayer[]{message.getSecond()}, uuids, names);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private static void onClient(CompoundTag message) {
         NameCache.INSTANCE.readFromNBT(message.getTagList("data", 10), message.getBoolean("merge"));
         MinecraftForge.EVENT_BUS.post(new DatabaseEvent.Update(DBType.NAMES));

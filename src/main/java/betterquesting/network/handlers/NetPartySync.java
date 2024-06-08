@@ -18,8 +18,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.server.ServerLifecycleHooks;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class NetPartySync {
         }
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public static void requestSync(@Nullable int[] partyIDs) {
         CompoundTag payload = new CompoundTag();
         if (partyIDs != null) payload.setIntArray("partyIDs", partyIDs);
@@ -91,7 +91,7 @@ public class NetPartySync {
         sendSync(new ServerPlayer[]{message.getSecond()}, reqIDs);
     }
 
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     private static void onClient(CompoundTag message) {
         ListTag data = message.getTagList("data", 10);
         if (!message.getBoolean("merge")) PartyManager.INSTANCE.reset();

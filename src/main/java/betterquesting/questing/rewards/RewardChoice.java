@@ -18,8 +18,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;
@@ -122,13 +122,13 @@ public class RewardChoice implements IReward {
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public IGuiPanel getRewardGui(IGuiRect rect, DBEntry<IQuest> quest) {
         return new PanelRewardChoice(rect, quest, this);
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
+    @OnlyIn(Dist.CLIENT)
     public Screen getRewardEditor(Screen screen, DBEntry<IQuest> quest) {
         return null;
     }
