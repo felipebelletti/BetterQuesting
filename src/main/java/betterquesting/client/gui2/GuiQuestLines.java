@@ -52,7 +52,7 @@ import betterquesting.network.handlers.NetQuestAction;
 import betterquesting.questing.QuestDatabase;
 import betterquesting.questing.QuestLineDatabase;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.util.Tuple;
@@ -326,7 +326,7 @@ public class GuiQuestLines extends GuiScreenCanvas implements IPEventListener, I
                     return false;
                 }
                 if (click == 1) {
-                    FontRenderer fr = Minecraft.getInstance().fontRenderer;
+                    Font fr = Minecraft.getInstance().fontRenderer;
                     boolean questExistsUnderMouse = cvQuest.getButtonAt(mx, my) != null;
                     int maxWidth = questExistsUnderMouse ? RenderUtils.getStringWidth(QuestTranslation.translate("betterquesting.btn.share_quest"), fr) : 0;
                     if (canEdit) {

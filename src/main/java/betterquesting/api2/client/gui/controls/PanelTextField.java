@@ -11,7 +11,7 @@ import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
 import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
@@ -520,7 +520,7 @@ public class PanelTextField<T> implements IGuiPanel {
         if (selectEnd != position) {
             this.selectEnd = position;
 
-            FontRenderer font = Minecraft.getInstance().fontRenderer;
+            Font font = Minecraft.getInstance().fontRenderer;
 
             if (canWrap) {
                 List<String> lines = RenderUtils.splitStringWithoutFormat(text, getTransform().getWidth() - 8, font);
@@ -538,7 +538,7 @@ public class PanelTextField<T> implements IGuiPanel {
                     }
 
                     idx += s.length();
-                    lastFormat = FontRenderer.getFormatFromString(lastFormat + s);
+                    lastFormat = Font.getFormatFromString(lastFormat + s);
                 }
 
                 y *= font.FONT_HEIGHT;
@@ -573,7 +573,7 @@ public class PanelTextField<T> implements IGuiPanel {
     }
 
     public void updateScrollBounds() {
-        FontRenderer font = Minecraft.getInstance().fontRenderer;
+        Font font = Minecraft.getInstance().fontRenderer;
 
         int prevX = getScrollX();
         int prevY = getScrollY();

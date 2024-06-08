@@ -7,7 +7,7 @@ import betterquesting.api2.client.gui.panels.IGuiPanel;
 import betterquesting.api2.client.gui.resources.colors.GuiColorStatic;
 import betterquesting.api2.client.gui.resources.colors.IGuiColor;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Font;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
 import net.minecraft.util.Mth;
@@ -71,7 +71,7 @@ public class PanelTextBox implements IGuiPanel {
 
     private void refreshText() {
         IGuiRect bounds = this.getTransform();
-        FontRenderer fr = Minecraft.getInstance().fontRenderer;
+        Font fr = Minecraft.getInstance().fontRenderer;
         float scale = fontScale / relScale;
 
         if (!autoFit) {
@@ -118,9 +118,9 @@ public class PanelTextBox implements IGuiPanel {
         if (lines < 0) return;
 
         IGuiRect bounds = this.getTransform();
-        FontRenderer fr = Minecraft.getInstance().fontRenderer;
-        //FontRenderer fr = BqFontRenderer.FONT_UNICODE;
-        //FontRenderer fr = BqFontRenderer.FONT_STANDARD;
+        Font fr = Minecraft.getInstance().fontRenderer;
+        //Font fr = BqFontRenderer.FONT_UNICODE;
+        //Font fr = BqFontRenderer.FONT_STANDARD;
 
         double s = fontScale / relScale;
         int bw = (int) Math.ceil(bounds.getWidth() / s);

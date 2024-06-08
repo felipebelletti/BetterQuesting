@@ -9,7 +9,7 @@ import betterquesting.api2.client.gui.popups.PopChoice;
 import betterquesting.api2.client.gui.themes.presets.PresetIcon;
 import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.client.BQ_Keybindings;
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -394,12 +394,12 @@ public class GuiContainerCanvas extends GuiContainer implements IScene {
 
     @Override
     protected void renderToolTip(ItemStack stack, int x, int y) {
-        FontRenderer font = stack.getItem().getFontRenderer(stack);
+        Font font = stack.getItem().getFontRenderer(stack);
         RenderUtils.drawHoveringText(stack, this.getItemToolTip(stack), x, y, width, height, -1, (font == null ? fontRenderer : font));
     }
 
     @Override
-    protected void drawHoveringText(List<String> textLines, int x, int y, FontRenderer font) {
+    protected void drawHoveringText(List<String> textLines, int x, int y, Font font) {
         RenderUtils.drawHoveringText(textLines, x, y, width, height, -1, font);
     }
 

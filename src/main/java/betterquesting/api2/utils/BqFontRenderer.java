@@ -1,14 +1,14 @@
 package betterquesting.api2.utils;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Font;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
-public class BqFontRenderer extends FontRenderer {
+public class BqFontRenderer extends Font {
     public static final BqFontRenderer FONT_UNICODE = new BqFontRenderer(true);
     public static final BqFontRenderer FONT_STANDARD = new BqFontRenderer(false);
 

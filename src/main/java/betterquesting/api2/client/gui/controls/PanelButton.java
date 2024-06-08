@@ -13,7 +13,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.api2.storage.INBTSaveLoad;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Font;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
 import net.minecraft.init.SoundEvents;
@@ -191,7 +191,7 @@ public class PanelButton implements IPanelButton, IGuiPanel, INBTSaveLoad<Compou
         GlStateManager.popMatrix();
     }
 
-    private static void drawCenteredString(FontRenderer font, String text, int x, int y, int width, int color, boolean shadow, int align) {
+    private static void drawCenteredString(Font font, String text, int x, int y, int width, int color, boolean shadow, int align) {
         switch (align) {
             case 0: {
                 font.drawString(text, x + 4, y, color, shadow);

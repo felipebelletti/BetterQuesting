@@ -7,7 +7,7 @@ import betterquesting.api2.client.gui.resources.colors.IGuiColor;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.core.BetterQuesting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -64,7 +64,7 @@ public class RenderUtils {
         GlStateManager.translate(0.0F, 0.0F, z);
         itemRender.zLevel = -150F; // Counters internal Z depth change so that GL translation makes sense
 
-        FontRenderer font = stack.getItem().getFontRenderer(stack);
+        Font font = stack.getItem().getFontRenderer(stack);
         if (font == null) font = mc.fontRenderer;
 
         try {
@@ -196,21 +196,21 @@ public class RenderUtils {
         GlStateManager.popMatrix();
     }
 
-    public static void drawSplitString(FontRenderer renderer, String string, int x, int y, int width, int color, boolean shadow) {
+    public static void drawSplitString(Font renderer, String string, int x, int y, int width, int color, boolean shadow) {
         drawSplitString(renderer, string, x, y, width, color, shadow, 0, splitString(string, width, renderer).size() - 1);
     }
 
-    public static void drawSplitString(FontRenderer renderer, String string, int x, int y, int width, int color, boolean shadow, int start, int end) {
+    public static void drawSplitString(Font renderer, String string, int x, int y, int width, int color, boolean shadow, int start, int end) {
         drawHighlightedSplitString(renderer, string, x, y, width, color, shadow, start, end, 0, 0, 0);
     }
 
     // TODO: Clean this up. The list of parameters is getting a bit excessive
 
-    public static void drawHighlightedSplitString(FontRenderer renderer, String string, int x, int y, int width, int color, boolean shadow, int highlightColor, int highlightStart, int highlightEnd) {
+    public static void drawHighlightedSplitString(Font renderer, String string, int x, int y, int width, int color, boolean shadow, int highlightColor, int highlightStart, int highlightEnd) {
         drawHighlightedSplitString(renderer, string, x, y, width, color, shadow, 0, splitString(string, width, renderer).size() - 1, highlightColor, highlightStart, highlightEnd);
     }
 
-    public static void drawHighlightedSplitString(FontRenderer renderer, String string, int x, int y, int width, int color, boolean shadow, int start, int end, int highlightColor, int highlightStart, int highlightEnd) {
+    public static void drawHighlightedSplitString(Font renderer, String string, int x, int y, int width, int color, boolean shadow, int start, int end, int highlightColor, int highlightStart, int highlightEnd) {
         if (renderer == null || string == null || string.length() <= 0 || start > end) {
             return;
         }
@@ -272,7 +272,7 @@ public class RenderUtils {
             int i2 = Math.min(idxEnd, hlEnd) - idxStart;
 
             if (!(i1 == i2 || i1 < 0 || i2 < 0 || i1 > lineSize || i2 > lineSize)) {
-                String lastFormat = FontRenderer.getFormatFromString(list.get(i));
+                String lastFormat = Font.getFormatFromString(list.get(i));
                 int x1 = getStringWidth(lastFormat + noFormat.get(i).substring(0, i1), renderer);
                 int x2 = getStringWidth(lastFormat + noFormat.get(i).substring(0, i2), renderer);
 
@@ -283,7 +283,7 @@ public class RenderUtils {
         }
     }
 
-    public static void drawHighlightedString(FontRenderer renderer, String string, int x, int y, int color, boolean shadow, int highlightColor, int highlightStart, int highlightEnd) {
+    public static void drawHighlightedString(Font renderer, String string, int x, int y, int color, boolean shadow, int highlightColor, int highlightStart, int highlightEnd) {
         if (renderer == null || string == null || string.length() <= 0) {
             return;
         }
@@ -470,7 +470,7 @@ public class RenderUtils {
      * not attempt to preserve the formatting between lines. This is particularly important when the
      * index positions in the text are required to match the original unwrapped text.
      */
-    public static List<String> splitStringWithoutFormat(String str, int wrapWidth, FontRenderer font) {
+    public static List<String> splitStringWithoutFormat(String str, int wrapWidth, Font font) {
         List<String> list = new ArrayList<>();
 
         String lastFormat = ""; // Formatting like bold can affect the wrapping width
@@ -487,7 +487,7 @@ public class RenderUtils {
                 String s = temp.substring(0, i);
                 char c0 = temp.charAt(i);
                 boolean flag = c0 == ' ' || c0 == '\n';
-                lastFormat = FontRenderer.getFormatFromString(lastFormat + s);
+                lastFormat = Font.getFormatFromString(lastFormat + s);
                 temp = temp.substring(i + (flag ? 1 : 0));
                 // NOTE: The index actually stops just before the space/nl so we don't need to remove it from THIS line. This is why the previous line moves forward by one for the NEXT line
                 list.add(s + (flag ? "\n" : "")); // Although we need to remove the spaces between each line we have to replace them with invisible new line characters to preserve the index count
@@ -501,7 +501,7 @@ public class RenderUtils {
         return list;
     }
 
-    public static List<String> splitString(String str, int wrapWidth, FontRenderer font) {
+    public static List<String> splitString(String str, int wrapWidth, Font font) {
         List<String> list = new ArrayList<>();
 
         String temp = str;
@@ -516,7 +516,7 @@ public class RenderUtils {
                 String s = temp.substring(0, i);
                 char c0 = temp.charAt(i);
                 boolean flag = c0 == ' ' || c0 == '\n';
-                temp = FontRenderer.getFormatFromString(s) + temp.substring(i + (flag ? 1 : 0));
+                temp = Font.getFormatFromString(s) + temp.substring(i + (flag ? 1 : 0));
                 list.add(s);
 
                 if (temp.length() <= 0 && !flag) {
@@ -531,7 +531,7 @@ public class RenderUtils {
     /**
      * Returns the index position under a given set of coordinates in a piece of text
      */
-    public static int getCursorPos(String text, int x, FontRenderer font) {
+    public static int getCursorPos(String text, int x, Font font) {
         if (text.length() <= 0) {
             return 0;
         }
@@ -554,7 +554,7 @@ public class RenderUtils {
     /**
      * Returns the index position under a given set of coordinates in a wrapped piece of text
      */
-    public static int getCursorPos(String text, int x, int y, int width, FontRenderer font) {
+    public static int getCursorPos(String text, int x, int y, int width, Font font) {
         List<String> tLines = RenderUtils.splitStringWithoutFormat(text, width, font);
 
         if (tLines.size() <= 0) {
@@ -569,13 +569,13 @@ public class RenderUtils {
         for (int i = 0; i < row; i++) {
             line = tLines.get(i);
             idx += line.length();
-            lastFormat = FontRenderer.getFormatFromString(lastFormat + line);
+            lastFormat = Font.getFormatFromString(lastFormat + line);
         }
 
         return idx + getCursorPos(lastFormat + tLines.get(row), x, font) - lastFormat.length();
     }
 
-    private static int sizeStringToWidth(String str, int wrapWidth, FontRenderer font) {
+    private static int sizeStringToWidth(String str, int wrapWidth, Font font) {
         int i = str.length();
         int j = 0;
         int k = 0;
@@ -659,14 +659,14 @@ public class RenderUtils {
         return (a3 << 24) + (r3 << 16) + (g3 << 8) + b3;
     }
 
-    public static void drawHoveringText(List<String> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, FontRenderer font) {
+    public static void drawHoveringText(List<String> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, Font font) {
         drawHoveringText(ItemStack.EMPTY, textLines, mouseX, mouseY, screenWidth, screenHeight, maxTextWidth, font);
     }
 
     /**
      * Modified version of Forge's tooltip rendering that doesn't adjust Z depth
      */
-    public static void drawHoveringText(@Nonnull final ItemStack stack, List<String> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, FontRenderer font) {
+    public static void drawHoveringText(@Nonnull final ItemStack stack, List<String> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, Font font) {
         if (textLines == null || textLines.isEmpty()) return;
 
         RenderTooltipEvent.Pre event = new RenderTooltipEvent.Pre(stack, textLines, mouseX, mouseY, screenWidth, screenHeight, maxTextWidth, font);
@@ -817,7 +817,7 @@ public class RenderUtils {
     /**
      * A version of getStringWidth that actually behaves according to the format resetting rules of colour codes. Minecraft's built in one is busted!
      */
-    public static int getStringWidth(String text, FontRenderer font) {
+    public static int getStringWidth(String text, Font font) {
         if (text == null || text.length() == 0) return 0;
 
         int maxWidth = 0;
