@@ -1,7 +1,7 @@
 package betterquesting;
 
-import net.minecraft.command.CommandResultStats.Type;
 import net.minecraft.commands.CommandSource;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.MinecraftServer;
@@ -15,70 +15,65 @@ import javax.annotation.Nonnull;
 /**
  * Elevates the player's privileges to OP level for use in command rewards
  */
-public class AdminExecute implements CommandSource {
+public class AdminExecute {
     private final Player player;
+    private final CommandSourceStack commandSourceStack;
 
     public AdminExecute(Player player) {
         this.player = player;
+        this.commandSourceStack = new CommandSourceStack(CommandSource.NULL, player.position(), player.getRotationVector(), player.getLevel(), 4, player.getName().getString(), player.getDisplayName(), player.getServer(), player);
     }
 
     @Nonnull
-    @Override
     public String getName() {
-        return player.getName();
+        return player.getName().getString();
     }
 
     @Nonnull
-    @Override
     public Component getDisplayName() {
         return player.getDisplayName();
     }
 
-    @Override
-    public void sendMessage(Component p_145747_1_) {
-        player.sendMessage(p_145747_1_);
+    public void sendMessage(Component message) {
+        player.sendSystemMessage(message);
     }
 
-    @Override
-    public boolean canUseCommand(int p_70003_1_, @Nonnull String p_70003_2_) {
-        return true;
+    public boolean canUseCommand(int permissionLevel, @Nonnull String commandName) {
+        return true; // Always return true as the admin has all permissions
     }
 
     @Nonnull
-    @Override
     public BlockPos getPosition() {
-        return player.getPosition();
+        return player.blockPosition();
     }
 
     @Nonnull
-    @Override
     public Level getEntityWorld() {
-        return player.getEntityWorld();
+        return player.getLevel();
     }
 
     @Nonnull
-    @Override
     public Vec3 getPositionVector() {
-        return player.getPositionVector();
+        return player.position();
     }
 
-    @Override
     public Entity getCommandSenderEntity() {
-        return player.getCommandSenderEntity();
+        return player;
     }
 
-    @Override
     public boolean sendCommandFeedback() {
-        return player.sendCommandFeedback();
+        return true; // Always return true as the admin sends feedback
     }
 
-    @Override
-    public void setCommandStat(Type type, int amount) {
-        player.setCommandStat(type, amount);
-    }
-
-    @Override
     public MinecraftServer getServer() {
         return player.getServer();
+    }
+
+    public void setCommandStat(CommandResult result, int amount) {
+        // Handle command statistics as necessary
+    }
+
+    public CommandSourceStack getCommandSourceStack() {
+        return this.commandSourceStack;
     }
 }
