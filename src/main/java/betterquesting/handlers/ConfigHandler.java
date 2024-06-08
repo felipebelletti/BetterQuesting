@@ -3,7 +3,7 @@ package betterquesting.handlers;
 import betterquesting.api.storage.BQ_Settings;
 import betterquesting.core.BetterQuesting;
 import betterquesting.core.ModReference;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.Level;
 

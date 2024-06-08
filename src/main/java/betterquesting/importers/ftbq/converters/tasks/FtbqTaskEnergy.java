@@ -8,7 +8,7 @@ import betterquesting.api.utils.BigItemStack;
 import betterquesting.importers.ftbq.FTBQQuestImporter;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class FtbqTaskEnergy {
     // With a little magic we're going to support this without having to reference RF Expansion nor even have it installed!

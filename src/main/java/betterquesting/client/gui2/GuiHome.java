@@ -44,7 +44,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import net.minecraftforge.fml.relauncher.Side;

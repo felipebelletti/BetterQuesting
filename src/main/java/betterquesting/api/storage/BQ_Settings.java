@@ -1,7 +1,7 @@
 package betterquesting.api.storage;
 
 import betterquesting.core.ModReference;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.io.File;
 

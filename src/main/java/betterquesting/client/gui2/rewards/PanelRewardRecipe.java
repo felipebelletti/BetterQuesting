@@ -14,7 +14,7 @@ import betterquesting.questing.rewards.RewardRecipe;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.util.vector.Vector4f;
 
 public class PanelRewardRecipe extends CanvasEmpty {

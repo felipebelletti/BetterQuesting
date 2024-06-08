@@ -14,7 +14,7 @@ import betterquesting.questing.tasks.TaskHunt;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class PanelTaskHunt extends CanvasMinimum {
 

@@ -5,7 +5,7 @@ import betterquesting.api2.registry.IFactoryData;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.TaskXP;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class FactoryTaskXP implements IFactoryData<ITask, CompoundTag> {
     public static final FactoryTaskXP INSTANCE = new FactoryTaskXP();

@@ -12,7 +12,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.client.themes.BQSTextures;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 
 import java.util.List;

@@ -3,7 +3,7 @@ package betterquesting.api.properties.basic;
 import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagInt;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class PropertyTypeInteger extends PropertyTypeBase<Integer> {
     public PropertyTypeInteger(ResourceLocation key, Integer def) {

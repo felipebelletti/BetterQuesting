@@ -4,7 +4,7 @@ import betterquesting.api.utils.BigItemStack;
 import betterquesting.api.utils.JsonHelper;
 import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class PropertyTypeItemStack extends PropertyTypeBase<BigItemStack> {
     public PropertyTypeItemStack(ResourceLocation key, BigItemStack def) {

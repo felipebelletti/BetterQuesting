@@ -9,7 +9,7 @@ import betterquesting.network.PacketTypeRegistry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

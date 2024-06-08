@@ -1,7 +1,7 @@
 package betterquesting.api.client.toolbox;
 
 import betterquesting.api2.client.toolbox.IToolTab;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.Collection;
 

@@ -6,7 +6,7 @@ import betterquesting.api2.registry.IFactoryData;
 import betterquesting.api2.registry.IRegistry;
 import betterquesting.core.BetterQuesting;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;

@@ -5,7 +5,7 @@ import betterquesting.api2.registry.IFactoryData;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.rewards.RewardScoreboard;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class FactoryRewardScoreboard implements IFactoryData<IReward, CompoundTag> {
     public static final FactoryRewardScoreboard INSTANCE = new FactoryRewardScoreboard();

@@ -2,7 +2,7 @@ package betterquesting.questing.tasks;
 
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskOptionalRetrieval;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.UUID;
 

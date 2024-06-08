@@ -4,7 +4,7 @@ import betterquesting.api.utils.BigItemStack;
 import betterquesting.core.ModReference;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class HQMItemHeart implements HQMItem {
     private final Item bqHeart;

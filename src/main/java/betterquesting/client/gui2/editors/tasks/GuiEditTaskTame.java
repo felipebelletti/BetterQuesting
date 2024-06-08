@@ -32,7 +32,7 @@ import net.minecraft.entity.EntityList;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 
 public class GuiEditTaskTame extends GuiScreenCanvas implements IVolatileScreen {

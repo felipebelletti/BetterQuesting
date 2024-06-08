@@ -11,7 +11,7 @@ import betterquesting.questing.rewards.factory.FactoryRewardXP;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

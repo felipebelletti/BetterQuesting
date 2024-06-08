@@ -7,7 +7,7 @@ import betterquesting.api.storage.BQ_Settings;
 import betterquesting.api.utils.BigItemStack;
 import betterquesting.core.ModReference;
 import net.minecraft.init.Items;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 // TODO: SPLIT THIS DAMN FILE UP. It's already too big and it needs to be divided up per-purpose
 

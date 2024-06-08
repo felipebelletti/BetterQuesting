@@ -10,7 +10,7 @@ import betterquesting.api2.client.gui.resources.textures.PolyTexture;
 import betterquesting.api2.registry.IFactoryData;
 import betterquesting.core.ModReference;
 import com.google.gson.JsonObject;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class FactoryPolyTextureR implements IFactoryData<IGuiTexture, JsonObject> {
     public static final FactoryPolyTextureR INSTANCE = new FactoryPolyTextureR();

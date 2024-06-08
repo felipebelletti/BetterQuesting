@@ -15,7 +15,7 @@ import betterquesting.questing.tasks.TaskTame;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.entity.EntityList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class PanelTaskTame extends CanvasEmpty {
     private final TaskTame task;

@@ -1,6 +1,6 @@
 package betterquesting.api2.client.gui.themes;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import javax.annotation.Nonnull;
 

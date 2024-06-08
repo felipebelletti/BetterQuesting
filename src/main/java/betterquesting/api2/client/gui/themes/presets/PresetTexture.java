@@ -8,7 +8,7 @@ import betterquesting.api2.client.gui.resources.textures.SlicedTexture.SliceMode
 import betterquesting.api2.client.gui.themes.IThemeRegistry;
 import betterquesting.client.themes.ThemeRegistry;
 import betterquesting.core.ModReference;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public enum PresetTexture {
     PANEL_MAIN("panel_main"),

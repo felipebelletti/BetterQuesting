@@ -11,7 +11,7 @@ import betterquesting.api2.registry.IFactoryData;
 import betterquesting.core.ModReference;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 
 public class FactorySlicedTexture implements IFactoryData<IGuiTexture, JsonObject> {

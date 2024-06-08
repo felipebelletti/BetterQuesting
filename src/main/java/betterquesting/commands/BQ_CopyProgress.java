@@ -12,7 +12,7 @@ import net.minecraft.commands.CommandSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
 
 import javax.annotation.Nonnull;

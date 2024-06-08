@@ -8,7 +8,7 @@ import betterquesting.api2.client.gui.themes.gui_args.GArgsNBT;
 import betterquesting.api2.client.gui.themes.gui_args.GArgsNone;
 import betterquesting.core.ModReference;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 
 public class PresetGUIs {

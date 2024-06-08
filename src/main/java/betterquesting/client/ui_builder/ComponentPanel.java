@@ -9,7 +9,7 @@ import betterquesting.core.ModReference;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringUtils;
 import org.lwjgl.util.vector.Vector4f;
 

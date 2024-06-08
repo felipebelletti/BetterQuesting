@@ -7,7 +7,7 @@ import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
 import betterquesting.api2.client.gui.resources.textures.SimpleTexture;
 import betterquesting.api2.client.gui.themes.IThemeRegistry;
 import betterquesting.core.BetterQuesting;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public enum BQSTextures {
     LOOT_CHEST("loot_chest"),

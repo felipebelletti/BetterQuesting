@@ -4,7 +4,7 @@ import betterquesting.core.ModReference;
 import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 

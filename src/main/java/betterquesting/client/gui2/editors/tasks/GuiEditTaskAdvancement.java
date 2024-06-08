@@ -32,7 +32,7 @@ import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.input.Keyboard;
 
 import java.util.ArrayList;

@@ -5,7 +5,7 @@ import betterquesting.api2.registry.IFactoryData;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.TaskHunt;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class FactoryTaskHunt implements IFactoryData<ITask, CompoundTag> {
     public static final FactoryTaskHunt INSTANCE = new FactoryTaskHunt();

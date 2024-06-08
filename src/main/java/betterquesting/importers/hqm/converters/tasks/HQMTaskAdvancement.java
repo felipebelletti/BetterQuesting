@@ -5,7 +5,7 @@ import betterquesting.api.utils.JsonHelper;
 import betterquesting.questing.tasks.TaskAdvancement;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;

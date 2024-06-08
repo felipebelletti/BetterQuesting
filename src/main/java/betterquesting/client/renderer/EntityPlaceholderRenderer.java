@@ -4,7 +4,7 @@ import betterquesting.api.placeholders.EntityPlaceholder;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class EntityPlaceholderRenderer extends Render<EntityPlaceholder> {
     protected EntityPlaceholderRenderer(RenderManager renderManager) {

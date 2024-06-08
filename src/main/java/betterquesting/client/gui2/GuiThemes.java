@@ -30,7 +30,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.client.themes.ThemeRegistry;
 import betterquesting.core.BetterQuesting;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.util.vector.Vector4f;
 
 import java.util.List;

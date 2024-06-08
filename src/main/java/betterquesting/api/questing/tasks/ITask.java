@@ -9,7 +9,7 @@ import betterquesting.api2.storage.INBTSaveLoad;
 import betterquesting.api2.utils.ParticipantInfo;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 

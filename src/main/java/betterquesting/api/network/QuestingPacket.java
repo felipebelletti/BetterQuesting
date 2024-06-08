@@ -1,7 +1,7 @@
 package betterquesting.api.network;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public final class QuestingPacket {
     private final ResourceLocation handler;
