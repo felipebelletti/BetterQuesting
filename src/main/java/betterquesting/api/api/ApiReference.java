@@ -16,8 +16,8 @@ import betterquesting.api2.client.gui.themes.IResourceReg;
 import betterquesting.api2.client.gui.themes.IThemeRegistry;
 import betterquesting.api2.registry.IFactoryData;
 import betterquesting.api2.registry.IRegistry;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.nbt.CompoundTag;
 
 public class ApiReference // Note to self: Don't make these client side only. It'll just crash servers regardless of which are used
 {

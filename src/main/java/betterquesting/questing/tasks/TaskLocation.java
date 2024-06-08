@@ -11,7 +11,7 @@ import betterquesting.questing.tasks.factory.FactoryTaskLocation;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;

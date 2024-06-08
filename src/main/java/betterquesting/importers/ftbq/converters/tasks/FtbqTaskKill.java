@@ -5,7 +5,7 @@ import betterquesting.api.utils.BigItemStack;
 import betterquesting.importers.ftbq.FTBQQuestImporter;
 import betterquesting.questing.tasks.TaskHunt;
 import net.minecraft.init.Items;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 
 public class FtbqTaskKill {
     public ITask[] convertTask(NBTTagCompound tag) {

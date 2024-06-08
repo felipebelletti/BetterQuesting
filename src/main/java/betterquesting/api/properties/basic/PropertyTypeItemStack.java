@@ -3,7 +3,7 @@ package betterquesting.api.properties.basic;
 import betterquesting.api.utils.BigItemStack;
 import betterquesting.api.utils.JsonHelper;
 import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
 public class PropertyTypeItemStack extends PropertyTypeBase<BigItemStack> {

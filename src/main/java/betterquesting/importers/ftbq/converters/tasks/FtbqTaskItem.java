@@ -7,7 +7,7 @@ import betterquesting.core.BetterQuesting;
 import betterquesting.importers.ftbq.FTBQQuestImporter;
 import betterquesting.importers.ftbq.FTBQUtils;
 import betterquesting.questing.tasks.TaskRetrieval;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NBTTagList;
 
 public class FtbqTaskItem {

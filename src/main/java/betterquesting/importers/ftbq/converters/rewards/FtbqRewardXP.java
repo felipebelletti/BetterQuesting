@@ -2,7 +2,7 @@ package betterquesting.importers.ftbq.converters.rewards;
 
 import betterquesting.api.questing.rewards.IReward;
 import betterquesting.questing.rewards.RewardXP;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 
 public class FtbqRewardXP {
     private final boolean isLevels;

@@ -3,7 +3,7 @@ package betterquesting.api.placeholders;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.Level;
 
 public class EntityPlaceholder extends Entity {

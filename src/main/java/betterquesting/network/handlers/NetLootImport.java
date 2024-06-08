@@ -6,7 +6,7 @@ import betterquesting.api.network.QuestingPacket;
 import betterquesting.core.BetterQuesting;
 import betterquesting.questing.rewards.loot.LootRegistry;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.text.TextComponentString;

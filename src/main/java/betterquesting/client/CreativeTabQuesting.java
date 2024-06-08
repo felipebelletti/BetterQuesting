@@ -2,7 +2,7 @@ package betterquesting.client;
 
 import betterquesting.core.BetterQuesting;
 import betterquesting.core.ModReference;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.item.ItemStack;
 
 public class CreativeTabQuesting extends CreativeTabs {

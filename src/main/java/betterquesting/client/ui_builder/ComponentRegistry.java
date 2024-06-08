@@ -7,7 +7,7 @@ import betterquesting.api2.client.gui.panels.IGuiPanel;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.client.themes.ThemeRegistry;
 import betterquesting.core.ModReference;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;

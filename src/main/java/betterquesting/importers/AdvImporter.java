@@ -21,7 +21,7 @@ import com.google.gson.JsonPrimitive;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.network.chat.Component;

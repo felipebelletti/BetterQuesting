@@ -4,7 +4,7 @@ import betterquesting.core.BetterQuesting;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTSizeTracker;
 import net.minecraft.nbt.NBTTagByteArray;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.math.MathHelper;
 
 import java.io.BufferedInputStream;

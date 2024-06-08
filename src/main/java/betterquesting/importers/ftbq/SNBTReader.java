@@ -3,7 +3,7 @@ package betterquesting.importers.ftbq;
 import betterquesting.core.BetterQuesting;
 import net.minecraft.nbt.JsonToNBT;
 import net.minecraft.nbt.NBTException;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 
 import javax.annotation.Nullable;
 import java.io.BufferedReader;

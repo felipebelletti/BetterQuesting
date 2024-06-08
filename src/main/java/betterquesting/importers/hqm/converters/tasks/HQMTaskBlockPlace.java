@@ -7,7 +7,7 @@ import betterquesting.importers.hqm.HQMUtilities;
 import betterquesting.questing.tasks.TaskInteractItem;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 
 import java.util.ArrayList;
 import java.util.List;

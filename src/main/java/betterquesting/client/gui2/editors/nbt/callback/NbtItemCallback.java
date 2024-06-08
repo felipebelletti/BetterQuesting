@@ -4,7 +4,7 @@ import betterquesting.api.misc.ICallback;
 import betterquesting.api.utils.BigItemStack;
 import betterquesting.api.utils.JsonHelper;
 import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 
 public class NbtItemCallback implements ICallback<BigItemStack> {
     private final NBTTagCompound json;

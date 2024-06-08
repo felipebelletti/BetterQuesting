@@ -6,7 +6,7 @@ import betterquesting.api2.storage.INBTPartial;
 import betterquesting.core.BetterQuesting;
 import betterquesting.network.handlers.NetInviteSync;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.server.ServerLifecycleHooks;

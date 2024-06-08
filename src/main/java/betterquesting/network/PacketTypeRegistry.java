@@ -3,7 +3,7 @@ package betterquesting.network;
 import betterquesting.api.network.IPacketRegistry;
 import betterquesting.network.handlers.*;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.fml.relauncher.Side;

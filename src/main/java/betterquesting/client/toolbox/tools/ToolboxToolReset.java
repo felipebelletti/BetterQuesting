@@ -7,7 +7,7 @@ import betterquesting.api2.utils.DirtyPlayerMarker;
 import betterquesting.client.gui2.editors.designer.PanelToolController;
 import betterquesting.network.handlers.NetQuestEdit;
 import net.minecraft.client.Minecraft;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.NonNullList;
 import org.lwjgl.input.Keyboard;
 

@@ -14,7 +14,7 @@ import betterquesting.network.handlers.*;
 import betterquesting.questing.rewards.factory.*;
 import betterquesting.questing.rewards.loot.LootRegistry;
 import betterquesting.questing.tasks.factory.*;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 

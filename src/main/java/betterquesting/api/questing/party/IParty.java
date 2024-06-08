@@ -3,7 +3,7 @@ package betterquesting.api.questing.party;
 import betterquesting.api.enums.EnumPartyStatus;
 import betterquesting.api.properties.IPropertyContainer;
 import betterquesting.api2.storage.INBTSaveLoad;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

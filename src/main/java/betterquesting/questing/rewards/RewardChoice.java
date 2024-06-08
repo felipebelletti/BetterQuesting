@@ -15,7 +15,7 @@ import betterquesting.questing.rewards.factory.FactoryRewardChoice;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;

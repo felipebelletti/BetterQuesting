@@ -10,7 +10,7 @@ import betterquesting.core.BetterQuesting;
 import betterquesting.questing.rewards.factory.FactoryRewardScoreboard;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.scoreboard.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;

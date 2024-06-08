@@ -22,7 +22,7 @@ import betterquesting.api2.storage.SimpleDatabase;
 import betterquesting.client.gui2.editors.nbt.PanelScrollingNBT;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import org.lwjgl.input.Keyboard;

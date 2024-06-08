@@ -2,7 +2,7 @@ package betterquesting.importers.hqm.converters.items;
 
 import betterquesting.api.utils.BigItemStack;
 import betterquesting.core.BetterQuesting;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 
 public class HQMItemBag implements HQMItem {
     @Override

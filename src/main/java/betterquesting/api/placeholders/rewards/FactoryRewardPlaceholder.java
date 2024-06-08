@@ -2,7 +2,7 @@ package betterquesting.api.placeholders.rewards;
 
 import betterquesting.api2.registry.IFactoryData;
 import betterquesting.core.ModReference;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
 public class FactoryRewardPlaceholder implements IFactoryData<RewardPlaceholder, NBTTagCompound> {

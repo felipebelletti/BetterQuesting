@@ -9,7 +9,7 @@ import betterquesting.client.gui2.rewards.PanelRewardRecipe;
 import betterquesting.questing.rewards.factory.FactoryRewardRecipe;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;

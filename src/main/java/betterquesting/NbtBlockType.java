@@ -5,7 +5,7 @@ import betterquesting.api.utils.BigItemStack;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
 public class NbtBlockType // TODO: Make a version of this for the base mod and give it a dedicated editor

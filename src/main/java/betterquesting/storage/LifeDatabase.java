@@ -2,7 +2,7 @@ package betterquesting.storage;
 
 import betterquesting.api.properties.NativeProps;
 import betterquesting.api.storage.ILifeDatabase;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.MathHelper;
 

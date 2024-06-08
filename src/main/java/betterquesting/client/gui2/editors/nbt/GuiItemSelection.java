@@ -33,7 +33,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.StringUtils;
 import net.minecraftforge.oredict.OreDictionary;
 import org.lwjgl.input.Keyboard;

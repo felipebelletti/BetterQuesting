@@ -5,7 +5,7 @@ import betterquesting.api.utils.JsonHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.entity.passive.EntityPig;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 
 public class NbtEntityCallback implements ICallback<Entity> {
     private final NBTTagCompound json;

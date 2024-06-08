@@ -1,7 +1,7 @@
 package betterquesting;
 
 import betterquesting.api2.storage.INBTPartial;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NBTTagList;
 
 import javax.annotation.Nonnull;

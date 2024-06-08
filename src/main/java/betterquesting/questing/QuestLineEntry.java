@@ -1,7 +1,7 @@
 package betterquesting.questing;
 
 import betterquesting.api.questing.IQuestLineEntry;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 
 public class QuestLineEntry implements IQuestLineEntry {
     private int sizeX = 0;

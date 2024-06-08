@@ -13,7 +13,7 @@ import betterquesting.network.handlers.NetScoreSync;
 import betterquesting.questing.tasks.factory.FactoryTaskScoreboard;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.scoreboard.IScoreCriteria;

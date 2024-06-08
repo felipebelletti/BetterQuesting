@@ -20,7 +20,7 @@ import betterquesting.client.gui2.editors.nbt.callback.NbtEntityCallback;
 import betterquesting.client.gui2.editors.nbt.callback.NbtFluidCallback;
 import betterquesting.client.gui2.editors.nbt.callback.NbtItemCallback;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 
 public class GuiNbtType extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {
     private final NBTTagCompound tagCompound;

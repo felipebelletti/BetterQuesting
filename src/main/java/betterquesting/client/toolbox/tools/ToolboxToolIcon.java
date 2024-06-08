@@ -9,7 +9,7 @@ import betterquesting.client.gui2.editors.designer.PanelToolController;
 import betterquesting.client.gui2.editors.nbt.GuiItemSelection;
 import betterquesting.network.handlers.NetQuestEdit;
 import net.minecraft.client.Minecraft;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
 import org.lwjgl.input.Keyboard;

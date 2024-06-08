@@ -3,7 +3,7 @@ package betterquesting.importers.hqm.converters.items;
 import betterquesting.api.utils.BigItemStack;
 import betterquesting.core.ModReference;
 import net.minecraft.item.Item;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ResourceLocation;
 
 public class HQMItemHeart implements HQMItem {
