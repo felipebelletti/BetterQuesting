@@ -1,6 +1,5 @@
 package betterquesting;
 
-import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -21,7 +20,17 @@ public class AdminExecute {
 
     public AdminExecute(Player player) {
         this.player = player;
-        this.commandSourceStack = new CommandSourceStack(CommandSource.NULL, player.position(), player.getRotationVector(), player.getLevel(), 4, player.getName().getString(), player.getDisplayName(), player.getServer(), player);
+        this.commandSourceStack = new CommandSourceStack(
+                CommandSource.NULL,
+                player.position(),
+                player.getRotationVector(),
+                player.getLevel(),
+                4,
+                player.getName().getString(),
+                player.getDisplayName(),
+                player.getServer(),
+                player
+        );
     }
 
     @Nonnull
@@ -67,10 +76,6 @@ public class AdminExecute {
 
     public MinecraftServer getServer() {
         return player.getServer();
-    }
-
-    public void setCommandStat(CommandResult result, int amount) {
-        // Handle command statistics as necessary
     }
 
     public CommandSourceStack getCommandSourceStack() {
