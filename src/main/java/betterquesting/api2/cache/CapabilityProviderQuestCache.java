@@ -3,7 +3,7 @@ package betterquesting.api2.cache;
 import betterquesting.core.ModReference;
 import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.capabilities.*;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
@@ -29,13 +29,13 @@ public class CapabilityProviderQuestCache implements ICapabilityProvider, ICapab
     }
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing) {
         return capability == CAP_QUEST_CACHE;
     }
 
     @Nullable
     @Override
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
         return capability == CAP_QUEST_CACHE ? CAP_QUEST_CACHE.cast(cache) : null;
     }
 
@@ -43,12 +43,12 @@ public class CapabilityProviderQuestCache implements ICapabilityProvider, ICapab
         CapabilityManager.INSTANCE.register(QuestCache.class, new IStorage<QuestCache>() {
             @Nullable
             @Override
-            public Tag writeNBT(Capability<QuestCache> capability, QuestCache instance, EnumFacing side) {
+            public Tag writeNBT(Capability<QuestCache> capability, QuestCache instance, Direction side) {
                 return instance.serializeNBT();
             }
 
             @Override
-            public void readNBT(Capability<QuestCache> capability, QuestCache instance, EnumFacing side, Tag nbt) {
+            public void readNBT(Capability<QuestCache> capability, QuestCache instance, Direction side, Tag nbt) {
                 if (nbt instanceof CompoundTag) instance.deserializeNBT((CompoundTag) nbt);
             }
         }, QuestCache::new);

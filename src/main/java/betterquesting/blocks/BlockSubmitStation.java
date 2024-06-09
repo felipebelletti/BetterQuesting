@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -38,7 +38,7 @@ public class BlockSubmitStation extends BlockContainer {
      * Called upon block activation (right click on the block.)
      */
     @Override
-    public boolean onBlockActivated(Level world, BlockPos pos, IBlockState state, Player player, InteractionHand hand, EnumFacing heldItem, float side, float hitX, float hitY) {
+    public boolean onBlockActivated(Level world, BlockPos pos, IBlockState state, Player player, InteractionHand hand, Direction heldItem, float side, float hitX, float hitY) {
         if (!world.isRemote) {
             player.openGui(BetterQuesting.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
         }

@@ -21,7 +21,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.core.Direction;
 import net.minecraft.util.ITickable;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
@@ -363,17 +363,17 @@ public class TileSubmitStation extends TileEntity implements IFluidHandler, ISid
 
     @Override
     @Nonnull
-    public int[] getSlotsForFace(@Nullable EnumFacing side) {
+    public int[] getSlotsForFace(@Nullable Direction side) {
         return slotsForFace;
     }
 
     @Override
-    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nullable EnumFacing side) {
+    public boolean canInsertItem(int slot, @Nonnull ItemStack stack, @Nullable Direction side) {
         return isItemValidForSlot(slot, stack);
     }
 
     @Override
-    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nullable EnumFacing side) {
+    public boolean canExtractItem(int slot, @Nonnull ItemStack stack, @Nullable Direction side) {
         return slot == 1;
     }
 
@@ -409,7 +409,7 @@ public class TileSubmitStation extends TileEntity implements IFluidHandler, ISid
     }
 
     @Override
-    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing) {
+    public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return true;
         } else if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
@@ -421,7 +421,7 @@ public class TileSubmitStation extends TileEntity implements IFluidHandler, ISid
 
     @Override
     @Nullable
-    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing) {
+    public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing) {
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(itemHandler);
         } else if (capability == CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY) {
