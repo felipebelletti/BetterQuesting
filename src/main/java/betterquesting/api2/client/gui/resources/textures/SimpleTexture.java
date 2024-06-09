@@ -7,7 +7,7 @@ import net.minecraft.client.Minecraft;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.fml.client.config.GuiUtils;
+import net.minecraftforge.client.gui.GuiUtils;
 import org.lwjgl.opengl.GL11;
 
 public class SimpleTexture implements IGuiTexture {
