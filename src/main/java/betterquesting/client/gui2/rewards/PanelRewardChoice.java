@@ -14,7 +14,7 @@ import betterquesting.api2.storage.DBEntry;
 import betterquesting.network.handlers.NetRewardChoice;
 import betterquesting.questing.rewards.RewardChoice;
 import net.minecraft.client.Minecraft;
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Vector4f;
 
 import java.util.UUID;
 

@@ -33,8 +33,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.core.NonNullList;
+import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.util.vector.Vector4f;
 
 import java.util.Iterator;
 import java.util.List;
@@ -102,7 +102,7 @@ public class GuiSubmitStation extends GuiContainerCanvas implements INeedsRefres
 
         cvBackground.addPanel(new PanelButton(new GuiTransform(GuiAlign.BOTTOM_CENTER, -100, -16, 200, 16, 0), -1, QuestTranslation.translate("gui.done")).setClickAction((b) -> mc.displayGuiScreen(parent)));
 
-        btnQstLeft = new PanelButton(new GuiTransform(new Vector4(0.5F, 0F, 0.5F, 0F), 8, 32, 16, 16, 0), -1, "") {
+        btnQstLeft = new PanelButton(new GuiTransform(new Vector4f(0.5F, 0F, 0.5F, 0F), 8, 32, 16, 16, 0), -1, "") {
             @Override
             public void onButtonClick() {
                 selQuest--;

@@ -35,7 +35,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.ChatFormatting;
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Vector4f;
 
 import java.util.ArrayDeque;
 import java.util.Comparator;

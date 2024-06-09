@@ -14,7 +14,7 @@ import betterquesting.api2.client.gui.resources.textures.ColorTexture;
 import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.api2.utils.QuestTranslation;
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Vector4f;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

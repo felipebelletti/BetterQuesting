@@ -38,7 +38,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
 
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Vector4f;
 
 public class GuiFluidSelection extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {
     private final ICallback<FluidStack> callback;

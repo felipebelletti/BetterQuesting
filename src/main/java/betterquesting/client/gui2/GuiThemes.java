@@ -31,7 +31,7 @@ import betterquesting.client.themes.ThemeRegistry;
 import betterquesting.core.BetterQuesting;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Vector4f;
 
 import java.util.List;
 

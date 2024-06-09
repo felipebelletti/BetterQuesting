@@ -12,7 +12,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.questing.rewards.RewardXP;
 import net.minecraft.world.item.Items;
 import net.minecraft.ChatFormatting;
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Vector4f;
 
 public class PanelRewardXP extends CanvasMinimum {
 

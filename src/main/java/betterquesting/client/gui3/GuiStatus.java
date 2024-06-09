@@ -14,7 +14,7 @@ import betterquesting.api2.client.gui.panels.lists.CanvasScrolling;
 import betterquesting.api2.client.gui.themes.presets.PresetIcon;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import net.minecraft.client.gui.screens.Screen;
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Vector4f;
 
 public class GuiStatus extends GuiScreenCanvas {
     public GuiStatus(Screen parent) {

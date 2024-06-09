@@ -1,7 +1,8 @@
 package betterquesting.api2.client.gui.misc;
 
-import org.lwjgl.util.vector.ReadableVector4f;
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Vector4f;
+//import org.lwjgl.util.vector.ReadableVector4f;
+//import org.joml.Vector4f;
 
 public final class GuiTransform implements IGuiRect {
     private IGuiRect parent;
@@ -13,16 +14,12 @@ public final class GuiTransform implements IGuiRect {
         this(GuiAlign.FULL_BOX, new GuiPadding(0, 0, 0, 0), 0);
     }
 
-    public GuiTransform(ReadableVector4f anchor) {
+    public GuiTransform(Vector4f anchor) {
         this(anchor, new GuiPadding(0, 0, 0, 0), 0);
     }
 
-    public GuiTransform(ReadableVector4f anchor, int xOff, int yOff, int width, int height, int order) {
-        this(new Vector4f(anchor.getX(), anchor.getY(), anchor.getX(), anchor.getY()), new GuiPadding(xOff, yOff, -xOff - width, -yOff - height), order);
-    }
-
-    public GuiTransform(ReadableVector4f anchor, GuiPadding padding, int depth) {
-        this(new Vector4f(anchor), padding, depth);
+    public GuiTransform(Vector4f anchor, int xOff, int yOff, int width, int height, int order) {
+        this(anchor, new GuiPadding(xOff, yOff, -xOff - width, -yOff - height), order);
     }
 
     public GuiTransform(Vector4f anchor, GuiPadding padding, int depth) {
@@ -42,7 +39,7 @@ public final class GuiTransform implements IGuiRect {
     }
 
     public GuiTransform copy() {
-        GuiTransform trans = new GuiTransform(new Vector4f(anchor), padding.copy(), drawOrder);
+        GuiTransform trans = new GuiTransform(anchor, padding.copy(), drawOrder);
         trans.setParent(this.parent);
         return trans;
     }

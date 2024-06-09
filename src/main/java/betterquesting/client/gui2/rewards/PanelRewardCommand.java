@@ -11,7 +11,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.questing.rewards.RewardCommand;
 import net.minecraft.init.Blocks;
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Vector4f;
 
 public class PanelRewardCommand extends CanvasMinimum {
 

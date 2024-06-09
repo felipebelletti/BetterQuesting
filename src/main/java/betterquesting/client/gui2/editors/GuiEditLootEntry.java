@@ -24,7 +24,7 @@ import betterquesting.questing.rewards.loot.LootRegistry;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Vector4f;
 
 import java.text.DecimalFormat;
 import java.util.List;

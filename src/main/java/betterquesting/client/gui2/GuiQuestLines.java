@@ -58,7 +58,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.util.Tuple;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.common.config.Configuration;
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Vector4f;
 
 import javax.annotation.Nonnull;
 import java.util.*;

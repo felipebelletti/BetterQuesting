@@ -29,7 +29,7 @@ import net.minecraft.util.Mth;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Vector4f;
 
 import javax.annotation.Nonnull;
 import java.util.*;

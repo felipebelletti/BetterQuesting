@@ -49,7 +49,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Vector4f;
 
 import java.io.File;
 import java.util.Collections;

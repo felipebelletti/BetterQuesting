@@ -37,7 +37,7 @@ import net.minecraft.nbt.CompoundTag;
 import org.apache.commons.lang3.StringUtils;
 import net.minecraftforge.oredict.OreDictionary;
 
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Vector4f;
 
 @SuppressWarnings("WeakerAccess")
 public class GuiItemSelection extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {

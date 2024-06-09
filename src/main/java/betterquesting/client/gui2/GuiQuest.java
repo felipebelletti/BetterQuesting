@@ -39,7 +39,7 @@ import betterquesting.questing.tasks.TaskRetrieval;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Vector4f;
 
 import java.util.HashMap;
 import java.util.List;

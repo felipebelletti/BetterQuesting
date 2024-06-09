@@ -18,7 +18,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.core.NonNullList;
 
-import org.lwjgl.util.vector.Vector4f;
+import org.joml.Vector4f;
 
 import java.util.ArrayList;
 import java.util.Collections;
