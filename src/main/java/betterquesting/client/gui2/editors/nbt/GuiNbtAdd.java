@@ -151,7 +151,7 @@ public class GuiNbtAdd extends GuiScreenCanvas implements IPEventListener, IVola
         switch (btn.getButtonID()) {
             case 0: // Cancel
             {
-                mc.displayGuiScreen(this.parent);
+                Minecraft.getInstance().setScreen(this.parent);
                 break;
             }
             case 1: // Confirm
@@ -175,7 +175,7 @@ public class GuiNbtAdd extends GuiScreenCanvas implements IPEventListener, IVola
                     }
                 }
 
-                mc.displayGuiScreen(this.parent);
+                Minecraft.getInstance().setScreen(this.parent);
                 break;
             }
             case 2: // Select this

@@ -75,7 +75,7 @@ public class GuiEditTaskScoreboard extends GuiScreenCanvas {
         cvBackground.addPanel(new PanelButton(new GuiTransform(GuiAlign.MID_CENTER, -100, 16, 200, 16, 0), -1, QuestTranslation.translate("betterquesting.btn.advanced")) {
             @Override
             public void onButtonClick() {
-                mc.displayGuiScreen(QuestingAPI.getAPI(ApiReference.THEME_REG).getGui(PresetGUIs.EDIT_NBT, new GArgsNBT<>(screenRef, task.writeToNBT(new CompoundTag()), task::readFromNBT, null)));
+                Minecraft.getInstance().setScreen(QuestingAPI.getAPI(ApiReference.THEME_REG).getGui(PresetGUIs.EDIT_NBT, new GArgsNBT<>(screenRef, task.writeToNBT(new CompoundTag()), task::readFromNBT, null)));
             }
         });
 
@@ -83,7 +83,7 @@ public class GuiEditTaskScoreboard extends GuiScreenCanvas {
             @Override
             public void onButtonClick() {
                 sendChanges();
-                mc.displayGuiScreen(parent);
+                Minecraft.getInstance().setScreen(parent);
             }
         });
     }

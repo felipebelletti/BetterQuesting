@@ -201,7 +201,7 @@ public class GuiItemSelection extends GuiScreenCanvas implements IPEventListener
                 callback.setValue(itemStack);
             }
 
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
         } else if (btn.getButtonID() == 1 && btn instanceof PanelButtonStorage) {
             BigItemStack tmp = ((PanelButtonStorage<BigItemStack>) btn).getStoredValue();
 

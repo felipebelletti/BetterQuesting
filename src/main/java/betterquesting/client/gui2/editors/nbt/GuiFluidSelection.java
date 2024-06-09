@@ -177,7 +177,7 @@ public class GuiFluidSelection extends GuiScreenCanvas implements IPEventListene
                 callback.setValue(itemStack);
             }
 
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
         } else if (btn.getButtonID() == 1 && btn instanceof PanelButtonStorage) {
             FluidStack fluid = ((PanelButtonStorage<FluidStack>) btn).getStoredValue();
 

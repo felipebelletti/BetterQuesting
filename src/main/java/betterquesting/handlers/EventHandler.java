@@ -104,12 +104,12 @@ public class EventHandler {
 
         if (mc.currentScreen == null && BQ_Keybindings.openQuests.isPressed()) {
             if (BQ_Settings.useBookmark && GuiHome.bookmark != null) {
-                mc.displayGuiScreen(GuiHome.bookmark);
+                Minecraft.getInstance().setScreen(GuiHome.bookmark);
             } else {
                 Screen guiToDisplay = ThemeRegistry.INSTANCE.getGui(PresetGUIs.HOME, GArgsNone.NONE);
                 if (BQ_Settings.useBookmark && BQ_Settings.skipHome)
                     guiToDisplay = new GuiQuestLines(guiToDisplay);
-                mc.displayGuiScreen(guiToDisplay);
+                Minecraft.getInstance().setScreen(guiToDisplay);
             }
         }
     }

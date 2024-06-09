@@ -56,7 +56,7 @@ public class PanelTabMain extends CanvasEmpty {
             @Override
             public void onButtonClick() {
                 Minecraft mc = Minecraft.getInstance();
-                mc.displayGuiScreen(new GuiNbtEditor(mc.currentScreen, cvQuestLine.getQuestLine().writeToNBT(new CompoundTag(), null), value -> {
+                Minecraft.getInstance().setScreen(new GuiNbtEditor(mc.currentScreen, cvQuestLine.getQuestLine().writeToNBT(new CompoundTag(), null), value -> {
                     CompoundTag payload = new CompoundTag();
                     ListTag dataList = new ListTag();
                     CompoundTag entry = new CompoundTag();

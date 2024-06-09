@@ -60,7 +60,7 @@ public class GuiThemes extends GuiScreenCanvas {
         inCan.addPanel(panTxt);
 
         PanelButton btnExit = new PanelButton(new GuiTransform(GuiAlign.BOTTOM_CENTER, new GuiPadding(-100, -16, -100, 0), 0), 0, QuestTranslation.translate("gui.done"));
-        btnExit.setClickAction((b) -> mc.displayGuiScreen(ThemeRegistry.INSTANCE.getGui(PresetGUIs.HOME, GArgsNone.NONE)));
+        btnExit.setClickAction((b) -> Minecraft.getInstance().setScreen(ThemeRegistry.INSTANCE.getGui(PresetGUIs.HOME, GArgsNone.NONE)));
         bgCan.addPanel(btnExit);
 
         CanvasScrolling canScroll = new CanvasScrolling(new GuiTransform(GuiAlign.HALF_LEFT, new GuiPadding(0, 16, 16, 16), 0));

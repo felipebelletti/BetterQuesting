@@ -66,7 +66,7 @@ public class GuiSubmitStation extends GuiContainerCanvas implements INeedsRefres
 
     public GuiSubmitStation(Screen parent, Inventory playerInvo, TileSubmitStation submitStation) {
         super(parent, playerInvo, new ContainerSubmitStation(0, playerInvo, submitStation));
-        this.ssContainer = (ContainerSubmitStation) this.inventorySlots;
+        this.ssContainer = (ContainerSubmitStation) this.getMenu();
         this.tile = submitStation;
     }
 
@@ -100,7 +100,7 @@ public class GuiSubmitStation extends GuiContainerCanvas implements INeedsRefres
         txtTitle.setColor(PresetColor.TEXT_HEADER.getColor());
         cvBackground.addPanel(txtTitle);
 
-        cvBackground.addPanel(new PanelButton(new GuiTransform(GuiAlign.BOTTOM_CENTER, -100, -16, 200, 16, 0), -1, QuestTranslation.translate("gui.done")).setClickAction((b) -> mc.displayGuiScreen(parent)));
+        cvBackground.addPanel(new PanelButton(new GuiTransform(GuiAlign.BOTTOM_CENTER, -100, -16, 200, 16, 0), -1, QuestTranslation.translate("gui.done")).setClickAction((b) -> Minecraft.getInstance().setScreen(parent)));
 
         btnQstLeft = new PanelButton(new GuiTransform(new Vector4f(0.5F, 0F, 0.5F, 0F), 8, 32, 16, 16, 0), -1, "") {
             @Override

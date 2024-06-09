@@ -122,7 +122,7 @@ public class GuiEntitySelection extends GuiScreenCanvas implements IPEventListen
                 QuestingAPI.getLogger().error("Unable to return entity selection!", e);
             }
 
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
         } else if (btn.getButtonID() == 1 && btn instanceof PanelButtonStorage) {
             Entity e = EntityList.newEntity(((PanelButtonStorage<EntityEntry>) btn).getStoredValue().getEntityClass(), this.mc.world);
 

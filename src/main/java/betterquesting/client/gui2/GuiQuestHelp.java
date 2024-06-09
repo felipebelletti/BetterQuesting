@@ -38,7 +38,7 @@ public class GuiQuestHelp extends GuiScreenCanvas {
         PanelButton btnBack = new PanelButton(new GuiTransform(GuiAlign.BOTTOM_CENTER, -100, -16, 200, 16, 0), 0, QuestTranslation.translate("gui.back")) {
             @Override
             public void onButtonClick() {
-                mc.displayGuiScreen(parent);
+                Minecraft.getInstance().setScreen(parent);
             }
         };
         cvBackground.addPanel(btnBack);

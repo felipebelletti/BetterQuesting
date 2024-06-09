@@ -60,7 +60,7 @@ public class GuiDesigner extends GuiScreenCanvas implements IVolatileScreen, INe
         this.questLine = QuestLineDatabase.INSTANCE.getValue(lineID);
 
         if (questLine == null) {
-            mc.displayGuiScreen(parent);
+            Minecraft.getInstance().setScreen(parent);
             return;
         }
 
@@ -162,7 +162,7 @@ public class GuiDesigner extends GuiScreenCanvas implements IVolatileScreen, INe
 
         if (btn.getButtonID() == 0) // Exit
         {
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
         }
     }
 }

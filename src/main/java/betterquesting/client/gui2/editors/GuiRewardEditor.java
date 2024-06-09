@@ -60,7 +60,7 @@ public class GuiRewardEditor extends GuiScreenCanvas implements IPEventListener,
         quest = QuestDatabase.INSTANCE.getValue(qID);
 
         if (quest == null) {
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
             return;
         }
 
@@ -72,7 +72,7 @@ public class GuiRewardEditor extends GuiScreenCanvas implements IPEventListener,
         super.initPanel();
 
         if (qID < 0) {
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
             return;
         }
 
@@ -150,7 +150,7 @@ public class GuiRewardEditor extends GuiScreenCanvas implements IPEventListener,
 
         if (btn.getButtonID() == 0) // Exit
         {
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
         } else if (btn.getButtonID() == 1 && btn instanceof PanelButtonStorage) // Add
         {
             IFactoryData<IReward, CompoundTag> fact = ((PanelButtonStorage<IFactoryData<IReward, CompoundTag>>) btn).getStoredValue();
@@ -170,9 +170,9 @@ public class GuiRewardEditor extends GuiScreenCanvas implements IPEventListener,
             Screen editor = reward.getRewardEditor(this, new DBEntry<>(qID, quest));
 
             if (editor != null) {
-                mc.displayGuiScreen(editor);
+                Minecraft.getInstance().setScreen(editor);
             } else {
-                mc.displayGuiScreen(new GuiNbtEditor(this, reward.writeToNBT(new CompoundTag()), value -> {
+                Minecraft.getInstance().setScreen(new GuiNbtEditor(this, reward.writeToNBT(new CompoundTag()), value -> {
                     reward.readFromNBT(value);
                     SendChanges();
                 }));

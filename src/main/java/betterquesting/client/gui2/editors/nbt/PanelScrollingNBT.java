@@ -392,23 +392,23 @@ public class PanelScrollingNBT extends CanvasScrolling implements IPEventListene
                 CompoundTag tag = (CompoundTag) entry;
 
                 if (JsonHelper.isItem(tag)) {
-                    mc.displayGuiScreen(new GuiItemSelection(mc.currentScreen, tag, new NbtItemCallback(tag)));
+                    Minecraft.getInstance().setScreen(new GuiItemSelection(mc.currentScreen, tag, new NbtItemCallback(tag)));
                 } else if (JsonHelper.isFluid(tag)) {
-                    mc.displayGuiScreen(new GuiFluidSelection(mc.currentScreen, tag, new NbtFluidCallback(tag)));
+                    Minecraft.getInstance().setScreen(new GuiFluidSelection(mc.currentScreen, tag, new NbtFluidCallback(tag)));
                 } else if (JsonHelper.isEntity(tag)) {
-                    mc.displayGuiScreen(new GuiEntitySelection(mc.currentScreen, tag, new NbtEntityCallback(tag)));
+                    Minecraft.getInstance().setScreen(new GuiEntitySelection(mc.currentScreen, tag, new NbtEntityCallback(tag)));
                 } else {
-                    mc.displayGuiScreen(new GuiNbtEditor(mc.currentScreen, tag, null));
+                    Minecraft.getInstance().setScreen(new GuiNbtEditor(mc.currentScreen, tag, null));
                 }
             } else if (entry.getId() == 9) // List editor
             {
-                mc.displayGuiScreen(new GuiNbtEditor(mc.currentScreen, (ListTag) entry, null));
+                Minecraft.getInstance().setScreen(new GuiNbtEditor(mc.currentScreen, (ListTag) entry, null));
             } else if (entry.getId() == 8) // Text editor
             {
                 if (nbt.getId() == 10) {
-                    mc.displayGuiScreen(new GuiTextEditor(mc.currentScreen, ((NBTTagString) entry).getString(), new CallbackNBTTagString((CompoundTag) nbt, ((PanelButtonStorage<String>) btn).getStoredValue())));
+                    Minecraft.getInstance().setScreen(new GuiTextEditor(mc.currentScreen, ((NBTTagString) entry).getString(), new CallbackNBTTagString((CompoundTag) nbt, ((PanelButtonStorage<String>) btn).getStoredValue())));
                 } else if (nbt.getId() == 9) {
-                    mc.displayGuiScreen(new GuiTextEditor(mc.currentScreen, ((NBTTagString) entry).getString(), new CallbackNBTTagString((ListTag) nbt, ((PanelButtonStorage<Integer>) btn).getStoredValue())));
+                    Minecraft.getInstance().setScreen(new GuiTextEditor(mc.currentScreen, ((NBTTagString) entry).getString(), new CallbackNBTTagString((ListTag) nbt, ((PanelButtonStorage<Integer>) btn).getStoredValue())));
                 }
             } else if (entry.getId() == 7 || entry.getId() == 11 || entry.getId() == 12) // Byte/Integer/Long array
             {
@@ -418,17 +418,17 @@ public class PanelScrollingNBT extends CanvasScrolling implements IPEventListene
         } else if (btn.getButtonID() == btnAdv) // Open advanced editor (on supported types)
         {
             if (entry.getId() == 10) {
-                mc.displayGuiScreen(new GuiNbtType(mc.currentScreen, (CompoundTag) entry));
+                Minecraft.getInstance().setScreen(new GuiNbtType(mc.currentScreen, (CompoundTag) entry));
             } else if (entry.getId() == 9) // Not currently available but will be when context list editors (enchantments/inventories/etc) are available
             {
                 // TODO: Replace with context based list editors
-                mc.displayGuiScreen(new GuiNbtEditor(mc.currentScreen, (ListTag) entry, null));
+                Minecraft.getInstance().setScreen(new GuiNbtEditor(mc.currentScreen, (ListTag) entry, null));
             }
         } else if (btn.getButtonID() == btnInsert) {
             if (nbt.getId() == 10) {
-                mc.displayGuiScreen(new GuiNbtAdd(mc.currentScreen, (CompoundTag) nbt));
+                Minecraft.getInstance().setScreen(new GuiNbtAdd(mc.currentScreen, (CompoundTag) nbt));
             } else if (nbt.getId() == 9) {
-                mc.displayGuiScreen(new GuiNbtAdd(mc.currentScreen, (ListTag) nbt, ((PanelButtonStorage<Integer>) btn).getStoredValue()));
+                Minecraft.getInstance().setScreen(new GuiNbtAdd(mc.currentScreen, (ListTag) nbt, ((PanelButtonStorage<Integer>) btn).getStoredValue()));
             }
         } else if (btn.getButtonID() == btnDelete) {
             if (nbt.getId() == 10) {

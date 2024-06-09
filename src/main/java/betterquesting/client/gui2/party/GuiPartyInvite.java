@@ -55,7 +55,7 @@ public class GuiPartyInvite extends GuiScreenCanvas implements IPEventListener {
         DBEntry<IParty> tmp = PartyManager.INSTANCE.getParty(playerID);
 
         if (tmp == null) {
-            mc.displayGuiScreen(parent);
+            Minecraft.getInstance().setScreen(parent);
             return;
         }
 
@@ -127,7 +127,7 @@ public class GuiPartyInvite extends GuiScreenCanvas implements IPEventListener {
 
         if (btn.getButtonID() == 0) // Exit
         {
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
         } else if (btn.getButtonID() == 1 && flName.getRawText().length() > 0) // Manual Invite
         {
             CompoundTag payload = new CompoundTag();

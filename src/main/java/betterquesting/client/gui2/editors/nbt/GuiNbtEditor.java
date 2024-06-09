@@ -105,7 +105,7 @@ public class GuiNbtEditor extends GuiScreenCanvas implements IPEventListener, IV
 
         if (btn.getButtonID() == 0) // Exit
         {
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
 
             if (nbt.getId() == 10 && comCallback != null) {
                 comCallback.setValue((CompoundTag) nbt);

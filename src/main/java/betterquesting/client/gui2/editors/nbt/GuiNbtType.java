@@ -65,27 +65,27 @@ public class GuiNbtType extends GuiScreenCanvas implements IPEventListener, IVol
         switch (btn.getButtonID()) {
             case 0: // Back
             {
-                mc.displayGuiScreen(this.parent);
+                Minecraft.getInstance().setScreen(this.parent);
                 break;
             }
             case 1: // Raw NBT
             {
-                mc.displayGuiScreen(new GuiNbtEditor(this.parent, tagCompound, null));
+                Minecraft.getInstance().setScreen(new GuiNbtEditor(this.parent, tagCompound, null));
                 break;
             }
             case 2: // Item
             {
-                mc.displayGuiScreen(new GuiItemSelection(this.parent, tagCompound, new NbtItemCallback(tagCompound)));
+                Minecraft.getInstance().setScreen(new GuiItemSelection(this.parent, tagCompound, new NbtItemCallback(tagCompound)));
                 break;
             }
             case 3: // Fluid
             {
-                mc.displayGuiScreen(new GuiFluidSelection(this.parent, tagCompound, new NbtFluidCallback(tagCompound)));
+                Minecraft.getInstance().setScreen(new GuiFluidSelection(this.parent, tagCompound, new NbtFluidCallback(tagCompound)));
                 break;
             }
             case 4: // Entity
             {
-                mc.displayGuiScreen(new GuiEntitySelection(this.parent, tagCompound, new NbtEntityCallback(tagCompound)));
+                Minecraft.getInstance().setScreen(new GuiEntitySelection(this.parent, tagCompound, new NbtEntityCallback(tagCompound)));
                 break;
             }
         }

@@ -91,7 +91,7 @@ public class GuiTextEditor extends GuiScreenCanvas implements IPEventListener, I
 
         if (btn.getButtonID() == 0) // Exit
         {
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
         } else if (btn.getButtonID() == 1 && btn instanceof PanelButtonStorage) {
             String format = ((PanelButtonStorage<String>) btn).getStoredValue();
             flText.writeText(format);

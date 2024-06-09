@@ -74,7 +74,7 @@ public class GuiEditTaskMeeting extends GuiScreenCanvas implements IVolatileScre
         cvBackground.addPanel(new PanelButton(new GuiTransform(GuiAlign.MID_CENTER, -100, 16, 200, 16, 0), -1, QuestTranslation.translate("bq_standard.btn.select_mob")) {
             @Override
             public void onButtonClick() {
-                mc.displayGuiScreen(QuestingAPI.getAPI(ApiReference.THEME_REG).getGui(PresetGUIs.EDIT_ENTITY, new GArgsCallback<>(screenRef, target, value -> {
+                Minecraft.getInstance().setScreen(QuestingAPI.getAPI(ApiReference.THEME_REG).getGui(PresetGUIs.EDIT_ENTITY, new GArgsCallback<>(screenRef, target, value -> {
                     Entity tmp = value != null ? value : new EntityVillager(mc.world);
                     ResourceLocation res = EntityList.getKey(tmp.getClass());
                     task.idName = res != null ? res.toString() : "minecraft:villager";
@@ -87,7 +87,7 @@ public class GuiEditTaskMeeting extends GuiScreenCanvas implements IVolatileScre
         cvBackground.addPanel(new PanelButton(new GuiTransform(GuiAlign.MID_CENTER, -100, 32, 200, 16, 0), -1, QuestTranslation.translate("betterquesting.btn.advanced")) {
             @Override
             public void onButtonClick() {
-                mc.displayGuiScreen(QuestingAPI.getAPI(ApiReference.THEME_REG).getGui(PresetGUIs.EDIT_NBT, new GArgsNBT<>(screenRef, task.writeToNBT(new CompoundTag()), task::readFromNBT, null)));
+                Minecraft.getInstance().setScreen(QuestingAPI.getAPI(ApiReference.THEME_REG).getGui(PresetGUIs.EDIT_NBT, new GArgsNBT<>(screenRef, task.writeToNBT(new CompoundTag()), task::readFromNBT, null)));
             }
         });
 
@@ -95,7 +95,7 @@ public class GuiEditTaskMeeting extends GuiScreenCanvas implements IVolatileScre
             @Override
             public void onButtonClick() {
                 sendChanges();
-                mc.displayGuiScreen(parent);
+                Minecraft.getInstance().setScreen(parent);
             }
         });
     }

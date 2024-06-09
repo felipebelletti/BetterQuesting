@@ -137,7 +137,7 @@ public class GuiQuestLinesEditor extends GuiScreenCanvas implements IPEventListe
             @Override
             public void onButtonClick() {
                 if (selected == null) return;
-                mc.displayGuiScreen(new GuiItemSelection(GuiQuestLinesEditor.this, selected.getProperty(NativeProps.ICON), value -> {
+                Minecraft.getInstance().setScreen(new GuiItemSelection(GuiQuestLinesEditor.this, selected.getProperty(NativeProps.ICON), value -> {
                     selected.setProperty(NativeProps.ICON, value);
                     SendChanges(new DBEntry<>(selID, selected));
                 }));
@@ -238,7 +238,7 @@ public class GuiQuestLinesEditor extends GuiScreenCanvas implements IPEventListe
 
         if (btn.getButtonID() == 0) // Exit
         {
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
         } else if (btn.getButtonID() == 1) // New Quest Line
         {
             CompoundTag payload = new CompoundTag();
@@ -251,14 +251,14 @@ public class GuiQuestLinesEditor extends GuiScreenCanvas implements IPEventListe
             NetChapterEdit.sendEdit(payload);
         } else if (btn.getButtonID() == 2) // Import
         {
-            mc.displayGuiScreen(new GuiImporters(this));
+            Minecraft.getInstance().setScreen(new GuiImporters(this));
         } else if (btn.getButtonID() == 3) // Add/Remove Quests
         {
-            mc.displayGuiScreen(new GuiQuestLineAddRemove(this, selected));
+            Minecraft.getInstance().setScreen(new GuiQuestLineAddRemove(this, selected));
         } else if (btn.getButtonID() == 4 && selected != null) // Designer
         {
-            //mc.displayGuiScreen(new GuiQuestLineDesigner(this, selected));
-            mc.displayGuiScreen(new GuiDesigner(this, selected));
+            //Minecraft.getInstance().setScreen(new GuiQuestLineDesigner(this, selected));
+            Minecraft.getInstance().setScreen(new GuiDesigner(this, selected));
         } else if (btn.getButtonID() == 5 && btn instanceof PanelButtonStorage) // Select Quest
         {
             DBEntry<IQuestLine> entry = ((PanelButtonStorage<DBEntry<IQuestLine>>) btn).getStoredValue();
@@ -286,7 +286,7 @@ public class GuiQuestLinesEditor extends GuiScreenCanvas implements IPEventListe
             if (order > 0) SendReorder(order);
         } else if (btn.getButtonID() == 8) // Big Description Editor
         {
-            mc.displayGuiScreen(new GuiTextEditor(this, tfDesc.getRawText(), value -> {
+            Minecraft.getInstance().setScreen(new GuiTextEditor(this, tfDesc.getRawText(), value -> {
                 if (selected != null) {
                     tfDesc.setText(value);
                     selected.setProperty(NativeProps.DESC, value);

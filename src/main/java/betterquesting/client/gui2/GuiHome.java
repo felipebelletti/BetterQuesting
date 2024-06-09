@@ -138,8 +138,8 @@ public class GuiHome extends GuiScreenCanvas {
             PanelButton tstBtn = new PanelButton(new GuiTransform(GuiAlign.TOP_LEFT, 0, 16, 16, 16, 0), -2, "?") {
                 @Override
                 public void onButtonClick() {
-                    mc.displayGuiScreen(new GuiStatus(GuiHome.this));
-                    //mc.displayGuiScreen(new GuiBuilderMain(GuiHome.this));
+                    Minecraft.getInstance().setScreen(new GuiStatus(GuiHome.this));
+                    //Minecraft.getInstance().setScreen(new GuiBuilderMain(GuiHome.this));
                 }
             }; // Test screen
             inCan.addPanel(tstBtn);
@@ -154,25 +154,25 @@ public class GuiHome extends GuiScreenCanvas {
 
         if (btn.getButtonID() == 0) // Exit
         {
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
         } else if (btn.getButtonID() == 1) // Quests
         {
-            mc.displayGuiScreen(new GuiQuestLines(this));
+            Minecraft.getInstance().setScreen(new GuiQuestLines(this));
         } else if (btn.getButtonID() == 2) // Party
         {
             DBEntry<IParty> party = PartyManager.INSTANCE.getParty(QuestingAPI.getQuestingUUID(mc.player));
 
             if (party != null) {
-                mc.displayGuiScreen(new GuiPartyManage(this));
+                Minecraft.getInstance().setScreen(new GuiPartyManage(this));
             } else {
-                mc.displayGuiScreen(new GuiPartyCreate(this));
+                Minecraft.getInstance().setScreen(new GuiPartyCreate(this));
             }
         } else if (btn.getButtonID() == 3) // Theme
         {
-            mc.displayGuiScreen(new GuiThemes(this));
+            Minecraft.getInstance().setScreen(new GuiThemes(this));
         } else if (btn.getButtonID() == 4) // Editor
         {
-            mc.displayGuiScreen(new GuiNbtEditor(this, QuestSettings.INSTANCE.writeToNBT(new CompoundTag()), (value) ->
+            Minecraft.getInstance().setScreen(new GuiNbtEditor(this, QuestSettings.INSTANCE.writeToNBT(new CompoundTag()), (value) ->
             {
                 QuestSettings.INSTANCE.readFromNBT(value);
                 NetSettingSync.requestEdit();
@@ -205,7 +205,7 @@ public class GuiHome extends GuiScreenCanvas {
                 });
 
                 //this.initGui(); // Reset the whole thing
-                mc.displayGuiScreen(null);
+                Minecraft.getInstance().setScreen(null);
             }
         }
     }

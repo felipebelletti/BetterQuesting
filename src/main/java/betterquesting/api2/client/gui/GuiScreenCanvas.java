@@ -200,7 +200,7 @@ public class GuiScreenCanvas extends Screen implements IScene {
             if (this.isVolatile || this instanceof IVolatileScreen) {
                 openPopup(new PopChoice(QuestTranslation.translate("betterquesting.gui.closing_warning") + "\n\n" + QuestTranslation.translate("betterquesting.gui.closing_confirm"), PresetIcon.ICON_NOTICE.getTexture(), this::confirmClose, QuestTranslation.translate("gui.yes"), QuestTranslation.translate("gui.no")));
             } else {
-                this.mc.displayGuiScreen(null);
+                this.Minecraft.getInstance().setScreen(null);
                 if (this.mc.currentScreen == null) this.mc.setIngameFocus();
             }
 
@@ -217,7 +217,7 @@ public class GuiScreenCanvas extends Screen implements IScene {
                     }
                 }
                 if (!hasKeyAction && canvas.parent != null) {
-                    mc.displayGuiScreen(canvas.parent);
+                    Minecraft.getInstance().setScreen(canvas.parent);
                 }
                 return;
             }
@@ -334,7 +334,7 @@ public class GuiScreenCanvas extends Screen implements IScene {
             if (this.isVolatile || this instanceof IVolatileScreen) {
                 openPopup(new PopChoice(QuestTranslation.translate("betterquesting.gui.closing_warning") + "\n\n" + QuestTranslation.translate("betterquesting.gui.closing_confirm"), PresetIcon.ICON_NOTICE.getTexture(), this::confirmClose, QuestTranslation.translate("gui.yes"), QuestTranslation.translate("gui.no")));
             } else {
-                this.mc.displayGuiScreen(null);
+                this.Minecraft.getInstance().setScreen(null);
                 if (this.mc.currentScreen == null) this.mc.setIngameFocus();
             }
         }
@@ -403,7 +403,7 @@ public class GuiScreenCanvas extends Screen implements IScene {
 
     private void confirmClose(int id) {
         if (id == 0) {
-            this.mc.displayGuiScreen(null);
+            this.Minecraft.getInstance().setScreen(null);
             if (this.mc.currentScreen == null) this.mc.setIngameFocus();
         }
     }

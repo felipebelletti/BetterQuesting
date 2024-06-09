@@ -124,7 +124,7 @@ public class GuiImporters extends GuiScreenCanvas implements IPEventListener, IC
 
         if (btn.getButtonID() == 0) // Exit
         {
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
         } else if (btn.getButtonID() == 1) // Select
         {
             IImporter imp = ((PanelButtonStorage<IImporter>) btn).getStoredValue();
@@ -136,7 +136,7 @@ public class GuiImporters extends GuiScreenCanvas implements IPEventListener, IC
         } else if (btn.getButtonID() == 2) // Import
         {
             lastImport = ((PanelButtonStorage<IImporter>) btn).getStoredValue();
-            mc.displayGuiScreen(new GuiFileBrowser(this, this, new File(".").getAbsoluteFile().getParentFile(), lastImport.getFileFilter()));
+            Minecraft.getInstance().setScreen(new GuiFileBrowser(this, this, new File(".").getAbsoluteFile().getParentFile(), lastImport.getFileFilter()));
         }
     }
 
@@ -155,7 +155,7 @@ public class GuiImporters extends GuiScreenCanvas implements IPEventListener, IC
 
         if (questDB.size() > 0 || lineDB.size() > 0) {
             NetImport.sendImport(questDB, lineDB);
-            mc.displayGuiScreen(parent);
+            Minecraft.getInstance().setScreen(parent);
         }
     }
 }

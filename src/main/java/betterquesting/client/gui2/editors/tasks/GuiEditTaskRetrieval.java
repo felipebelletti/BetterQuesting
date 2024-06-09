@@ -68,7 +68,7 @@ public class GuiEditTaskRetrieval extends GuiScreenCanvas implements IVolatileSc
                 -1,
                 QuestTranslation.translate("bq_standard.btn.edit_nbt"));
         btnEditNBT.setClickAction(btn -> {
-            mc.displayGuiScreen(new GuiNbtEditor(GuiEditTaskRetrieval.this, current, value -> current = value));
+            Minecraft.getInstance().setScreen(new GuiNbtEditor(GuiEditTaskRetrieval.this, current, value -> current = value));
         });
         cvBackground.addPanel(btnEditNBT);
 
@@ -78,7 +78,7 @@ public class GuiEditTaskRetrieval extends GuiScreenCanvas implements IVolatileSc
             public void onButtonClick() {
                 task.readFromNBT(current);
                 sendChanges();
-                mc.displayGuiScreen(parent);
+                Minecraft.getInstance().setScreen(parent);
             }
 
         });
@@ -92,7 +92,7 @@ public class GuiEditTaskRetrieval extends GuiScreenCanvas implements IVolatileSc
         addBoolean("ignoreNBT", cvList);
         addBoolean("partialMatch", cvList);
         cvList.addPanel("requiredItems", rect -> new PanelButton(rect, -1, "List...").setClickAction(b -> {
-            mc.displayGuiScreen(new GuiNbtEditor(mc.currentScreen, (ListTag) current.getTag("requiredItems"), null));
+            Minecraft.getInstance().setScreen(new GuiNbtEditor(mc.currentScreen, (ListTag) current.getTag("requiredItems"), null));
         }));
     }
 

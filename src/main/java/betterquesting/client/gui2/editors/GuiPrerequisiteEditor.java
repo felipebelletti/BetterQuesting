@@ -60,7 +60,7 @@ public class GuiPrerequisiteEditor extends GuiScreenCanvas implements IPEventLis
         quest = QuestDatabase.INSTANCE.getValue(questID);
 
         if (quest == null) {
-            mc.displayGuiScreen(parent);
+            Minecraft.getInstance().setScreen(parent);
             return;
         }
 
@@ -201,10 +201,10 @@ public class GuiPrerequisiteEditor extends GuiScreenCanvas implements IPEventLis
         IPanelButton btn = event.getButton();
 
         if (btn.getButtonID() == 0) { // Exit
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
         } else if (btn.getButtonID() == 1 && btn instanceof PanelButtonStorage) { // Edit Quest
             DBEntry<IQuest> entry = ((PanelButtonStorage<DBEntry<IQuest>>) btn).getStoredValue();
-            mc.displayGuiScreen(new GuiQuest(this, entry.getID()));
+            Minecraft.getInstance().setScreen(new GuiQuest(this, entry.getID()));
         } else if (btn.getButtonID() == 2 && btn instanceof PanelButtonStorage) { // Add
             DBEntry<IQuest> entry = ((PanelButtonStorage<DBEntry<IQuest>>) btn).getStoredValue();
             addReq(quest, entry.getID());

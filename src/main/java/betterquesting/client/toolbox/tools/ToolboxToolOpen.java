@@ -36,7 +36,7 @@ public class ToolboxToolOpen implements IToolboxTool {
             int qID = btn.getStoredValue().getID();
 
             Minecraft mc = Minecraft.getInstance();
-            mc.displayGuiScreen(new GuiQuest(mc.currentScreen, qID));
+            Minecraft.getInstance().setScreen(new GuiQuest(mc.currentScreen, qID));
             return true;
         }
 

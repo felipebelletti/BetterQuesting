@@ -100,7 +100,7 @@ public class GuiQuestDescEditor extends GuiScreenCanvas implements IPEventListen
      * Close the screen.
      */
     public void close() {
-        mc.displayGuiScreen(this.parent);
+        Minecraft.getInstance().setScreen(this.parent);
     }
 
     /**

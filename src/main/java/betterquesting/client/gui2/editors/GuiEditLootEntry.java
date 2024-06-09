@@ -114,7 +114,7 @@ public class GuiEditLootEntry extends GuiScreenCanvas {
             public void onButtonClick() {
                 if (selEntry != null) {
                     final CompoundTag eTag = selEntry.writeToNBT(new CompoundTag());
-                    mc.displayGuiScreen(QuestingAPI.getAPI(ApiReference.THEME_REG).getGui(PresetGUIs.EDIT_NBT, new GArgsNBT<>(screenRef, eTag.getTagList("items", 10), value -> {
+                    Minecraft.getInstance().setScreen(QuestingAPI.getAPI(ApiReference.THEME_REG).getGui(PresetGUIs.EDIT_NBT, new GArgsNBT<>(screenRef, eTag.getTagList("items", 10), value -> {
                         LootGroup lg = LootRegistry.INSTANCE.getValue(groupID);
                         LootGroup.LootEntry le = lg == null ? null : lg.getValue(selectedID);
                         if (le != null) {
@@ -132,7 +132,7 @@ public class GuiEditLootEntry extends GuiScreenCanvas {
             @Override
             public void onButtonClick() {
                 sendChanges();
-                mc.displayGuiScreen(parent);
+                Minecraft.getInstance().setScreen(parent);
             }
         });
 
@@ -154,7 +154,7 @@ public class GuiEditLootEntry extends GuiScreenCanvas {
             LootRegistry.INSTANCE.updateUI = false;
             lootGroup = LootRegistry.INSTANCE.getValue(groupID);
             if (lootGroup == null) {
-                mc.displayGuiScreen(parent);
+                Minecraft.getInstance().setScreen(parent);
                 return;
             }
 

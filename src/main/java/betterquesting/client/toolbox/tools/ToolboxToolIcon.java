@@ -49,7 +49,7 @@ public class ToolboxToolIcon implements IToolboxTool {
 
     private void changeIcon(List<PanelButtonQuest> list, BigItemStack refItem) {
         Minecraft mc = Minecraft.getInstance();
-        mc.displayGuiScreen(new GuiItemSelection(mc.currentScreen, refItem, value -> {
+        Minecraft.getInstance().setScreen(new GuiItemSelection(mc.currentScreen, refItem, value -> {
             ListTag dataList = new ListTag();
             for (PanelButtonQuest b : list) {
                 b.getStoredValue().getValue().setProperty(NativeProps.ICON, value);

@@ -118,7 +118,7 @@ public class GuiEditLootGroup extends GuiScreenCanvas implements IVolatileScreen
             public void onButtonClick() {
                 if (selGroup != null) {
                     SendChanges();
-                    mc.displayGuiScreen(new GuiEditLootEntry(screenRef, selGroup));
+                    Minecraft.getInstance().setScreen(new GuiEditLootEntry(screenRef, selGroup));
                 }
             }
         });
@@ -129,7 +129,7 @@ public class GuiEditLootGroup extends GuiScreenCanvas implements IVolatileScreen
             @Override
             public void onButtonClick() {
                 SendChanges();
-                mc.displayGuiScreen(parent);
+                Minecraft.getInstance().setScreen(parent);
             }
         });
 

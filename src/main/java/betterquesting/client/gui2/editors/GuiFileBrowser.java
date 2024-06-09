@@ -207,7 +207,7 @@ public class GuiFileBrowser extends GuiScreenCanvas implements IPEventListener {
         if (btn.getButtonID() == 0) // Exit
         {
             if (callback != null) callback.setValue(selList.toArray(new File[0]));
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
         }
     }
 

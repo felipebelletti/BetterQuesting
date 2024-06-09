@@ -107,7 +107,7 @@ public class GuiBuilderMain extends GuiScreenCanvas implements IVolatileScreen {
         PanelButton btnExit = new PanelButton(new GuiTransform(GuiAlign.TOP_RIGHT, -16, 0, 16, 16, 0), -1, "") {
             @Override
             public void onButtonClick() {
-                mc.displayGuiScreen(parent);
+                Minecraft.getInstance().setScreen(parent);
             }
         }.setIcon(PresetIcon.ICON_CROSS.getTexture());
         this.addPanel(btnExit);

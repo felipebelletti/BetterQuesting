@@ -56,7 +56,7 @@ public class GuiQuestEditor extends GuiScreenCanvas implements IPEventListener, 
         quest = QuestDatabase.INSTANCE.getValue(questID);
 
         if (quest == null) {
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
         } else {
             pnTitle.setText(QuestTranslation.translate("betterquesting.title.edit_quest", QuestTranslation.translate(quest.getProperty(NativeProps.NAME))));
             if (!flName.isFocused())
@@ -76,7 +76,7 @@ public class GuiQuestEditor extends GuiScreenCanvas implements IPEventListener, 
         quest = QuestDatabase.INSTANCE.getValue(questID);
 
         if (quest == null) {
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
             return;
         }
 
@@ -175,27 +175,27 @@ public class GuiQuestEditor extends GuiScreenCanvas implements IPEventListener, 
         switch (btn.getButtonID()) {
             case 0: // Exit
             {
-                mc.displayGuiScreen(this.parent);
+                Minecraft.getInstance().setScreen(this.parent);
                 break;
             }
             case 1: // Edit tasks
             {
-                mc.displayGuiScreen(new betterquesting.client.gui2.editors.GuiTaskEditor(this, quest));
+                Minecraft.getInstance().setScreen(new betterquesting.client.gui2.editors.GuiTaskEditor(this, quest));
                 break;
             }
             case 2: // Edit rewards
             {
-                mc.displayGuiScreen(new betterquesting.client.gui2.editors.GuiRewardEditor(this, quest));
+                Minecraft.getInstance().setScreen(new betterquesting.client.gui2.editors.GuiRewardEditor(this, quest));
                 break;
             }
             case 3: // Requirements
             {
-                mc.displayGuiScreen(new betterquesting.client.gui2.editors.GuiPrerequisiteEditor(this, quest));
+                Minecraft.getInstance().setScreen(new betterquesting.client.gui2.editors.GuiPrerequisiteEditor(this, quest));
                 break;
             }
             case 4: // Advanced
             {
-                mc.displayGuiScreen(new GuiNbtEditor(this, quest.writeToNBT(new CompoundTag()), value -> {
+                Minecraft.getInstance().setScreen(new GuiNbtEditor(this, quest.writeToNBT(new CompoundTag()), value -> {
                     quest.readFromNBT(value);
                     sendChanges(questID);
                 }));
@@ -223,11 +223,11 @@ public class GuiQuestEditor extends GuiScreenCanvas implements IPEventListener, 
             }
             case 7: // Description Editor
             {
-                mc.displayGuiScreen(new GuiQuestDescEditor(this, questID, quest));
+                Minecraft.getInstance().setScreen(new GuiQuestDescEditor(this, questID, quest));
                 break;
             }
             case 8: {
-                mc.displayGuiScreen(new GuiItemSelection(this, quest.getProperty(NativeProps.ICON), value -> {
+                Minecraft.getInstance().setScreen(new GuiItemSelection(this, quest.getProperty(NativeProps.ICON), value -> {
                     quest.setProperty(NativeProps.ICON, value);
                     sendChanges(questID);
                 }));

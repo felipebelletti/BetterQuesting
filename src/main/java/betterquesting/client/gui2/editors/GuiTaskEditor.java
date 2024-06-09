@@ -60,7 +60,7 @@ public class GuiTaskEditor extends GuiScreenCanvas implements IPEventListener, I
         quest = QuestDatabase.INSTANCE.getValue(qID);
 
         if (quest == null) {
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
             return;
         }
 
@@ -72,7 +72,7 @@ public class GuiTaskEditor extends GuiScreenCanvas implements IPEventListener, I
         super.initPanel();
 
         if (qID < 0) {
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
             return;
         }
 
@@ -150,7 +150,7 @@ public class GuiTaskEditor extends GuiScreenCanvas implements IPEventListener, I
 
         if (btn.getButtonID() == 0) // Exit
         {
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
         } else if (btn.getButtonID() == 1 && btn instanceof PanelButtonStorage) // Add
         {
             IFactoryData<ITask, CompoundTag> fact = ((PanelButtonStorage<IFactoryData<ITask, CompoundTag>>) btn).getStoredValue();
@@ -170,9 +170,9 @@ public class GuiTaskEditor extends GuiScreenCanvas implements IPEventListener, I
             Screen editor = task.getTaskEditor(this, new DBEntry<>(qID, quest));
 
             if (editor != null) {
-                mc.displayGuiScreen(editor);
+                Minecraft.getInstance().setScreen(editor);
             } else {
-                mc.displayGuiScreen(new GuiNbtEditor(this, task.writeToNBT(new CompoundTag()), value -> {
+                Minecraft.getInstance().setScreen(new GuiNbtEditor(this, task.writeToNBT(new CompoundTag()), value -> {
                     task.readFromNBT(value);
                     SendChanges();
                 }));

@@ -148,7 +148,7 @@ public class GuiQuestLines extends GuiScreenCanvas implements IPEventListener, I
         this.addPanel(cvBackground);
 
         PanelButton btnExit = new PanelButton(new GuiTransform(GuiAlign.BOTTOM_LEFT, 8, -24, 32, 16, 0), -1, "").setIcon(PresetIcon.ICON_PG_PREV.getTexture());
-        btnExit.setClickAction((b) -> mc.displayGuiScreen(parent));
+        btnExit.setClickAction((b) -> Minecraft.getInstance().setScreen(parent));
         btnExit.setTooltip(Collections.singletonList(QuestTranslation.translate("gui.back")));
         cvBackground.addPanel(btnExit);
 
@@ -160,12 +160,12 @@ public class GuiQuestLines extends GuiScreenCanvas implements IPEventListener, I
 
         if (canEdit) {
             PanelButton btnEdit = new PanelButton(new GuiTransform(GuiAlign.BOTTOM_LEFT, 8, -56, 16, 16, 0), -1, "").setIcon(PresetIcon.ICON_GEAR.getTexture());
-            btnEdit.setClickAction((b) -> mc.displayGuiScreen(new GuiQuestLinesEditor(this)));
+            btnEdit.setClickAction((b) -> Minecraft.getInstance().setScreen(new GuiQuestLinesEditor(this)));
             btnEdit.setTooltip(Collections.singletonList(QuestTranslation.translate("betterquesting.btn.edit")));
             cvBackground.addPanel(btnEdit);
 
             btnDesign = new PanelButton(new GuiTransform(GuiAlign.BOTTOM_LEFT, 24, -56, 16, 16, 0), -1, "").setIcon(PresetIcon.ICON_SORT.getTexture());
-            btnDesign.setClickAction($ -> mc.displayGuiScreen(new GuiDesigner(this, selectedLine)));
+            btnDesign.setClickAction($ -> Minecraft.getInstance().setScreen(new GuiDesigner(this, selectedLine)));
             btnDesign.setTooltip(Collections.singletonList(QuestTranslation.translate("betterquesting.btn.designer")));
             cvBackground.addPanel(btnDesign);
             btnDesign.setActive(selectedLine != null);
@@ -337,17 +337,17 @@ public class GuiQuestLines extends GuiScreenCanvas implements IPEventListener, I
                     if (canEdit) {
                         if (questExistsUnderMouse) {
                             GuiQuestEditor editor = new GuiQuestEditor(new GuiQuestLines(parent), cvQuest.getButtonAt(mx, my).getStoredValue().getID());
-                            Runnable actionEditor = () -> mc.displayGuiScreen(editor);
+                            Runnable actionEditor = () -> Minecraft.getInstance().setScreen(editor);
                             popup.addButton(QuestTranslation.translate("betterquesting.btn.edit"), null, actionEditor);
                         }
                         GuiDesigner designer = new GuiDesigner(new GuiQuestLines(parent), cvQuest.getQuestLine());
-                        Runnable actionDesigner = () -> mc.displayGuiScreen(designer);
+                        Runnable actionDesigner = () -> Minecraft.getInstance().setScreen(designer);
                         popup.addButton(QuestTranslation.translate("betterquesting.btn.designer"), null, actionDesigner);
                     }
                     if (questExistsUnderMouse) {
                         Runnable questSharer = () -> {
                             mc.player.sendChatMessage("betterquesting.msg.share_quest:" + cvQuest.getButtonAt(mx, my).getStoredValue().getID());
-                            mc.displayGuiScreen(null);
+                            Minecraft.getInstance().setScreen(null);
                         };
                         popup.addButton(QuestTranslation.translate("betterquesting.btn.share_quest"), null, questSharer);
 
@@ -462,7 +462,7 @@ public class GuiQuestLines extends GuiScreenCanvas implements IPEventListener, I
             DBEntry<IQuest> quest = ((PanelButtonStorage<DBEntry<IQuest>>) btn).getStoredValue();
             GuiHome.bookmark = new GuiQuest(this, quest.getID());
 
-            mc.displayGuiScreen(GuiHome.bookmark);
+            Minecraft.getInstance().setScreen(GuiHome.bookmark);
         }
     }
 
@@ -704,7 +704,7 @@ public class GuiQuestLines extends GuiScreenCanvas implements IPEventListener, I
                 panelButtonQuest.setTextures(newTexture, newTexture, newTexture);
             });
         });
-        mc.displayGuiScreen(guiQuestSearch);
+        Minecraft.getInstance().setScreen(guiQuestSearch);
     }
 
     public static class ScrollPosition{

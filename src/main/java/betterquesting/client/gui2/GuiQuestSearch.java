@@ -51,7 +51,7 @@ public class GuiQuestSearch extends GuiScreenCanvas {
                 0,
                 QuestTranslation.translate("gui.back")
         );
-        btnExit.setClickAction((b) -> mc.displayGuiScreen(parent));
+        btnExit.setClickAction((b) -> Minecraft.getInstance().setScreen(parent));
         cvInner.addPanel(btnExit);
     }
 
@@ -77,10 +77,10 @@ public class GuiQuestSearch extends GuiScreenCanvas {
         canvasQuestSearch.setQuestOpenCallback(questSearchEntry -> {
             acceptCallback(questSearchEntry);
             GuiHome.bookmark = new GuiQuest(parent, questSearchEntry.getQuest().getID());
-            mc.displayGuiScreen(GuiHome.bookmark);
+            Minecraft.getInstance().setScreen(GuiHome.bookmark);
         });
         canvasQuestSearch.setQuestHighlightCallback(questSearchEntry -> {
-            mc.displayGuiScreen(parent);
+            Minecraft.getInstance().setScreen(parent);
             acceptCallback(questSearchEntry);
         });
         return canvasQuestSearch;

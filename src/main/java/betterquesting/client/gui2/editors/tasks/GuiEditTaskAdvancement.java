@@ -108,7 +108,7 @@ public class GuiEditTaskAdvancement extends GuiScreenCanvas implements IVolatile
             @Override
             public void onButtonClick() {
                 sendChanges();
-                mc.displayGuiScreen(parent);
+                Minecraft.getInstance().setScreen(parent);
             }
         });
     }

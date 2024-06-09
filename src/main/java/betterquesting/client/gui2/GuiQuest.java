@@ -94,7 +94,7 @@ public class GuiQuest extends GuiScreenCanvas implements IPEventListener, INeeds
         this.quest = QuestDatabase.INSTANCE.getValue(questID);
 
         if (quest == null) {
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
             return;
         }
 
@@ -115,7 +115,7 @@ public class GuiQuest extends GuiScreenCanvas implements IPEventListener, INeeds
 
                     PopContextMenu popup = new PopContextMenu(new GuiRectangle(mx, my, 76, 16), true);
                     GuiRewardEditor editor = new GuiRewardEditor(new GuiQuest(parent, questID), quest);
-                    Runnable action = () -> mc.displayGuiScreen(editor);
+                    Runnable action = () -> Minecraft.getInstance().setScreen(editor);
                     popup.addButton(QuestTranslation.translate("betterquesting.context.add_reward"), null, action);
                     openPopup(popup);
 
@@ -131,7 +131,7 @@ public class GuiQuest extends GuiScreenCanvas implements IPEventListener, INeeds
                 else if (rectReward != null && rectReward.contains(mx, my) && QuestingAPI.getAPI(ApiReference.SETTINGS).canUserEdit(mc.player)) {
                     PopContextMenu popup = new PopContextMenu(new GuiRectangle(mx, my, 76, 16), true);
                     GuiRewardEditor editor = new GuiRewardEditor(new GuiQuest(parent, questID), quest);
-                    Runnable action = () -> mc.displayGuiScreen(editor);
+                    Runnable action = () -> Minecraft.getInstance().setScreen(editor);
                     popup.addButton(QuestTranslation.translate("betterquesting.context.add_reward"), null, action);
                     openPopup(popup);
                     return true;
@@ -190,7 +190,7 @@ public class GuiQuest extends GuiScreenCanvas implements IPEventListener, INeeds
                         QuestingAPI.getAPI(ApiReference.SETTINGS).canUserEdit(mc.player)) {
                     PopContextMenu popup = new PopContextMenu(new GuiRectangle(mx, my, 64, 16), true);
                     GuiTaskEditor editor = new GuiTaskEditor(new GuiQuest(parent, questID), quest);
-                    Runnable action = () -> mc.displayGuiScreen(editor);
+                    Runnable action = () -> Minecraft.getInstance().setScreen(editor);
                     popup.addButton(QuestTranslation.translate("betterquesting.context.add_task"), null, action);
                     openPopup(popup);
                     return true;
@@ -289,9 +289,9 @@ public class GuiQuest extends GuiScreenCanvas implements IPEventListener, INeeds
         IPanelButton btn = event.getButton();
 
         if (btn.getButtonID() == 0) { // Exit
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
         } else if (btn.getButtonID() == 1) { // Edit
-            mc.displayGuiScreen(new GuiQuestEditor(this, questID));
+            Minecraft.getInstance().setScreen(new GuiQuestEditor(this, questID));
         } else if (btn.getButtonID() == 6) { // Reward claim
             NetQuestAction.requestClaim(new int[]{questID});
         } else if (btn.getButtonID() == 7) { // Task detect/submit

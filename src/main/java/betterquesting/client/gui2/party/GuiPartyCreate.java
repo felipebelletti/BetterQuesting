@@ -64,7 +64,7 @@ public class GuiPartyCreate extends GuiScreenCanvas implements IPEventListener, 
         DBEntry<IParty> curParty = PartyManager.INSTANCE.getParty(playerID);
 
         if (curParty != null) {
-            mc.displayGuiScreen(new GuiPartyManage(parent));
+            Minecraft.getInstance().setScreen(new GuiPartyManage(parent));
             return;
         }
 
@@ -80,7 +80,7 @@ public class GuiPartyCreate extends GuiScreenCanvas implements IPEventListener, 
         DBEntry<IParty> curParty = PartyManager.INSTANCE.getParty(playerID);
 
         if (curParty != null) {
-            mc.displayGuiScreen(new GuiPartyManage(parent));
+            Minecraft.getInstance().setScreen(new GuiPartyManage(parent));
             return;
         }
 
@@ -154,7 +154,7 @@ public class GuiPartyCreate extends GuiScreenCanvas implements IPEventListener, 
 
         if (btn.getButtonID() == 0) // Exit
         {
-            mc.displayGuiScreen(this.parent);
+            Minecraft.getInstance().setScreen(this.parent);
         } else if (btn.getButtonID() == 1) // Create
         {
             CompoundTag payload = new CompoundTag();
