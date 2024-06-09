@@ -34,7 +34,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.core.NonNullList;
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector4f;
 
 import java.util.Iterator;
