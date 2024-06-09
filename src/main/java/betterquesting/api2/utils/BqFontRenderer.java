@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
-import net.minecraft.client.resources.IReloadableResourceManager;
+import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.resources.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -18,7 +18,7 @@ public class BqFontRenderer extends Font {
 
     public BqFontRenderer(boolean unicode) {
         super(Minecraft.getInstance().gameSettings, new ResourceLocation("minecraft:textures/font/ascii.png"), Minecraft.getInstance().renderEngine, unicode);
-        ((IReloadableResourceManager) Minecraft.getInstance().getResourceManager()).registerReloadListener(this);
+        ((ReloadableResourceManager) Minecraft.getInstance().getResourceManager()).registerReloadListener(this);
     }
 
     @Override
