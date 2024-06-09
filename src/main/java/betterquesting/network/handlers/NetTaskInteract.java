@@ -12,7 +12,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.EnumHand;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -42,7 +42,7 @@ public class NetTaskInteract {
         ParticipantInfo pInfo = new ParticipantInfo(sender);
         List<DBEntry<IQuest>> actQuest = QuestingAPI.getAPI(ApiReference.QUEST_DB).bulkLookup(pInfo.getSharedQuests());
 
-        EnumHand hand = tag.getBoolean("isMainHand") ? EnumHand.MAIN_HAND : EnumHand.OFF_HAND;
+        InteractionHand hand = tag.getBoolean("isMainHand") ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
         boolean isHit = tag.getBoolean("isHit");
 
         for (DBEntry<IQuest> entry : actQuest) {

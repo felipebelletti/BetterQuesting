@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
-import net.minecraft.util.EnumHand;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -59,9 +59,9 @@ public class TaskInteractEntity implements ITask {
         return FactoryTaskInteractEntity.INSTANCE.getRegistryName();
     }
 
-    public void onInteract(ParticipantInfo pInfo, DBEntry<IQuest> quest, EnumHand hand, ItemStack item, Entity entity, boolean isHit) {
+    public void onInteract(ParticipantInfo pInfo, DBEntry<IQuest> quest, InteractionHand hand, ItemStack item, Entity entity, boolean isHit) {
         if ((!onHit && isHit) || (!onInteract && !isHit)) return;
-        if ((!useMainHand && hand == EnumHand.MAIN_HAND) || (!useOffHand && hand == EnumHand.OFF_HAND)) return;
+        if ((!useMainHand && hand == InteractionHand.MAIN_HAND) || (!useOffHand && hand == InteractionHand.OFF_HAND)) return;
 
         ResourceLocation targetRes = new ResourceLocation(entityID);
         Class<? extends Entity> targetClass = EntityList.getClass(targetRes);

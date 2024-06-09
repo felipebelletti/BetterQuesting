@@ -33,10 +33,10 @@ public class ItemExtraLife extends Item {
      */
     @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(Level world, Player player, @Nonnull EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(Level world, Player player, @Nonnull InteractionHand hand) {
         ItemStack stack = player.getHeldItem(hand);
 
-        if (stack.getItemDamage() != 0 || hand != EnumHand.MAIN_HAND) {
+        if (stack.getItemDamage() != 0 || hand != InteractionHand.MAIN_HAND) {
             return new ActionResult<>(EnumActionResult.PASS, stack);
         } else if (QuestSettings.INSTANCE.getProperty(NativeProps.HARDCORE)) {
             if (!player.capabilities.isCreativeMode) {

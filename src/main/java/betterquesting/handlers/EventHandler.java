@@ -48,7 +48,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.integrated.IntegratedServer;
-import net.minecraft.util.EnumHand;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.util.text.*;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.util.text.event.HoverEvent;
@@ -544,7 +544,7 @@ public class EventHandler {
     public void onRightClickEmpty(PlayerInteractEvent.RightClickEmpty event) // CLIENT SIDE ONLY EVENT
     {
         if (event.getEntityPlayer() == null || !event.getEntityPlayer().world.isRemote || event.getEntityPlayer() instanceof FakePlayer || event.isCanceled()) return;
-        NetTaskInteract.requestInteraction(false, event.getHand() == EnumHand.MAIN_HAND);
+        NetTaskInteract.requestInteraction(false, event.getHand() == InteractionHand.MAIN_HAND);
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -567,7 +567,7 @@ public class EventHandler {
         for (DBEntry<IQuest> entry : actQuest) {
             for (DBEntry<ITask> task : entry.getValue().getTasks().getEntries()) {
                 if (task.getValue() instanceof TaskInteractEntity)
-                    ((TaskInteractEntity) task.getValue()).onInteract(pInfo, entry, EnumHand.MAIN_HAND, player.getHeldItemMainhand(), event.getTarget(), true);
+                    ((TaskInteractEntity) task.getValue()).onInteract(pInfo, entry, InteractionHand.MAIN_HAND, player.getHeldItemMainhand(), event.getTarget(), true);
             }
         }
     }

@@ -42,10 +42,10 @@ public class ItemLootChest extends Item {
      */
     @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(Level world, Player player, @Nonnull EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(Level world, Player player, @Nonnull InteractionHand hand) {
         ItemStack stack = player.getHeldItem(hand);
 
-        if (hand != EnumHand.MAIN_HAND) return new ActionResult<>(EnumActionResult.PASS, stack);
+        if (hand != InteractionHand.MAIN_HAND) return new ActionResult<>(EnumActionResult.PASS, stack);
 
         if (stack.getItemDamage() == 104) {
             if (world.isRemote || !(player instanceof ServerPlayer)) {

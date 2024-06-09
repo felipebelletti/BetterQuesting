@@ -21,7 +21,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumHand;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.core.BlockPos;
@@ -58,9 +58,9 @@ public class TaskInteractItem implements ITask {
         return FactoryTaskInteractItem.INSTANCE.getRegistryName();
     }
 
-    public void onInteract(ParticipantInfo pInfo, DBEntry<IQuest> quest, EnumHand hand, ItemStack item, IBlockState state, BlockPos pos, boolean isHit) {
+    public void onInteract(ParticipantInfo pInfo, DBEntry<IQuest> quest, InteractionHand hand, ItemStack item, IBlockState state, BlockPos pos, boolean isHit) {
         if ((!onHit && isHit) || (!onInteract && !isHit)) return;
-        if ((!useMainHand && hand == EnumHand.MAIN_HAND) || (!useOffHand && hand == EnumHand.OFF_HAND)) return;
+        if ((!useMainHand && hand == InteractionHand.MAIN_HAND) || (!useOffHand && hand == InteractionHand.OFF_HAND)) return;
 
         if (targetBlock.b != Blocks.AIR) {
             if (state.getBlock() == Blocks.AIR) return;

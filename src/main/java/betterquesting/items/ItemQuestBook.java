@@ -6,7 +6,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nonnull;
@@ -21,7 +21,7 @@ public class ItemQuestBook extends Item {
 
     @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull Level world, @Nonnull Player player, @Nonnull EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull Level world, @Nonnull Player player, @Nonnull InteractionHand hand) {
 
         ItemStack stack = player.getHeldItem(hand);
 
