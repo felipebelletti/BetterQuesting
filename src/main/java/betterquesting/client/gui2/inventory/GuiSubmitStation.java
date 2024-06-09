@@ -29,14 +29,17 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.blocks.TileSubmitStation;
 import betterquesting.network.handlers.NetStationEdit;
 import betterquesting.questing.QuestDatabase;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.core.NonNullList;
+import org.lwjgl.glfw.GLFW;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector4f;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 public class GuiSubmitStation extends GuiContainerCanvas implements INeedsRefresh {
     private final ContainerSubmitStation ssContainer;
@@ -62,7 +65,7 @@ public class GuiSubmitStation extends GuiContainerCanvas implements INeedsRefres
     private int selQuest = 0;
     private int selTask = 0;
 
-    public GuiSubmitStation(Screen parent, InventoryPlayer playerInvo, TileSubmitStation submitStation) {
+    public GuiSubmitStation(Screen parent, Inventory playerInvo, TileSubmitStation submitStation) {
         super(parent, new ContainerSubmitStation(playerInvo, submitStation));
         this.ssContainer = (ContainerSubmitStation) this.inventorySlots;
         this.tile = submitStation;
@@ -71,8 +74,8 @@ public class GuiSubmitStation extends GuiContainerCanvas implements INeedsRefres
     @Override
     public void refreshGui() {
         quests.clear();
-        QuestCache qc = mc.player.getCapability(CapabilityProviderQuestCache.CAP_QUEST_CACHE, null);
-        if (qc != null) quests.addAll(QuestDatabase.INSTANCE.bulkLookup(qc.getActiveQuests()));
+        Optional<QuestCache> qc = Minecraft.getInstance().player.getCapability(CapabilityProviderQuestCache.CAP_QUEST_CACHE, null).resolve();
+        qc.ifPresent(questCache -> quests.addAll(QuestDatabase.INSTANCE.bulkLookup(questCache.getActiveQuests())));
         filterQuests();
 
         refreshTaskPanel();
@@ -82,12 +85,12 @@ public class GuiSubmitStation extends GuiContainerCanvas implements INeedsRefres
     public void initPanel() {
         super.initPanel();
 
-        Keyboard.enableRepeatEvents(true);
+        org.lwjgl.glfw.GLFW.glfwSetInputMode(Minecraft.getInstance().getWindow().getWindow(), org.lwjgl.glfw.GLFW.GLFW_REPEAT, org.lwjgl.glfw.GLFW.GLFW_TRUE);
 
         quests.clear();
         taskPanel = null;
-        QuestCache qc = mc.player.getCapability(CapabilityProviderQuestCache.CAP_QUEST_CACHE, null);
-        if (qc != null) quests.addAll(QuestDatabase.INSTANCE.bulkLookup(qc.getActiveQuests()));
+        Optional<QuestCache> qc = Minecraft.getInstance().player.getCapability(CapabilityProviderQuestCache.CAP_QUEST_CACHE, null).resolve();
+        qc.ifPresent(questCache -> quests.addAll(QuestDatabase.INSTANCE.bulkLookup(questCache.getActiveQuests())));
         filterQuests();
 
         // Background panel
@@ -100,7 +103,7 @@ public class GuiSubmitStation extends GuiContainerCanvas implements INeedsRefres
 
         cvBackground.addPanel(new PanelButton(new GuiTransform(GuiAlign.BOTTOM_CENTER, -100, -16, 200, 16, 0), -1, QuestTranslation.translate("gui.done")).setClickAction((b) -> mc.displayGuiScreen(parent)));
 
-        btnQstLeft = new PanelButton(new GuiTransform(new Vector4f(0.5F, 0F, 0.5F, 0F), 8, 32, 16, 16, 0), -1, "") {
+        btnQstLeft = new PanelButton(new GuiTransform(new Vector4(0.5F, 0F, 0.5F, 0F), 8, 32, 16, 16, 0), -1, "") {
             @Override
             public void onButtonClick() {
                 selQuest--;
@@ -143,7 +146,7 @@ public class GuiSubmitStation extends GuiContainerCanvas implements INeedsRefres
         btnSet = new PanelButton(new GuiTransform(new Vector4f(0.75F, 0F, 0.75F, 0F), -16, 64, 16, 16, 0), -1, "") {
             @Override
             public void onButtonClick() {
-                tile.setupTask(QuestingAPI.getQuestingUUID(mc.player), quests.get(selQuest).getValue(), tasks.get(selTask).getValue());
+                tile.setupTask(QuestingAPI.getQuestingUUID(Minecraft.getInstance().player), quests.get(selQuest).getValue(), tasks.get(selTask).getValue());
                 NetStationEdit.setupStation(tile.getPos(), selQuest, selTask);
                 refreshTaskPanel();
             }
@@ -170,7 +173,7 @@ public class GuiSubmitStation extends GuiContainerCanvas implements INeedsRefres
         txtTskTitle.setColor(PresetColor.TEXT_MAIN.getColor()).setAlignment(1);
         cvBackground.addPanel(txtTskTitle);
 
-        setInventoryPosition((xSize - 64) / 4 + 16 - 81, (ySize - 64) / 2 + 16 - 49);
+        setInventoryPosition((getXSize() - 64) / 4 + 16 - 81, (getYSize() - 64) / 2 + 16 - 49);
         refreshTaskPanel();
     }
 
