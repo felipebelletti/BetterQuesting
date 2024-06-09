@@ -21,22 +21,24 @@ import betterquesting.importers.NativeFileImporter;
 import betterquesting.importers.ftbq.FTBQQuestImporter;
 import betterquesting.importers.hqm.HQMBagImporter;
 import betterquesting.importers.hqm.HQMQuestImporter;
-import betterquesting.misc.QuestResourcesFile;
-import betterquesting.misc.QuestResourcesFolder;
-import net.minecraft.world.level.block.Block;
+//import betterquesting.misc.QuestResourcesFile;
+//import betterquesting.misc.QuestResourcesFolder;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ModelBakery;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.resources.SimpleReloadableResourceManager;
+//import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+//import net.minecraft.client.resources.SimpleReloadableResourceManager;
+import net.minecraft.client.resources.model.ModelBakery;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.server.packs.resources.ReloadableResourceManager;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.Item;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.ClientCommandHandler;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 
@@ -47,14 +49,13 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
-    @SuppressWarnings({"unchecked", "rawtypes"})
     public void registerHandlers() {
         super.registerHandlers();
 
-        if (!Minecraft.getInstance().getFramebuffer().isStencilEnabled()) {
-            if (!Minecraft.getInstance().getFramebuffer().enableStencil()) {
-                BetterQuesting.logger.error("[!] FAILED TO ENABLE STENCIL BUFFER. GUIS WILL BREAK! [!]");
-            }
+        Minecraft.getInstance().getMainRenderTarget().enableStencil();
+
+        if (!Minecraft.getInstance().getMainRenderTarget().isStencilEnabled()) {
+            BetterQuesting.logger.error("[!] FAILED TO ENABLE STENCIL BUFFER. GUIS WILL BREAK! [!]");
         }
 
         MinecraftForge.EVENT_BUS.register(PEventBroadcaster.INSTANCE);
@@ -62,22 +63,27 @@ public class ClientProxy extends CommonProxy {
         ExpansionLoader.INSTANCE.initClientAPIs();
 
         MinecraftForge.EVENT_BUS.register(new QuestNotification());
-        MinecraftForge.EVENT_BUS.register(BQ_Keybindings.class); // BQ_Keybindings.RegisterKeys();
+        MinecraftForge.EVENT_BUS.register(BQ_Keybindings.class);
 
+        /*
         try {
-            //String tmp = "defaultResourcePacks";
-            ArrayList list = ObfuscationReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getInstance(), "field_110449_ao", "defaultResourcePacks");
+//            ArrayList<Object> list = ObfuscationReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getInstance(), "f_91022_");
+            ArrayList list = ObfuscationReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getInstance(), "field_110449_ao");
             QuestResourcesFolder qRes1 = new QuestResourcesFolder();
             QuestResourcesFile qRes2 = new QuestResourcesFile();
             list.add(qRes1);
             list.add(qRes2);
-            ((SimpleReloadableResourceManager) Minecraft.getInstance().getResourceManager()).reloadResourcePack(qRes1); // Make sure the pack(s) are visible to everything
-            ((SimpleReloadableResourceManager) Minecraft.getInstance().getResourceManager()).reloadResourcePack(qRes2); // Make sure the pack(s) are visible to everything
+//            ((ReloadableResourceManager) Minecraft.getInstance().getResourceManager()).registerReloadListener(qRes1);
+//            ((ReloadableResourceManager) Minecraft.getInstance().getResourceManager()).registerReloadListener(qRes2);
+            Minecraft.getInstance().getResourceManager().
+            Minecraft.getInstance().reloadResourcePacks();
         } catch (Exception e) {
             BetterQuesting.logger.error("Unable to install questing resource loaders", e);
         }
+        */
 
-        RenderingRegistry.registerEntityRenderingHandler(EntityPlaceholder.class, new PlaceholderRenderFactory());
+        // @todo 1.20, this might be needed, however for now I dont know how to properly register it
+//        ForgeRegistries.ENTITY_TYPES.register(EntityPlaceholder.class.getName(), new PlaceholderRenderFactory());
 
         ToolboxRegistry.INSTANCE.registerToolTab(new ResourceLocation(ModReference.MODID, "main"), ToolboxTabMain.INSTANCE);
     }
@@ -88,11 +94,11 @@ public class ClientProxy extends CommonProxy {
 
         registerBlockModel(BetterQuesting.submitStation);
         registerItemModel(ItemPlaceholder.placeholder);
-        registerItemModel(BetterQuesting.extraLife, 0, new ResourceLocation( ModReference.MODID, "heart_full").toString());
-        registerItemModel(BetterQuesting.extraLife, 1, new ResourceLocation( ModReference.MODID, "heart_half").toString());
-        registerItemModel(BetterQuesting.extraLife, 2, new ResourceLocation( ModReference.MODID, "heart_quarter").toString());
+        registerItemModel(BetterQuesting.extraLife, 0, new ResourceLocation(ModReference.MODID, "heart_full").toString());
+        registerItemModel(BetterQuesting.extraLife, 1, new ResourceLocation(ModReference.MODID, "heart_half").toString());
+        registerItemModel(BetterQuesting.extraLife, 2, new ResourceLocation(ModReference.MODID, "heart_quarter").toString());
         registerItemModel(BetterQuesting.guideBook);
-        registerItemModelSubtypes(BetterQuesting.lootChest, 0, 104, BetterQuesting.lootChest.getRegistryName().toString());
+        registerItemModelSubtypes(BetterQuesting.lootChest, 0, 104, BetterQuesting.lootChest.getDescriptionId());
         registerItemModel(BetterQuesting.questBook);
 
         ThemeRegistry.INSTANCE.loadResourceThemes();
@@ -100,19 +106,20 @@ public class ClientProxy extends CommonProxy {
 
     @OnlyIn(Dist.CLIENT)
     public static void registerBlockModel(Block block) {
-        registerBlockModel(block, 0, block.getRegistryName().toString());
+        registerBlockModel(block, 0, block.getDescriptionId());
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void registerBlockModel(Block block, int meta, String name) {
-        Item item = Item.getItemFromBlock(block);
-        ModelResourceLocation model = new ModelResourceLocation(name, "inventory");
-
-        if (!name.equals(item.getRegistryName().toString())) {
-            ModelBakery.registerItemVariants(item, model);
-        }
-
-        ModelLoader.setCustomModelResourceLocation(item, meta, model);
+        Item item = Item.byBlock(block);
+        // @todo 1.20 I dont think we should be registering stuff here, however I guess the mod won't work properly without it
+//        ModelResourceLocation model = new ModelResourceLocation(name, "inventory");
+//
+//        if (!name.equals(item.getRegistryName().toString())) {
+//            ModelBakery.registerItemVariants(item, model);
+//        }
+//
+//        ModelLoader.setCustomModelResourceLocation(item, meta, model);
     }
 
     @OnlyIn(Dist.CLIENT)
@@ -130,18 +137,19 @@ public class ClientProxy extends CommonProxy {
 
     @OnlyIn(Dist.CLIENT)
     public static void registerItemModel(Item item) {
-        registerItemModel(item, 0, item.getRegistryName().toString());
+        registerItemModel(item, 0, item.getDescriptionId());
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void registerItemModel(Item item, int meta, String name) {
-        ModelResourceLocation model = new ModelResourceLocation(name, "inventory");
+        // @todo 1.20 yeah, I fucked up here too
+//        ModelResourceLocation model = new ModelResourceLocation(name, "inventory");
 
-        if (!name.equals(item.getRegistryName().toString())) {
-            ModelBakery.registerItemVariants(item, model);
+        if (!name.equals(item.getDescriptionId())) {
+            // ModelBakery.registerItemVariants(item, model);
         }
 
-        ModelLoader.setCustomModelResourceLocation(item, meta, model);
+        // ModelLoader.setCustomModelResourceLocation(item, meta, model);
     }
 
     @Override
@@ -149,15 +157,14 @@ public class ClientProxy extends CommonProxy {
         super.registerExpansion();
 
         QuestingAPI.getAPI(ApiReference.IMPORT_REG).registerImporter(NativeFileImporter.INSTANCE);
-
         QuestingAPI.getAPI(ApiReference.IMPORT_REG).registerImporter(HQMQuestImporter.INSTANCE);
         QuestingAPI.getAPI(ApiReference.IMPORT_REG).registerImporter(HQMBagImporter.INSTANCE);
-
         QuestingAPI.getAPI(ApiReference.IMPORT_REG).registerImporter(FTBQQuestImporter.INSTANCE);
         QuestingAPI.getAPI(ApiReference.IMPORT_REG).registerImporter(AdvImporter.INSTANCE);
 
         BQSTextures.registerTextures();
 
+        // @todo 1.20 it should be done within main class
         ClientCommandHandler.instance.registerCommand(new BQ_CommandClient());
     }
 }

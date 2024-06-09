@@ -1,14 +1,13 @@
 package betterquesting.client.renderer;
 
 import betterquesting.api.placeholders.EntityPlaceholder;
-import net.minecraft.client.renderer.entity.Render;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 
-public class PlaceholderRenderFactory implements IRenderFactory<EntityPlaceholder> {
+public class PlaceholderRenderFactory implements EntityRendererProvider<EntityPlaceholder> {
 
     @Override
-    public Render<? super EntityPlaceholder> createRenderFor(RenderManager manager) {
+    public EntityRenderer<EntityPlaceholder> create(Context manager) {
         return new EntityPlaceholderRenderer(manager);
     }
 
