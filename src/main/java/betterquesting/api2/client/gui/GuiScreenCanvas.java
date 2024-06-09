@@ -10,7 +10,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetIcon;
 import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.client.BQ_Keybindings;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.components.Button; // import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.screens.Screen;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
@@ -163,7 +163,7 @@ public class GuiScreenCanvas extends Screen implements IScene {
      */
     @Override
     @Deprecated
-    public void actionPerformed(GuiButton button) {
+    public void actionPerformed(Button button) {
     }
 
     // Remembers the last mouse buttons states. Required to fire release events

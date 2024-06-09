@@ -10,14 +10,14 @@ import betterquesting.api2.client.gui.themes.presets.PresetIcon;
 import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.client.BQ_Keybindings;
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.components.Button; // import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gui.screens.inventory.ContainerScreen;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.TooltipFlag;
 import org.lwjgl.glfw.GLFW;
-import net.minecraft.world.item.TooltipFlag.TooltipFlags;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -29,7 +29,7 @@ import java.util.ListIterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 // This will probably be rewritten at a later date once I reimplement Minecraft's inventory controls natively into their own isolated canvas elements
-public class GuiContainerCanvas extends GuiContainer implements IScene {
+public class GuiContainerCanvas extends ContainerScreen implements IScene {
     private final List<IGuiPanel> guiPanels = new CopyOnWriteArrayList<>();
     private final GuiRectangle rootTransform = new GuiRectangle(0, 0, 0, 0, 0);
     private final GuiTransform transform = new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(16, 16, 16, 16), 0);
@@ -162,7 +162,7 @@ public class GuiContainerCanvas extends GuiContainer implements IScene {
      */
     @Override
     @Deprecated
-    public void actionPerformed(GuiButton button) {
+    public void actionPerformed(Button button) {
     }
 
     // Remembers the last mouse buttons states. Required to fire release events
@@ -347,7 +347,7 @@ public class GuiContainerCanvas extends GuiContainer implements IScene {
         if (tt == null) {
             for (Slot slot : this.inventorySlots.inventorySlots) {
                 if (slot.isEnabled() && slot.getHasStack() && isPointInRegion(slot.xPos, slot.yPos, 16, 16, mx, my)) {
-                    tt = slot.getStack().getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? TooltipFlags.ADVANCED : TooltipFlags.NORMAL);
+                    tt = slot.getStack().getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? TooltipFlag.ADVANCED : TooltipFlag.NORMAL);
                     return tt.size() <= 0 ? null : tt;
                 }
             }
