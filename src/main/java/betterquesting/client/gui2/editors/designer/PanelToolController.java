@@ -156,7 +156,7 @@ public class PanelToolController implements IGuiPanel {
             int smy = (int) ((my - ty) / zs) + lsy;
 
             poseStack.pushPose();
-            RenderUtils.startScissor(transform);
+            RenderUtils.startScissor(poseStack, transform);
 
             poseStack.translate(tx - lsx * zs, ty - lsy * zs, 0F);
             poseStack.scale(zs, zs, zs);
@@ -173,7 +173,7 @@ public class PanelToolController implements IGuiPanel {
             // Pretending we're on the scrolling canvas (when we're really not) so as not to influence it by hotswapping panels
             activeTool.drawCanvas(smx, smy, partialTick, poseStack);
 
-            RenderUtils.endScissor();
+            RenderUtils.endScissor(poseStack);
             poseStack.popPose();
 
             activeTool.drawOverlay(mx, my, partialTick, poseStack);
