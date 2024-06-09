@@ -17,7 +17,7 @@ import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.TooltipFlag;
 import org.lwjgl.glfw.GLFW;
-import net.minecraft.inventory.Container;
+import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.item.ItemStack;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -43,7 +43,7 @@ public class GuiContainerCanvas extends ContainerScreen implements IScene {
     private IGuiPanel popup = null;
     //private IGuiPanel focused = null;
 
-    public GuiContainerCanvas(Screen parent, Container container) {
+    public GuiContainerCanvas(Screen parent, ChestMenu container) {
         super(container);
         this.parent = parent;
     }
