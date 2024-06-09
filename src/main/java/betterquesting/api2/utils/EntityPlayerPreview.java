@@ -2,54 +2,55 @@ package betterquesting.api2.utils;
 
 import betterquesting.core.ModReference;
 import com.mojang.authlib.GameProfile;
-import net.minecraft.client.entity.EntityOtherPlayerMP;
-import net.minecraft.entity.player.EnumPlayerModelParts;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.player.RemotePlayer;
+import net.minecraft.client.resources.DefaultPlayerSkin;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.world.level.Level;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.PlayerModelPart;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
+import org.jetbrains.annotations.NotNull;
 
-public class EntityPlayerPreview extends EntityOtherPlayerMP {
+public class EntityPlayerPreview extends RemotePlayer {
     private final ResourceLocation resource;
 
     /**
      * Backup constructor. DO NOT USE
      */
-    public EntityPlayerPreview(Level worldIn) {
+    public EntityPlayerPreview(ClientLevel worldIn) {
         this(worldIn, new GameProfile(null, "Notch"));
     }
 
-    public EntityPlayerPreview(Level worldIn, GameProfile gameProfileIn) {
+    public EntityPlayerPreview(ClientLevel worldIn, GameProfile gameProfileIn) {
         super(worldIn, gameProfileIn);
         this.resource = new ResourceLocation(ModReference.MODID, "textures/skin_cache/" + gameProfileIn.getName());
-        this.getDataManager().set(PLAYER_MODEL_FLAG, (byte) 1);
+        this.getEntityData().set(DATA_PLAYER_MODE_CUSTOMISATION, (byte) 1);
     }
 
     @Override
-    public ResourceLocation getLocationSkin() {
-        return this.resource;
+    public @NotNull ResourceLocation getSkinTextureLocation() {
+        return this.resource != null ? this.resource : DefaultPlayerSkin.getDefaultSkin(this.getUUID());
     }
 
     @Override
-    public ResourceLocation getLocationCape() {
+    public ResourceLocation getCloakTextureLocation() {
         return null;
     }
 
     @Override
-    public boolean hasSkin() {
+    public boolean isModelPartShown(@NotNull PlayerModelPart part) {
         return true;
     }
 
     @Override
-    public Component getDisplayName() {
-        return new TextComponentString("");
+    public @NotNull Component getDisplayName() {
+        return Component.literal("");
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
-    public boolean isWearing(EnumPlayerModelParts part) {
+    public boolean isWearing(PlayerModelPart part) {
         return true;
     }
 }
