@@ -3,38 +3,45 @@ package betterquesting.client.gui2.inventory;
 import betterquesting.blocks.TileSubmitStation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.inventory.Container;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.core.NonNullList;
+import org.jetbrains.annotations.NotNull;
 
-public class ContainerSubmitStation extends Container {
-    private TileSubmitStation tile;
+public class ContainerSubmitStation extends AbstractContainerMenu {
+    private final TileSubmitStation tile;
 
-    public ContainerSubmitStation(Inventory inventory, TileSubmitStation tile) {
+    public ContainerSubmitStation(int containerId, Inventory playerInventory, TileSubmitStation tile) {
+        super(null, containerId); // Replace 'null' with the actual container type if needed
         this.tile = tile;
 
-        this.addSlotToContainer(new Slot(tile, 0, 0, 0) {
+        // Slot for item submission
+        this.addSlot(new Slot(tile, 0, 0, 0) {
             @Override
-            public boolean isItemValid(ItemStack stack) {
-                return inventory.isItemValidForSlot(0, stack);
+            public boolean mayPlace(ItemStack stack) {
+                return tile.canPlaceItem(0, stack);
             }
         });
 
-        this.addSlotToContainer(new Slot(tile, 1, 0, 0) {
+        // Slot for returned items
+        this.addSlot(new Slot(tile, 1, 0, 0) {
             @Override
-            public boolean isItemValid(ItemStack stack) {
+            public boolean mayPlace(ItemStack stack) {
                 return false;
             }
         });
 
+        // Player inventory slots
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
-                this.addSlotToContainer(new Slot(inventory, j + i * 9 + 9, j * 18, i * 18));
+                this.addSlot(new Slot(playerInventory, j + i * 9 + 9, j * 18, i * 18));
             }
         }
 
+        // Player hotbar slots
         for (int i = 0; i < 9; ++i) {
-            this.addSlotToContainer(new Slot(inventory, i, i * 18, 58));
+            this.addSlot(new Slot(playerInventory, i, i * 18, 58));
         }
     }
 
@@ -43,61 +50,56 @@ public class ContainerSubmitStation extends Container {
 
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 9; ++j) {
-                Slot s = inventorySlots.get(idx);
-                s.xPos = j * 18 + x;
-                s.yPos = i * 18 + y;
+                Slot s = this.slots.remove(idx);
+                this.slots.add(idx, new Slot(s.container, s.index, j * 18 + x, i * 18 + y));
                 idx++;
             }
         }
 
         for (int i = 0; i < 9; ++i) {
-            Slot s = inventorySlots.get(idx);
-            s.xPos = i * 18 + x;
-            s.yPos = 58 + y;
+            Slot s = this.slots.remove(idx);
+            this.slots.add(idx, new Slot(s.container, s.index, i * 18 + x, 58 + y));
             idx++;
         }
     }
 
-    /**
-     * Called when a player shift-clicks on a slot. You must override this or you will crash when someone does that.
-     */
     @Override
-    public ItemStack transferStackInSlot(Player player, int idx) {
+    public @NotNull ItemStack quickMoveStack(Player player, int idx) {
         if (idx < 0) return ItemStack.EMPTY;
 
         ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(idx);
+        Slot slot = this.slots.get(idx);
 
-        if (slot != null && slot.getHasStack()) {
-            ItemStack itemstack1 = slot.getStack();
+        if (slot != null && slot.hasItem()) {
+            ItemStack itemstack1 = slot.getItem();
             itemstack = itemstack1.copy();
 
             if (idx == 0) {
-                if (!this.mergeItemStack(itemstack1, 1, 37, true)) {
+                if (!this.moveItemStackTo(itemstack1, 1, 37, true)) {
                     return ItemStack.EMPTY;
                 }
 
-                slot.onSlotChange(itemstack1, itemstack);
-            } else if (slot.isItemValid(itemstack1)) {
-                if (!this.mergeItemStack(itemstack1, 0, 1, false)) {
+                slot.onQuickCraft(itemstack1, itemstack);
+            } else if (slot.mayPlace(itemstack1)) {
+                if (!this.moveItemStackTo(itemstack1, 0, 1, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (idx < 28) {
-                if (!this.mergeItemStack(itemstack1, 28, 37, false)) {
+                if (!this.moveItemStackTo(itemstack1, 28, 37, false)) {
                     return ItemStack.EMPTY;
                 }
             } else if (idx < 37) {
-                if (!this.mergeItemStack(itemstack1, 1, 28, false)) {
+                if (!this.moveItemStackTo(itemstack1, 1, 28, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.mergeItemStack(itemstack1, 1, 37, false)) {
+            } else if (!this.moveItemStackTo(itemstack1, 1, 37, false)) {
                 return ItemStack.EMPTY;
             }
 
             if (itemstack1.isEmpty()) {
-                slot.putStack(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
-                slot.onSlotChanged();
+                slot.setChanged();
             }
 
             if (itemstack1.getCount() == itemstack.getCount()) {
@@ -111,19 +113,17 @@ public class ContainerSubmitStation extends Container {
     }
 
     public void moveSubmitSlot(int x, int y) {
-        Slot s = inventorySlots.get(0);
-        s.xPos = x;
-        s.yPos = y;
+        Slot s = this.slots.remove(0);
+        this.slots.add(0, new Slot(s.container, s.index, x, y));
     }
 
     public void moveReturnSlot(int x, int y) {
-        Slot s = inventorySlots.get(1);
-        s.xPos = x;
-        s.yPos = y;
+        Slot s = this.slots.remove(1);
+        this.slots.add(1, new Slot(s.container, s.index, x, y));
     }
 
     @Override
-    public boolean canInteractWith(Player player) {
-        return tile.isUsableByPlayer(player);
+    public boolean stillValid(Player player) {
+        return tile.stillValid(player);
     }
 }

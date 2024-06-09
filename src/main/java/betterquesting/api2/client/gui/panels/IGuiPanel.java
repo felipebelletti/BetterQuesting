@@ -3,6 +3,7 @@ package betterquesting.api2.client.gui.panels;
 import betterquesting.api2.client.gui.misc.IGuiRect;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 
 import java.util.List;
 
@@ -25,5 +26,5 @@ public interface IGuiPanel {
 
     boolean onKeyTyped(char c, int keycode);
 
-    List<String> getTooltip(int mx, int my);
+    List<Component> getTooltip(int mx, int my);
 }

@@ -62,7 +62,7 @@ public class ClientProxy extends CommonProxy {
         ExpansionLoader.INSTANCE.initClientAPIs();
 
         MinecraftForge.EVENT_BUS.register(new QuestNotification());
-        BQ_Keybindings.RegisterKeys();
+        MinecraftForge.EVENT_BUS.register(BQ_Keybindings.class); // BQ_Keybindings.RegisterKeys();
 
         try {
             //String tmp = "defaultResourcePacks";

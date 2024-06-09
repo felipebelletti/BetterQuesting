@@ -2,34 +2,33 @@ package betterquesting.api2.client.gui;
 
 import betterquesting.api.client.gui.misc.IVolatileScreen;
 import betterquesting.api.storage.BQ_Settings;
-import betterquesting.api.utils.RenderUtils;
 import betterquesting.api2.client.gui.misc.*;
 import betterquesting.api2.client.gui.panels.IGuiPanel;
 import betterquesting.api2.client.gui.popups.PopChoice;
 import betterquesting.api2.client.gui.themes.presets.PresetIcon;
 import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.client.BQ_Keybindings;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.components.Button; // import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.screens.Screen;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.screens.inventory.ContainerScreen;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.TooltipFlag;
-import org.lwjgl.glfw.GLFW;
-import net.minecraft.world.inventory.ChestMenu;
-import net.minecraft.world.item.ItemStack;
-
-import org.lwjgl.input.Mouse;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
-import java.io.IOException;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-// This will probably be rewritten at a later date once I reimplement Minecraft's inventory controls natively into their own isolated canvas elements
-public class GuiContainerCanvas extends ContainerScreen implements IScene {
+@OnlyIn(Dist.CLIENT)
+public class GuiContainerCanvas extends AbstractContainerScreen<AbstractContainerMenu> implements IScene {
     private final List<IGuiPanel> guiPanels = new CopyOnWriteArrayList<>();
     private final GuiRectangle rootTransform = new GuiRectangle(0, 0, 0, 0, 0);
     private final GuiTransform transform = new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(16, 16, 16, 16), 0);
@@ -41,10 +40,9 @@ public class GuiContainerCanvas extends ContainerScreen implements IScene {
     public final Screen parent;
 
     private IGuiPanel popup = null;
-    //private IGuiPanel focused = null;
 
-    public GuiContainerCanvas(Screen parent, ChestMenu container) {
-        super(container);
+    public GuiContainerCanvas(Screen parent, Inventory inventory, AbstractContainerMenu container) {
+        super(container, inventory, parent.getTitle());
         this.parent = parent;
     }
 
@@ -88,23 +86,21 @@ public class GuiContainerCanvas extends ContainerScreen implements IScene {
      * Use initPanel() for embed support
      */
     @Override
-    public final void initGui() {
-        super.initGui();
+    protected void init() {
+        super.init();
 
         // Make the container somewhat behave using the root transform bounds
-        this.guiLeft = 0;
-        this.guiTop = 0;
-        this.xSize = width;
-        this.ySize = height;
+        this.leftPos = 0;
+        this.topPos = 0;
+        this.imageWidth = width;
+        this.imageHeight = height;
 
         initPanel();
     }
 
     @Override
-    public void onGuiClosed() {
-        super.onGuiClosed();
-
-        Keyboard.enableRepeatEvents(false);
+    public void removed() {
+        super.removed();
     }
 
     @Override
@@ -126,7 +122,6 @@ public class GuiContainerCanvas extends ContainerScreen implements IScene {
 
     @Override
     public void setEnabled(boolean state) {
-        // Technically supported if you wanted something like a multiscreen where this isn't actually the root screen
         this.enabled = state;
     }
 
@@ -136,88 +131,97 @@ public class GuiContainerCanvas extends ContainerScreen implements IScene {
     }
 
     @Override
-    protected void drawGuiContainerBackgroundLayer(float partialTick, int mx, int my) {
-        if (useDefaultBG) this.drawDefaultBackground();
+    protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mx, int my) {
+        if (useDefaultBG) {
+            this.renderBackground(guiGraphics);
+        }
 
-        GlStateManager.pushMatrix();
         RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
-        GlStateManager.disableDepth();
 
-        this.drawPanel(mx, my, partialTick);
-
-        GlStateManager.enableDepth();
-        GlStateManager.popMatrix();
+        this.drawPanel(mx, my, partialTick, guiGraphics.pose(), guiGraphics);
     }
 
     @Override
-    public void drawScreen(int mx, int my, float partialTick) {
-        super.drawScreen(mx, my, partialTick);
-
-        List<String> tt = this.getTooltip(mx, my);
-        if (tt != null && tt.size() > 0) this.drawHoveringText(tt, mx, my);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+        this.renderBackground(guiGraphics);
+        super.render(guiGraphics, mouseX, mouseY, partialTick);
+        this.renderTooltip(guiGraphics, mouseX, mouseY);
     }
 
     /**
      * Use panel buttons and the event broadcaster
      */
-    @Override
-    @Deprecated
-    public void actionPerformed(Button button) {
-    }
+//    @Override
+//    @Deprecated
+//    protected void buttonPressed(Button button) {
+//    }
 
     // Remembers the last mouse buttons states. Required to fire release events
     private boolean[] mBtnState = new boolean[3];
 
     @Override
-    public void handleMouseInput() throws IOException {
-        super.handleMouseInput();
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        boolean result = super.mouseClicked(mouseX, mouseY, button);
 
-        int i = Mouse.getEventX() * width / mc.getWindow().getGuiScaledWidth();
-        int j = height - Mouse.getEventY() * height / mc.getWindow().getGuiScaledHeight() - 1;
-        int k = Mouse.getEventButton();
-        int SDX = (int) -Math.signum(Mouse.getEventDWheel());
-        boolean flag = Mouse.getEventButtonState();
-
-        if (k >= 0 && k < 3 && mBtnState[k] != flag) {
-            if (flag) {
-                this.onMouseClick(i, j, k);
-            } else {
-                this.onMouseRelease(i, j, k);
+        if (button >= 0 && button < 3) {
+            if (this.mBtnState[button] != result) {
+                if (result) {
+                    this.onMouseClick((int) mouseX, (int) mouseY, button);
+                }
+                this.mBtnState[button] = result;
             }
-            mBtnState[k] = flag;
         }
-
-        if (SDX != 0) {
-            this.onMouseScroll(i, j, SDX);
-        }
+        return result;
     }
 
     @Override
-    public void keyTyped(char c, int keyCode) {
-        if (keyCode == 1) {
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        boolean result = super.mouseReleased(mouseX, mouseY, button);
+
+        if (button >= 0 && button < 3) {
+            if (this.mBtnState[button] != result) {
+                this.onMouseRelease((int) mouseX, (int) mouseY, button);
+                this.mBtnState[button] = result;
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double scroll) {
+        boolean result = super.mouseScrolled(mouseX, mouseY, scroll);
+
+        if (scroll != 0) {
+            this.onMouseScroll((int) mouseX, (int) mouseY, (int) scroll);
+        }
+        return result;
+    }
+
+    @Override
+    public boolean charTyped(char codePoint, int modifiers) {
+        if (modifiers == 1) {
             if (this.isVolatile || this instanceof IVolatileScreen) {
                 openPopup(new PopChoice(QuestTranslation.translate("betterquesting.gui.closing_warning") + "\n\n" + QuestTranslation.translate("betterquesting.gui.closing_confirm"), PresetIcon.ICON_NOTICE.getTexture(), this::confirmClose, QuestTranslation.translate("gui.yes"), QuestTranslation.translate("gui.no")));
             } else {
-                this.mc.displayGuiScreen(null);
-                if (this.mc.currentScreen == null) this.mc.setIngameFocus();
+                this.minecraft.setScreen(null);
+                if (this.minecraft.screen == null) this.minecraft.mouseHandler.grabMouse();
             }
-
-            return;
+            return true;
         }
 
-        this.onKeyTyped(c, keyCode);
+        return this.onKeyTyped(codePoint, modifiers);
     }
 
     @Override
-    public void drawPanel(int mx, int my, float partialTick) {
+    public void drawPanel(int mx, int my, float partialTick, PoseStack poseStack, GuiGraphics guiGraphics) {
         for (IGuiPanel entry : guiPanels) {
             if (entry.isEnabled()) {
-                entry.drawPanel(mx, my, partialTick);
+                entry.drawPanel(mx, my, partialTick, poseStack, guiGraphics);
             }
         }
 
         if (popup != null && popup.isEnabled()) {
-            popup.drawPanel(mx, my, partialTick);
+            popup.drawPanel(mx, my, partialTick, poseStack, guiGraphics);
         }
     }
 
@@ -227,13 +231,12 @@ public class GuiContainerCanvas extends ContainerScreen implements IScene {
 
         if (popup != null && popup.isEnabled()) {
             popup.onMouseClick(mx, my, click);
-            return true;// Regardless of whether this is actually used we prevent other things from being edited
+            return true;
         }
 
         ListIterator<IGuiPanel> pnIter = guiPanels.listIterator(guiPanels.size());
 
-        while (pnIter.hasPrevious()) // TODO: Allow click through even after used. Other panels need it to passively reset things
-        {
+        while (pnIter.hasPrevious()) {
             IGuiPanel entry = pnIter.previous();
 
             if (entry.isEnabled() && entry.onMouseClick(mx, my, click)) {
@@ -251,13 +254,12 @@ public class GuiContainerCanvas extends ContainerScreen implements IScene {
 
         if (popup != null && popup.isEnabled()) {
             popup.onMouseRelease(mx, my, click);
-            return true;// Regardless of whether this is actually used we prevent other things from being edited
+            return true;
         }
 
         ListIterator<IGuiPanel> pnIter = guiPanels.listIterator(guiPanels.size());
 
-        while (pnIter.hasPrevious()) // TODO: Allow click through even after used. Other panels need it to passively reset things
-        {
+        while (pnIter.hasPrevious()) {
             IGuiPanel entry = pnIter.previous();
 
             if (entry.isEnabled() && entry.onMouseRelease(mx, my, click)) {
@@ -269,13 +271,13 @@ public class GuiContainerCanvas extends ContainerScreen implements IScene {
         return used;
     }
 
-    //@Override
+    @Override
     public boolean onMouseScroll(int mx, int my, int scroll) {
         boolean used = false;
 
         if (popup != null && popup.isEnabled()) {
             popup.onMouseScroll(mx, my, scroll);
-            return true;// Regardless of whether this is actually used we prevent other things from being edited
+            return true;
         }
 
         ListIterator<IGuiPanel> pnIter = guiPanels.listIterator(guiPanels.size());
@@ -299,7 +301,7 @@ public class GuiContainerCanvas extends ContainerScreen implements IScene {
         if (popup != null) {
             if (popup.isEnabled()) {
                 popup.onKeyTyped(c, keycode);
-                return true;// Regardless of whether this is actually used we prevent other things from being edited
+                return true;
             }
         }
 
@@ -314,12 +316,12 @@ public class GuiContainerCanvas extends ContainerScreen implements IScene {
             }
         }
 
-        if (!used && (BQ_Keybindings.openQuests.getKeyCode() == keycode || mc.gameSettings.keyBindInventory.getKeyCode() == keycode)) {
+        if (!used && (BQ_Keybindings.openQuests.getKey().getValue() == keycode || minecraft.options.keyInventory.getKey().getValue() == keycode)) {
             if (this.isVolatile || this instanceof IVolatileScreen) {
                 openPopup(new PopChoice(QuestTranslation.translate("betterquesting.gui.closing_warning") + "\n\n" + QuestTranslation.translate("betterquesting.gui.closing_confirm"), PresetIcon.ICON_NOTICE.getTexture(), this::confirmClose, QuestTranslation.translate("gui.yes"), QuestTranslation.translate("gui.no")));
             } else {
-                this.mc.displayGuiScreen(null);
-                if (this.mc.currentScreen == null) this.mc.setIngameFocus();
+                this.minecraft.setScreen(null);
+                if (this.minecraft.screen == null) this.minecraft.mouseHandler.grabMouse();
             }
         }
 
@@ -327,9 +329,9 @@ public class GuiContainerCanvas extends ContainerScreen implements IScene {
     }
 
     @Override
-    public List<String> getTooltip(int mx, int my) {
+    public List<Component> getTooltip(int mx, int my) {
         ListIterator<IGuiPanel> pnIter = guiPanels.listIterator(guiPanels.size());
-        List<String> tt = null;
+        List<Component> tt = null;
 
         if (popup != null && popup.isEnabled()) {
             tt = popup.getTooltip(mx, my);
@@ -345,9 +347,9 @@ public class GuiContainerCanvas extends ContainerScreen implements IScene {
         }
 
         if (tt == null) {
-            for (Slot slot : this.inventorySlots.inventorySlots) {
-                if (slot.isEnabled() && slot.getHasStack() && isPointInRegion(slot.xPos, slot.yPos, 16, 16, mx, my)) {
-                    tt = slot.getStack().getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? TooltipFlag.ADVANCED : TooltipFlag.NORMAL);
+            for (Slot slot : this.menu.slots) {
+                if (slot.isActive() && slot.hasItem() && isHovering(slot.x, slot.y, 16, 16, mx, my)) {
+                    tt = slot.getItem().getTooltipLines(minecraft.player, minecraft.options.advancedItemTooltips ? TooltipFlag.Default.ADVANCED : TooltipFlag.Default.NORMAL);
                     return tt.size() <= 0 ? null : tt;
                 }
             }
@@ -379,34 +381,25 @@ public class GuiContainerCanvas extends ContainerScreen implements IScene {
     }
 
     @Override
-    public boolean doesGuiPauseGame() {
-        return false; // Halts packet handling if paused
+    public boolean isPauseScreen() {
+        return false;
     }
 
-    /**
-     * Should be using PanelButton instead when using a Canvas
-     */
-    @Override
-    @Deprecated
-    public <T extends GuiButton> T addButton(T button) {
-        return super.addButton(button);
-    }
-
-    @Override
-    protected void renderToolTip(ItemStack stack, int x, int y) {
-        Font font = stack.getItem().getFontRenderer(stack);
-        RenderUtils.drawHoveringText(stack, this.getItemToolTip(stack), x, y, width, height, -1, (font == null ? fontRenderer : font));
-    }
-
-    @Override
-    protected void drawHoveringText(List<String> textLines, int x, int y, Font font) {
-        RenderUtils.drawHoveringText(textLines, x, y, width, height, -1, font);
-    }
+//    @Override
+//    protected void renderTooltip(PoseStack poseStack, int x, int y) {
+//        Font font = stack.getItem().getFontRenderer(stack);
+//        RenderUtils.drawHoveringText(stack, this.getTooltipFromItem(stack), x, y, width, height, -1, (font == null ? this.font : font));
+//    }
+//
+//    @Override
+//    protected void renderTooltip(PoseStack poseStack, List<Component> textLines, int x, int y, Font font) {
+//        RenderUtils.drawHoveringText(textLines, x, y, width, height, -1, font);
+//    }
 
     public void confirmClose(int id) {
         if (id == 0) {
-            this.mc.displayGuiScreen(null);
-            if (this.mc.currentScreen == null) this.mc.setIngameFocus();
+            this.minecraft.setScreen(null);
+            if (this.minecraft.screen == null) this.minecraft.mouseHandler.grabMouse();
         }
     }
 }

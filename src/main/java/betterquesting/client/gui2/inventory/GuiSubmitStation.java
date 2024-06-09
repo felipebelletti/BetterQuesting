@@ -65,7 +65,7 @@ public class GuiSubmitStation extends GuiContainerCanvas implements INeedsRefres
     private int selTask = 0;
 
     public GuiSubmitStation(Screen parent, Inventory playerInvo, TileSubmitStation submitStation) {
-        super(parent, new ContainerSubmitStation(playerInvo, submitStation));
+        super(parent, playerInvo, new ContainerSubmitStation(0, playerInvo, submitStation));
         this.ssContainer = (ContainerSubmitStation) this.inventorySlots;
         this.tile = submitStation;
     }
@@ -146,7 +146,7 @@ public class GuiSubmitStation extends GuiContainerCanvas implements INeedsRefres
             @Override
             public void onButtonClick() {
                 tile.setupTask(QuestingAPI.getQuestingUUID(Minecraft.getInstance().player), quests.get(selQuest).getValue(), tasks.get(selTask).getValue());
-                NetStationEdit.setupStation(tile.getPos(), selQuest, selTask);
+                NetStationEdit.setupStation(tile.getBlockPos(), selQuest, selTask);
                 refreshTaskPanel();
             }
         };
@@ -157,7 +157,7 @@ public class GuiSubmitStation extends GuiContainerCanvas implements INeedsRefres
             @Override
             public void onButtonClick() {
                 tile.reset();
-                NetStationEdit.resetStation(tile.getPos());
+                NetStationEdit.resetStation(tile.getBlockPos());
                 refreshTaskPanel();
             }
         };

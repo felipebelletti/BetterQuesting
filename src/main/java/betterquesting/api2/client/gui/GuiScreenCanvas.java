@@ -330,7 +330,7 @@ public class GuiScreenCanvas extends Screen implements IScene {
             }
         }
 
-        if (!used && (BQ_Keybindings.openQuests.getKeyCode() == keycode || mc.gameSettings.keyBindInventory.getKeyCode() == keycode)) {
+        if (!used && (BQ_Keybindings.openQuests.getKey().getValue() == keycode || mc.gameSettings.keyBindInventory.getKey().getValue() == keycode)) {
             if (this.isVolatile || this instanceof IVolatileScreen) {
                 openPopup(new PopChoice(QuestTranslation.translate("betterquesting.gui.closing_warning") + "\n\n" + QuestTranslation.translate("betterquesting.gui.closing_confirm"), PresetIcon.ICON_NOTICE.getTexture(), this::confirmClose, QuestTranslation.translate("gui.yes"), QuestTranslation.translate("gui.no")));
             } else {
