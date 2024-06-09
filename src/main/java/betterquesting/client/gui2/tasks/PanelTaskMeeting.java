@@ -46,7 +46,7 @@ public class PanelTaskMeeting extends CanvasMinimum {
         this.addPanel(new PanelTextBox(new GuiTransform(GuiAlign.TOP_EDGE, 0, 0, width, 16, 0), QuestTranslation.translate("bq_standard.gui.meet", tnm) + " x" + task.amount).setAlignment(1).setColor(PresetColor.TEXT_MAIN.getColor()));
 
         if (target != null)
-            this.addPanel(new PanelEntityPreview(new GuiTransform(GuiAlign.TOP_LEFT, 0, 16, width, 64, 0), target).setRotationDriven(new ValueFuncIO<>(() -> 15F), new ValueFuncIO<>(() -> (float) (Minecraft.getSystemTime() % 30000L / 30000D * 360D))));
+            this.addPanel(new PanelEntityPreview(new GuiTransform(GuiAlign.TOP_LEFT, 0, 16, width, 64, 0), target).setRotationDriven(new ValueFuncIO<>(() -> 15F), new ValueFuncIO<>(() -> (float) (net.minecraft.Util.getMillis() % 30000L / 30000D * 360D))));
         recalculateSizes();
     }
 }

@@ -65,7 +65,7 @@ public class GuiEditTaskMeeting extends GuiScreenCanvas implements IVolatileScre
             if (target != null) target.readFromNBT(task.targetTags);
         } else target = null;
 
-        this.addPanel(new PanelEntityPreview(new GuiTransform(GuiAlign.HALF_TOP, new GuiPadding(16, 32, 16, 0), 0), target).setRotationDriven(new ValueFuncIO<>(() -> 15F), new ValueFuncIO<>(() -> (float) (Minecraft.getSystemTime() % 30000L / 30000D * 360D)))); // Preview works with null. It's fine (or should be)
+        this.addPanel(new PanelEntityPreview(new GuiTransform(GuiAlign.HALF_TOP, new GuiPadding(16, 32, 16, 0), 0), target).setRotationDriven(new ValueFuncIO<>(() -> 15F), new ValueFuncIO<>(() -> (float) (net.minecraft.Util.getMillis() % 30000L / 30000D * 360D)))); // Preview works with null. It's fine (or should be)
 
         cvBackground.addPanel(new PanelTextBox(new GuiTransform(GuiAlign.MID_CENTER, -100, 4, 96, 12, 0), QuestTranslation.translate("bq_standard.gui.amount")).setAlignment(2).setColor(PresetColor.TEXT_MAIN.getColor()));
         cvBackground.addPanel(new PanelTextField<>(new GuiTransform(GuiAlign.MID_CENTER, 0, 0, 100, 16, 0), "" + task.amount, FieldFilterNumber.INT).setCallback(value -> task.amount = value));

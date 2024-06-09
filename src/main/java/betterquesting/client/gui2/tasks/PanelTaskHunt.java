@@ -48,7 +48,7 @@ public class PanelTaskHunt extends CanvasMinimum {
         this.addPanel(new PanelTextBox(new GuiTransform(GuiAlign.TOP_EDGE, 0, 0, width, 12, 0), QuestTranslation.translate("bq_standard.gui.kill", tnm) + " " + progress + "/" + task.required).setAlignment(1).setColor(PresetColor.TEXT_MAIN.getColor()));
 
         if (target != null)
-            this.addPanel(new PanelEntityPreview(new GuiTransform(GuiAlign.TOP_LEFT, 0, 16, width, 64, 0), target).setRotationDriven(new ValueFuncIO<>(() -> 15F), new ValueFuncIO<>(() -> (float) (Minecraft.getSystemTime() % 30000L / 30000D * 360D))));
+            this.addPanel(new PanelEntityPreview(new GuiTransform(GuiAlign.TOP_LEFT, 0, 16, width, 64, 0), target).setRotationDriven(new ValueFuncIO<>(() -> 15F), new ValueFuncIO<>(() -> (float) (net.minecraft.Util.getMillis() % 30000L / 30000D * 360D))));
 
         recalculateSizes();
     }

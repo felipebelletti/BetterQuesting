@@ -73,7 +73,7 @@ public class PanelTaskInteractEntity extends CanvasMinimum {
         }
 
         if (target != null)
-            this.addPanel(new PanelEntityPreview(new GuiTransform(GuiAlign.TOP_LEFT, 48, 0, initialRect.getWidth() - 48, 96, 0), target).setRotationDriven(new ValueFuncIO<>(() -> 15F), new ValueFuncIO<>(() -> (float) (Minecraft.getSystemTime() % 30000L / 30000D * 360D))));
+            this.addPanel(new PanelEntityPreview(new GuiTransform(GuiAlign.TOP_LEFT, 48, 0, initialRect.getWidth() - 48, 96, 0), target).setRotationDriven(new ValueFuncIO<>(() -> 15F), new ValueFuncIO<>(() -> (float) (net.minecraft.Util.getMillis() % 30000L / 30000D * 360D))));
         recalculateSizes();
     }
 }

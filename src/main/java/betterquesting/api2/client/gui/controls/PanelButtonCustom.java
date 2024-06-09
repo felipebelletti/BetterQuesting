@@ -7,8 +7,9 @@ import betterquesting.api2.client.gui.panels.CanvasEmpty;
 import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.phys.Vec3;
 import org.lwjgl.input.Mouse;
 
 import java.util.function.Consumer;
@@ -88,7 +89,7 @@ public class PanelButtonCustom extends CanvasEmpty implements IPanelButton {
         boolean clicked = isActive() && click == 0 && bounds.contains(mx, my) && !PEventBroadcaster.INSTANCE.postEvent(new PEventButton(this));
 
         if (clicked) {
-            Minecraft.getInstance().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK.get(), 1.0F));
             onButtonClick();
         }
 

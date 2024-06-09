@@ -4,7 +4,7 @@ import betterquesting.api.storage.BQ_Settings;
 import betterquesting.api.utils.RenderUtils;
 import betterquesting.api2.utils.QuestTranslation;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.ScaledResolution;
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.lwjgl.glfw.GLFW;
@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.ChatFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -59,8 +59,8 @@ public class QuestNotification {
             }
 
             notice.init = true;
-            notice.startTime = Minecraft.getSystemTime();
-            mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(new SoundEvent(new ResourceLocation(notice.sound)), 1.0F));
+            notice.startTime = net.minecraft.Util.getMillis();
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation(notice.sound)), 1.0F));
         }
 
         if (notice.getTime() >= 6F) {
@@ -110,7 +110,7 @@ public class QuestNotification {
         private final String sound;
 
         public QuestNotice(String mainTxt, String subTxt, ItemStack icon, String sound) {
-            this.startTime = Minecraft.getSystemTime();
+            this.startTime = net.minecraft.Util.getMillis();
             this.mainTxt = mainTxt;
             this.subTxt = subTxt;
             this.icon = icon;
@@ -118,7 +118,7 @@ public class QuestNotification {
         }
 
         public float getTime() {
-            return (Minecraft.getSystemTime() - startTime) / 1000F;
+            return (net.minecraft.Util.getMillis() - startTime) / 1000F;
         }
     }
 }

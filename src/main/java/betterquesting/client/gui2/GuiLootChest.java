@@ -10,10 +10,11 @@ import betterquesting.api2.client.gui.panels.content.PanelTextBox;
 import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
 import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.client.themes.BQSTextures;
-import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class GuiLootChest extends GuiScreenCanvas {
     public void initPanel() {
         super.initPanel();
 
-        mc.getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(new SoundEvent(new ResourceLocation("random.chestopen")), 1.0F));
+        Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(new ResourceLocation("random.chestopen")), 1.0F));
 
         this.addPanel(new PanelGeneric(new GuiTransform(GuiAlign.MID_CENTER, -64, 0, 128, 68, 0), BQSTextures.LOOT_CHEST.getTexture()));
         this.addPanel(new PanelTextBox(new GuiTransform(GuiAlign.MID_CENTER, -64, 40, 128, 56, -1), QuestTranslation.translate(title)).setAlignment(1));
