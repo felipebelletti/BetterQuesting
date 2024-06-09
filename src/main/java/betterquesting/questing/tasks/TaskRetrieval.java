@@ -16,7 +16,7 @@ import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskRetrieval;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NBTTagInt;
@@ -101,7 +101,7 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
             }
         }
 
-        final List<InventoryPlayer> invoList;
+        final List<Inventory> invoList;
         if (consume) {
             invoList = Collections.singletonList(pInfo.PLAYER.inventory);
         } else {
@@ -110,7 +110,7 @@ public class TaskRetrieval implements ITaskInventory, IItemTask {
         }
 
         int[] remCounts = new int[progress.size()];
-        for (InventoryPlayer invo : invoList) {
+        for (Inventory invo : invoList) {
             for (int i = 0; i < invo.getSizeInventory(); i++) {
                 ItemStack stack = invo.getStackInSlot(i);
                 if (stack.isEmpty())

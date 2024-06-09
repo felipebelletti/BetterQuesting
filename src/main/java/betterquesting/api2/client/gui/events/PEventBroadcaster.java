@@ -1,6 +1,11 @@
 package betterquesting.api2.client.gui.events;
 
-import net.minecraftforge.client.event.GuiOpenEvent;
+/*
+@todo: fork 1.20.1 net.minecraftforge.client.ScreenEvent.Opening might have been
+  replaced to RenderGuiEvent instead of event.RenderGuiEvent
+*/
+import net.minecraftforge.client.event.RenderGuiEvent;
+//import net.minecraftforge.client.event.ScreenEvent.Opening;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.Nonnull;
@@ -57,7 +62,7 @@ public class PEventBroadcaster {
      * Clears event listeners whenever a new GUI loads. If you must have cross GUI communication either handle this yourself or re-register the relevant listeners.
      */
     @SubscribeEvent
-    public void onGuiOpened(GuiOpenEvent event) {
+    public void onGuiOpened(RenderGuiEvent event) {
         entryList.clear();
     }
 }

@@ -2,15 +2,15 @@ package betterquesting.client.gui2.inventory;
 
 import betterquesting.blocks.TileSubmitStation;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 public class ContainerSubmitStation extends Container {
     private TileSubmitStation tile;
 
-    public ContainerSubmitStation(InventoryPlayer inventory, TileSubmitStation tile) {
+    public ContainerSubmitStation(Inventory inventory, TileSubmitStation tile) {
         this.tile = tile;
 
         this.addSlotToContainer(new Slot(tile, 0, 0, 0) {

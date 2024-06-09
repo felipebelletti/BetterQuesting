@@ -37,7 +37,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidUtil;
-import org.lwjgl.input.Keyboard;
+
 import org.lwjgl.util.vector.Vector4f;
 
 public class GuiFluidSelection extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {
@@ -61,7 +61,7 @@ public class GuiFluidSelection extends GuiScreenCanvas implements IPEventListene
         super.initPanel();
 
         PEventBroadcaster.INSTANCE.register(this, PEventButton.class);
-        Keyboard.enableRepeatEvents(true);
+        org.lwjgl.glfw.GLFW.glfwSetInputMode(Minecraft.getInstance().getWindow().getWindow(), org.lwjgl.glfw.GLFW.GLFW_REPEAT, org.lwjgl.glfw.GLFW.GLFW_TRUE);
 
         // Background panel
         CanvasTextured cvBackground = new CanvasTextured(new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(0, 0, 0, 0), 0), PresetTexture.PANEL_MAIN.getTexture());

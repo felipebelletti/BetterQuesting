@@ -85,7 +85,7 @@ public class PanelHScrollBar implements IScrollBar {
     public void drawPanel(int mx, int my, float partialTick) {
         IGuiRect bounds = this.getTransform();
 
-        if (active && isDragging && (Mouse.isButtonDown(0) || Mouse.isButtonDown(2))) {
+        if (active && isDragging && (GLFW.glfwGetMouseButton(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_MOUSE_BUTTON_1) == GLFW.GLFW_PRESS || Mouse.isButtonDown(2))) {
             float cx = (float) (mx - (bounds.getX() + hSize / 2)) / (float) (bounds.getWidth() - hSize);
             this.writeValue(cx);
         } else if (isDragging) {

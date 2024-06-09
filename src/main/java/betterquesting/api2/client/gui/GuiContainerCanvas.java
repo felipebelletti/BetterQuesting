@@ -19,7 +19,7 @@ import net.minecraft.world.item.TooltipFlag;
 import org.lwjgl.glfw.GLFW;
 import net.minecraft.world.inventory.ChestMenu;
 import net.minecraft.world.item.ItemStack;
-import org.lwjgl.input.Keyboard;
+
 import org.lwjgl.input.Mouse;
 
 import javax.annotation.Nonnull;

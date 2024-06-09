@@ -30,7 +30,7 @@ import net.minecraft.nbt.*;
 import net.minecraft.ChatFormatting;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import org.lwjgl.input.Keyboard;
+
 import org.lwjgl.util.vector.Vector4f;
 
 import java.util.ArrayList;
@@ -63,7 +63,7 @@ public class GuiNbtAdd extends GuiScreenCanvas implements IPEventListener, IVola
         super.initPanel();
 
         PEventBroadcaster.INSTANCE.register(this, PEventButton.class);
-        Keyboard.enableRepeatEvents(true);
+        org.lwjgl.glfw.GLFW.glfwSetInputMode(Minecraft.getInstance().getWindow().getWindow(), org.lwjgl.glfw.GLFW.GLFW_REPEAT, org.lwjgl.glfw.GLFW.GLFW_TRUE);
 
         // Background panel
         CanvasTextured cvBackground = new CanvasTextured(new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(0, 0, 0, 0), 0), PresetTexture.PANEL_MAIN.getTexture());

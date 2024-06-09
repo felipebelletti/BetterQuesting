@@ -2,7 +2,7 @@ package betterquesting.client.gui2.editors;
 
 import javax.annotation.Nullable;
 
-import org.lwjgl.input.Keyboard;
+
 
 import com.google.common.collect.Lists;
 
@@ -168,7 +168,7 @@ public class GuiQuestDescEditor extends GuiScreenCanvas implements IPEventListen
         super.initPanel();
 
         PEventBroadcaster.INSTANCE.register(this, PEventButton.class);
-        Keyboard.enableRepeatEvents(true);
+        org.lwjgl.glfw.GLFW.glfwSetInputMode(Minecraft.getInstance().getWindow().getWindow(), org.lwjgl.glfw.GLFW.GLFW_REPEAT, org.lwjgl.glfw.GLFW.GLFW_TRUE);
 
         // Background panel
         CanvasTextured cvBackground = new CanvasTextured(new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(0, 0, 0, 0), 0),

@@ -23,7 +23,7 @@ import betterquesting.questing.rewards.loot.LootGroup;
 import betterquesting.questing.rewards.loot.LootRegistry;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
-import org.lwjgl.input.Keyboard;
+
 import org.lwjgl.util.vector.Vector4f;
 
 import java.text.DecimalFormat;
@@ -54,7 +54,7 @@ public class GuiEditLootEntry extends GuiScreenCanvas {
     public void initPanel() {
         super.initPanel();
 
-        Keyboard.enableRepeatEvents(true);
+        org.lwjgl.glfw.GLFW.glfwSetInputMode(Minecraft.getInstance().getWindow().getWindow(), org.lwjgl.glfw.GLFW.GLFW_REPEAT, org.lwjgl.glfw.GLFW.GLFW_TRUE);
 
         CanvasTextured cvBackground = new CanvasTextured(new GuiTransform(), PresetTexture.PANEL_MAIN.getTexture());
         this.addPanel(cvBackground);

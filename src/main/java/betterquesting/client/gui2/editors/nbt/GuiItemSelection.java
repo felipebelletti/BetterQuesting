@@ -36,7 +36,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import org.apache.commons.lang3.StringUtils;
 import net.minecraftforge.oredict.OreDictionary;
-import org.lwjgl.input.Keyboard;
+
 import org.lwjgl.util.vector.Vector4f;
 
 @SuppressWarnings("WeakerAccess")
@@ -62,7 +62,7 @@ public class GuiItemSelection extends GuiScreenCanvas implements IPEventListener
         super.initPanel();
 
         PEventBroadcaster.INSTANCE.register(this, PEventButton.class);
-        Keyboard.enableRepeatEvents(true);
+        org.lwjgl.glfw.GLFW.glfwSetInputMode(Minecraft.getInstance().getWindow().getWindow(), org.lwjgl.glfw.GLFW.GLFW_REPEAT, org.lwjgl.glfw.GLFW.GLFW_TRUE);
 
         // Background panel
         CanvasTextured cvBackground = new CanvasTextured(new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(0, 0, 0, 0), 0), PresetTexture.PANEL_MAIN.getTexture());

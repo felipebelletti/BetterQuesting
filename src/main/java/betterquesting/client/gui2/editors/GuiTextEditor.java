@@ -25,7 +25,7 @@ import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.api2.utils.QuestTranslation;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.ChatFormatting;
-import org.lwjgl.input.Keyboard;
+
 
 public class GuiTextEditor extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {
     private final ICallback<String> callback;
@@ -45,7 +45,7 @@ public class GuiTextEditor extends GuiScreenCanvas implements IPEventListener, I
         super.initPanel();
 
         PEventBroadcaster.INSTANCE.register(this, PEventButton.class);
-        Keyboard.enableRepeatEvents(true);
+        org.lwjgl.glfw.GLFW.glfwSetInputMode(Minecraft.getInstance().getWindow().getWindow(), org.lwjgl.glfw.GLFW.GLFW_REPEAT, org.lwjgl.glfw.GLFW.GLFW_TRUE);
 
         // Background panel
         CanvasTextured cvBackground = new CanvasTextured(new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(0, 0, 0, 0), 0), PresetTexture.PANEL_MAIN.getTexture());

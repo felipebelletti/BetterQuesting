@@ -27,7 +27,7 @@ import betterquesting.api2.utils.QuestTranslation;
 import betterquesting.client.toolbox.ToolboxRegistry;
 import betterquesting.questing.QuestLineDatabase;
 import net.minecraft.client.gui.screens.Screen;
-import org.lwjgl.input.Keyboard;
+
 import org.lwjgl.util.vector.Vector4f;
 
 import java.util.ArrayList;
@@ -80,7 +80,7 @@ public class GuiDesigner extends GuiScreenCanvas implements IVolatileScreen, INe
         super.initPanel();
 
         PEventBroadcaster.INSTANCE.register(this, PEventButton.class);
-        Keyboard.enableRepeatEvents(true);
+        org.lwjgl.glfw.GLFW.glfwSetInputMode(Minecraft.getInstance().getWindow().getWindow(), org.lwjgl.glfw.GLFW.GLFW_REPEAT, org.lwjgl.glfw.GLFW.GLFW_TRUE);
 
         // Background panel
         CanvasTextured cvBackground = new CanvasTextured(new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(0, 0, 96, 0), 0), PresetTexture.PANEL_MAIN.getTexture());

@@ -7,7 +7,7 @@ import betterquesting.client.gui2.editors.designer.PanelToolController;
 import betterquesting.network.handlers.NetQuestEdit;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.NonNullList;
-import org.lwjgl.input.Keyboard;
+
 
 import java.util.Collections;
 import java.util.List;

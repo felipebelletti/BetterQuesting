@@ -26,7 +26,7 @@ import org.lwjgl.glfw.GLFW;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import org.lwjgl.input.Keyboard;
+
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector4f;

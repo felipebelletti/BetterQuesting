@@ -13,7 +13,7 @@ import betterquesting.core.BetterQuesting;
 import betterquesting.questing.tasks.factory.FactoryTaskFluid;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NBTTagInt;
@@ -99,7 +99,7 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
             }
         }
 
-        final List<InventoryPlayer> invoList;
+        final List<Inventory> invoList;
         if (consume) {
             // We do not support consuming resources from other member's invetories.
             // This could otherwise be abused to siphon items/fluids unknowingly
@@ -109,7 +109,7 @@ public class TaskFluid implements ITaskInventory, IFluidTask, IItemTask {
             pInfo.ACTIVE_PLAYERS.forEach((p) -> invoList.add(p.inventory));
         }
 
-        for (InventoryPlayer invo : invoList) {
+        for (Inventory invo : invoList) {
             for (int i = 0; i < invo.getSizeInventory(); i++) {
                 ItemStack stack = invo.getStackInSlot(i);
                 if (stack.isEmpty()) continue;

@@ -41,7 +41,7 @@ import betterquesting.storage.NameCache;
 import betterquesting.storage.QuestSettings;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
-import org.lwjgl.input.Keyboard;
+
 
 import java.util.List;
 import java.util.UUID;
@@ -92,7 +92,7 @@ public class GuiPartyManage extends GuiScreenCanvas implements IPEventListener, 
         partyID = tmp.getID();
 
         PEventBroadcaster.INSTANCE.register(this, PEventButton.class);
-        Keyboard.enableRepeatEvents(true);
+        org.lwjgl.glfw.GLFW.glfwSetInputMode(Minecraft.getInstance().getWindow().getWindow(), org.lwjgl.glfw.GLFW.GLFW_REPEAT, org.lwjgl.glfw.GLFW.GLFW_TRUE);
 
         // 0 = INVITE, 1 = MEMBER, 2 = ADMIN, 3 = OWNER/OP
         EnumPartyStatus status = NameCache.INSTANCE.isOP(playerID) ? EnumPartyStatus.OWNER : party.getStatus(playerID);

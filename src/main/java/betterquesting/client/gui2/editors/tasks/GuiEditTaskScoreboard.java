@@ -28,7 +28,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
-import org.lwjgl.input.Keyboard;
+
 
 public class GuiEditTaskScoreboard extends GuiScreenCanvas {
     private final DBEntry<IQuest> quest;
@@ -45,7 +45,7 @@ public class GuiEditTaskScoreboard extends GuiScreenCanvas {
     public void initPanel() {
         super.initPanel();
 
-        Keyboard.enableRepeatEvents(true);
+        org.lwjgl.glfw.GLFW.glfwSetInputMode(Minecraft.getInstance().getWindow().getWindow(), org.lwjgl.glfw.GLFW.GLFW_REPEAT, org.lwjgl.glfw.GLFW.GLFW_TRUE);
 
         CanvasTextured cvBackground = new CanvasTextured(new GuiTransform(), PresetTexture.PANEL_MAIN.getTexture());
         this.addPanel(cvBackground);

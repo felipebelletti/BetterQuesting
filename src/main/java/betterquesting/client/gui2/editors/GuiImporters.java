@@ -27,7 +27,7 @@ import betterquesting.client.importers.ImportedQuests;
 import betterquesting.client.importers.ImporterRegistry;
 import betterquesting.network.handlers.NetImport;
 import net.minecraft.client.gui.screens.Screen;
-import org.lwjgl.input.Keyboard;
+
 
 import java.io.File;
 import java.util.List;
@@ -47,7 +47,7 @@ public class GuiImporters extends GuiScreenCanvas implements IPEventListener, IC
         super.initPanel();
 
         PEventBroadcaster.INSTANCE.register(this, PEventButton.class);
-        Keyboard.enableRepeatEvents(true);
+        org.lwjgl.glfw.GLFW.glfwSetInputMode(Minecraft.getInstance().getWindow().getWindow(), org.lwjgl.glfw.GLFW.GLFW_REPEAT, org.lwjgl.glfw.GLFW.GLFW_TRUE);
 
         // Background panel
         CanvasTextured cvBackground = new CanvasTextured(new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(0, 0, 0, 0), 0), PresetTexture.PANEL_MAIN.getTexture());

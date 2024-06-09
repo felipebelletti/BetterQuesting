@@ -36,7 +36,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.entity.EntityList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.fml.common.registry.EntityEntry;
-import org.lwjgl.input.Keyboard;
+
 
 public class GuiEntitySelection extends GuiScreenCanvas implements IPEventListener, IVolatileScreen {
     private final ICallback<Entity> callback;
@@ -58,7 +58,7 @@ public class GuiEntitySelection extends GuiScreenCanvas implements IPEventListen
         super.initPanel();
 
         PEventBroadcaster.INSTANCE.register(this, PEventButton.class);
-        Keyboard.enableRepeatEvents(true);
+        org.lwjgl.glfw.GLFW.glfwSetInputMode(Minecraft.getInstance().getWindow().getWindow(), org.lwjgl.glfw.GLFW.GLFW_REPEAT, org.lwjgl.glfw.GLFW.GLFW_TRUE);
 
         // Background panel
         CanvasTextured cvBackground = new CanvasTextured(new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(0, 0, 0, 0), 0), PresetTexture.PANEL_MAIN.getTexture());

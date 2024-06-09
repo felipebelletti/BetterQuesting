@@ -30,7 +30,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.nbt.*;
 import net.minecraftforge.fluids.FluidStack;
-import org.lwjgl.input.Keyboard;
+
 
 import java.util.*;
 
@@ -73,7 +73,7 @@ public class PanelScrollingNBT extends CanvasScrolling implements IPEventListene
 
         // Listens to its own buttons to update NBT values. The parent screen defines what the IDs are and any furter actions
         PEventBroadcaster.INSTANCE.register(this, PEventButton.class);
-        Keyboard.enableRepeatEvents(true);
+        org.lwjgl.glfw.GLFW.glfwSetInputMode(Minecraft.getInstance().getWindow().getWindow(), org.lwjgl.glfw.GLFW.GLFW_REPEAT, org.lwjgl.glfw.GLFW.GLFW_TRUE);
     }
 
     // TODO: Implement this with a proper way of displaying and choosing between options (and setting priority for default)

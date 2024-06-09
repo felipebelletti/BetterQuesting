@@ -33,7 +33,7 @@ import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
-import org.lwjgl.input.Keyboard;
+
 
 public class GuiEditTaskHunt extends GuiScreenCanvas implements IVolatileScreen {
     private final DBEntry<IQuest> quest;
@@ -49,7 +49,7 @@ public class GuiEditTaskHunt extends GuiScreenCanvas implements IVolatileScreen 
     public void initPanel() {
         super.initPanel();
 
-        Keyboard.enableRepeatEvents(true);
+        org.lwjgl.glfw.GLFW.glfwSetInputMode(Minecraft.getInstance().getWindow().getWindow(), org.lwjgl.glfw.GLFW.GLFW_REPEAT, org.lwjgl.glfw.GLFW.GLFW_TRUE);
 
         CanvasTextured cvBackground = new CanvasTextured(new GuiTransform(), PresetTexture.PANEL_MAIN.getTexture());
         this.addPanel(cvBackground);

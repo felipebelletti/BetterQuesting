@@ -16,13 +16,13 @@ import mezz.jei.api.recipe.IFocus.Mode;
 import mezz.jei.config.KeyBindings;
 import mezz.jei.gui.Focus;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.item.TooltipFlag.TooltipFlags;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.NonNullList;
 import net.minecraftforge.fml.common.Optional.Method;
 import net.minecraftforge.oredict.OreDictionary;
-import org.lwjgl.input.Keyboard;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +57,7 @@ public class PanelItemSlot extends PanelButtonStorage<BigItemStack> {
         if (value != null) {
             Minecraft mc = Minecraft.getInstance();
             this.setIcon(oreDict || value.getBaseStack().getItemDamage() == OreDictionary.WILDCARD_VALUE ? new OreDictTexture(1F, value, showCount, true) : new ItemTexture(value, showCount, true), 1);
-            this.setTooltip(value.getBaseStack().getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? TooltipFlags.ADVANCED : TooltipFlags.NORMAL));
+            this.setTooltip(value.getBaseStack().getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? TooltipFlag.ADVANCED : TooltipFlag.NORMAL));
         } else {
             this.setIcon(null);
             this.setTooltip(null);
@@ -78,7 +78,7 @@ public class PanelItemSlot extends PanelButtonStorage<BigItemStack> {
             }
 
             Minecraft mc = Minecraft.getInstance();
-            return ttStack.getBaseStack().getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? TooltipFlags.ADVANCED : TooltipFlags.NORMAL);
+            return ttStack.getBaseStack().getTooltip(mc.player, mc.gameSettings.advancedItemTooltips ? TooltipFlag.ADVANCED : TooltipFlag.NORMAL);
         }
 
         return null;

@@ -31,7 +31,7 @@ import betterquesting.questing.party.PartyManager;
 import betterquesting.storage.NameCache;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.nbt.CompoundTag;
-import org.lwjgl.input.Keyboard;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,7 +63,7 @@ public class GuiPartyInvite extends GuiScreenCanvas implements IPEventListener {
         partyID = tmp.getID();
 
         PEventBroadcaster.INSTANCE.register(this, PEventButton.class);
-        Keyboard.enableRepeatEvents(true);
+        org.lwjgl.glfw.GLFW.glfwSetInputMode(Minecraft.getInstance().getWindow().getWindow(), org.lwjgl.glfw.GLFW.GLFW_REPEAT, org.lwjgl.glfw.GLFW.GLFW_TRUE);
 
         // Background panel
         CanvasTextured cvBackground = new CanvasTextured(new GuiTransform(GuiAlign.FULL_BOX, new GuiPadding(0, 0, 0, 0), 0), PresetTexture.PANEL_MAIN.getTexture());

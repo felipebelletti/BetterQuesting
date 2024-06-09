@@ -10,13 +10,16 @@ import betterquesting.api2.client.gui.resources.colors.IGuiColor;
 import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
 import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import org.lwjgl.glfw.GLFW;
 import net.minecraft.util.Mth;
-import org.lwjgl.input.Mouse;
 
 import java.util.List;
 
@@ -499,7 +502,7 @@ public class PanelTextField<T> implements IGuiPanel {
         if (selectEnd != position) {
             this.selectEnd = position;
 
-            Font font = Minecraft.getInstance().fontRenderer;
+            Font font = Minecraft.getInstance().font;
 
             if (canWrap) {
                 List<String> lines = RenderUtils.splitStringWithoutFormat(text, getTransform().getWidth() - 8, font);
@@ -517,7 +520,7 @@ public class PanelTextField<T> implements IGuiPanel {
                     }
 
                     idx += s.length();
-                    lastFormat = Font.getFormatFromString(lastFormat + s);
+                    lastFormat = Component.literal(lastFormat + s).withStyle(Style.EMPTY).toString();
                 }
 
                 y *= font.lineHeight;
@@ -552,7 +555,7 @@ public class PanelTextField<T> implements IGuiPanel {
     }
 
     public void updateScrollBounds() {
-        Font font = Minecraft.getInstance().fontRenderer;
+        Font font = Minecraft.getInstance().font;
 
         int prevX = getScrollX();
         int prevY = getScrollY();
@@ -590,12 +593,12 @@ public class PanelTextField<T> implements IGuiPanel {
     }
 
     @Override
-    public void drawPanel(int mx, int my, float partialTick) {
-        if (isActive && dragging && Mouse.isButtonDown(0)) {
+    public void drawPanel(int mx, int my, float partialTick, PoseStack poseStack, GuiGraphics guiGraphics) {
+        if (isActive && dragging && GLFW.glfwGetMouseButton(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_MOUSE_BUTTON_1) == GLFW.GLFW_PRESS) {
             if (canWrap) {
-                setSelectionPos(RenderUtils.getCursorPos(text, mx - (transform.getX() + 4) + getScrollX(), my - (transform.getY() + 4) + getScrollY(), transform.getWidth() - 8, Minecraft.getInstance().fontRenderer));
+                setSelectionPos(RenderUtils.getCursorPos(text, mx - (transform.getX() + 4) + getScrollX(), my - (transform.getY() + 4) + getScrollY(), transform.getWidth() - 8, Minecraft.getInstance().font));
             } else {
-                setSelectionPos(RenderUtils.getCursorPos(text, mx - (transform.getX() + 4) + getScrollX(), Minecraft.getInstance().fontRenderer));
+                setSelectionPos(RenderUtils.getCursorPos(text, mx - (transform.getX() + 4) + getScrollX(), Minecraft.getInstance().font));
             }
         } else if (dragging) {
             dragging = false;
@@ -605,36 +608,36 @@ public class PanelTextField<T> implements IGuiPanel {
         int state = !this.isActive() ? 0 : (isFocused ? 2 : 1);
         Minecraft mc = Minecraft.getInstance();
         IGuiTexture t = texState[state];
-        GlStateManager.pushMatrix();
+        poseStack.pushPose();
 
         if (t != null) // Full screen text editors probably don't need the backgrounds
         {
-            t.drawTexture(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), 0F, partialTick);
+            t.drawTexture(poseStack, bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), 0F, partialTick);
         }
 
-        RenderUtils.startScissor(bounds);
-        GlStateManager.translate(-getScrollX(), -getScrollY(), 0);
+        RenderUtils.startScissor(poseStack, bounds);
+        poseStack.translate(-getScrollX(), -getScrollY(), 0);
 
         if (text.length() <= 0) {
             if (!isFocused) {
-                mc.fontRenderer.drawString(watermark, bounds.getX() + 4, bounds.getY() + 4, colWatermark.getRGB(), false);
+                guiGraphics.drawString(mc.font, watermark, bounds.getX() + 4, bounds.getY() + 4, colWatermark.getRGB(), false);
             }
         } else {
             IGuiColor c = colStates[state];
 
             if (!canWrap) {
-                RenderUtils.drawHighlightedString(mc.fontRenderer, text, bounds.getX() + 4, bounds.getY() + 4, c.getRGB(), false, colHighlight.getRGB(), selectStart, selectEnd);
+                RenderUtils.drawHighlightedString(guiGraphics, poseStack, mc.font, text, bounds.getX() + 4, bounds.getY() + 4, c.getRGB(), false, colHighlight.getRGB(), selectStart, selectEnd);
             } else {
-                RenderUtils.drawHighlightedSplitString(mc.fontRenderer, text, bounds.getX() + 4, bounds.getY() + 4, bounds.getWidth() - 8, c.getRGB(), false, colHighlight.getRGB(), selectStart, selectEnd);
+                RenderUtils.drawHighlightedSplitString(guiGraphics, poseStack, mc.font, text, bounds.getX() + 4, bounds.getY() + 4, bounds.getWidth() - 8, c.getRGB(), false, colHighlight.getRGB(), selectStart, selectEnd);
             }
         }
 
         if (isFocused && selectStart == selectEnd && (System.currentTimeMillis() / 500L) % 2 == 0) {
-            RenderUtils.drawHighlightBox(cursorLine, colHighlight);
+            RenderUtils.drawHighlightBox(guiGraphics, poseStack, cursorLine, colHighlight);
         }
 
-        RenderUtils.endScissor();
-        GlStateManager.popMatrix();
+        RenderUtils.endScissor(poseStack);
+        poseStack.popPose();
     }
 
     @Override
@@ -646,9 +649,9 @@ public class PanelTextField<T> implements IGuiPanel {
             }
 
             if (canWrap) {
-                setCursorPosition(RenderUtils.getCursorPos(text, mx - (transform.getX() + 4) + getScrollX(), my - (transform.getY() + 4) + getScrollY(), transform.getWidth() - 8, Minecraft.getInstance().fontRenderer));
+                setCursorPosition(RenderUtils.getCursorPos(text, mx - (transform.getX() + 4) + getScrollX(), my - (transform.getY() + 4) + getScrollY(), transform.getWidth() - 8, Minecraft.getInstance().font));
             } else {
-                setCursorPosition(RenderUtils.getCursorPos(text, mx - (transform.getX() + 4) + getScrollX(), Minecraft.getInstance().fontRenderer));
+                setCursorPosition(RenderUtils.getCursorPos(text, mx - (transform.getX() + 4) + getScrollX(), Minecraft.getInstance().font));
             }
             dragging = true;
 
