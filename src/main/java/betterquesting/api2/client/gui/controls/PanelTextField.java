@@ -369,129 +369,109 @@ public class PanelTextField<T> implements IGuiPanel {
     public boolean onKeyTyped(char typedChar, int keyCode) {
         if (!this.isFocused) {
             return false;
-        } else if (Screen.isKeyComboCtrlA(keyCode)) {
+        } else if (Screen.hasControlDown() && keyCode == GLFW.GLFW_KEY_A) {
             this.setCursorPosition(text.length());
             this.setSelectionPos(0);
             return true;
-        } else if (Screen.isKeyComboCtrlC(keyCode)) {
-            Screen.setClipboardString(this.getSelectedText());
+        } else if (Screen.hasControlDown() && keyCode == GLFW.GLFW_KEY_C) {
+            Minecraft.getInstance().keyboardHandler.setClipboard(this.getSelectedText());
             return true;
-        } else if (Screen.isKeyComboCtrlV(keyCode)) {
+        } else if (Screen.hasControlDown() && keyCode == GLFW.GLFW_KEY_V) {
             if (this.isActive) {
-                this.writeText(Screen.getClipboardString());
+                this.writeText(Minecraft.getInstance().keyboardHandler.getClipboard());
             }
-
             return true;
-        } else if (Screen.isKeyComboCtrlX(keyCode)) {
-            Screen.setClipboardString(this.getSelectedText());
-
+        } else if (Screen.hasControlDown() && keyCode == GLFW.GLFW_KEY_X) {
+            Minecraft.getInstance().keyboardHandler.setClipboard(this.getSelectedText());
             if (this.isActive) {
                 this.writeText("");
             }
-
             return true;
         } else {
             switch (keyCode) {
-                case 14: // Backspace
-                {
-                    if (Screen.isCtrlKeyDown()) {
+                case GLFW.GLFW_KEY_BACKSPACE: {
+                    if (Screen.hasControlDown()) {
                         if (this.isActive) {
                             this.deleteWords(-1);
                         }
                     } else if (this.isActive) {
                         this.deleteFromCursor(-1);
                     }
-
                     return true;
                 }
-                case 28: // Enter
-                {
+                case GLFW.GLFW_KEY_ENTER: {
                     if (canWrap) {
                         this.writeText("\n");
                     }
-
                     return true;
                 }
-                case 199: // Home
-                {
-                    if (Screen.isShiftKeyDown()) {
+                case GLFW.GLFW_KEY_HOME: {
+                    if (Screen.hasShiftDown()) {
                         this.setSelectionPos(0);
                     } else {
                         this.setCursorPosition(0);
                     }
-
                     return true;
                 }
-                case 203: // Left arrow
-                {
-                    if (Screen.isShiftKeyDown()) {
-                        if (Screen.isCtrlKeyDown()) {
+                case GLFW.GLFW_KEY_LEFT: {
+                    if (Screen.hasShiftDown()) {
+                        if (Screen.hasControlDown()) {
                             this.setSelectionPos(this.getNthWordFromPos(-1, selectEnd));
                         } else {
                             this.setSelectionPos(selectEnd - 1);
                         }
-                    } else if (Screen.isCtrlKeyDown()) {
+                    } else if (Screen.hasControlDown()) {
                         this.setCursorPosition(this.getNthWordFromCursor(-1));
                     } else {
                         this.moveCursorBy(-1);
                     }
-
                     return true;
                 }
-                case 205: // Right arrow
-                {
-                    if (Screen.isShiftKeyDown()) {
-                        if (Screen.isCtrlKeyDown()) {
+                case GLFW.GLFW_KEY_RIGHT: {
+                    if (Screen.hasShiftDown()) {
+                        if (Screen.hasControlDown()) {
                             this.setSelectionPos(this.getNthWordFromPos(1, selectEnd));
                         } else {
                             this.setSelectionPos(selectEnd + 1);
                         }
-                    } else if (Screen.isCtrlKeyDown()) {
+                    } else if (Screen.hasControlDown()) {
                         this.setCursorPosition(this.getNthWordFromCursor(1));
                     } else {
                         this.moveCursorBy(1);
                     }
-
                     return true;
                 }
-                case 207: // End
-                {
-                    if (Screen.isShiftKeyDown()) {
+                case GLFW.GLFW_KEY_END: {
+                    if (Screen.hasShiftDown()) {
                         this.setSelectionPos(this.text.length());
                     } else {
                         this.setCursorPosition(text.length());
                     }
-
                     return true;
                 }
-                case 200: // Up arrow
-                {
+                case GLFW.GLFW_KEY_UP: {
                     // TODO: Move cursor up one line
                     return true;
                 }
-                case 208: // Down arrow
-                {
+                case GLFW.GLFW_KEY_DOWN: {
                     // TODO: Move cursor down one line
                     return true;
                 }
-                case 211: // Delete
-                {
-                    if (Screen.isCtrlKeyDown()) {
+                case GLFW.GLFW_KEY_DELETE: {
+                    if (Screen.hasControlDown()) {
                         if (this.isActive) {
                             this.deleteWords(1);
                         }
                     } else if (this.isActive) {
                         this.deleteFromCursor(1);
                     }
-
                     return true;
                 }
                 default: {
-                    if (isAllowedCharacter(typedChar)) {
+                    if (net.minecraft.SharedConstants.isAllowedChatCharacter(typedChar)) {
                         if (this.isActive) {
                             this.writeText(Character.toString(typedChar));
                         }
-
                         return true;
                     } else {
                         return false; // We're not using this key. Other controls/menus are free to use it
@@ -499,10 +479,6 @@ public class PanelTextField<T> implements IGuiPanel {
                 }
             }
         }
-    }
-
-    public boolean isAllowedCharacter(char c) {
-        return !Character.isISOControl(c) && c != '\u00A7';
     }
 
     /**
@@ -544,19 +520,19 @@ public class PanelTextField<T> implements IGuiPanel {
                     lastFormat = Font.getFormatFromString(lastFormat + s);
                 }
 
-                y *= font.FONT_HEIGHT;
+                y *= font.lineHeight;
                 int sy = getScrollY();
 
                 if (y < sy) {
                     setScrollY(y);
-                } else if (y > sy + (transform.getHeight() - 8) - font.FONT_HEIGHT) {
-                    setScrollY(y - (transform.getHeight() - 8) + font.FONT_HEIGHT);
+                } else if (y > sy + (transform.getHeight() - 8) - font.lineHeight) {
+                    setScrollY(y - (transform.getHeight() - 8) + font.lineHeight);
                 }
 
                 cursorLine.x = x + 4;
                 cursorLine.y = y + 4;
                 cursorLine.w = 1;
-                cursorLine.h = font.FONT_HEIGHT;
+                cursorLine.h = font.lineHeight;
             } else {
                 int x = RenderUtils.getStringWidth(text.substring(0, selectEnd), font);
                 int sx = getScrollX();
@@ -570,7 +546,7 @@ public class PanelTextField<T> implements IGuiPanel {
                 cursorLine.x = x + 4;
                 cursorLine.y = 4;
                 cursorLine.w = 1;
-                cursorLine.h = font.FONT_HEIGHT;
+                cursorLine.h = font.lineHeight;
             }
         }
     }
@@ -586,7 +562,7 @@ public class PanelTextField<T> implements IGuiPanel {
             scrollWidth = Math.max(0, RenderUtils.getStringWidth(text, font) - (transform.getWidth() - 8));
         } else {
             scrollWidth = 0;
-            scrollHeight = Math.max(0, (RenderUtils.splitString(text, transform.getWidth() - 8, font).size() * font.FONT_HEIGHT) - (transform.getHeight() - 8));
+            scrollHeight = Math.max(0, (RenderUtils.splitString(text, transform.getWidth() - 8, font).size() * font.lineHeight) - (transform.getHeight() - 8));
         }
 
         setScrollX(prevX);

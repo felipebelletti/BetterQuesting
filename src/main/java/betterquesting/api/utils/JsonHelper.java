@@ -6,6 +6,7 @@ import betterquesting.api.placeholders.PlaceholderConverter;
 import betterquesting.api2.utils.BQThreadedIO;
 import com.google.gson.*;
 import com.google.gson.stream.JsonWriter;
+import net.minecraft.SharedConstants;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -241,10 +242,7 @@ public class JsonHelper {
     }
 
     public static String makeFileNameSafe(String s) {
-        // Define illegal file characters manually
-        char[] illegalFileCharacters = { '/', '\n', '\r', '\t', '\0', '\f', '?', '*', '\\', '<', '>', '|', '\"', ':' };
-
-        for (char c : illegalFileCharacters) {
+        for (char c : SharedConstants.ILLEGAL_FILE_CHARACTERS) {
             s = s.replace(c, '_');
         }
 
