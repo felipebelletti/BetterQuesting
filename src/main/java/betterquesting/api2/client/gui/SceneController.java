@@ -1,6 +1,6 @@
 package betterquesting.api2.client.gui;
 
-import net.minecraftforge.client.event.GuiOpenEvent;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -23,12 +23,9 @@ public class SceneController {
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
-    public static void onGuiOpened(GuiOpenEvent event) {
-        if (event.getGui() instanceof IScene) {
-            // TODO: Review the following
-            // Does this need to be cleared if the GUI isn't compatible?
-            // Would this interfere with an overlay canvas?
-            curScene = (IScene) event.getGui();
+    public static void onGuiOpened(ScreenEvent.Opening event) {
+        if (event.getScreen() instanceof IScene) {
+            curScene = (IScene) event.getScreen();
         }
     }
 }
