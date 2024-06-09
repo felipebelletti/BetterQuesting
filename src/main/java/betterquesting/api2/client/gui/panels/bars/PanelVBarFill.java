@@ -79,7 +79,7 @@ public class PanelVBarFill implements IBarFill {
         IGuiRect bounds = this.getTransform();
         GlStateManager.pushMatrix();
 
-        GlStateManager.color(1F, 1F, 1F, 1F);
+        RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 
         if (texBack != null) {
             texBack.drawTexture(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), 0F, partialTick);

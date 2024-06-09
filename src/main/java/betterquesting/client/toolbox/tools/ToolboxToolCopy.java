@@ -6,7 +6,6 @@ import betterquesting.api.questing.IQuestLine;
 import betterquesting.api2.client.gui.controls.PanelButtonQuest;
 import betterquesting.api2.client.gui.misc.GuiRectangle;
 import betterquesting.api2.client.gui.panels.lists.CanvasQuestLine;
-import betterquesting.api2.storage.DBEntry;
 import betterquesting.client.gui2.editors.designer.PanelToolController;
 import betterquesting.client.toolbox.ToolboxTabMain;
 import betterquesting.network.handlers.NetChapterEdit;
@@ -56,7 +55,7 @@ public class ToolboxToolCopy implements IToolboxTool {
     }
 
     @Override
-    public void drawCanvas(int mx, int my, float partialTick) {
+    public void drawCanvas(int mx, int my, float partialTick, PoseStack poseStack) {
         if (grabList.size() <= 0) return;
 
         int snap = Math.max(1, ToolboxTabMain.INSTANCE.getSnapValue());

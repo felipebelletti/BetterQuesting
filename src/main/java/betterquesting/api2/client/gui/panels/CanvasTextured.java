@@ -25,7 +25,7 @@ public class CanvasTextured extends CanvasEmpty {
         if (bgTexture != null) {
             IGuiRect bounds = this.getTransform();
             GlStateManager.pushMatrix();
-            GlStateManager.color(1F, 1F, 1F, 1F);
+            RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
             bgTexture.drawTexture(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), 0F, partialTick);
             GlStateManager.popMatrix();
         }

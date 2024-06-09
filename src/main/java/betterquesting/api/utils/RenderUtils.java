@@ -6,20 +6,34 @@ import betterquesting.api2.client.gui.resources.colors.GuiColorStatic;
 import betterquesting.api2.client.gui.resources.colors.IGuiColor;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.core.BetterQuesting;
+import com.mojang.blaze3d.platform.Lighting;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
 import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.network.chat.Style;
+import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.util.Mth;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
+import org.joml.Matrix4f;
+import org.joml.Vector2i;
 import org.lwjgl.opengl.GL11;
+import net.minecraft.network.chat.Component;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
@@ -49,31 +63,29 @@ public class RenderUtils {
             return;
         }
 
-        GlStateManager.pushMatrix();
-        RenderItem itemRender = mc.getRenderItem();
-        float preZ = itemRender.zLevel;
-
+        PoseStack poseStack = new PoseStack();
+        poseStack.pushPose();
         float r = (float) (color >> 16 & 255) / 255.0F;
         float g = (float) (color >> 8 & 255) / 255.0F;
         float b = (float) (color & 255) / 255.0F;
-        GlStateManager.color(r, g, b);
-        RenderHelper.enableGUIStandardItemLighting();
-        GlStateManager.enableRescaleNormal();
-        GlStateManager.enableDepth();
+        RenderSystem.setShaderColor(r, g, b, 1.0F);
+        RenderSystem.enableDepthTest();
 
-        GlStateManager.translate(0.0F, 0.0F, z);
-        itemRender.zLevel = -150F; // Counters internal Z depth change so that GL translation makes sense
+        poseStack.translate(0.0F, 0.0F, z);
 
-        Font font = stack.getItem().getFontRenderer(stack);
-        if (font == null) font = mc.fontRenderer;
+        Font font = mc.font;
 
         try {
-            itemRender.renderItemAndEffectIntoGUI(stack, x, y);
+            MultiBufferSource.BufferSource bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+            ItemRenderer itemRenderer = mc.getItemRenderer();
+            BakedModel model = itemRenderer.getModel(stack, null, null, 0);
+
+            itemRenderer.render(stack, ItemDisplayContext.GUI, false, poseStack, bufferSource, 15728880, OverlayTexture.NO_OVERLAY, model);
 
             if (stack.getCount() != 1 || text != null) {
-                GlStateManager.pushMatrix();
+                poseStack.pushPose();
 
-                int w = getStringWidth(text, font);
+                int w = font.width(text);
                 float tx;
                 float ty;
                 float s = 1F;
@@ -81,147 +93,139 @@ public class RenderUtils {
                 if (w > 17) {
                     s = 17F / w;
                     tx = 0;
-                    ty = 17 - font.FONT_HEIGHT * s;
+                    ty = 17 - font.lineHeight * s;
                 } else {
                     tx = 17 - w;
-                    ty = 18 - font.FONT_HEIGHT;
+                    ty = 18 - font.lineHeight;
                 }
 
-                GlStateManager.translate(x + tx, y + ty, 0);
-                GlStateManager.scale(s, s, 1F);
+                poseStack.translate(x + tx, y + ty, 0);
+                poseStack.scale(s, s, 1F);
 
-                GlStateManager.disableLighting();
-                GlStateManager.disableDepth();
-                GlStateManager.disableBlend();
+                RenderSystem.disableDepthTest();
+                RenderSystem.disableBlend();
 
-                font.drawString(text, 0, 0, 16777215, true);
+                Matrix4f matrix4f = poseStack.last().pose();
+                font.drawInBatch(text, 0, 0, 16777215, true, poseStack.last().pose(), bufferSource, Font.DisplayMode.NORMAL, 0, 15728880, false);
 
-                GlStateManager.enableLighting();
-                GlStateManager.enableDepth();
-                GlStateManager.enableBlend();
+                bufferSource.endBatch();
 
-                GlStateManager.popMatrix();
+                RenderSystem.enableDepthTest();
+                RenderSystem.enableBlend();
+
+                poseStack.popPose();
             }
-
-            itemRender.renderItemOverlayIntoGUI(font, stack, x, y, "");
         } catch (Exception e) {
-            BetterQuesting.logger.warn("Unabled to render item " + stack, e);
+            BetterQuesting.logger.warn("Unable to render item " + stack, e);
         }
 
-        GlStateManager.disableDepth();
-        RenderHelper.disableStandardItemLighting();
+        RenderSystem.disableDepthTest();
 
-        itemRender.zLevel = preZ; // Just in case
-
-        GlStateManager.popMatrix();
+        poseStack.popPose();
     }
 
-    public static void RenderEntity(int posX, int posY, int scale, float rotation, float pitch, Entity entity) {
-        RenderEntity(posX, posY, 64F, scale, rotation, pitch, entity);
-    }
-
-    public static void RenderEntity(float posX, float posY, float posZ, int scale, float rotation, float pitch, Entity entity) {
+    public static void RenderEntity(PoseStack poseStack, float posX, float posY, float posZ, int scale, float rotation, float pitch, Entity entity) {
         try {
-            GlStateManager.enableColorMaterial();
-            GlStateManager.pushMatrix();
-            GlStateManager.enableDepth();
-            GlStateManager.translate(posX, posY, posZ);
-            GlStateManager.scale((float) -scale, (float) scale, (float) scale); // Not entirely sure why mobs are flipped but this is how vanilla GUIs fix it so...
-            GlStateManager.rotate(180.0F, 0.0F, 0.0F, 1.0F);
-            GlStateManager.rotate(pitch, 1F, 0F, 0F);
-            GlStateManager.rotate(rotation, 0F, 1F, 0F);
-            float f3 = entity.rotationYaw;
-            float f4 = entity.rotationPitch;
-            float f5 = entity.prevRotationYaw;
-            float f6 = entity.prevRotationPitch;
-            entity.rotationYaw = 0;
-            entity.rotationPitch = 0;
-            entity.prevRotationYaw = 0;
-            entity.prevRotationPitch = 0;
-            EntityLivingBase livingBase = (entity instanceof EntityLivingBase) ? (EntityLivingBase) entity : null;
-            float f7 = livingBase == null ? 0 : livingBase.renderYawOffset;
-            float f8 = livingBase == null ? 0 : livingBase.rotationYawHead;
-            float f9 = livingBase == null ? 0 : livingBase.prevRotationYawHead;
-            if (livingBase != null) {
-                livingBase.renderYawOffset = 0;
-                livingBase.rotationYawHead = 0;
-                livingBase.prevRotationYawHead = 0;
+            poseStack.pushPose();
+            poseStack.translate(posX, posY, posZ);
+            poseStack.scale(-scale, scale, scale);
+            poseStack.mulPose(Axis.ZP.rotationDegrees(180.0F));
+            poseStack.mulPose(Axis.XP.rotationDegrees(pitch));
+            poseStack.mulPose(Axis.YP.rotationDegrees(rotation));
+
+            float f3 = entity.getYRot();
+            float f4 = entity.getXRot();
+            float f5 = entity.yRotO;
+            float f6 = entity.xRotO;
+            entity.setYRot(0);
+            entity.setXRot(0);
+            entity.yRotO = 0;
+            entity.xRotO = 0;
+
+            LivingEntity livingEntity = entity instanceof LivingEntity ? (LivingEntity) entity : null;
+            float f7 = livingEntity == null ? 0 : livingEntity.yBodyRot;
+            float f8 = livingEntity == null ? 0 : livingEntity.yHeadRot;
+            float f9 = livingEntity == null ? 0 : livingEntity.yHeadRotO;
+            if (livingEntity != null) {
+                livingEntity.yBodyRot = 0;
+                livingEntity.yHeadRot = 0;
+                livingEntity.yHeadRotO = 0;
             }
 
-            RenderHelper.enableStandardItemLighting();
-            RenderManager rendermanager = Minecraft.getInstance().getRenderManager();
-            rendermanager.setPlayerViewY(180.0F);
-            rendermanager.renderEntity(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, false);
-            entity.rotationYaw = f3;
-            entity.rotationPitch = f4;
-            entity.prevRotationYaw = f5;
-            entity.prevRotationPitch = f6;
-            if (livingBase != null) {
-                livingBase.renderYawOffset = f7;
-                livingBase.rotationYawHead = f8;
-                livingBase.prevRotationYawHead = f9;
+            RenderSystem.setShader(GameRenderer::getRendertypeEntityCutoutShader);
+            RenderSystem.enableDepthTest();
+            Lighting.setupFor3DItems();
+            EntityRenderDispatcher entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
+            entityRenderDispatcher.setRenderShadow(false);
+            MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
+            entityRenderDispatcher.render(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, poseStack, bufferSource, 15728880);
+            bufferSource.endBatch();
+            entityRenderDispatcher.setRenderShadow(true);
+
+            entity.setYRot(f3);
+            entity.setXRot(f4);
+            entity.yRotO = f5;
+            entity.xRotO = f6;
+            if (livingEntity != null) {
+                livingEntity.yBodyRot = f7;
+                livingEntity.yHeadRot = f8;
+                livingEntity.yHeadRotO = f9;
             }
-            GlStateManager.disableDepth();
-            GlStateManager.popMatrix();
-            RenderHelper.disableStandardItemLighting();
-            GlStateManager.disableRescaleNormal();
-            OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit);
-            GlStateManager.disableTexture2D();
-            OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
-            GlStateManager.enableTexture2D(); // Breaks subsequent text rendering if not included
-            GlStateManager.disableColorMaterial();
+
+            poseStack.popPose();
+            Lighting.setupForFlatItems();
+            RenderSystem.disableDepthTest();
         } catch (Exception e) {
             // Hides rendering errors with entities which are common for invalid/technical entities
         }
     }
 
-    public static void DrawLine(int x1, int y1, int x2, int y2, float width, int color) {
+    public static void drawLine(int x1, int y1, int x2, int y2, float width, int color) {
         float r = (float) (color >> 16 & 255) / 255.0F;
         float g = (float) (color >> 8 & 255) / 255.0F;
         float b = (float) (color & 255) / 255.0F;
-        GlStateManager.pushMatrix();
 
-        GlStateManager.disableTexture2D();
-        GlStateManager.color(r, g, b, 1F);
-        GL11.glLineWidth(width);
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        RenderSystem.setShaderColor(r, g, b, 1F);
+        RenderSystem.lineWidth(width);
 
-        GL11.glBegin(GL11.GL_LINES);
-        GL11.glVertex2f(x1, y1);
-        GL11.glVertex2f(x2, y2);
-        GL11.glEnd();
+        Tesselator tesselator = Tesselator.getInstance();
+        BufferBuilder bufferbuilder = tesselator.getBuilder();
 
-        GlStateManager.enableTexture2D();
-        GlStateManager.color(1F, 1F, 1F, 1F);
+        bufferbuilder.begin(VertexFormat.Mode.LINES, DefaultVertexFormat.POSITION_COLOR);
+        bufferbuilder.vertex(x1, y1, 0).color(r, g, b, 1F).endVertex();
+        bufferbuilder.vertex(x2, y2, 0).color(r, g, b, 1F).endVertex();
+        tesselator.end();
 
-        GlStateManager.popMatrix();
+        RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
     }
 
-    public static void drawSplitString(Font renderer, String string, int x, int y, int width, int color, boolean shadow) {
-        drawSplitString(renderer, string, x, y, width, color, shadow, 0, splitString(string, width, renderer).size() - 1);
+    public static void drawSplitString(GuiGraphics guiGraphics, PoseStack poseStack, Font renderer, String string, int x, int y, int width, int color, boolean shadow) {
+        drawSplitString(guiGraphics, poseStack, renderer, string, x, y, width, color, shadow, 0, splitString(string, width, renderer).size() - 1);
     }
 
-    public static void drawSplitString(Font renderer, String string, int x, int y, int width, int color, boolean shadow, int start, int end) {
-        drawHighlightedSplitString(renderer, string, x, y, width, color, shadow, start, end, 0, 0, 0);
+    public static void drawSplitString(GuiGraphics guiGraphics, PoseStack poseStack, Font renderer, String string, int x, int y, int width, int color, boolean shadow, int start, int end) {
+        drawHighlightedSplitString(guiGraphics, poseStack, renderer, string, x, y, width, color, shadow, start, end, 0, 0, 0);
     }
 
     // TODO: Clean this up. The list of parameters is getting a bit excessive
 
-    public static void drawHighlightedSplitString(Font renderer, String string, int x, int y, int width, int color, boolean shadow, int highlightColor, int highlightStart, int highlightEnd) {
-        drawHighlightedSplitString(renderer, string, x, y, width, color, shadow, 0, splitString(string, width, renderer).size() - 1, highlightColor, highlightStart, highlightEnd);
+    public static void drawHighlightedSplitString(GuiGraphics guiGraphics, PoseStack poseStack, Font renderer, String string, int x, int y, int width, int color, boolean shadow, int highlightColor, int highlightStart, int highlightEnd) {
+        drawHighlightedSplitString(guiGraphics, poseStack, renderer, string, x, y, width, color, shadow, 0, splitString(string, width, renderer).size() - 1, highlightColor, highlightStart, highlightEnd);
     }
 
-    public static void drawHighlightedSplitString(Font renderer, String string, int x, int y, int width, int color, boolean shadow, int start, int end, int highlightColor, int highlightStart, int highlightEnd) {
+    public static void drawHighlightedSplitString(GuiGraphics guiGraphics, PoseStack poseStack, Font renderer, String string, int x, int y, int width, int color, boolean shadow, int start, int end, int highlightColor, int highlightStart, int highlightEnd) {
         if (renderer == null || string == null || string.length() <= 0 || start > end) {
             return;
         }
 
-        string = string.replaceAll("\r", ""); //Line endings from localizations break things so we remove them
+        string = string.replaceAll("\r", ""); // Line endings from localizations break things so we remove them
 
         List<String> list = splitString(string, width, renderer);
         List<String> noFormat = splitStringWithoutFormat(string, width, renderer); // Needed for accurate highlight index positions
 
         if (list.size() != noFormat.size()) {
-            //BetterQuesting.logger.error("Line count mismatch (" + list.size() + " != " + noFormat.size() + ") while drawing formatted text!");
+            // BetterQuesting.logger.error("Line count mismatch (" + list.size() + " != " + noFormat.size() + ") while drawing formatted text!");
             return;
         }
 
@@ -238,32 +242,14 @@ public class RenderUtils {
         }
 
         // Text rendering is very vulnerable to colour leaking
-        GlStateManager.color(1F, 1F, 1F, 1F);
+        RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 
         for (int i = start; i <= end; i++) {
             if (i < 0 || i >= list.size()) {
                 continue;
             }
 
-            renderer.drawString(list.get(i), x, y + (renderer.FONT_HEIGHT * (i - start)), color, shadow);
-
-            // DEBUG
-			/*boolean b = (System.currentTimeMillis()/1000)%2 == 0;
-			
-			if(b)
-			{
-				renderer.drawString(i + ": " + list.get(i), x, y + (renderer.FONT_HEIGHT * (i - start)), color, shadow);
-			}
-			
-			if(i >= noFormat.size())
-			{
-				continue;
-			}
-			
-			if(!b)
-			{
-				renderer.drawString(i + ": " + noFormat.get(i), x, y + (renderer.FONT_HEIGHT * (i - start)), color, shadow);
-			}*/
+            guiGraphics.drawString(renderer, list.get(i), x, y + (renderer.lineHeight * (i - start)), color, shadow);
 
             int lineSize = noFormat.get(i).length();
             int idxEnd = idxStart + lineSize;
@@ -272,23 +258,23 @@ public class RenderUtils {
             int i2 = Math.min(idxEnd, hlEnd) - idxStart;
 
             if (!(i1 == i2 || i1 < 0 || i2 < 0 || i1 > lineSize || i2 > lineSize)) {
-                String lastFormat = Font.getFormatFromString(list.get(i));
-                int x1 = getStringWidth(lastFormat + noFormat.get(i).substring(0, i1), renderer);
-                int x2 = getStringWidth(lastFormat + noFormat.get(i).substring(0, i2), renderer);
+                Component textComponent = Component.literal(noFormat.get(i).substring(0, i2)).setStyle(Style.EMPTY);
+                int x1 = renderer.width(textComponent.getString().substring(0, i1));
+                int x2 = renderer.width(textComponent.getString());
 
-                drawHighlightBox(x + x1, y + (renderer.FONT_HEIGHT * (i - start)), x + x2, y + (renderer.FONT_HEIGHT * (i - start)) + renderer.FONT_HEIGHT, highlightColor);
+                drawHighlightBox(guiGraphics, poseStack, x + x1, y + (renderer.lineHeight * (i - start)), x + x2, y + (renderer.lineHeight * (i - start)) + renderer.lineHeight, highlightColor);
             }
 
             idxStart = idxEnd;
         }
     }
 
-    public static void drawHighlightedString(Font renderer, String string, int x, int y, int color, boolean shadow, int highlightColor, int highlightStart, int highlightEnd) {
+    public static void drawHighlightedString(GuiGraphics guiGraphics, PoseStack poseStack, Font renderer, String string, int x, int y, int color, boolean shadow, int highlightColor, int highlightStart, int highlightEnd) {
         if (renderer == null || string == null || string.length() <= 0) {
             return;
         }
 
-        renderer.drawString(string, x, y, color, shadow);
+        guiGraphics.drawString(renderer, string, x, y, color, shadow);
 
         int hlStart = Math.min(highlightStart, highlightEnd);
         int hlEnd = Math.max(highlightStart, highlightEnd);
@@ -301,15 +287,15 @@ public class RenderUtils {
             int x1 = getStringWidth(string.substring(0, i1), renderer);
             int x2 = getStringWidth(string.substring(0, i2), renderer);
 
-            drawHighlightBox(x + x1, y, x + x2, y + renderer.FONT_HEIGHT, highlightColor);
+            drawHighlightBox(guiGraphics, poseStack, x + x1, y, x + x2, y + renderer.lineHeight, highlightColor);
         }
     }
 
-    public static void drawHighlightBox(IGuiRect rect, IGuiColor color) {
-        drawHighlightBox(rect.getX(), rect.getY(), rect.getX() + rect.getWidth(), rect.getY() + rect.getHeight(), color.getRGB());
+    public static void drawHighlightBox(GuiGraphics guiGraphics, PoseStack poseStack, IGuiRect rect, IGuiColor color) {
+        drawHighlightBox(guiGraphics, poseStack, rect.getX(), rect.getY(), rect.getX() + rect.getWidth(), rect.getY() + rect.getHeight(), color.getRGB());
     }
 
-    public static void drawHighlightBox(int left, int top, int right, int bottom, int color) {
+    public static void drawHighlightBox(GuiGraphics guiGraphics, PoseStack poseStack, int left, int top, int right, int bottom, int color) {
         if (left < right) {
             int i = left;
             left = right;
@@ -327,51 +313,44 @@ public class RenderUtils {
         float f1 = (float) (color >> 8 & 255) / 255.0F;
         float f2 = (float) (color & 255) / 255.0F;
 
-        GlStateManager.pushMatrix();
+        RenderSystem.setShaderColor(f, f1, f2, f3);
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
 
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        Tesselator tesselator = Tesselator.getInstance();
+        BufferBuilder bufferbuilder = tesselator.getBuilder();
+        bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION);
+        bufferbuilder.vertex(poseStack.last().pose(), (float) left, (float) bottom, 0.0F).endVertex();
+        bufferbuilder.vertex(poseStack.last().pose(), (float) right, (float) bottom, 0.0F).endVertex();
+        bufferbuilder.vertex(poseStack.last().pose(), (float) right, (float) top, 0.0F).endVertex();
+        bufferbuilder.vertex(poseStack.last().pose(), (float) left, (float) top, 0.0F).endVertex();
+        tesselator.end();
 
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
-        GlStateManager.color(f, f1, f2, f3);
-        GlStateManager.disableTexture2D();
-        GlStateManager.enableColorLogic();
-        GlStateManager.colorLogicOp(GlStateManager.LogicOp.OR_REVERSE);
-        bufferbuilder.begin(7, DefaultVertexFormats.POSITION);
-        bufferbuilder.pos((double) left, (double) bottom, 0.0D).endVertex();
-        bufferbuilder.pos((double) right, (double) bottom, 0.0D).endVertex();
-        bufferbuilder.pos((double) right, (double) top, 0.0D).endVertex();
-        bufferbuilder.pos((double) left, (double) top, 0.0D).endVertex();
-        tessellator.draw();
-        GlStateManager.disableColorLogic();
-        GlStateManager.enableTexture2D();
-
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-
-        GlStateManager.popMatrix();
+        RenderSystem.disableBlend();
     }
 
-    public static void drawColoredRect(IGuiRect rect, IGuiColor color) {
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder vertexbuffer = tessellator.getBuffer();
-        GlStateManager.enableBlend();
-        GlStateManager.disableTexture2D();
-        GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+
+    public static void drawColoredRect(PoseStack poseStack, IGuiRect rect, IGuiColor color) {
+        Tesselator tesselator = Tesselator.getInstance();
+        BufferBuilder bufferBuilder = tesselator.getBuilder();
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
         color.applyGlColor();
-        vertexbuffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
-        vertexbuffer.pos((double) rect.getX(), (double) rect.getY() + rect.getHeight(), 0.0D).endVertex();
-        vertexbuffer.pos((double) rect.getX() + rect.getWidth(), (double) rect.getY() + rect.getHeight(), 0.0D).endVertex();
-        vertexbuffer.pos((double) rect.getX() + rect.getWidth(), (double) rect.getY(), 0.0D).endVertex();
-        vertexbuffer.pos((double) rect.getX(), (double) rect.getY(), 0.0D).endVertex();
-        tessellator.draw();
-        GlStateManager.enableTexture2D();
-        GlStateManager.disableBlend();
+
+        bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
+        bufferBuilder.vertex(poseStack.last().pose(), (float) rect.getX(), (float) rect.getY() + rect.getHeight(), 0.0F).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
+        bufferBuilder.vertex(poseStack.last().pose(), (float) rect.getX() + rect.getWidth(), (float) rect.getY() + rect.getHeight(), 0.0F).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
+        bufferBuilder.vertex(poseStack.last().pose(), (float) rect.getX() + rect.getWidth(), (float) rect.getY(), 0.0F).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
+        bufferBuilder.vertex(poseStack.last().pose(), (float) rect.getX(), (float) rect.getY(), 0.0F).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
+        tesselator.end();
+
+        RenderSystem.disableBlend();
     }
 
     private static final IGuiColor STENCIL_COLOR = new GuiColorStatic(0, 0, 0, 255);
     private static int stencilDepth = 0;
 
-    public static void startScissor(IGuiRect rect) {
+    public static void startScissor(PoseStack poseStack, IGuiRect rect) {
         if (stencilDepth >= 255) {
             throw new IndexOutOfBoundsException("Exceeded the maximum number of nested stencils (255)");
         }
@@ -390,7 +369,7 @@ public class RenderUtils {
         GL11.glColorMask(false, false, false, false);
         GL11.glDepthMask(false);
 
-        drawColoredRect(rect, STENCIL_COLOR);
+        drawColoredRect(poseStack, rect, STENCIL_COLOR);
 
         GL11.glStencilMask(0x00);
         GL11.glStencilFunc(GL11.GL_EQUAL, stencilDepth + 1, 0xFF);
@@ -401,9 +380,9 @@ public class RenderUtils {
         stencilDepth++;
     }
 
-    private static void fillScreen() {
-        int w = Minecraft.getInstance().displayWidth;
-        int h = Minecraft.getInstance().displayHeight;
+    private static void fillScreen(PoseStack poseStack) {
+        int w = Minecraft.getInstance().getWindow().getGuiScaledWidth();
+        int h = Minecraft.getInstance().getWindow().getGuiScaledHeight();
 
         GL11.glPushAttrib(GL11.GL_TEXTURE_BIT | GL11.GL_DEPTH_TEST | GL11.GL_LIGHTING);
 
@@ -419,7 +398,8 @@ public class RenderUtils {
         GL11.glPushMatrix();
         GL11.glLoadIdentity();
 
-        drawColoredRect(new GuiRectangle(0, 0, w, h), STENCIL_COLOR);
+//        PoseStack poseStack = new PoseStack();
+        drawColoredRect(poseStack, new GuiRectangle(0, 0, w, h), STENCIL_COLOR);
 
         GL11.glMatrixMode(GL11.GL_PROJECTION);
         GL11.glPopMatrix();
@@ -433,7 +413,7 @@ public class RenderUtils {
     /**
      * Pops the last scissor off the stack and returns to the last parent scissor or disables it if there are none
      */
-    public static void endScissor() {
+    public static void endScissor(PoseStack poseStack) {
         stencilDepth--;
 
         if (stencilDepth < 0) {
@@ -455,7 +435,7 @@ public class RenderUtils {
             GL11.glColorMask(false, false, false, false);
             GL11.glDepthMask(false);
 
-            fillScreen();
+            fillScreen(poseStack);
 
             GL11.glColorMask(true, true, true, true);
             GL11.glDepthMask(true);
@@ -487,7 +467,8 @@ public class RenderUtils {
                 String s = temp.substring(0, i);
                 char c0 = temp.charAt(i);
                 boolean flag = c0 == ' ' || c0 == '\n';
-                lastFormat = Font.getFormatFromString(lastFormat + s);
+//                lastFormat = Font.getFormatFromString(lastFormat + s);
+                lastFormat = Component.literal(lastFormat + s).setStyle(Style.EMPTY).toString();
                 temp = temp.substring(i + (flag ? 1 : 0));
                 // NOTE: The index actually stops just before the space/nl so we don't need to remove it from THIS line. This is why the previous line moves forward by one for the NEXT line
                 list.add(s + (flag ? "\n" : "")); // Although we need to remove the spaces between each line we have to replace them with invisible new line characters to preserve the index count
@@ -516,7 +497,8 @@ public class RenderUtils {
                 String s = temp.substring(0, i);
                 char c0 = temp.charAt(i);
                 boolean flag = c0 == ' ' || c0 == '\n';
-                temp = Font.getFormatFromString(s) + temp.substring(i + (flag ? 1 : 0));
+//                temp = Font.getFormatFromString(s) + temp.substring(i + (flag ? 1 : 0));
+                temp = Component.literal(s).setStyle(Style.EMPTY).toString() + temp.substring(i + (flag ? 1 : 0));
                 list.add(s);
 
                 if (temp.length() <= 0 && !flag) {
@@ -561,7 +543,7 @@ public class RenderUtils {
             return 0;
         }
 
-        int row = Mth.clamp(y / font.FONT_HEIGHT, 0, tLines.size() - 1);
+        int row = Mth.clamp(y / font.lineHeight, 0, tLines.size() - 1);
         String lastFormat = "";
         String line;
         int idx = 0;
@@ -569,7 +551,8 @@ public class RenderUtils {
         for (int i = 0; i < row; i++) {
             line = tLines.get(i);
             idx += line.length();
-            lastFormat = Font.getFormatFromString(lastFormat + line);
+//            lastFormat = Font.getFormatFromString(lastFormat + line);
+            lastFormat = Component.literal(lastFormat + line).setStyle(Style.EMPTY).toString();
         }
 
         return idx + getCursorPos(lastFormat + tLines.get(row), x, font) - lastFormat.length();
@@ -591,7 +574,7 @@ public class RenderUtils {
                 case ' ':
                     l = k;
                 default:
-                    j += font.getCharWidth(c0);
+                    j += font.width(String.valueOf(c0));
 
                     if (flag) {
                         ++j;
@@ -659,37 +642,199 @@ public class RenderUtils {
         return (a3 << 24) + (r3 << 16) + (g3 << 8) + b3;
     }
 
-    public static void drawHoveringText(List<String> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, Font font) {
-        drawHoveringText(ItemStack.EMPTY, textLines, mouseX, mouseY, screenWidth, screenHeight, maxTextWidth, font);
+    public static void drawHoveringText(List<String> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, Font font, PoseStack poseStack, GuiGraphics guiGraphics) {
+        drawHoveringText(ItemStack.EMPTY, textLines, mouseX, mouseY, screenWidth, screenHeight, maxTextWidth, font, poseStack, guiGraphics);
     }
 
     /**
      * Modified version of Forge's tooltip rendering that doesn't adjust Z depth
      */
-    public static void drawHoveringText(@Nonnull final ItemStack stack, List<String> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, Font font) {
+    // first rewrite of drawHoveringText which doesnt require the fill function
+//    public static void drawHoveringText(@Nonnull final ItemStack stack, List<String> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, Font font, PoseStack poseStack, GuiGraphics guiGraphics) {
+//        if (textLines == null || textLines.isEmpty()) return;
+//
+//        RenderTooltipEvent.Pre event = new RenderTooltipEvent.Pre(stack, guiGraphics, mouseX, mouseY, screenWidth, screenHeight, font, new ArrayList<>(), (tooltipWidth, tooltipHeight, screenWidth1, screenHeight1, x, y) -> {
+//            int newX = x;
+//            int newY = y;
+//
+//            if (x + tooltipWidth + 4 > screenWidth1) {
+//                newX = x - 16 - tooltipWidth;
+//                if (newX < 4) {
+//                    newX = screenWidth1 - tooltipWidth - 4;
+//                }
+//            }
+//
+//            if (y + tooltipHeight + 4 > screenHeight1) {
+//                newY = y - tooltipHeight - 4;
+//                if (newY < 4) {
+//                    newY = screenHeight1 - tooltipHeight - 4;
+//                }
+//            }
+//
+//            return new Vector2i(newX, newY);
+//        });
+//        if (MinecraftForge.EVENT_BUS.post(event)) return;
+//
+//        mouseX = event.getX();
+//        mouseY = event.getY();
+//        screenWidth = event.getScreenWidth();
+//        screenHeight = event.getScreenHeight();
+//        maxTextWidth = event.getGraphics().guiWidth(); // doesn't seems right...
+//        font = event.getFont();
+//
+//        poseStack.pushPose();
+//        poseStack.translate(0F, 0F, 32F);
+//        Lighting.setupForFlatItems();
+//        RenderSystem.disableDepthTest();
+//        RenderSystem.disableBlend();
+//
+//        int tooltipTextWidth = 0;
+//
+//        for (String textLine : textLines) {
+//            int textLineWidth = getStringWidth(textLine, font);
+//
+//            if (textLineWidth > tooltipTextWidth) {
+//                tooltipTextWidth = textLineWidth;
+//            }
+//        }
+//
+//        boolean needsWrap = false;
+//
+//        int titleLinesCount = 1;
+//        int tooltipX = mouseX + 12;
+//
+//        if (tooltipX + tooltipTextWidth + 4 > screenWidth) {
+//            tooltipX = mouseX - 16 - tooltipTextWidth;
+//
+//            if (tooltipX < 4) // if the tooltip doesn't fit on the screen
+//            {
+//                if (mouseX > screenWidth / 2) {
+//                    tooltipTextWidth = mouseX - 12 - 8;
+//                } else {
+//                    tooltipTextWidth = screenWidth - 16 - mouseX;
+//                }
+//                needsWrap = true;
+//            }
+//        }
+//
+//        if (maxTextWidth > 0 && tooltipTextWidth > maxTextWidth) {
+//            tooltipTextWidth = maxTextWidth;
+//            needsWrap = true;
+//        }
+//
+//        if (needsWrap) {
+//            int wrappedTooltipWidth = 0;
+//            List<String> wrappedTextLines = new ArrayList<>();
+//
+//            for (int i = 0; i < textLines.size(); i++) {
+//                String textLine = textLines.get(i);
+//                List<FormattedCharSequence> wrappedLine = font.split(Component.literal(textLine), tooltipTextWidth);
+//                if (i == 0) {
+//                    titleLinesCount = wrappedLine.size();
+//                }
+//
+//                for (FormattedCharSequence line : wrappedLine) {
+//                    int lineWidth = getStringWidth(line.toString(), font);
+//                    if (lineWidth > wrappedTooltipWidth) {
+//                        wrappedTooltipWidth = lineWidth;
+//                    }
+//                    wrappedTextLines.add(line.toString());
+//                }
+//            }
+//
+//            tooltipTextWidth = wrappedTooltipWidth;
+//            textLines = wrappedTextLines;
+//
+//            if (mouseX > screenWidth / 2) {
+//                tooltipX = mouseX - 16 - tooltipTextWidth;
+//            } else {
+//                tooltipX = mouseX + 12;
+//            }
+//        }
+//
+//        int tooltipY = mouseY - 12;
+//        int tooltipHeight = 8;
+//
+//        if (textLines.size() > 1) {
+//            tooltipHeight += (textLines.size() - 1) * 10;
+//
+//            if (textLines.size() > titleLinesCount) {
+//                tooltipHeight += 2; // gap between title lines and next lines
+//            }
+//        }
+//
+//        if (tooltipY < 4) {
+//            tooltipY = 4;
+//        } else if (tooltipY + tooltipHeight + 4 > screenHeight) {
+//            tooltipY = screenHeight - tooltipHeight - 4;
+//        }
+//
+//        PresetTexture.TOOLTIP_BG.getTexture().drawTexture(poseStack, tooltipX - 4, tooltipY - 4, tooltipTextWidth + 8, tooltipHeight + 8, 0F, 1F);
+//        int tooltipTop = tooltipY;
+//
+//        poseStack.translate(0F, 0F, 0.1F);
+//
+//        for (int lineNumber = 0; lineNumber < textLines.size(); ++lineNumber) {
+//            String line = textLines.get(lineNumber);
+//            guiGraphics.drawString(font, line, (float) tooltipX, (float) tooltipY, -1, true);
+////            font.drawStringWithShadow(line, (float) tooltipX, (float) tooltipY, -1);
+//
+//            if (lineNumber + 1 == titleLinesCount) {
+//                tooltipY += 2;
+//            }
+//
+//            tooltipY += 10;
+//        }
+//
+//        MinecraftForge.EVENT_BUS.post(new RenderTooltipEvent.Pre(stack, textLines, tooltipX, tooltipTop, font, tooltipTextWidth, tooltipHeight));
+//
+//        Lighting.setupFor3DItems();
+//        RenderSystem.enableDepthTest();
+//        RenderSystem.enableBlend();
+//        poseStack.popPose();
+//    }
+
+    public static void drawHoveringText(@Nonnull final ItemStack stack, List<String> textLines, int mouseX, int mouseY, int screenWidth, int screenHeight, int maxTextWidth, Font font, PoseStack poseStack, GuiGraphics guiGraphics) {
         if (textLines == null || textLines.isEmpty()) return;
 
-        RenderTooltipEvent.Pre event = new RenderTooltipEvent.Pre(stack, textLines, mouseX, mouseY, screenWidth, screenHeight, maxTextWidth, font);
+        RenderTooltipEvent.Pre event = new RenderTooltipEvent.Pre(stack, guiGraphics, mouseX, mouseY, screenWidth, screenHeight, font, new ArrayList<>(), (tooltipWidth, tooltipHeight, screenWidth1, screenHeight1, x, y) -> {
+            int newX = x;
+            int newY = y;
+
+            if (x + tooltipWidth + 4 > screenWidth1) {
+                newX = x - 16 - tooltipWidth;
+                if (newX < 4) {
+                    newX = screenWidth1 - tooltipWidth - 4;
+                }
+            }
+
+            if (y + tooltipHeight + 4 > screenHeight1) {
+                newY = y - tooltipHeight - 4;
+                if (newY < 4) {
+                    newY = screenHeight1 - tooltipHeight - 4;
+                }
+            }
+
+            return new Vector2i(newX, newY); // Replace with appropriate positioner return
+        });
         if (MinecraftForge.EVENT_BUS.post(event)) return;
 
         mouseX = event.getX();
         mouseY = event.getY();
         screenWidth = event.getScreenWidth();
         screenHeight = event.getScreenHeight();
-        maxTextWidth = event.getMaxWidth();
-        font = event.getFontRenderer();
+        maxTextWidth = event.getGraphics().guiWidth();
+        font = event.getFont();
 
-        GlStateManager.pushMatrix();
-        GlStateManager.translate(0F, 0F, 32F);
-        GlStateManager.disableRescaleNormal();
-        RenderHelper.disableStandardItemLighting();
-        GlStateManager.disableLighting();
-        //GlStateManager.enableDepth();
-        GlStateManager.disableDepth();
+        poseStack.pushPose();
+        poseStack.translate(0F, 0F, 400F);
+        Lighting.setupForFlatItems();
+        RenderSystem.disableDepthTest();
+        RenderSystem.disableBlend();
         int tooltipTextWidth = 0;
 
         for (String textLine : textLines) {
-            int textLineWidth = getStringWidth(textLine, font);
+            int textLineWidth = font.width(textLine);
 
             if (textLineWidth > tooltipTextWidth) {
                 tooltipTextWidth = textLineWidth;
@@ -704,8 +849,7 @@ public class RenderUtils {
         if (tooltipX + tooltipTextWidth + 4 > screenWidth) {
             tooltipX = mouseX - 16 - tooltipTextWidth;
 
-            if (tooltipX < 4) // if the tooltip doesn't fit on the screen
-            {
+            if (tooltipX < 4) {
                 if (mouseX > screenWidth / 2) {
                     tooltipTextWidth = mouseX - 12 - 8;
                 } else {
@@ -726,17 +870,17 @@ public class RenderUtils {
 
             for (int i = 0; i < textLines.size(); i++) {
                 String textLine = textLines.get(i);
-                List<String> wrappedLine = font.listFormattedStringToWidth(textLine, tooltipTextWidth);
+                List<FormattedCharSequence> wrappedLine = font.split(Component.literal(textLine), tooltipTextWidth);
                 if (i == 0) {
                     titleLinesCount = wrappedLine.size();
                 }
 
-                for (String line : wrappedLine) {
-                    int lineWidth = getStringWidth(line, font);
+                for (FormattedCharSequence line : wrappedLine) {
+                    int lineWidth = font.width(line);
                     if (lineWidth > wrappedTooltipWidth) {
                         wrappedTooltipWidth = lineWidth;
                     }
-                    wrappedTextLines.add(line);
+                    wrappedTextLines.add(line.toString());
                 }
             }
 
@@ -757,7 +901,7 @@ public class RenderUtils {
             tooltipHeight += (textLines.size() - 1) * 10;
 
             if (textLines.size() > titleLinesCount) {
-                tooltipHeight += 2; // gap between title lines and next lines
+                tooltipHeight += 2;
             }
         }
 
@@ -766,36 +910,22 @@ public class RenderUtils {
         } else if (tooltipY + tooltipHeight + 4 > screenHeight) {
             tooltipY = screenHeight - tooltipHeight - 4;
         }
-		
-		/*int backgroundColor = 0xF0100010;
-		int borderColorStart = 0x505000FF;
-		int borderColorEnd = (borderColorStart & 0xFEFEFE) >> 1 | borderColorStart & 0xFF000000;
-		
-		RenderTooltipEvent.Color colorEvent = new RenderTooltipEvent.Color(stack, textLines, tooltipX, tooltipY, font, backgroundColor, borderColorStart, borderColorEnd);
-		MinecraftForge.EVENT_BUS.post(colorEvent);
-		backgroundColor = colorEvent.getBackground();
-		borderColorStart = colorEvent.getBorderStart();
-		borderColorEnd = colorEvent.getBorderEnd();
-		
-		GuiUtils.drawGradientRect(0, tooltipX - 3, tooltipY - 4, tooltipX + tooltipTextWidth + 3, tooltipY - 3, backgroundColor, backgroundColor);
-		GuiUtils.drawGradientRect(0, tooltipX - 3, tooltipY + tooltipHeight + 3, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 4, backgroundColor, backgroundColor);
-		GuiUtils.drawGradientRect(0, tooltipX - 3, tooltipY - 3, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 3, backgroundColor, backgroundColor);
-		GuiUtils.drawGradientRect(0, tooltipX - 4, tooltipY - 3, tooltipX - 3, tooltipY + tooltipHeight + 3, backgroundColor, backgroundColor);
-		GuiUtils.drawGradientRect(0, tooltipX + tooltipTextWidth + 3, tooltipY - 3, tooltipX + tooltipTextWidth + 4, tooltipY + tooltipHeight + 3, backgroundColor, backgroundColor);
-		GuiUtils.drawGradientRect(0, tooltipX - 3, tooltipY - 3 + 1, tooltipX - 3 + 1, tooltipY + tooltipHeight + 3 - 1, borderColorStart, borderColorEnd);
-		GuiUtils.drawGradientRect(0, tooltipX + tooltipTextWidth + 2, tooltipY - 3 + 1, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 3 - 1, borderColorStart, borderColorEnd);
-		GuiUtils.drawGradientRect(0, tooltipX - 3, tooltipY - 3, tooltipX + tooltipTextWidth + 3, tooltipY - 3 + 1, borderColorStart, borderColorStart);
-		GuiUtils.drawGradientRect(0, tooltipX - 3, tooltipY + tooltipHeight + 2, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 3, borderColorEnd, borderColorEnd);
 
-		MinecraftForge.EVENT_BUS.post(new RenderTooltipEvent.PostBackground(stack, textLines, tooltipX, tooltipY, font, tooltipTextWidth, tooltipHeight));*/
-        PresetTexture.TOOLTIP_BG.getTexture().drawTexture(tooltipX - 4, tooltipY - 4, tooltipTextWidth + 8, tooltipHeight + 8, 0F, 1F);
-        int tooltipTop = tooltipY;
+        // Draw background
+        fill(poseStack, tooltipX - 4, tooltipY - 4, tooltipX + tooltipTextWidth + 4, tooltipY - 3, 0xF0100010);
+        fill(poseStack, tooltipX - 4, tooltipY + tooltipHeight + 3, tooltipX + tooltipTextWidth + 4, tooltipY + tooltipHeight + 4, 0xF0100010);
+        fill(poseStack, tooltipX - 4, tooltipY - 3, tooltipX + tooltipTextWidth + 4, tooltipY + tooltipHeight + 3, 0xF0100010);
+        fill(poseStack, tooltipX - 4, tooltipY - 3, tooltipX - 3, tooltipY + tooltipHeight + 3, 0xF0100010);
+        fill(poseStack, tooltipX + tooltipTextWidth + 3, tooltipY - 3, tooltipX + tooltipTextWidth + 4, tooltipY + tooltipHeight + 3, 0xF0100010);
+        fill(poseStack, tooltipX - 3, tooltipY - 3, tooltipX + tooltipTextWidth + 3, tooltipY - 2, 0x505000FF);
+        fill(poseStack, tooltipX - 3, tooltipY + tooltipHeight + 2, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 3, 0x505000FF);
+        fill(poseStack, tooltipX - 3, tooltipY - 3, tooltipX - 2, tooltipY + tooltipHeight + 3, 0x505000FF);
+        fill(poseStack, tooltipX + tooltipTextWidth + 2, tooltipY - 3, tooltipX + tooltipTextWidth + 3, tooltipY + tooltipHeight + 3, 0x505000FF);
 
-        GlStateManager.translate(0F, 0F, 0.1F);
-
+        // Draw text
         for (int lineNumber = 0; lineNumber < textLines.size(); ++lineNumber) {
             String line = textLines.get(lineNumber);
-            font.drawStringWithShadow(line, (float) tooltipX, (float) tooltipY, -1);
+            guiGraphics.drawString(font, line, tooltipX, tooltipY, -1, true);
 
             if (lineNumber + 1 == titleLinesCount) {
                 tooltipY += 2;
@@ -804,14 +934,34 @@ public class RenderUtils {
             tooltipY += 10;
         }
 
-        MinecraftForge.EVENT_BUS.post(new RenderTooltipEvent.PostText(stack, textLines, tooltipX, tooltipTop, font, tooltipTextWidth, tooltipHeight));
+        // this is fucked up, I dont know what replaces it
+//        MinecraftForge.EVENT_BUS.post(new RenderTooltipEvent.Post(stack, guiGraphics, mouseX, mouseY, font, new ArrayList<>(), event.getTooltipPositioner()));
 
-        GlStateManager.enableLighting();
-        //GlStateManager.disableDepth();
-        //GlStateManager.enableDepth();
-        RenderHelper.enableStandardItemLighting();
-        GlStateManager.enableRescaleNormal();
-        GlStateManager.popMatrix();
+        Lighting.setupFor3DItems();
+        RenderSystem.enableDepthTest();
+        RenderSystem.enableBlend();
+        poseStack.popPose();
+    }
+
+    private static void fill(PoseStack poseStack, int x1, int y1, int x2, int y2, int color) {
+        RenderSystem.setShader(GameRenderer::getPositionColorShader);
+        RenderSystem.setShaderColor((color >> 16 & 255) / 255.0F, (color >> 8 & 255) / 255.0F, (color & 255) / 255.0F, (color >> 24 & 255) / 255.0F);
+        RenderSystem.enableBlend();
+        RenderSystem.defaultBlendFunc();
+        RenderSystem.lineWidth(1.0F);
+
+        poseStack.pushPose();
+        poseStack.translate(0.0D, 0.0D, 0.0D);
+
+        var bufferBuilder = Tesselator.getInstance().getBuilder();
+        bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
+        bufferBuilder.vertex(poseStack.last().pose(), x1, y1, 0).color(color).endVertex();
+        bufferBuilder.vertex(poseStack.last().pose(), x1, y2, 0).color(color).endVertex();
+        bufferBuilder.vertex(poseStack.last().pose(), x2, y2, 0).color(color).endVertex();
+        bufferBuilder.vertex(poseStack.last().pose(), x2, y1, 0).color(color).endVertex();
+        bufferBuilder.end();
+
+        poseStack.popPose();
     }
 
     /**
@@ -826,7 +976,7 @@ public class RenderUtils {
 
         for (int j = 0; j < text.length(); ++j) {
             char c0 = text.charAt(j);
-            int k = font.getCharWidth(c0);
+            int k = font.width(String.valueOf(c0));
 
             if (k < 0 && j < text.length() - 1) // k should only be negative when the section sign has been used!
             {

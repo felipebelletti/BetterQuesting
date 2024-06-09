@@ -75,7 +75,7 @@ public class PanelTextBox implements IGuiPanel {
         float scale = fontScale / relScale;
 
         if (!autoFit) {
-            lines = (int) Math.floor(bounds.getHeight() / (fr.FONT_HEIGHT * scale)) - 1;
+            lines = (int) Math.floor(bounds.getHeight() / (fr.lineHeight * scale)) - 1;
             return;
         }
 
@@ -83,7 +83,7 @@ public class PanelTextBox implements IGuiPanel {
         List<String> sl = w > 8 ? fr.listFormattedStringToWidth(text, w) : Collections.emptyList();
         lines = sl.size() - 1;
 
-        this.transform.h = (int) Math.floor(fr.FONT_HEIGHT * sl.size() * scale);
+        this.transform.h = (int) Math.floor(fr.lineHeight * sl.size() * scale);
 
         refRect.x = bounds.getX();
         refRect.y = bounds.getY();

@@ -140,7 +140,7 @@ public class GuiContainerCanvas extends GuiContainer implements IScene {
         if (useDefaultBG) this.drawDefaultBackground();
 
         GlStateManager.pushMatrix();
-        GlStateManager.color(1F, 1F, 1F, 1F);
+        RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
         GlStateManager.disableDepth();
 
         this.drawPanel(mx, my, partialTick);
@@ -172,8 +172,8 @@ public class GuiContainerCanvas extends GuiContainer implements IScene {
     public void handleMouseInput() throws IOException {
         super.handleMouseInput();
 
-        int i = Mouse.getEventX() * width / mc.displayWidth;
-        int j = height - Mouse.getEventY() * height / mc.displayHeight - 1;
+        int i = Mouse.getEventX() * width / mc.getWindow().getGuiScaledWidth();
+        int j = height - Mouse.getEventY() * height / mc.getWindow().getGuiScaledHeight() - 1;
         int k = Mouse.getEventButton();
         int SDX = (int) -Math.signum(Mouse.getEventDWheel());
         boolean flag = Mouse.getEventButtonState();

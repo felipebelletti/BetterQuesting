@@ -17,17 +17,21 @@ import betterquesting.api2.client.gui.resources.lines.IGuiLine;
 import betterquesting.api2.client.gui.resources.textures.ColorTexture;
 import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
 import com.mojang.blaze3d.systems.RenderSystem;
-import org.lwjgl.glfw.GLFW;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 import net.minecraft.core.NonNullList;
 import net.minecraft.util.Mth;
-import org.lwjgl.input.Keyboard;
+import org.lwjgl.glfw.GLFW;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-// Kinda just a poxy panel where tools can be hotswapped out
+// Kinda just a proxy panel where tools can be hotswapped out
 public class PanelToolController implements IGuiPanel {
     private CanvasQuestLine questLine;
     private final IGuiRect transform;
@@ -108,7 +112,7 @@ public class PanelToolController implements IGuiPanel {
     }
 
     public CanvasQuestLine getCanvas() {
-        return this.getCanvas();
+        return this.questLine;
     }
 
     public IValueIO<Float> getScrollX() {
@@ -139,7 +143,7 @@ public class PanelToolController implements IGuiPanel {
     }
 
     @Override
-    public void drawPanel(int mx, int my, float partialTick) {
+    public void drawPanel(int mx, int my, float partialTick, PoseStack poseStack, GuiGraphics guiGraphics) {
         if (!enabled) return;
 
         if (activeTool != null) {
@@ -151,11 +155,11 @@ public class PanelToolController implements IGuiPanel {
             int smx = (int) ((mx - tx) / zs) + lsx;
             int smy = (int) ((my - ty) / zs) + lsy;
 
-            GlStateManager.pushMatrix();
+            poseStack.pushPose();
             RenderUtils.startScissor(transform);
 
-            GlStateManager.translate(tx - lsx * zs, ty - lsy * zs, 0F);
-            GlStateManager.scale(zs, zs, zs);
+            poseStack.translate(tx - lsx * zs, ty - lsy * zs, 0F);
+            poseStack.scale(zs, zs, zs);
 
             if (selBounds != null) {
                 selBounds.w = smx - selBounds.x;
@@ -164,15 +168,15 @@ public class PanelToolController implements IGuiPanel {
                 selLine.drawLine(selBounds, selBounds, 2, selCol, partialTick);
             }
 
-            for (IGuiPanel pn : highlights) pn.drawPanel(smx, smy, partialTick);
+            for (IGuiPanel pn : highlights) pn.drawPanel(smx, smy, partialTick, poseStack, guiGraphics);
 
             // Pretending we're on the scrolling canvas (when we're really not) so as not to influence it by hotswapping panels
-            activeTool.drawCanvas(smx, smy, partialTick);
+            activeTool.drawCanvas(smx, smy, partialTick, poseStack);
 
             RenderUtils.endScissor();
-            GlStateManager.popMatrix();
+            poseStack.popPose();
 
-            activeTool.drawOverlay(mx, my, partialTick);
+            activeTool.drawOverlay(mx, my, partialTick, poseStack);
         }
     }
 
@@ -218,8 +222,8 @@ public class PanelToolController implements IGuiPanel {
                 selBounds.h *= -1;
             }
 
-            boolean append = Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
-            boolean subtract = Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL);
+            boolean append = Screen.hasShiftDown();
+            boolean subtract = Screen.hasControlDown();
 
             if (!append && !subtract) selected.clear();
 
@@ -255,9 +259,9 @@ public class PanelToolController implements IGuiPanel {
     public boolean onKeyTyped(char c, int keycode) {
         if (activeTool != null) {
             if (activeTool.onKeyPressed(c, keycode)) return true;
-            if (activeTool.useSelection() && keycode == Keyboard.KEY_A) {
-                boolean append = Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL);
-                boolean subtract = append && (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT));
+            if (activeTool.useSelection() && keycode == GLFW.GLFW_KEY_A) {
+                boolean append = Screen.hasControlDown();
+                boolean subtract = append && Screen.hasShiftDown();
 
                 if (subtract) {
                     selBounds = null;

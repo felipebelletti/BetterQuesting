@@ -98,7 +98,7 @@ public class PanelPlayerPortrait implements IGuiPanel {
         GlStateManager.pushMatrix();
         RenderUtils.startScissor(new GuiRectangle(bounds));
 
-        GlStateManager.color(1F, 1F, 1F, 1F);
+        RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
         int scale = Math.min(bounds.getWidth(), bounds.getHeight());
         RenderUtils.RenderEntity(bounds.getX() + bounds.getWidth() / 2, bounds.getY() + bounds.getHeight() / 2 + (int) (scale * 1.5F), zDepth, scale, yawDriver.readValue(), pitchDriver.readValue(), player);
 

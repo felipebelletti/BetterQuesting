@@ -49,7 +49,7 @@ public class ToolboxToolLink implements IToolboxTool {
     }
 
     @Override
-    public void drawCanvas(int mx, int my, float partialTick) {
+    public void drawCanvas(int mx, int my, float partialTick, PoseStack poseStack) {
         if (linking.size() <= 0) return;
 
         mouseRect.x = mx;

@@ -1,6 +1,5 @@
 package betterquesting.api2.client.gui.controls;
 
-import betterquesting.api.utils.RenderUtils;
 import betterquesting.api2.client.gui.events.PEventBroadcaster;
 import betterquesting.api2.client.gui.events.types.PEventButton;
 import betterquesting.api2.client.gui.misc.IGuiRect;
@@ -11,15 +10,16 @@ import betterquesting.api2.client.gui.resources.textures.IGuiTexture;
 import betterquesting.api2.client.gui.themes.presets.PresetColor;
 import betterquesting.api2.client.gui.themes.presets.PresetTexture;
 import betterquesting.api2.storage.INBTSaveLoad;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.gui.Font;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import org.lwjgl.glfw.GLFW;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
-import org.lwjgl.input.Mouse;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -154,14 +154,15 @@ public class PanelButton implements IPanelButton, IGuiPanel, INBTSaveLoad<Compou
     }
 
     @Override
-    public void drawPanel(int mx, int my, float partialTick) {
+    public void drawPanel(int mx, int my, float partialTick, PoseStack poseStack, GuiGraphics guiGraphics) {
         IGuiRect bounds = this.getTransform();
-        GlStateManager.pushMatrix();
-        GlStateManager.color(1F, 1F, 1F, 1F);
+        poseStack.pushPose();
+
+        RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
         this.setHovered(bounds.contains(mx, my));
         int curState = !isActive() ? 0 : (isHovered() ? 2 : 1);
 
-        if (curState == 2 && pendingRelease && Mouse.isButtonDown(0)) {
+        if (curState == 2 && pendingRelease && GLFW.glfwGetMouseButton(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_MOUSE_BUTTON_1) == GLFW.GLFW_PRESS) {
             curState = 0;
         }
 
@@ -169,7 +170,7 @@ public class PanelButton implements IPanelButton, IGuiPanel, INBTSaveLoad<Compou
 
         if (t != null) // Support for text or icon only buttons in one or more states.
         {
-            t.drawTexture(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), 0F, partialTick);
+            t.drawTexture(poseStack, bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), 0F, partialTick);
         }
 
         if (texIcon != null) {
@@ -177,35 +178,38 @@ public class PanelButton implements IPanelButton, IGuiPanel, INBTSaveLoad<Compou
 
             if (isz > 0) {
                 if (colIcon != null) {
-                    texIcon.drawTexture(bounds.getX() + (bounds.getWidth() / 2) - (isz / 2), bounds.getY() + (bounds.getHeight() / 2) - (isz / 2), isz, isz, 0F, partialTick, colIcon);
+                    texIcon.drawTexture(poseStack, bounds.getX() + (bounds.getWidth() / 2) - (isz / 2), bounds.getY() + (bounds.getHeight() / 2) - (isz / 2), isz, isz, 0F, partialTick, colIcon);
                 } else {
-                    texIcon.drawTexture(bounds.getX() + (bounds.getWidth() / 2) - (isz / 2), bounds.getY() + (bounds.getHeight() / 2) - (isz / 2), isz, isz, 0F, partialTick);
+                    texIcon.drawTexture(poseStack, bounds.getX() + (bounds.getWidth() / 2) - (isz / 2), bounds.getY() + (bounds.getHeight() / 2) - (isz / 2), isz, isz, 0F, partialTick);
                 }
             }
         }
 
-        if (btnText != null && btnText.length() > 0) {
-            drawCenteredString(Minecraft.getInstance().fontRenderer, btnText, bounds.getX(), bounds.getY() + bounds.getHeight() / 2 - 4, bounds.getWidth(), colStates[curState].getRGB(), txtShadow, textAlign);
+        if (btnText != null && !btnText.isEmpty()) {
+            drawCenteredString(guiGraphics, Minecraft.getInstance().font, btnText, bounds.getX(), bounds.getY() + bounds.getHeight() / 2 - 4, bounds.getWidth(), colStates[curState].getRGB(), txtShadow, textAlign);
         }
 
-        GlStateManager.popMatrix();
+        poseStack.popPose();
     }
 
-    private static void drawCenteredString(Font font, String text, int x, int y, int width, int color, boolean shadow, int align) {
+    private static void drawCenteredString(GuiGraphics guiGraphics, Font font, String text, int x, int y, int width, int color, boolean shadow, int align) {
+        float xPos;
+
         switch (align) {
-            case 0: {
-                font.drawString(text, x + 4, y, color, shadow);
+            case 0:
+                xPos = x + 4;
                 break;
-            }
-            case 2: {
-                font.drawString(text, x + width - RenderUtils.getStringWidth(text, font) / 2F - 4, y, color, shadow);
+            case 2:
+                xPos = x + width - font.width(text) / 2F - 4;
                 break;
-            }
-            default: {
-                font.drawString(text, x + Math.floorDiv(width, 2) - RenderUtils.getStringWidth(text, font) / 2F, y, color, shadow);
-            }
+            default:
+                xPos = x + Math.floorDiv(width, 2) - font.width(text) / 2F;
+                break;
         }
+
+        guiGraphics.drawString(font, text, (int) xPos, y, color, shadow);
     }
+
 
     @Override
     public boolean onMouseClick(int mx, int my, int click) {
@@ -225,7 +229,7 @@ public class PanelButton implements IPanelButton, IGuiPanel, INBTSaveLoad<Compou
         boolean clicked = isActive() && isHovered() && (click == 1 || (click == 0 && !PEventBroadcaster.INSTANCE.postEvent(new PEventButton(this))));
 
         if (clicked) {
-            Minecraft.getInstance().getSoundHandler().playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
             if (click == 0) onButtonClick();
             else if (click == 1) onRightButtonClick();
         }

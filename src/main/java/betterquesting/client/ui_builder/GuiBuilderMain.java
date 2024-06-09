@@ -435,7 +435,7 @@ public class GuiBuilderMain extends GuiScreenCanvas implements IVolatileScreen {
 
         GL11.glLineWidth(1F);
         GlStateManager.enableTexture2D();
-        GlStateManager.color(1F, 1F, 1F, 1F);
+        RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 
         GlStateManager.popMatrix();
     }

@@ -47,7 +47,7 @@ public class BoxLine implements IGuiLine {
         GL11.glLineWidth(1F);
         GL11.glDisable(GL11.GL_LINE_STIPPLE);
         GlStateManager.enableTexture2D();
-        GlStateManager.color(1F, 1F, 1F, 1F);
+        RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 
         GlStateManager.popMatrix();
     }

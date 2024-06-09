@@ -70,7 +70,7 @@ public class ToolboxToolRemove implements IToolboxTool {
     }
 
     @Override
-    public void drawCanvas(int mx, int my, float partialTick) {
+    public void drawCanvas(int mx, int my, float partialTick, PoseStack poseStack) {
     }
 
     @Override

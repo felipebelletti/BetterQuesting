@@ -2,6 +2,7 @@ package betterquesting.api.client.toolbox;
 
 import betterquesting.api2.client.gui.controls.PanelButtonQuest;
 import betterquesting.api2.client.gui.panels.lists.CanvasQuestLine;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.core.NonNullList;
 
 import java.util.List;
@@ -25,12 +26,12 @@ public interface IToolboxTool {
     /**
      * Draws within the relative scrolling portion of the canvas
      */
-    void drawCanvas(int mx, int my, float partialTick);
+    void drawCanvas(int mx, int my, float partialTick, PoseStack poseStack);
 
     /**
      * Draws over the top of the canvas without being affected by scrolling
      */
-    void drawOverlay(int mx, int my, float partialTick);
+    void drawOverlay(int mx, int my, float partialTick, PoseStack poseStack);
 
     /**
      * Fired when the tool controller has changed its multi-selection

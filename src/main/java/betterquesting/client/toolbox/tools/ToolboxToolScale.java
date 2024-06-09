@@ -74,7 +74,7 @@ public class ToolboxToolScale implements IToolboxTool {
     }
 
     @Override
-    public void drawCanvas(int mx, int my, float partialTick) {
+    public void drawCanvas(int mx, int my, float partialTick, PoseStack poseStack) {
         if (grabList.size() > 0) {
             int snap = Math.max(1, ToolboxTabMain.INSTANCE.getSnapValue());
             int dx = mx + snap / 2;

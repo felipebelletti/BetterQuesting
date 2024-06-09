@@ -89,7 +89,7 @@ public class PanelEntityPreview implements IGuiPanel {
         GlStateManager.pushMatrix();
         RenderUtils.startScissor(new GuiRectangle(bounds));
 
-        GlStateManager.color(1F, 1F, 1F, 1F);
+        RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 
         int sizeX = bounds.getWidth();
         int sizeY = bounds.getHeight();
